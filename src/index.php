@@ -21,120 +21,122 @@
 			</div>
 		</div>
 
-		<div class="grid-x main-content">
-			<div class="cell large-3 left-content">
-			Left Column
-			</div>
-			<div class="cell large-9 grid-x right-content">
-				<div class="cell header small-12 text-right">
-					<h3 class="subheader">Gang Name</h3>
+		<div class="grid-container fluid">
+			<div class="grid-x grid-margin-x main-content">
+				<div class="cell large-3 left-content">
+				Left Column
 				</div>
-				<div class="cell small-12 grid-x right-content-container">
-					<div class="cell small-12 text-right">
-						<a href="#" class="button submit" data-bs-toggle="modal" data-bs-target="#fighterEditModal">Add Fighter</a>
-						<a href="#" class="button submit">Print Cards</a>
+				<div class="cell large-9 grid-x right-content">
+					<div class="cell header small-12 text-right">
+						<h3 class="subheader">Gang Name</h3>
 					</div>
-					<div class="cell small-12">
-						<table>
-							<thead class="table-dark">
-								<tr>
-									<th scope="col">Fighter</th>
-									<th scope="col">Type</th>
-									<th scope="col">Cost</th>
-									<th scope="col" class="text-center">XP</th>
-									<th scope="col" class="text-center">ADV</th>
-									<th scope="col" class="text-center">Rec</th>
-									<th scope="col" class="text-center">Cap</th>
-									<th scope="col"></th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td>Joe Banks</td>
-									<td>Leader</td>
-									<td>250</td>
-									<td class="text-center">6xp</td>
-									<td class="text-center">3</td>
-									<td class="text-center">X</td>
-									<td class="text-center">X</td>
-									<td>
-										<ul class="dropdown menu" data-dropdown-menu>
-											<li>
-												<a href="#" class="button hollow">Actions</a>
-												<ul class="menu">
-													<li><a href="#">Edit</a></li>
-													<li><a href="#">Create Card</a></li>
-													<li><a href="#">Remove</a></li>
-												</ul>
-											</li>
-										</ul>
-									</td>
-								</tr>
-								<tr>
-									<td>Frank Black</td>
-									<td>Champion</td>
-									<td>250</td>
-									<td class="text-center">6xp</td>
-									<td class="text-center">3</td>
-									<td class="text-center">X</td>
-									<td class="text-center">X</td>
-									<td>
-										<ul class="dropdown menu" data-dropdown-menu>
-											<li>
-												<a href="#" class="button hollow">Actions</a>
-												<ul class="menu">
-													<li><a href="#">Edit</a></li>
-													<li><a href="#">Create Card</a></li>
-													<li><a href="#">Remove</a></li>
-												</ul>
-											</li>
-										</ul>
-									</td>
-								</tr>
-								<tr>
-									<td>Kim Deal</td>
-									<td>Champion</td>
-									<td>250</td>
-									<td class="text-center">6xp</td>
-									<td class="text-center">3</td>
-									<td class="text-center">X</td>
-									<td class="text-center">X</td>
-									<td>
-										<ul class="dropdown menu" data-dropdown-menu>
-											<li>
-												<a href="#" class="button hollow">Actions</a>
-												<ul class="menu">
-													<li><a href="#">Edit</a></li>
-													<li><a href="#">Create Card</a></li>
-													<li><a href="#">Remove</a></li>
-												</ul>
-											</li>
-										</ul>
-									</td>
-								</tr>
-								<tr>
-									<td>Joey Santiago</td>
-									<td>Fighter</td>
-									<td>250</td>
-									<td class="text-center">6xp</td>
-									<td class="text-center">3</td>
-									<td class="text-center">X</td>
-									<td class="text-center">X</td>
-									<td>
-										<ul class="dropdown menu" data-dropdown-menu>
-											<li>
-												<a href="#" class="button hollow">Actions</a>
-												<ul class="menu">
-													<li><a href="#">Edit</a></li>
-													<li><a href="#">Create Card</a></li>
-													<li><a href="#">Remove</a></li>
-												</ul>
-											</li>
-										</ul>
-									</td>
-								</tr>
-							</tbody>
-						</table>
+					<div class="cell small-12 grid-x right-content-container">
+						<div class="cell small-12 text-right">
+							<a class="button submit" data-open="fighterModal">Add Fighter</a>
+							<a href="#" class="button submit">Print Cards</a>
+						</div>
+						<div class="cell small-12">
+							<table class="hover">
+								<thead class="table-dark">
+									<tr>
+										<th scope="col">Fighter</th>
+										<th scope="col">Type</th>
+										<th scope="col">Cost</th>
+										<th scope="col" class="text-center">XP</th>
+										<th scope="col" class="text-center">ADV</th>
+										<th scope="col" class="text-center">Rec</th>
+										<th scope="col" class="text-center">Cap</th>
+										<th scope="col"></th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>Joe Banks</td>
+										<td>Leader</td>
+										<td>250</td>
+										<td class="text-center">6xp</td>
+										<td class="text-center">3</td>
+										<td class="text-center">X</td>
+										<td class="text-center">X</td>
+										<td>
+											<ul class="dropdown menu" data-dropdown-menu>
+												<li>
+													<a href="#" class="button hollow">Actions</a>
+													<ul class="menu">
+														<li><a href="#">Edit</a></li>
+														<li><a href="#">Create Card</a></li>
+														<li><a href="#">Remove</a></li>
+													</ul>
+												</li>
+											</ul>
+										</td>
+									</tr>
+									<tr>
+										<td>Frank Black</td>
+										<td>Champion</td>
+										<td>250</td>
+										<td class="text-center">6xp</td>
+										<td class="text-center">3</td>
+										<td class="text-center">X</td>
+										<td class="text-center">X</td>
+										<td>
+											<ul class="dropdown menu" data-dropdown-menu>
+												<li>
+													<a href="#" class="button hollow">Actions</a>
+													<ul class="menu">
+														<li><a href="#">Edit</a></li>
+														<li><a href="#">Create Card</a></li>
+														<li><a href="#">Remove</a></li>
+													</ul>
+												</li>
+											</ul>
+										</td>
+									</tr>
+									<tr>
+										<td>Kim Deal</td>
+										<td>Champion</td>
+										<td>250</td>
+										<td class="text-center">6xp</td>
+										<td class="text-center">3</td>
+										<td class="text-center">X</td>
+										<td class="text-center">X</td>
+										<td>
+											<ul class="dropdown menu" data-dropdown-menu>
+												<li>
+													<a href="#" class="button hollow">Actions</a>
+													<ul class="menu">
+														<li><a href="#">Edit</a></li>
+														<li><a href="#">Create Card</a></li>
+														<li><a href="#">Remove</a></li>
+													</ul>
+												</li>
+											</ul>
+										</td>
+									</tr>
+									<tr>
+										<td>Joey Santiago</td>
+										<td>Fighter</td>
+										<td>250</td>
+										<td class="text-center">6xp</td>
+										<td class="text-center">3</td>
+										<td class="text-center">X</td>
+										<td class="text-center">X</td>
+										<td>
+											<ul class="dropdown menu" data-dropdown-menu>
+												<li>
+													<a href="#" class="button hollow">Actions</a>
+													<ul class="menu">
+														<li><a href="#">Edit</a></li>
+														<li><a href="#">Create Card</a></li>
+														<li><a href="#">Remove</a></li>
+													</ul>
+												</li>
+											</ul>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -152,7 +154,7 @@
 			</div>
 		</div>
 		</div>
-		<div class="reveal" id="exampleModal1" data-reveal>
+		<div class="small reveal" id="fighterModal" data-reveal>
 			<div class="grid-x">
 				<div class="cell small-12">
 					<h5 class="modal-title">Add/Edit Fighter</h5>
@@ -216,6 +218,7 @@
 					<table class="table fighter-weapon">
 						<thead>
 							<th colspan="3">Weapon</th>
+							<th colspan="1">Profile</th>
 							<th colspan="2">Rng</th>
 							<th colspan="2">Acc</th>
 							<th colspan="1">Str</th>
@@ -230,7 +233,7 @@
 									<input type="text" name="weapon_name" class="form-control form-control-sm" placeholder="Name" aria-label="Weapon Name">
 								</td>
 								<td colspan="1">
-									<input type="text" name="weapon_name" class="form-control form-control-sm" placeholder="Name" aria-label="Weapon Name">
+									<input type="text" name="trait_name" class="form-control form-control-sm" placeholder="Default" aria-label="Weapon Name">
 								</td>
 								<td colspan="2" class="two-stat">
 									<input type="text" name="range_short" class="form-control form-control-sm" placeholder="S" aria-label="Range Short">
@@ -255,13 +258,27 @@
 								<td colspan="3">
 									<input type="text" name="traits" class="form-control form-control-sm" placeholder="Traits" aria-label="Traits">
 								</td>
+								<td colspan="1">
+									<a class="button">+</a>
+								</td>
+							</tr>
+							<tr>
+								<td colspan="16" class="text-right">
+									<a class="button">Add Weapon</a>
+								</td>
 							</tr>
 						</tbody>
 					</table>
 				</div>
 				<div class="cell small-12">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary">Save changes</button>
+					<input type="text" name="wargear" class="" placeholder="Wargear">
+				</div>
+				<div class="cell small-12">
+					<input type="text" name="skills" class="" placeholder="Skills">
+				</div>
+				<div class="cell small-12">
+					<a class="button" data-close>Close</a>
+					<a class="button">Save changes</a>
 				</div>
 			</div>
 		</div>
