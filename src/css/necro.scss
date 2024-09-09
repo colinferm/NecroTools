@@ -1,0 +1,32 @@
+$white: #fff;
+
+body {
+	.main-content {
+		.right-content {
+			min-height: 600px;
+
+			.right-content-container {
+				height: 100%;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+			}
+		}
+	}
+
+	.modal {
+		.form-row {
+			display: flex;
+		}
+
+	}
+
+	.left-content {
+		background-color: rgb(222, 226, 230);
+	}
+
+	.footer {
+		min-height: 250px;
+		color: $white
+	}
+}

@@ -1,0 +1,46 @@
+version: "3.7"
+services:
+  web-server:
+    build:
+      dockerfile: php8.Dockerfile
+      context: .
+    container_name: necro-web-server
+    depends_on:
+      - mysql-server
+    environment:
+      DATABASE_HOST: mysql-server
+      DATABASE_USER: necromunda
+      DATABASE_PASSWORD: necromunda
+      REDIS_HOST: redis
+      NODE_ENV: development
+      DOMAIN_NAME: localhost:8080
+      XDEBUG_SESSION: 1
+    ports:
+      - "8080:80"
+      - "9001:12080"
+      - "4568:4568"
+    volumes:
+      - "./src/:/var/www/html/"
+
+  mysql-server:
+    image: mysql:8.3.0
+    container_name: necro-mysql-server
+    environment:
+      MYSQL_ROOT_PASSWORD: necromunda
+      MYSQL_USER: necromunda
+      MYSQL_PASSWORD: necromunda
+    ports:
+      - "33060:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./data:/docker-entrypoint-initdb.d
+
+  redis:
+    image: redis:7.0.4-alpine
+    container_name: necro-redis
+    volumes:
+      - redis-data:/data
+
+volumes:
+  mysql-data:
+  redis-data:
