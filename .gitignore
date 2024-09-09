@@ -3,3 +3,6 @@ necro.js
 templates.js
 necro.css
 necro.css.map
+src/css/foundation-compiled.css
+src/css/foundation-compiled.css.map
+src/api/lib/vendor/

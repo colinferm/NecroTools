@@ -137,6 +137,10 @@ module.exports = function (grunt) {
     },
     sass: {
       dist: {
+        options: {
+          loadPath: ['/usr/lib/node_modules/foundation-sites/scss'],
+          update: true
+        },
         files: [{
           expand: true,
           cwd: '/var/www/html',

@@ -1,4 +1,4 @@
-$white: #fff;
+@import '_settings';
 
 body {
 	.main-content {
@@ -17,6 +17,20 @@ body {
 	.modal {
 		.form-row {
 			display: flex;
+		}
+
+		table {
+			&.fighter-weapon {
+				td {
+					&.two-stat {
+						text-wrap: nowrap;
+						input {
+							display: inline-block;
+							max-width: 44%;
+						}
+					}
+				}
+			}
 		}
 
 	}

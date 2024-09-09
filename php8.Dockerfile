@@ -81,7 +81,7 @@ RUN npm install grunt
 RUN npm install grunt-contrib-concat grunt-contrib-copy grunt-contrib-jshint grunt-contrib-qunit \
   grunt-contrib-sass grunt-contrib-uglify  grunt-contrib-watch grunt-newer grunt-replace \
   grunt-contrib-clean grunt-zip
-RUN npm install -g grunt-cli
+RUN npm install -g grunt-cli foundation-sites
 
 # Start the container with a few tasks
 ENTRYPOINT ["/bin/bash", "-c", "bash && \
