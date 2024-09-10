@@ -46,22 +46,6 @@ module.exports = function (grunt) {
         src: ['/var/www/html/js/utils/packages.js', '/var/www/html/js/utils/**', '/var/www/html/js/routers/**', '/var/www/html/js/models/**', '/var/www/html/js/views/**'],
         dest: '/var/www/html/js/necro.js'
       },
-      libs: {
-        options: {
-          banner: '',
-          stripBanners: true,
-          process: function (src, filePath) {
-            if (src.charAt(src.length - 1) != ';') src = src + ';' + grunt.util.linefeed;
-            return src;
-          }
-        },
-        src: [
-          '/var/www/html/js/lib/jquery-3.7.1.min.js',
-          '/var/www/html/js/lib/underscore-umd-1.13.7.min.js',
-          '/var/www/html/js/lib/backbone-1.6.0.min.js'
-        ],
-        dest: '/var/www/html/js/libs.js'
-      },
       toCompiled: {
         options: {
           banner: "/* Compiled: <%= grunt.template.today('yyyy-mm-dd, h:MM:ss TT') %> */\n",
@@ -250,12 +234,11 @@ module.exports = function (grunt) {
   grunt.registerTask('process-js', ['clean:cleanJS', 'concat:toCompiled']);
   grunt.registerTask('process-js-dist', ['clean:cleanJS', 'concat:toCompiledDist', 'uglify:fromCompiled', 'clean:removeCompiled']);
   grunt.registerTask('process-templates', ['concat:templates']);
-  grunt.registerTask('process-libs', ['concat:libs']);
   grunt.registerTask('process-sass', ['sass:dist']);
   grunt.registerTask('clean-all', ['clean:all']);
   grunt.registerTask('clean-compiled', ['clean:removeCompiled']);
-  grunt.registerTask('package-production', ['clean:all', 'concat:libs', 'copy:production', 'clean:cleanProduction', 'concat:templatesDist', 'concat:toCompiledDist', 'uglify:fromCompiled', 'zip:packageProduction']);
-  grunt.registerTask('refresh', ['clean:all', 'concat:toCompiled', 'concat:templates', 'concat:libs', 'sass:dist']);
+  grunt.registerTask('package-production', ['clean:all', 'copy:production', 'clean:cleanProduction', 'concat:templatesDist', 'concat:toCompiledDist', 'uglify:fromCompiled', 'zip:packageProduction']);
+  grunt.registerTask('refresh', ['clean:all', 'concat:toCompiled', 'concat:templates', 'sass:dist']);
   grunt.registerTask('ugly-js', ['clean:cleanJS', 'concat:toCompiledDist', 'uglify:fromCompiled', 'clean:removeCompiled', 'copy:uglified']);
 
 
