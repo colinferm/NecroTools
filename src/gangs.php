@@ -2,124 +2,180 @@
 // SET UP BACKBONE
 
 ?>
-
 <!doctype html>
-<html lang="en">
+<html class="no-js" lang="en">
 	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+		<meta charset="utf-8" />
+		<meta http-equiv="x-ua-compatible" content="ie=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link href="/css/foundation-compiled.css" rel="stylesheet" type="text/css" />
 		<link href="/css/necro.css" rel="stylesheet" type="text/css" />
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+		<script src="/js/libs/jquery-3.7.1.min.js"></script>
 		<title>Bootstrap demo</title>
 	</head>
 	<body>
-		<nav class="navbar navbar-expand-lg bg-dark border-bottom border-body" data-bs-theme="dark">
-			<div class="container-xl">
-				<a class="navbar-brand" href="#">
-					<i class="bi bi-dice-6"></i> NecroTools
-				</a>
-				<div class="collapse navbar-collapse" id="navbarScroll">
-					<ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
-						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-							Tools
-							</a>
-							<ul class="dropdown-menu">
-								<li><a class="dropdown-item" href="#">Gangs</a></li>
-								<li><hr class="dropdown-divider"></li>
-								<li><a class="dropdown-item" href="#">Admin</a></li>
-								<li><a class="dropdown-item" href="#">Add Weapon</a></li>
-								<li><a class="dropdown-item" href="#">Add Weapon Trait</a></li>
-							</ul>
-						</li>
-					</ul>
-					<form class="d-flex" role="search">
-						<input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-						<button class="btn btn-outline-success" type="submit">Search</button>
-					</form>
-				</div>
+		<div data-sticky-container>
+			<div class="title-bar" data-sticky data-options="marginTop:0;" style="width:100%" data-top-anchor="1">
+				<div class="title-bar-left">NecroTools</div>
+				<div class="title-bar-right"><!-- Content --></div>
 			</div>
-		</nav>
+		</div>
 
-		<div class="container-xl main-content">
-			<div class="row">
-				<div class="col-3 left-content">
+		<div class="grid-container fluid">
+			<div class="grid-x grid-margin-x main-content">
+				<div class="cell large-3 left-content">
 				Left Column
 				</div>
-				<div class="col-9 container right-content">
-					<div class="header col-12 m-2 text-end">
-						<h3>Gangs</h3>
+				<div class="cell large-9 grid-x right-content">
+					<div class="cell header small-12 text-right">
+						<h3 class="subheader">Gangs</h3>
 					</div>
-					<div class="me-3 right-content-container">
-						<table class="table table-striped table-hover">
-							<thead class="table-dark">
+					<div class="cell large-12 right-content-container">
+						<table class="hover">
+							<thead class="dark">
 								<tr>
-									<th scope="col">Name</th>
-									<th scope="col">Type</th>
-									<th scope="col">Members</th>
-									<th scope="col">Value</th>
+									<th>Name</th>
+									<th>Type</th>
+									<th>Members</th>
+									<th>Value</th>
+									<th></th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr>
 									<td>Killers</td>
 									<td>Goliath</td>
-									<td class="text-center">8</td>
-									<td class="text-center">1050</td>
-								</tr>
-								<tr>
-									<td>Killers</td>
-									<td>Goliath</td>
-									<td class="text-center">8</td>
-									<td class="text-center">1050</td>
-								</tr>
-								<tr>
-									<td>Killers</td>
-									<td>Goliath</td>
-									<td class="text-center">8</td>
-									<td class="text-center">1050</td>
+									<td>8</td>
+									<td>1050</td>
+									<td>
+										<ul class="dropdown menu" data-dropdown-menu>
+											<li>
+												<a class="button hollow">Action</a>
+												<ul class="menu">
+													<li><a href="#">Edit</a></li>
+													<li><a href="#">Clone</a></li>
+													<li><a href="#">Remove</a></li>
+												</ul>
+											</li>
+										</ul>
+									</td>
 								</tr>
 								<tr>
 									<td>Killers</td>
 									<td>Goliath</td>
 									<td>8</td>
 									<td>1050</td>
+									<td>
+										<ul class="dropdown menu" data-dropdown-menu>
+											<li>
+												<a class="button hollow">Action</a>
+												<ul class="menu">
+													<li><a href="#">Edit</a></li>
+													<li><a href="#">Clone</a></li>
+													<li><a href="#">Remove</a></li>
+												</ul>
+											</li>
+										</ul>
+									</td>
 								</tr>
 								<tr>
 									<td>Killers</td>
 									<td>Goliath</td>
 									<td>8</td>
 									<td>1050</td>
+									<td>
+										<ul class="dropdown menu" data-dropdown-menu>
+											<li>
+												<a class="button hollow">Action</a>
+												<ul class="menu">
+													<li><a href="#">Edit</a></li>
+													<li><a href="#">Clone</a></li>
+													<li><a href="#">Remove</a></li>
+												</ul>
+											</li>
+										</ul>
+									</td>
 								</tr>
 								<tr>
 									<td>Killers</td>
 									<td>Goliath</td>
 									<td>8</td>
 									<td>1050</td>
+									<td>
+										<ul class="dropdown menu" data-dropdown-menu>
+											<li>
+												<a class="button hollow">Action</a>
+												<ul class="menu">
+													<li><a href="#">Edit</a></li>
+													<li><a href="#">Clone</a></li>
+													<li><a href="#">Remove</a></li>
+												</ul>
+											</li>
+										</ul>
+									</td>
+								</tr>
+								<tr>
+									<td>Killers</td>
+									<td>Goliath</td>
+									<td>8</td>
+									<td>1050</td>
+									<td>
+										<ul class="dropdown menu" data-dropdown-menu>
+											<li>
+												<a class="button hollow">Action</a>
+												<ul class="menu">
+													<li><a href="#">Edit</a></li>
+													<li><a href="#">Clone</a></li>
+													<li><a href="#">Remove</a></li>
+												</ul>
+											</li>
+										</ul>
+									</td>
+								</tr>
+								<tr>
+									<td>Killers</td>
+									<td>Goliath</td>
+									<td>8</td>
+									<td>1050</td>
+									<td>
+										<ul class="dropdown menu" data-dropdown-menu>
+											<li>
+												<a class="button hollow">Action</a>
+												<ul class="menu">
+													<li><a href="#">Edit</a></li>
+													<li><a href="#">Clone</a></li>
+													<li><a href="#">Remove</a></li>
+												</ul>
+											</li>
+										</ul>
+									</td>
 								</tr>
 							</tbody>
 						</table>
 					</div>
 				</div>
 			</div>
-			<div class="container-xl row align-items-center bg-dark footer">
-				<div class="col-4 text-center">
-					Footer Column Left
-				</div>
-				<div class="col-4 text-center">
-					Footer Column Middle
-				</div>
-				<div class="col-4 text-center">
-					Footer Column Right
-				</div>
+		</div>
+		<div class="grid-x footer">
+			<div class="large-4 text-center">
+				Footer Column Left
+			</div>
+			<div class="large-4 text-center">
+				Footer Column Middle
+			</div>
+			<div class="large-4 text-center">
+				Footer Column Right
 			</div>
 		</div>
-	</body>
+		<script>
+			$(document).ready(function($) {
+				$(document).foundation();
+			});
+		</script>
 
-	<?php require_once 'js/templates.js'; ?>
-	<script src="/js/libs/bootstrap.bundle.min.js"></script>
-	<script src="/js/libs/jquery-3.7.1.min.js"></script>
-	<script src="/js/libs/underscore-umd-1.13.7.min.js"></script>
-	<script src="/js/libs/backbone-1.6.0.min.js"></script>
+		<?php require_once 'js/templates.js'; ?>
+		<script src="/js/libs/underscore-umd-1.13.7.min.js"></script>
+		<script src="/js/libs/backbone-1.6.0.min.js"></script>
+		<script src="/js/libs/foundation.min.js"></script>
+	</body>
 </html>

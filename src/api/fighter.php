@@ -5,6 +5,13 @@ use Psr\Http\Message\ServerRequestInterface;
 
 class FighterController extends SlimController {
 
+	public static function getSkills() {
+		$query = "
+			SELECT s.id, s.skill_name FROM necro_fighter_skill s ORDER BY s.skill_name ASC
+		";
+		return dbQuery($query);
+	}
+
 	public static function getFightersForGang($gangId, $db) {
 		$query = "
 			SELECT f.id, f.fighter_name, f.heirarchy_role, f.backstory, 

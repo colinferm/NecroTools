@@ -1,13 +1,19 @@
 var Necro = {
-	Apps: {},
-	Utils: {},
+	Apps: {
+		Data: {}
+	},
+	Utils: {
+		UI: {}
+	},
 	Routers: {},
 	Models: {},
 	Views: {},
-	UI: {}
+	Events: {}
 };
 
-Necro.Apps.FighterTypes = ['leader','champion','fighter','prospect','juve','brute','hanger-on','pet'];
+_.extend(Necro.Events, Backbone.Events);
+
+Necro.Apps.Data.FighterTypes = ['leader','champion','fighter','prospect','juve','brute','hanger-on','pet'];
 
 Necro.Utils.UI.TPL = {
 	templates: {},
@@ -16,6 +22,7 @@ Necro.Utils.UI.TPL = {
 	loadAllTemplates: function (callback) {
 		var that = this;
 		//that.templates[name] = data;
+		var templateCount = 0;
 		if (Object.keys(that.templates).length == 0) {
 			$("script").each(function (index) {
 				var tmpid = $(this).attr('id');
@@ -23,10 +30,11 @@ Necro.Utils.UI.TPL = {
 					//console.log("Loading template " + index + ":" + tmpid);
 					that.templates[tmpid] = $(this).html();
 				}
+				templateCount++;
 			});
 			console.log("Loaded templates");
 		}
-		callback();
+		callback(templateCount);
 	},
 
 	// Get template by name from hash of preloaded templates

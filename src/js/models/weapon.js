@@ -5,7 +5,7 @@ Necro.Models.Weapon = Backbone.Model.extend({
 		"id": null,
 		"weapon_name": "",
 		"weapon_value": 0,
-		"characteristics": new Necro.Models.WeaponCharacteristicCollection({})
+		"characteristics":  Necro.Models.WeaponCharacteristicCollection
 	},
 
 	getValue: function() {
@@ -38,7 +38,7 @@ Necro.Models.WeaponCharacteristic = Backbone.Model.extend({
 		"armor_penetration": "",
 		"damage": 1,
 		"ammo_check": 4,
-		"traits": new Necro.Models.WeaponTraitCollection({})
+		"traits": Necro.Models.WeaponTraitCollection
 	}
 });
 Necro.Models.WeaponCharacteristicCollection = Backbone.Collection.extend({

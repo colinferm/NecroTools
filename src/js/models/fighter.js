@@ -3,7 +3,7 @@ Necro.Models.Fighter = Backbone.Model.extend({
 	idAttribute: "id",
 	defaults:    {
 		"id": null,
-		"gang": new Necro.Models.Gang({}),
+		"gang": Necro.Models.Gang,
 		"fighter_name": "",
 		"movement": "",
 		"weapon_skill": "",
@@ -21,8 +21,8 @@ Necro.Models.Fighter = Backbone.Model.extend({
 		"is_convalescence": false,
 		"experience": 0,
 		"base_value": 0,
-		"weapons": new Necro.Models.WeaponCollection({}),
-		"gear": new Necro.Models.GearCollection({})
+		"weapons": Necro.Models.WeaponCollection,
+		"gear": Necro.Models.GearCollection
 	},
 
 	getValue: function() {

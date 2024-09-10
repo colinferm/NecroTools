@@ -1,5 +1,11 @@
 @import '_settings';
 
+@mixin dark() {
+	&.dark {
+		@content;
+	}
+}
+
 body {
 	.main-content {
 		.right-content {
@@ -30,6 +36,19 @@ body {
 				}
 			}
 		}
+
+		thead {
+			@include dark {
+				tr {
+					&:hover {
+						color: $white;
+						background-color: $black;
+					}
+					color: $white;
+					background-color: $black;
+				}
+			}
+		}
 	}
 
 	.left-content {
@@ -38,6 +57,7 @@ body {
 
 	.footer {
 		min-height: 250px;
-		color: $white
+		color: $white;
+		background-color: $black;
 	}
 }

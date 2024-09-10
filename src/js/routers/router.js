@@ -1,4 +1,4 @@
-Apps.RedRouter = Backbone.Router.extend({
+Necro.Routers.NecroRouter = Backbone.Router.extend({
 	savedSearches: {},
 	history: [],
 
@@ -24,19 +24,41 @@ Apps.RedRouter = Backbone.Router.extend({
 		_.bindAll(this, 'register');
 		_.bindAll(this, 'listGangs');
 		_.bindAll(this, 'addGang');
-		/*
+
 		//user session
-		this.session = new Security.Session();
+		this.session = new Necro.Models.User();
 
 		//generate the top nav
-		this.topNav = new TopNavView({ el: $('#topNavWrapper') });
-		this.menu = new MenuView({ el: $('.breadLine'), collection: this.session.taskList });
+		this.header = new Necro.Views.Header({ el: $('.nav-content') });
+		this.footer = new Necro.Views.Footer({ el: $('.footer-content') });
+		this.leftContent = new Necro.Views.LeftContent({});
+		this.rightContent = new Necro.Views.RightContent({});
+		this.rightContent.pageTitle = 'Home';
+		this.contentWell = $('.main-content');
+		//this.menu = new MenuView({ el: $('.breadLine'), collection: this.session.taskList });
 
 		// On route change event handler.
 		$(window).on('hashchange', function (event) {
 			window.tabindex = 0;
 		});
-		*/
+	},
+
+	load: function (callback) {
+		this.header.render();
+		this.footer.render();
+		this.contentWell.append(this.leftContent.render());
+		this.contentWell.append(this.rightContent.render());
+		Backbone.history.start();
+		
+		if (!this.session.isLoggedIn()) {
+			window.location.href = '#login';
+		}
+	},
+
+	updateRight: function(elem, title) {
+		this.rightContent.pageTitle = title;
+		Necro.Events.trigger('right:title:change');
+		$('.right-content-container', this.rightContent.$el).html(elem);
 	},
 
 	home: function() {
@@ -44,7 +66,8 @@ Apps.RedRouter = Backbone.Router.extend({
 	},
 
 	login: function() {
-
+		var loginView = new Necro.Views.Login({model: this.session});
+		this.updateRight(loginView.render(), "Log In");
 	}, 
 
 	logout: function() {

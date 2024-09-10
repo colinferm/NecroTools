@@ -5,8 +5,8 @@ Necro.Models.Gang = Backbone.Model.extend({
 		"id": null,
 		"gang_name": "",
 		"outlaw": false,
-		"fighters": new Necro.Models.FighterCollection({}),
-		"stash": new Necro.Models.WeaponCollection({})
+		"fighters": Necro.Models.FighterCollection,
+		"stash": Necro.Models.WeaponCollection
 	},
 
 	getValue: function() {
