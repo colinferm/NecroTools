@@ -31,14 +31,13 @@ require_once 'api/fighter.php';
 		<script>
 			$(document).ready(function($) {
 				window.$ = $;
-				$(document).foundation();
 				Necro.Utils.UI.TPL.loadAllTemplates(function(count) {
 					console.log("Templates loaded: " + count );
 				});
 				Necro.Apps.Data.Traits = <?php echo json_encode(WeaponController::getTraits()); ?>;
 				Necro.Apps.Data.Skills = <?php echo json_encode(FighterController::getSkills()); ?>;
 
-				var necro = new Necro.Routers.NecroRouter();
+				window.necro = new Necro.Routers.NecroRouter();
 				necro.load();
 			});
 		</script>
@@ -48,6 +47,7 @@ require_once 'api/fighter.php';
 		<script src="/js/libs/handlebars.min-v4.7.8.js"></script>
 		<script src="/js/libs/backbone-1.6.0.min.js"></script>
 		<script src="/js/libs/foundation.min.js"></script>
+		<script src="/js/libs/jquery.cookie-1.3.js"></script>
 		<script src="/js/necro.js"></script>
 	</body>
 </html>

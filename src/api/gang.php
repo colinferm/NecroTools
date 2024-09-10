@@ -7,8 +7,8 @@ class GangController extends SlimController {
 	
 	public function fetchGangs(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
 		$query = "
-			SELECT g.id, g.gang_name, g.gang_type_id, gt.gang_type_name, gt.house_gang, g.outlaw, g.created, g.last_mod 
-			FROM necro_gang g necro_gang_type gt 
+			SELECT g.id, g.gang_name, g.gang_type_id, gt.type_name, gt.house_gang, g.outlaw, g.created, g.last_mod 
+			FROM necro_gang g, necro_gang_type gt 
 			WHERE g.gang_type_id = gt.id
 			ORDER BY g.last_mod
 		";
@@ -20,8 +20,8 @@ class GangController extends SlimController {
 	public function fetchGang(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
 		$id = $args['id'];
 		$query = "
-			SELECT g.id, g.gang_name, g.gang_type_id, gt.gang_type_name, gt.house_gang, g.outlaw, g.created, g.last_mod 
-			FROM necro_gang g necro_gang_type gt 
+			SELECT g.id, g.gang_name, g.gang_type_id, gt.type_name, gt.house_gang, g.outlaw, g.created, g.last_mod 
+			FROM necro_gang g, necro_gang_type gt 
 			WHERE g.gang_type_id = gt.id
 			AND g.id = :id
 			ORDER BY g.last_mod

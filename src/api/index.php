@@ -15,6 +15,7 @@ $app = AppFactory::create();
 $app->setBasePath("/api");
 $app->post('/login', [\UserController::class, 'login']);
 $app->post('/register', [\UserController::class, 'register']);
+$app->post('/verify', [\UserController::class, 'verify']);
 //$app->get('/password', [\UserController::class, 'passwordGen']);
 
 $app->get('/gangs', [\GangController::class, 'fetchGangs']);

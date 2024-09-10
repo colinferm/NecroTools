@@ -5,22 +5,23 @@ use Psr\Http\Message\ServerRequestInterface;
 
 class UserController extends SlimController {
 
-	public static function findOauth($key) {
-		return dbQuery("SELECT id, username, email_address, confirmed, registered, last_login, is_admin, oauth_key FROM necro_user WHERE oauth_key = :token", ['token' => $key]);
+	public static function findOauth($token) {
+		return dbQueryFirst("SELECT id, username, email_address, confirmed, registered, last_login, is_admin, oauth_key FROM necro_user WHERE oauth_key = :token", ['token' => $token]);
 	}
 
 	public static function doLogin($params) {
-		$username = $params['username'];
-		$password = $password['password'];
+		$email = $params['email_address'];
+		$password = $params['userpassword'];
 
-		$user = dbQuery("SELECT id, username, userpassword, email_address, confirmed, registered, last_login, is_admin, oauth_key FROM necro_user WHERE oauth_key = :token", ['username' => $username]);
-		if (password_verify($password, $user['userpassword'])) {
+		$user = dbQueryFirst("SELECT id, username, userpassword, email_address, confirmed, registered, last_login, is_admin, oauth_key FROM necro_user WHERE email_address = :email_address", ['email_address' => $email]);
+		if (password_verify($email, $user['userpassword'])) {
 			throw new AuthenticationException();
 		}
 		unset($user['userpassword']);
 		$token = md5(microtime());
 
-		$_COOKIE['auth'] = $token;
+		setcookie('auth', $token, time() + 86400, "/");
+		//$_COOKIE['auth'] = $token;
 		$user['oauth_key'] = $token;
 		$_SESSION['user'] = $user;
 
@@ -31,12 +32,27 @@ class UserController extends SlimController {
 
 	public function login(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
 		//$params = $request->getQueryParams();
-		$params = json_decode($request->getBody());
+		$params = $request->getParsedBody();
+		//$params = json_decode($body);
 		
 		list($user, $token) = UserController::doLogin($params);
 
 		$response->getBody()->write(json_encode($user));
 		return $response->withHeader('Content-Type', 'application/json')->withHeader("Authorization", "OAuth oauth_token=".$token);
+	}
+
+	public function verify(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+		$body = $request->getBody()->getContents();
+		$auth = json_decode($body);
+		
+		$user = UserController::findOauth($auth->oauth_key);
+
+		if ($user) {
+			$response->getBody()->write(json_encode($user));
+			return $response->withHeader('Content-Type', 'application/json')->withHeader("Authorization", "OAuth oauth_token=".$auth->oauth_key);
+		} else {
+			throw new AuthenticationException();
+		}
 	}
 
 	public function register(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {

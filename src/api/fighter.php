@@ -15,7 +15,7 @@ class FighterController extends SlimController {
 	public static function getFightersForGang($gangId, $db) {
 		$query = "
 			SELECT f.id, f.fighter_name, f.heirarchy_role, f.backstory, 
-			f.movement, f.weapon_skill, f.balistic_kill, f.strength, f.toughness, f.wounds, f.initiative, f.attacks,
+			f.movement, f.weapon_skill, f.balistic_skill, f.strength, f.toughness, f.wounds, f.initiative, f.attacks,
 			f.leadership, f.cool, f.willpower, f.intelligence, 
 			f.is_vehicle, f.is_convalescence, f.is_captured, f.experience, f.base_value, f.view_order
 			FROM necro_fighter f
@@ -37,7 +37,7 @@ class FighterController extends SlimController {
 		$id = $args['id'];
 		$query = "
 			SELECT f.id, f.fighter_name, f.heirarchy_role, f.backstory, 
-			f.movement, f.weapon_skill, f.balistic_kill, f.strength, f.toughness, f.toughness_side, f.toughness_rear,  
+			f.movement, f.weapon_skill, f.balistic_skill, f.strength, f.toughness, f.toughness_side, f.toughness_rear,  
 			f.handling, f.save_roll, f.wounds, f.initiative, f.attacks, f.leadership, f.cool, f.willpower, f.intelligence, 
 			f.is_vehicle, f.is_convalescence, f.is_captured, f.experience, f.base_value, f.view_order
 			FROM necro_fighter f

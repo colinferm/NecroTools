@@ -15,6 +15,16 @@ function dbQuery($query, $args = array(), $db = null) {
 	return $stmt->fetchAll();
 }
 
+function dbQueryFirst($query, $args = array(), $db = null) {
+	if (is_null($db)) $db = getDb();
+	$data = array();
+
+	$stmt = $db->prepare($query);
+	$stmt->setFetchMode(PDO::FETCH_ASSOC);
+	$stmt->execute($args);
+	return $stmt->fetch();
+}
+
 function dbUpdate($query, $args) {
 	$db = getDb();
 	$stmt = $db->prepare($query);
