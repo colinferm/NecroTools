@@ -13,42 +13,66 @@
 	<input type="text" name="base_cost" class="form-control form-control-sm" placeholder="Cost" aria-label="Base Cost" value="{{base_cost}}">
 </div>
 <div class="cell small-12 grid-x">
-	<div class="cell small-1">
-		<input type="text" name="movement" class="form-control form-control-sm" placeholder="M" aria-label="Movement" value="{{movement}}">
-	</div>
-	<div class="cell small-1">
-		<input type="text" name="weapon_skill" class="form-control form-control-sm" placeholder="WS" aria-label="Weapon Skill" value="{{weapon_skill}}">
-	</div>
-	<div class="cell small-1">
-		<input type="text" name="ballistic_skill" class="form-control form-control-sm" placeholder="BS" aria-label="Ballistic Skill" value="{{ballistic_skill}}">
-	</div>
-	<div class="cell small-1">
-		<input type="text" name="strength" class="form-control form-control-sm" placeholder="S" aria-label="Strength" value="{{strength}}">
-	</div>
-	<div class="cell small-1">
-		<input type="text" name="toughness" class="form-control form-control-sm" placeholder="T" aria-label="Toughness" value="{{toughness}}">
-	</div>
-	<div class="cell small-1">
-		<input type="text" name="wounds" class="form-control form-control-sm" placeholder="W" aria-label="Wounds" value="{{wounds}}">
-	</div>
-	<div class="cell small-1">
-		<input type="text" name="initiative" class="form-control form-control-sm" placeholder="I" aria-label="Initiative" value="{{initiative}}">
-	</div>
-	<div class="cell small-1">
-		<input type="text" name="attacks" class="form-control form-control-sm" placeholder="A" aria-label="Attacks" value="{{attacks}}">
-	</div>
-	<div class="cell small-1">
-		<input type="text" name="leadership" class="form-control form-control-sm" placeholder="LD" aria-label="Leadership" value="{{leadership}}">
-	</div>
-	<div class="cell small-1">
-		<input type="text" name="cool" class="form-control form-control-sm" placeholder="CL" aria-label="Cool" value="{{cool}}">
-	</div>
-	<div class="cell small-1">
-		<input type="text" name="willpower" class="form-control form-control-sm" placeholder="WIL" aria-label="Willpower" value="{{willpower}}">
-	</div>
-	<div class="cell small-1">
-		<input type="text" name="intelligence" class="form-control form-control-sm" placeholder="INT" aria-label="Intelligence" value="{{intelligence}}">
-	</div>
+	<table class="table fighter-weapon">
+		<thead>
+			<th colspan="1">M</th>
+			<th colspan="1">WS</th>
+			<th colspan="1">BS</th>
+			<th colspan="1">S</th>
+			<th colspan="1">T</th>
+			<th colspan="1">W</th>
+			<th colspan="1">I</th>
+			<th colspan="1">A</th>
+			<th colspan="1">LD</th>
+			<th colspan="1">CL</th>
+			<th colspan="1">WIL</th>
+			<th colspan="1">INT</th>
+			<th colspan="1">XP</th>
+		</thead>
+		<tbody>
+			<tr>
+				<td>
+					<input type="text" name="movement" class="form-control form-control-sm" placeholder="M" aria-label="Movement">
+				</td>
+				<td>
+					<input type="text" name="weapon_skill" class="form-control form-control-sm" placeholder="WS" aria-label="Weapon Skill" value="{{weapon_skill}}">
+				</td>
+				<td>
+					<input type="text" name="ballistic_skill" class="form-control form-control-sm" placeholder="BS" aria-label="Ballistic Skill" value="{{ballistic_skill}}">
+				</td>
+				<td>
+					<input type="text" name="strength" class="form-control form-control-sm" placeholder="S" aria-label="Strength" value="{{strength}}">
+				</td>
+				<td>
+					<input type="text" name="toughness" class="form-control form-control-sm" placeholder="T" aria-label="Toughness" value="{{toughness}}">
+				</td>
+				<td>
+					<input type="text" name="wounds" class="form-control form-control-sm" placeholder="W" aria-label="Wounds" value="{{wounds}}">
+				</td>
+				<td>
+					<input type="text" name="initiative" class="form-control form-control-sm" placeholder="I" aria-label="Inititive" value="{{inititive}}">
+				</td>
+				<td>
+					<input type="text" name="attacks" class="form-control form-control-sm" placeholder="A" aria-label="Attacks" value="{{attacks}}">
+				</td>
+				<td>
+					<input type="text" name="leadership" class="form-control form-control-sm" placeholder="LD" aria-label="Leadership" value="{{leadership}}">
+				</td>
+				<td>
+					<input type="text" name="cool" class="form-control form-control-sm" placeholder="CL" aria-label="Cool" value="{{cool}}">
+				</td>
+				<td>
+					<input type="text" name="willpower" class="form-control form-control-sm" placeholder="WIL" aria-label="Willpower" value="{{willpower}}">
+				</td>
+				<td>
+					<input type="text" name="intelligence" class="form-control form-control-sm" placeholder="INT" aria-label="Intelligence" value="{{intelligence}}">
+				</td>
+				<td class="xp_stat">
+					<input type="text" name="xp" class="form-control form-control-sm" placeholder="XP" aria-label="Experience">
+				</td>
+			</tr>
+		</tbody>
+	</table>
 </div>
 <div class="cell small-12">
 	<table class="table fighter-weapon">
@@ -64,10 +88,9 @@
 			<th colspan="3">Traits</th>
 		</thead>
 		<tbody>
-			
 			<tr>
 				<td colspan="16" class="text-right">
-					<a class="button">Add Weapon</a>
+					<a class="button add_weapon">Add Weapon</a>
 				</td>
 			</tr>
 		</tbody>

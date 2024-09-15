@@ -9,7 +9,8 @@ Necro.Routers.NecroRouter = Backbone.Router.extend({
 		"logout":"logout",
 		"register": "register",
 		"gangs":"listGangs",
-		"addGang": "addGang",
+		"gang": "gangForm",
+		"gang/:id": "gangForm"
 		/*
 		"entities/list":"entityListSearch",
 		"entities/new":"entityForm",
@@ -18,12 +19,10 @@ Necro.Routers.NecroRouter = Backbone.Router.extend({
 	},
 
 	initialize: function () {
-		_.bindAll(this, 'home');
-		_.bindAll(this, 'login');
-		_.bindAll(this, 'logout');
-		_.bindAll(this, 'register');
-		_.bindAll(this, 'listGangs');
-		_.bindAll(this, 'addGang');
+		_.bindAll(this, 
+			'home', 'login', 'logout', 'register', 'listGangs', 'gangForm'
+			'updateRight', 'updateLeft', 'updateFoundation'
+		);
 
 		Necro.Events.on('stylize', this.updateFoundation);
 
@@ -106,7 +105,12 @@ Necro.Routers.NecroRouter = Backbone.Router.extend({
 		this.updateRight(gangListView.render(), "Gangs");
 	},
 
-	addGang: function() {
+	gangForm: function(id) {
+		var gang = new Necro.Models.Gang({});
+		if (id) {
+			gang.set("id", id);
+		}
+		
 
 	}
 });

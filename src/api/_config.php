@@ -1,10 +1,13 @@
 <?php
 define('DB_HOST', getenv('DATABASE_HOST'));
 define('DB_TYPE','mysql');
-define('DB_NAME','necromunda');
-define('DB_USER','necromunda');
-define('DB_PASS','necromunda');
+define('DB_NAME', getenv('DATABASE_USER'));
+define('DB_USER', getenv('DATABASE_USER'));
+define('DB_PASS', getenv('DATABASE_PASSWORD'));
 
 define('IS_REDIS_ACTIVE', 1);
 define('REDIS_HOST', getenv('REDIS_HOST'));
+
+// See UserController:peperGen to generate a unique pepper
+define('PEPPER', '0123456789');
 ?>

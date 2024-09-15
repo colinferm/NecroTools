@@ -1,5 +1,4 @@
 <?php
-// SET UP SLIM
 require_once('./_config.php');
 require_once('./utils.php');
 require_once('./lib/vendor/autoload.php');
@@ -17,6 +16,7 @@ $app->post('/login', [\UserController::class, 'login']);
 $app->post('/register', [\UserController::class, 'register']);
 $app->post('/verify', [\UserController::class, 'verify']);
 //$app->get('/password', [\UserController::class, 'passwordGen']);
+//$app->get('/pepper', [\UserController::class, 'pepperGen']);
 
 $app->get('/gangs', [\GangController::class, 'fetchGangs']);
 

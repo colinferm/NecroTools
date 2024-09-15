@@ -2,7 +2,7 @@ Necro.Views.GangList = Backbone.View.extend({
 	tagName: 'table',
 	className: 'hover',
 	templateName: 'gang-list',
-	pageTitle: 'Log In',
+	pageTitle: 'Gangs',
 
 	events: {
 		

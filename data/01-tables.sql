@@ -313,6 +313,14 @@ CREATE TABLE necro_fighter_gear (
 	PRIMARY KEY (id)
 );
 
+DROP TABLE IF EXISTS necro_gang_stash_map;
+CREATE TABLE necro_gang_stash (
+	gang_id INT NOT NULL,
+	gear_id INT,
+	weapon_id INT,
+	INDEX idx_gang_stash_map (gang_id, gear_id, weapon_id)
+)
+
 DROP TABLE IF EXISTS necro_weapon_trait_characteristic_map;
 CREATE TABLE necro_weapon_trait_characteristic_map (
 	characteristic_id INT NOT NULL,

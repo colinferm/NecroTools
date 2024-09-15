@@ -14,14 +14,13 @@ class UserController extends SlimController {
 		$password = $params['userpassword'];
 
 		$user = dbQueryFirst("SELECT id, username, userpassword, email_address, confirmed, registered, last_login, is_admin, oauth_key FROM necro_user WHERE email_address = :email_address", ['email_address' => $email]);
-		if (password_verify($email, $user['userpassword'])) {
+		if (password_verify($email, PEPPER.$user['userpassword'])) {
 			throw new AuthenticationException();
 		}
 		unset($user['userpassword']);
 		$token = md5(microtime());
 
 		setcookie('auth', $token, time() + 86400, "/");
-		//$_COOKIE['auth'] = $token;
 		$user['oauth_key'] = $token;
 		$_SESSION['user'] = $user;
 
@@ -31,9 +30,7 @@ class UserController extends SlimController {
 	}
 
 	public function login(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
-		//$params = $request->getQueryParams();
 		$params = $request->getParsedBody();
-		//$params = json_decode($body);
 		
 		list($user, $token) = UserController::doLogin($params);
 
@@ -58,14 +55,14 @@ class UserController extends SlimController {
 	public function register(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
 		$params = json_decode($request->getBody());
 		$username = $params['username'];
-		$password = password_hash($params['password'], PASSWORD_DEFAULT);
+		$password = password_hash(PEPPER.$params['password'], PASSWORD_DEFAULT);
 		$email = $password['email_address'];
 
 		$result = dbInsert("
 			INSERT INTO necro_user 
-			(user_name, userpassword, email_address, confirmed, last_login, is_admin, oauth_key) 
+				(user_name, userpassword, email_address, confirmed, last_login, is_admin, oauth_key) 
 			VALUES 
-			(:username, :userpassword, :email, 0, NOW(), 0, '')
+				(:username, :userpassword, :email, 0, NOW(), 0, '')
 		", ['username' => $username, 'userpassword' => $password, 'email' => $email]);
 
 		if ($result) {
@@ -79,8 +76,14 @@ class UserController extends SlimController {
 
 	public function passwordGen(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
 		$params = $request->getQueryParams();
-		$password = password_hash($params['password'], PASSWORD_DEFAULT);
-		$response->getBody()->write($password);
+		$password = password_hash(PEPPER.$params['password'], PASSWORD_DEFAULT);
+		$response->getBody()->write('Password: '.$password);
+		return $response;
+	}
+	
+	public function peperGen(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+		$pepper = password_hash(time(), PASSWORD_DEFAULT);
+		$response->getBody()->write('Pepper: '.$pepper);
 		return $response;
 	}
 }

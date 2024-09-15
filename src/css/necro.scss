@@ -7,6 +7,13 @@
 }
 
 body {
+	
+	[type="text"] {
+		border: none;
+		box-shadow: none;
+		background-color: transparent;
+	}
+	
 	.main-content {
 		.right-content {
 			min-height: 600px;
@@ -26,6 +33,10 @@ body {
 
 	table {
 		&.fighter-weapon {
+			th, td {
+				text-align: center;
+			}
+			
 			td {
 				&.two-stat {
 					text-wrap: nowrap;
@@ -34,6 +45,10 @@ body {
 						max-width: 44%;
 					}
 				}
+			}
+			
+			.fighter_basic {
+				background-color: light-gray;
 			}
 		}
 
@@ -48,6 +63,18 @@ body {
 					background-color: $black;
 				}
 			}
+		}
+		
+		.head_stat {
+			input
+				&::placeholder {
+				color: #000;
+			}
+			background-color: #DEB887;
+		}
+		
+		.xp_stat {
+			background-color: #D2691E;
 		}
 	}
 
