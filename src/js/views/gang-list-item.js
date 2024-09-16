@@ -3,7 +3,7 @@ Necro.Views.GangListItem = Backbone.View.extend({
 	templateName: 'gang-list-item',
 
 	events: {
-		
+		'click .action_edit': 'editGang'
 	},
 
 	initialize : function(options) {
@@ -15,15 +15,14 @@ Necro.Views.GangListItem = Backbone.View.extend({
 	},
 
 	render: function() {
-		var data = {
-			gang_name: this.model.get("gang_name"),
-			gang_house: this.model.get("type_name"),
-			gang_value: 0,
-			gang_fighters: 0
-		};
-		this.$el.html(this.template(data));
+		this.$el.html(this.template(this.model.toJSON()));
 		Necro.Events.trigger('stylize');
 		return this.$el;
 	},
+
+	editGang: function() {
+		//necro.rosterForm(this.model.get("id"), this.model);
+		necro.navigate("roster/"+this.model.get("id"));
+	}
 
 });

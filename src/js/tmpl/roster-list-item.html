@@ -1,11 +1,22 @@
-<tr>
 	<td>{{fighter_name}}</td>
-	<td>{{gang_role}}</td>
-	<td>{{value}}</td>
+	<td>{{heirarchy_role}}</td>
+	<td>{{base_value}}</td>
 	<td class="text-center">{{experience}}</td>
 	<td class="text-center">{{advancements}}</td>
-	<td class="text-center">{{is_convalescence}}</td>
-	<td class="text-center">{{is_captured}}</td>
+	<td class="text-center">
+		{{#if is_convalescence}}
+			<span class="yes">&#x2714;</span>
+		{{else}} 
+			<span class="no">&cross;</span>
+		{{/if}}
+	</td>
+	<td class="text-center">
+		{{#if is_captured}}
+			<span class="yes">&#x2714;</span>
+		{{else}} 
+			<span class="no">&cross;</span>
+		{{/if}}
+	</td>
 	<td>
 		<ul class="dropdown menu" data-dropdown-menu>
 			<li>
@@ -19,4 +30,3 @@
 			</li>
 		</ul>
 	</td>
-</tr>

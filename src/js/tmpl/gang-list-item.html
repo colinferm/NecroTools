@@ -1,7 +1,14 @@
 <td>{{gang_name}}</td>
-<td>{{gang_house}}</td>
-<td>{{gang_fighter}}</td>
-<td>{{gang_value}}</td>
+<td>{{type_name}}</td>
+<td>{{num_fighters}}</td>
+<td>
+	{{#if outlaw}}
+		<span class="yes">&#x2714;</span>
+	{{else}} 
+		<span class="no">&cross;</span>
+	{{/if}}
+</td>
+<td>{{last_mod}}</td>
 <td>
 	<ul class="dropdown menu" data-dropdown-menu>
 		<li>

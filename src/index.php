@@ -15,6 +15,8 @@ require_once 'api/fighter.php';
 		<meta http-equiv="x-ua-compatible" content="ie=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<link href="/css/foundation-compiled.css" rel="stylesheet" type="text/css" />
+		<link href="/css/jquery-ui.theme.min.css" rel="stylesheet" type="text/css" />
+		<link href="/css/jquery.tagit.css" rel="stylesheet" type="text/css" />
 		<link href="/css/necro.css" rel="stylesheet" type="text/css" />
 		<script src="/js/libs/jquery-3.7.1.min.js"></script>
 		<title>Bootstrap demo</title>
@@ -48,6 +50,8 @@ require_once 'api/fighter.php';
 		<script src="/js/libs/backbone-1.6.0.min.js"></script>
 		<script src="/js/libs/foundation.min.js"></script>
 		<script src="/js/libs/jquery.cookie-1.3.js"></script>
+		<script src="/js/libs/jquery-ui.min.js"></script>
+		<script src="/js/libs/tag-it.min.js"></script>
 		<script src="/js/necro.js"></script>
 	</body>
 </html>

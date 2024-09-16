@@ -15,8 +15,8 @@ $app->setBasePath("/api");
 $app->post('/login', [\UserController::class, 'login']);
 $app->post('/register', [\UserController::class, 'register']);
 $app->post('/verify', [\UserController::class, 'verify']);
-//$app->get('/password', [\UserController::class, 'passwordGen']);
-//$app->get('/pepper', [\UserController::class, 'pepperGen']);
+$app->get('/password', [\UserController::class, 'passwordGen']);
+$app->get('/pepper', [\UserController::class, 'pepperGen']);
 
 $app->get('/gangs', [\GangController::class, 'fetchGangs']);
 
@@ -26,7 +26,7 @@ $app->put('/gang/{id}', [\GangController::class, 'updateGang']);
 $app->get('/gang/{id}/fighters', [\FighterController::class, 'fetchGangFighters']);
 
 $app->post('/fighter', [\FighterController::class, 'addFighter']);
-$app->get('/fighter/{id}', [\FighterController::class, 'addFighter']);
+$app->get('/fighter/{id}', [\FighterController::class, 'fetchFighter']);
 $app->put('/fighter/{id}', [\FighterController::class, 'updateFighter']);
 
 $app->get('/traits', [\WeaponController::class, 'fetchTraits']);

@@ -9,8 +9,8 @@ Necro.Routers.NecroRouter = Backbone.Router.extend({
 		"logout":"logout",
 		"register": "register",
 		"gangs":"listGangs",
-		"gang": "gangForm",
-		"gang/:id": "gangForm"
+		"roster": "rosterForm",
+		"roster/:id": "rosterForm"
 		/*
 		"entities/list":"entityListSearch",
 		"entities/new":"entityForm",
@@ -20,8 +20,8 @@ Necro.Routers.NecroRouter = Backbone.Router.extend({
 
 	initialize: function () {
 		_.bindAll(this, 
-			'home', 'login', 'logout', 'register', 'listGangs', 'gangForm'
-			'updateRight', 'updateLeft', 'updateFoundation'
+			'home', 'login', 'logout', 'register', 'listGangs', 'rosterForm',
+			'updateRight', 'updateLeft', 'updateFoundation', 'showRoster'
 		);
 
 		Necro.Events.on('stylize', this.updateFoundation);
@@ -42,18 +42,20 @@ Necro.Routers.NecroRouter = Backbone.Router.extend({
 		if (auth) {
 			//this.session.set("oauth_key", auth);
 			this.session.url = "/api/verify";
+			var location = window.location.href;
+			location = location.substring(location.indexOf('#'), location.length)
 			this.session.save({
 				oauth_key: auth
 			}, {
-				success: function() {
-					necro.navigate("gangs", {trigger: true});
-				},
-				error: function() {
-					necro.navigate("login", {trigger: true});
-				}
+				success: _.bind(function() {
+					this.navigate(location, {trigger: true});
+				}, this),
+				error: _.bind(function() {
+					this.navigate(location, {trigger: true});
+				}, this)
 			});
 		} else {
-			necro.navigate("login", {trigger: true});
+			this.navigate("login", {trigger: true});
 		}
 		this.updateFoundation();
 
@@ -75,6 +77,10 @@ Necro.Routers.NecroRouter = Backbone.Router.extend({
 		this.rightContent.pageTitle = title;
 		Necro.Events.trigger('right:title:change');
 		$('.right-content-container', this.rightContent.$el).html(elem);
+	},
+
+	updateLeft: function(elem, title) {
+	
 	},
 
 	updateFoundation: function() {
@@ -105,12 +111,23 @@ Necro.Routers.NecroRouter = Backbone.Router.extend({
 		this.updateRight(gangListView.render(), "Gangs");
 	},
 
-	gangForm: function(id) {
-		var gang = new Necro.Models.Gang({});
+	rosterForm: function(id) {
 		if (id) {
-			gang.set("id", id);
+			var gang = new Necro.Models.Gang({id: id});
+			gang.fetch({
+				success: this.showRoster
+			});
+		} else {
+			var gang = new Necro.Models.Gang();
+			this.showRoster(gang);
 		}
-		
 
+	},
+
+	showRoster: function(gang) {
+		var title = "Create Roster";
+		if (gang.get("id")) title = gang.get("gang_name");
+		var rosterListView = new Necro.Views.Roster({model: gang});
+		this.updateRight(rosterListView.render(), title);
 	}
 });

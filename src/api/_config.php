@@ -9,5 +9,5 @@ define('IS_REDIS_ACTIVE', 1);
 define('REDIS_HOST', getenv('REDIS_HOST'));
 
 // See UserController:peperGen to generate a unique pepper
-define('PEPPER', '0123456789');
+define('PEPPER', '$2y$10$0RPcLXUOzQu1EZO8PQXikuULwwnkFGi7ycn3G.IBl580Vv7ibw4Wu');
 ?>

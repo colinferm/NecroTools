@@ -7,9 +7,11 @@ class GangController extends SlimController {
 	
 	public function fetchGangs(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
 		$query = "
-			SELECT g.id, g.gang_name, g.gang_type_id, gt.type_name, gt.house_gang, g.outlaw, g.created, g.last_mod 
-			FROM necro_gang g, necro_gang_type gt 
-			WHERE g.gang_type_id = gt.id
+			SELECT g.id, g.gang_name, g.gang_type_id, gt.type_name, gt.house_gang, g.outlaw, COUNT(f.id) AS num_fighters, unix_timestamp(g.created) * 1000 AS created, unix_timestamp(g.last_mod) * 1000 AS last_mod 
+			FROM necro_gang g
+			JOIN necro_gang_type gt ON (g.gang_type_id = gt.id)
+			LEFT JOIN necro_fighter f ON (g.id = f.gang_id)
+			GROUP BY g.id, g.gang_name, g.gang_type_id, gt.type_name, gt.house_gang, g.outlaw, g.last_mod
 			ORDER BY g.last_mod
 		";
 		$data = dbQuery($query);
@@ -20,14 +22,16 @@ class GangController extends SlimController {
 	public function fetchGang(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
 		$id = $args['id'];
 		$query = "
-			SELECT g.id, g.gang_name, g.gang_type_id, gt.type_name, gt.house_gang, g.outlaw, g.created, g.last_mod 
-			FROM necro_gang g, necro_gang_type gt 
-			WHERE g.gang_type_id = gt.id
-			AND g.id = :id
+			SELECT g.id, g.gang_name, g.gang_type_id, gt.type_name, gt.house_gang, g.outlaw, COUNT(f.id) AS num_fighters, unix_timestamp(g.created) * 1000 AS created, unix_timestamp(g.last_mod) * 1000 AS last_mod 
+			FROM necro_gang g
+			JOIN necro_gang_type gt ON (g.gang_type_id = gt.id)
+			LEFT JOIN necro_fighter f ON (g.id = f.gang_id)
+			WHERE g.id = :id
+			GROUP BY g.id, g.gang_name, g.gang_type_id, gt.type_name, gt.house_gang, g.outlaw, g.last_mod
 			ORDER BY g.last_mod
 		";
 		$db = getDb();
-		$data = dbQuery($query, ['id' => $id], $db);
+		$data = dbQueryFirst($query, ['id' => $id], $db);
 
 		$fighters = FighterController::getFightersForGang($id, $db);
 		$data['fighters'] = $fighters;

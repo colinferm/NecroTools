@@ -92,3 +92,14 @@ Necro.Apps.handleAjaxOauth = function (xhr) {
 		xhr.setRequestHeader("Authorization", "OAuth oauth_token=" + token);
 	}
 };
+
+Date.prototype.dateToYMD = function() {
+    var d = this.getDate();
+    var m = this.getMonth() + 1; //Month from 0 to 11
+    var y = this.getFullYear();
+    return '' + (m<=9 ? '0' + m : m) + '/' + (d <= 9 ? '0' + d : d) + '/' + y;
+}
+
+Date.prototype.toString = function() {
+	return this.dateToYMD();
+}

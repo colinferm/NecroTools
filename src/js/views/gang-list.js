@@ -1,14 +1,16 @@
 Necro.Views.GangList = Backbone.View.extend({
-	tagName: 'table',
-	className: 'hover',
+	tagName: 'div',
+	className: 'large-12',
 	templateName: 'gang-list',
 	pageTitle: 'Gangs',
 
 	events: {
-		
+		'click .addGang': 'addGang'
 	},
 
 	initialize : function(options) {
+		_.bindAll(this, 'addGang');
+
 		var html = Necro.Utils.UI.TPL.get(this.templateName);
 		this.template = Handlebars.compile(html);
 
@@ -30,6 +32,10 @@ Necro.Views.GangList = Backbone.View.extend({
 			var item = new Necro.Views.GangListItem({model: model});
 			$('tbody', this.el).append(item.render());
 		});
+	},
+
+	addGang: function() {
+		necro.navigate("roster", {trigger: true});
 	}
 
 });

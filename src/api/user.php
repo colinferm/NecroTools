@@ -81,7 +81,7 @@ class UserController extends SlimController {
 		return $response;
 	}
 	
-	public function peperGen(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+	public function pepperGen(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
 		$pepper = password_hash(time(), PASSWORD_DEFAULT);
 		$response->getBody()->write('Pepper: '.$pepper);
 		return $response;

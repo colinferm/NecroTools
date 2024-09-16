@@ -1,5 +1,5 @@
 -- Create Test User
-INSERT INTO necro_user VALUES (0, 'admin', '$2y$10$DoaSpTQPrSSzHikRkMa.KuZTJRF7dLF.CvoDq1tJl9yV5aZw/zOrS', 'admin@admin.com', 1, NOW(), NOW(), 1);
+INSERT INTO necro_user VALUES (0, 'admin', '$2y$10$Q/H/OASzzpCTCBLNpjKiHeXyrJYQMiegm16MBMD98sc4W0CIgxo/u', 'admin@admin.com', 1, NOW(), NOW(), 1);
 
 -- Create Dummy gangs
 INSERT INTO necro_gang VALUES (1, 1, 'The Bad Asses', 1, 0, NOW(), NOW());
@@ -50,3 +50,24 @@ INSERT INTO necro_weapon_trait_characteristic_map VALUES (8, 6);
 INSERT INTO necro_weapon_trait_characteristic_map VALUES (8, 7);
 INSERT INTO necro_weapon_trait_characteristic_map VALUES (8, 8);
 INSERT INTO necro_weapon_trait_characteristic_map VALUES (8, 9);
+
+-- Add Gear
+INSERT INTO necro_fighter_gear VALUES (1, 'Flak Armor', 10);
+
+-- Add Fighters
+INSERT INTO necro_fighter VALUES(1, 1, 'Joe Blow', 'leader', NULL, '5', '3', '3', '3', '3', '0', '0', '2', '4', '2', 0, 0, '7', '8', '8', '8', 0, 0, 0, 0, 6, 2, 125, 1, NOW());
+INSERT INTO necro_fighter VALUES(2, 1, 'Jill Jones', 'champion', NULL, '5', '4', '3', '3', '3', '0', '0', '2', '4', '2', 0, 0, '8', '8', '8', '8', 0, 0, 0, 0, 4, 1, 115, 1, NOW());
+
+-- Map Weapons to fighters
+INSERT INTO necro_weapon_fighter_map VALUES (1, 1);
+INSERT INTO necro_weapon_fighter_map VALUES (1, 3);
+INSERT INTO necro_weapon_fighter_map VALUES (2, 2);
+INSERT INTO necro_weapon_fighter_map VALUES (2, 3);
+
+-- Map Skills to fighters
+INSERT INTO necro_weapon_fighter_map VALUES (1, 53);
+INSERT INTO necro_weapon_fighter_map VALUES (1, 71);
+
+-- Map Gear to fighters
+INSERT INTO necro_weapon_fighter_map VALUES (1, 1);
+INSERT INTO necro_weapon_fighter_map VALUES (2, 1);
