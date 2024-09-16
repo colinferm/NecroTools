@@ -24,7 +24,7 @@ require_once 'api/fighter.php';
 	<body>
 		<div class="nav-content"></div>
 		<div class="grid-container fluid">
-			<div class="grid-x grid-margin-x main-content">
+			<div class="grid-x grid-padding-x main-content">
 
 			</div>
 		</div>

@@ -26,10 +26,11 @@ Necro.Views.Roster = Backbone.View.extend({
 
 	addItems: function() {
 		$('tbody', this.el).empty()
-		_.each(this.model.get("fighters"), function(model) {
+		_.each(this.model.get("fighters").models, function(model) {
 			var item = new Necro.Views.RosterItem({model: model});
 			$('tbody', this.el).append(item.render());
 		});
+		Necro.Events.trigger('stylize');
 	}
 
 });

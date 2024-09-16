@@ -32,6 +32,7 @@ Necro.Views.GangList = Backbone.View.extend({
 			var item = new Necro.Views.GangListItem({model: model});
 			$('tbody', this.el).append(item.render());
 		});
+		Necro.Events.trigger('stylize');
 	},
 
 	addGang: function() {

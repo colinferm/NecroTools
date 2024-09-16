@@ -26,14 +26,17 @@ Necro.Models.Gang = Backbone.Model.extend({
 	parse: function(response) {
 		if (response.created) response.created = new Date(response.created);
 		if (response.last_mod) response.last_mod = new Date(response.last_mod);
-		var fighters = [];
 		if (response.fighters) {
+			var fighters = [];
 			_.each(response.fighters, function(fighter) {
-				fighters.push(new Necro.Models.Fighter(fighter));
+				if (fighter.is_vehicle) {
+					fighters.push(new Necro.Models.Vehicle(fighter));
+				} else {
+					fighters.push(new Necro.Models.Fighter(fighter));
+				}
 			});
-			response.fighters = fighters;
+			response.fighters = new Necro.Models.FighterCollection(fighters);
 		}
-		console.log(response);
 		return response;
 	}
 });

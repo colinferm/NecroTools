@@ -21,8 +21,7 @@ Necro.Views.GangListItem = Backbone.View.extend({
 	},
 
 	editGang: function() {
-		//necro.rosterForm(this.model.get("id"), this.model);
-		necro.navigate("roster/"+this.model.get("id"));
+		necro.navigate("roster/"+this.model.get("id"), {trigger: true});
 	}
 
 });

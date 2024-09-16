@@ -37,6 +37,19 @@ Necro.Models.Fighter = Backbone.Model.extend({
 			val += gear.get("base_value");
 		});
 		return val;
+	},
+
+	parse: function(response) {
+		if (response.created) response.created = new Date(response.created);
+		if (response.last_mod) response.last_mod = new Date(response.last_mod);
+		var weapons = [];
+		if (response.weapons) {
+			_.each(response.weapons, function(weapon) {
+				weapons.push(new Necro.Models.Weapon(weapon));
+			});
+			response.weapons = new Necro.Models.WeaponCollection(weapons);
+		}
+		return response;
 	}
 });
 Necro.Models.FighterCollection = Backbone.Collection.extend({

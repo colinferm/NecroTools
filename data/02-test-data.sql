@@ -65,9 +65,9 @@ INSERT INTO necro_weapon_fighter_map VALUES (2, 2);
 INSERT INTO necro_weapon_fighter_map VALUES (2, 3);
 
 -- Map Skills to fighters
-INSERT INTO necro_weapon_fighter_map VALUES (1, 53);
-INSERT INTO necro_weapon_fighter_map VALUES (1, 71);
+INSERT INTO necro_fighter_skill_map VALUES (1, 53);
+INSERT INTO necro_fighter_skill_map VALUES (2, 71);
 
 -- Map Gear to fighters
-INSERT INTO necro_weapon_fighter_map VALUES (1, 1);
-INSERT INTO necro_weapon_fighter_map VALUES (2, 1);
+INSERT INTO necro_fighter_gear_map VALUES (1, 1);
+INSERT INTO necro_fighter_gear_map VALUES (2, 1);

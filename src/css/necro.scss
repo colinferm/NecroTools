@@ -9,11 +9,19 @@
 .no {
 	color: red;
 	font-weight: bold;
+
+	&.inverse {
+		color: green;
+	}
 }
 
 .yes {
 	color: green;
 	font-weight: bold;
+
+	&.inverse {
+		color: red;
+	}
 }
 
 body {

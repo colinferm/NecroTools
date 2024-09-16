@@ -11,6 +11,41 @@ class WeaponController extends SlimController {
 		";
 		return dbQuery($query);
 	}
+
+	public static function getWeaponsForFighter($id) {
+		$query = "
+			SELECT w.id, w.weapon_category_id, wc.category_name, w.weapon_name, w.weapon_value, w.rarity
+			FROM necro_weapon w, necro_weapon_category wc, necro_weapon_fighter_map wfm
+			WHERE 1 = 1
+			AND w.weapon_category_id = wc.id
+			AND wfm.weapon_id = w.id
+			AND wfm.fighter_id = :id
+		";
+		$weapons = dbQuery($query, ['id' => $id]);
+
+		foreach ($weapons as &$weapon) {
+			$charSQL = "
+				SELECT id, ammo_type, range_short, range_long, accuracy_short, accuracy_long, strength, armor_penetration, damage, ammo_check 
+				FROM necro_weapon_characteristic
+				WHERE weapon_id = :weapon_id
+			";
+			$chars = dbQuery($charSQL, ['weapon_id' => $weapon['id']]);
+
+			foreach($chars as &$char) {
+				$traitSQL = "
+					SELECT t.id, t.trait_name, t.trait_value 
+					FROM necro_weapon_trait t, necro_weapon_trait_characteristic_map wtcm
+					WHERE t.id = wtcm.trait_id
+					AND wtcm.characteristic_id = :char_id
+					ORDER BY t.trait_name ASC
+				";
+				$traits = dbQuery($traitSQL, ['char_id' => $char['id']]);
+				$char['traits'] = $traits;
+			}
+			$weapon['characteristics'] = $chars;
+		}
+		return $weapons;
+	}
 	
 	public function fetchTraits(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
 		$data = WeaponController::getTraits();
@@ -67,6 +102,7 @@ class WeaponController extends SlimController {
 			FROM necro_weapon_category c, necro_weapon w, necro_weapon_characteristic ca
 			WHERE c.id = w.weapon_category_id
 			AND w.id = ca.weapon_id
+			GROUP BY weapon_name, category_name
 		";
 
 		$params = $request->getQueryParams();

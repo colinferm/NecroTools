@@ -355,7 +355,7 @@ CREATE TABLE necro_weapon_fighter_map (
 );
 INSERT INTO necro_weapon_fighter_map VALUES (1, 1);
 INSERT INTO necro_weapon_fighter_map VALUES (1, 3);
-INSERT INTO necro_weapon_fighter_map VALUES (2, 2);
+INSERT INTO necro_weapon_fighter_map VALUES (2, 7);
 INSERT INTO necro_weapon_fighter_map VALUES (2, 3);
 
 DROP TABLE IF EXISTS necro_fighter_skill_map;
@@ -364,8 +364,8 @@ CREATE TABLE necro_fighter_skill_map (
 	skill_id INT NOT NULL,
 	INDEX idx_fighter_trait_map (fighter_id, skill_id)
 );
-INSERT INTO necro_weapon_fighter_map VALUES (1, 53);
-INSERT INTO necro_weapon_fighter_map VALUES (2, 71);
+INSERT INTO necro_fighter_skill_map VALUES (1, 53);
+INSERT INTO necro_fighter_skill_map VALUES (2, 71);
 
 DROP TABLE IF EXISTS necro_fighter_gear_map;
 CREATE TABLE necro_fighter_gear_map (
@@ -373,5 +373,5 @@ CREATE TABLE necro_fighter_gear_map (
 	gear_id INT NOT NULL,
 	INDEX idx_fighter_gear_map (fighter_id, gear_id)
 );
-INSERT INTO necro_weapon_fighter_map VALUES (1, 1);
-INSERT INTO necro_weapon_fighter_map VALUES (2, 1);
+INSERT INTO necro_fighter_gear_map VALUES (1, 1);
+INSERT INTO necro_fighter_gear_map VALUES (2, 1);

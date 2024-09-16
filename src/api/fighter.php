@@ -44,7 +44,9 @@ class FighterController extends SlimController {
 			WHERE f.id = :id
 			ORDER BY f.view_order
 		";
-		$fighter = dbQuery($query, ['id' => $id]);
+		$fighter = dbQueryFirst($query, ['id' => $id]);
+		$fighter['weapons'] = WeaponController::getWeaponsForFighter($id);
+
 		$response->getBody()->write(json_encode($fighter));
 		return $response->withHeader('Content-Type', 'application/json');
 	}
