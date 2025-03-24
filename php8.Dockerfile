@@ -22,7 +22,7 @@ RUN docker-php-ext-install mysqli pdo pdo_mysql soap zip intl \
   && docker-php-ext-install -j$(nproc) gd 
 
 # Install PHP redis support
-RUN apt-get install -y libzstd-dev
+RUN apt-get install -y redis-server redis-tools libzstd-dev
 RUN pecl install igbinary \
   && docker-php-ext-enable igbinary \
   && yes '' | pecl install redis \
@@ -85,6 +85,7 @@ RUN npm install -g grunt-cli foundation-sites
 
 # Start the container with a few tasks
 ENTRYPOINT ["/bin/bash", "-c", "bash && \
+  service redis-server start && \
   cd /var/www/html/api/lib && \
   composer update >> /dev/stdout && \
   cd /usr/src/necro && \

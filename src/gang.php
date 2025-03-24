@@ -162,7 +162,7 @@
 			<div class="grid-x">
 				<div class="cell small-12">
 					<h5 class="modal-title">Add/Edit Fighter</h5>
-					  <button class="close-button" aria-label="Close" type="button" data-close>
+					<button class="close-button" aria-label="Close" type="button" data-close>
 				</div>
 				<div class="cell small-12 grid-x">
 					<div class="cell small-6">
