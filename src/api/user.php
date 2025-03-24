@@ -6,10 +6,12 @@ use Psr\Http\Message\ServerRequestInterface;
 class UserController extends SlimController {
 
 	public static function findOauth($token) {
-		return dbQueryFirst("SELECT id, username, email_address, confirmed, registered, last_login, is_admin, oauth_key FROM necro_user WHERE oauth_key = :token", ['token' => $token]);
+		global $ndb;
+		return $ndb->queryFirst("SELECT id, username, email_address, confirmed, registered, last_login, is_admin, oauth_key FROM {$ndb->user} WHERE oauth_key = :token", ['token' => $token]);
 	}
 
 	public static function doLogin($params) {
+		global $ndb;
 		$email = $params['email_address'];
 		$password = $params['userpassword'];
 
@@ -24,7 +26,7 @@ class UserController extends SlimController {
 		$user['oauth_key'] = $token;
 		$_SESSION['user'] = $user;
 
-		dbUpdate("UPDATE necro_user SET oauth_key = :token, last_login = NOW() WHERE id = :id", ['token' => $token, 'id' => $user['id']]);
+		$ndb->pdate("UPDATE {$ndb->user} SET oauth_key = :token, last_login = NOW() WHERE id = :id", ['token' => $token, 'id' => $user['id']]);
 
 		return [$user, $token];
 	}
@@ -53,13 +55,14 @@ class UserController extends SlimController {
 	}
 
 	public function register(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+		global $ndb;
 		$params = json_decode($request->getBody());
 		$username = $params['username'];
 		$password = password_hash(PEPPER.$params['password'], PASSWORD_DEFAULT);
 		$email = $password['email_address'];
 
-		$result = dbInsert("
-			INSERT INTO necro_user 
+		$result = $ndb->insert("
+			INSERT INTO {$ndb->user}
 				(user_name, userpassword, email_address, confirmed, last_login, is_admin, oauth_key) 
 			VALUES 
 				(:username, :userpassword, :email, 0, NOW(), 0, '')

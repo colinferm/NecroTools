@@ -2,8 +2,8 @@
 INSERT INTO necro_user VALUES (0, 'admin', '$2y$10$Q/H/OASzzpCTCBLNpjKiHeXyrJYQMiegm16MBMD98sc4W0CIgxo/u', 'admin@admin.com', 1, NOW(), NOW(), 1);
 
 -- Create Dummy gangs
-INSERT INTO necro_gang VALUES (1, 1, 'The Bad Asses', 1, 0, NOW(), NOW());
-INSERT INTO necro_gang VALUES (2, 1, 'Not Your Mamas', 2, 0, NOW(), NOW());
+INSERT INTO necro_user_gang VALUES (1, 1, 'The Bad Asses', 1, 0, NOW(), NOW());
+INSERT INTO necro_user_gang VALUES (2, 1, 'Not Your Mamas', 2, 0, NOW(), NOW());
 
 -- Create Weapons
 INSERT INTO necro_weapon VALUES (1, 2, 'Boltgun', 55, 'R8');
@@ -55,8 +55,8 @@ INSERT INTO necro_weapon_trait_characteristic_map VALUES (8, 9);
 INSERT INTO necro_fighter_gear VALUES (1, 'Flak Armor', 10);
 
 -- Add Fighters
-INSERT INTO necro_fighter VALUES(1, 1, 'Joe Blow', 'leader', NULL, '5', '3', '3', '3', '3', '0', '0', '2', '4', '2', 0, 0, '7', '8', '8', '8', 0, 0, 0, 0, 6, 2, 125, 1, NOW());
-INSERT INTO necro_fighter VALUES(2, 1, 'Jill Jones', 'champion', NULL, '5', '4', '3', '3', '3', '0', '0', '2', '4', '2', 0, 0, '8', '8', '8', '8', 0, 0, 0, 0, 4, 1, 115, 1, NOW());
+INSERT INTO necro_user_fighter VALUES(1, 1, 'Joe Blow', '1', NULL, '5', '3', '3', '3', '3', '0', '0', '2', '4', '2', 0, 0, '7', '8', '8', '8', 0, 0, 0, 0, 6, 2, 125, 1, NOW());
+INSERT INTO necro_user_fighter VALUES(2, 1, 'Jill Jones', '3', NULL, '5', '4', '3', '3', '3', '0', '0', '2', '4', '2', 0, 0, '8', '8', '8', '8', 0, 0, 0, 0, 4, 1, 115, 1, NOW());
 
 -- Map Weapons to fighters
 INSERT INTO necro_weapon_fighter_map VALUES (1, 1);
@@ -69,5 +69,5 @@ INSERT INTO necro_fighter_skill_map VALUES (1, 53);
 INSERT INTO necro_fighter_skill_map VALUES (2, 71);
 
 -- Map Gear to fighters
-INSERT INTO necro_fighter_gear_map VALUES (1, 1);
-INSERT INTO necro_fighter_gear_map VALUES (2, 1);
+INSERT INTO necro_user_fighter_gear_map VALUES (1, 1);
+INSERT INTO necro_user_fighter_gear_map VALUES (2, 1);

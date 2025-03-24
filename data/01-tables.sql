@@ -32,8 +32,66 @@ INSERT INTO necro_gang_type VALUES (8, 'Ash Waste Nomad', 0);
 INSERT INTO necro_gang_type VALUES (9, 'Enforcer', 0);
 INSERT INTO necro_gang_type VALUES (10, 'Corpse Grinder', 0);
 
-DROP TABLE IF EXISTS necro_gang;
-CREATE TABLE necro_gang (
+DROP TABLE IF EXISTS necro_gang_fighter_role;
+CREATE TABLE necro_gang_fighter_role (
+	id INT NOT NULL AUTO_INCREMENT,
+	heirarchy_role ENUM('leader', 'champion', 'fighter', 'prospect', 'juve', 'crew', 'brute', 'hanger-on', 'pet'),
+	gang_id INT NOT NULL,
+	role_name VARCHAR(100),
+	PRIMARY KEY (id)
+);
+INSERT INTO necro_gang_fighter_role VALUES (1, 'leader', 2, 'Queen');
+INSERT INTO necro_gang_fighter_role VALUES (2, 'champion', 2, 'Death-Maiden');
+INSERT INTO necro_gang_fighter_role VALUES (3, 'champion', 2, 'Matriarch');
+INSERT INTO necro_gang_fighter_role VALUES (4, 'fighter', 2, 'Sister');
+INSERT INTO necro_gang_fighter_role VALUES (5, 'prospect', 2, 'Wyld-Runner');
+INSERT INTO necro_gang_fighter_role VALUES (6, 'prospect', 2, 'Little Sister');
+INSERT INTO necro_gang_fighter_role VALUES (7, 'crew', 2, 'Helion');
+INSERT INTO necro_gang_fighter_role VALUES (8, 'pet', 2, 'Phelynx');
+INSERT INTO necro_gang_fighter_role VALUES (9, 'pet', 2, 'Phyrr Cat');
+INSERT INTO necro_gang_fighter_role VALUES (100, 'brute', 2, 'Khimerix');
+
+DROP TABLE IF EXISTS necro_gang_fighter_role_skill_set_map;
+CREATE TABLE necro_gang_fighter_role_skill_set_map (
+	fighter_role_id INT NOT NULL,
+	skill_set_id INT NOT NULL,
+	is_primary TINYINT NOT NULL DEFAULT '1',
+	INDEX idx_fighter_role_skill_set (fighter_role_id, skill_set_id)
+);
+
+
+DROP TABLE IF EXISTS necro_fighter_template;
+CREATE TABLE necro_fighter_template (
+	id INT NOT NULL AUTO_INCREMENT,
+	gang_type_id INT NOT NULL,
+	fighter_role INT NOT NULL,
+	movement TINYINT NOT NULL,
+	weapon_skill TINYINT NOT NULL,
+	balistic_skill TINYINT NOT NULL,
+	strength TINYINT NOT NULL,
+	toughness TINYINT NOT NULL,
+	toughness_side TINYINT NOT NULL,
+	toughness_rear TINYINT NOT NULL,
+	wounds TINYINT NOT NULL,
+	initiative TINYINT NOT NULL,
+	attacks TINYINT NOT NULL,
+	handling TINYINT NOT NULL,
+	save_roll TINYINT NOT NULL,
+	leadership TINYINT NOT NULL,
+	cool TINYINT NOT NULL,
+	willpower TINYINT NOT NULL,
+	intelligence TINYINT NOT NULL,
+	is_vehicle TINYINT NOT NULL,
+	is_dramatis TINYINT NOT NULL,
+	base_value INT NOT NULL,
+	view_order TINYINT NOT NULL DEFAULT '0',
+	created DATETIME NOT NULL,
+	PRIMARY KEY (id),
+	INDEX idx_fighter_gang_template (id)
+);
+
+DROP TABLE IF EXISTS necro_user_gang;
+CREATE TABLE necro_user_gang (
 	id INT NOT NULL AUTO_INCREMENT,
 	user_id INT NOT NULL,
 	gang_name VARCHAR(255) NOT NULL,
@@ -45,15 +103,15 @@ CREATE TABLE necro_gang (
 	INDEX idx_gang_user (user_id)
 );
 
-INSERT INTO necro_gang VALUES (1, 1, 'The Bad Asses', 1, 0, NOW(), NOW());
-INSERT INTO necro_gang VALUES (2, 1, 'Not Your Mamas', 2, 0, NOW(), NOW());
+INSERT INTO necro_user_gang VALUES (1, 1, 'The Bad Asses', 1, 0, NOW(), NOW());
+INSERT INTO necro_user_gang VALUES (2, 1, 'Not Your Mamas', 2, 0, NOW(), NOW());
 
-DROP TABLE IF EXISTS necro_fighter;
-CREATE TABLE necro_fighter (
+DROP TABLE IF EXISTS necro_user_fighter;
+CREATE TABLE necro_user_fighter (
 	id INT NOT NULL AUTO_INCREMENT,
-	gang_id INT NOT NULL,
+	user_gang_id INT NOT NULL,
 	fighter_name VARCHAR(255) NOT NULL,
-	heirarchy_role ENUM('leader', 'champion', 'fighter', 'prospect', 'juve', 'brute', 'hanger-on', 'pet'),
+	fighter_role INT NOT NULL,
 	backstory TEXT,
 	movement TINYINT NOT NULL,
 	weapon_skill TINYINT NOT NULL,
@@ -81,10 +139,10 @@ CREATE TABLE necro_fighter (
 	view_order TINYINT NOT NULL DEFAULT '0',
 	created DATETIME NOT NULL,
 	PRIMARY KEY (id),
-	INDEX idx_fighter_gang (gang_id)
+	INDEX idx_user_fighter_gang (gang_id)
 );
-INSERT INTO necro_fighter VALUES(1, 1, 'Joe Blow', 'leader', NULL, '5', '3', '3', '3', '3', '0', '0', '2', '4', '2', 0, 0, '7', '8', '8', '8', 0, 0, 0, 0, 6, 2, 125, 1, NOW());
-INSERT INTO necro_fighter VALUES(2, 1, 'Jill Jones', 'champion', NULL, '5', '4', '3', '3', '3', '0', '0', '2', '4', '2', 0, 0, '8', '8', '8', '8', 0, 0, 0, 0, 4, 1, 115, 1, NOW());
+INSERT INTO necro_user_fighter VALUES(1, 1, 'Joe Blow', '1', NULL, '5', '3', '3', '3', '3', '0', '0', '2', '4', '2', 0, 0, '7', '8', '8', '8', 0, 0, 0, 0, 6, 2, 125, 1, NOW());
+INSERT INTO necro_user_fighter VALUES(2, 1, 'Jill Jones', '3', NULL, '5', '4', '3', '3', '3', '0', '0', '2', '4', '2', 0, 0, '8', '8', '8', '8', 0, 0, 0, 0, 4, 1, 115, 1, NOW());
 
 DROP TABLE IF EXISTS necro_weapon_category;
 CREATE TABLE necro_weapon_category (
@@ -314,13 +372,14 @@ CREATE TABLE necro_fighter_gear (
 	id INT NOT NULL AUTO_INCREMENT,
 	gear_name VARCHAR(255),
 	base_value INT,
+	notes VARCHAR(255) NULL,
 	PRIMARY KEY (id)
 );
-INSERT INTO necro_fighter_gear VALUES (1, 'Flak Armor', 10);
+INSERT INTO necro_fighter_gear VALUES (1, 'Flak Armor', 10, NULL);
 
-DROP TABLE IF EXISTS necro_gang_stash_map;
-CREATE TABLE necro_gang_stash_map (
-	gang_id INT NOT NULL,
+DROP TABLE IF EXISTS necro_user_gang_stash_map;
+CREATE TABLE necro_user_gang_stash_map (
+	user_gang_id INT NOT NULL,
 	gear_id INT,
 	weapon_id INT,
 	INDEX idx_gang_stash_map (gang_id, gear_id, weapon_id)
@@ -347,31 +406,31 @@ INSERT INTO necro_weapon_trait_characteristic_map VALUES (8, 7);
 INSERT INTO necro_weapon_trait_characteristic_map VALUES (8, 8);
 INSERT INTO necro_weapon_trait_characteristic_map VALUES (8, 9);
 
-DROP TABLE IF EXISTS necro_weapon_fighter_map;
-CREATE TABLE necro_weapon_fighter_map (
-	fighter_id INT NOT NULL,
+DROP TABLE IF EXISTS necro_user_fighter_weapon_map;
+CREATE TABLE necro_user_fighter_weapon_map (
+	user_fighter_id INT NOT NULL,
 	weapon_id INT NOT NULL,
 	INDEX idx_weapon_fighter_map (fighter_id, weapon_id)
 );
-INSERT INTO necro_weapon_fighter_map VALUES (1, 1);
-INSERT INTO necro_weapon_fighter_map VALUES (1, 3);
-INSERT INTO necro_weapon_fighter_map VALUES (2, 7);
-INSERT INTO necro_weapon_fighter_map VALUES (2, 3);
+INSERT INTO necro_user_fighter_weapon_map VALUES (1, 1);
+INSERT INTO necro_user_fighter_weapon_map VALUES (1, 3);
+INSERT INTO necro_user_fighter_weapon_map VALUES (2, 7);
+INSERT INTO necro_user_fighter_weapon_map VALUES (2, 3);
 
-DROP TABLE IF EXISTS necro_fighter_skill_map;
-CREATE TABLE necro_fighter_skill_map (
-	fighter_id INT NOT NULL,
+DROP TABLE IF EXISTS necro_user_fighter_skill_map;
+CREATE TABLE necro_user_fighter_skill_map (
+	user_fighter_id INT NOT NULL,
 	skill_id INT NOT NULL,
 	INDEX idx_fighter_trait_map (fighter_id, skill_id)
 );
-INSERT INTO necro_fighter_skill_map VALUES (1, 53);
-INSERT INTO necro_fighter_skill_map VALUES (2, 71);
+INSERT INTO necro_user_fighter_skill_map VALUES (1, 53);
+INSERT INTO necro_user_fighter_skill_map VALUES (2, 71);
 
-DROP TABLE IF EXISTS necro_fighter_gear_map;
-CREATE TABLE necro_fighter_gear_map (
-	fighter_id INT NOT NULL,
+DROP TABLE IF EXISTS necro_user_fighter_gear_map;
+CREATE TABLE necro_user_fighter_gear_map (
+	user_fighter_id INT NOT NULL,
 	gear_id INT NOT NULL,
 	INDEX idx_fighter_gear_map (fighter_id, gear_id)
 );
-INSERT INTO necro_fighter_gear_map VALUES (1, 1);
-INSERT INTO necro_fighter_gear_map VALUES (2, 1);
+INSERT INTO necro_user_fighter_gear_map VALUES (1, 1);
+INSERT INTO necro_user_fighter_gear_map VALUES (2, 1);

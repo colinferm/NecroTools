@@ -6,45 +6,48 @@ use Psr\Http\Message\ServerRequestInterface;
 class FighterController extends SlimController {
 
 	public static function getSkills() {
+		global $ndb;
 		$query = "
-			SELECT s.id, s.skill_name FROM necro_fighter_skill s ORDER BY s.skill_name ASC
+			SELECT s.id, s.skill_name FROM {$ndb->fighter_skill} s ORDER BY s.skill_name ASC
 		";
-		return dbQuery($query);
+		return $ndb->query($query);
 	}
 
-	public static function getFightersForGang($gangId, $db) {
+	public static function getFightersForGang($gangId) {
+		global $ndb;
 		$query = "
 			SELECT f.id, f.fighter_name, f.heirarchy_role, f.backstory, 
 			f.movement, f.weapon_skill, f.balistic_skill, f.strength, f.toughness, f.wounds, f.initiative, f.attacks,
 			f.leadership, f.cool, f.willpower, f.intelligence, 
 			f.is_vehicle, f.is_convalescence, f.is_captured, f.experience, f.advancements, f.base_value, f.view_order
-			FROM necro_fighter f
+			FROM {$ndb->user_fighter} f
 			WHERE f.gang_id = :gang_id
 			ORDER BY f.view_order
 		";
-		return dbQuery($query, ['gang_id' => $gangId]);
+		return $ndb->query($query, ['gang_id' => $gangId]);
 	}
 
 	public function fetchGangFighters(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+		global $ndb;
 		$gangId = $args['id'];
-		$db = getDb();
-		$fighters = FighterController::getFightersForGang($gangId, $db);
+		$fighters = FighterController::getFightersForGang($gangId);
 		$response->getBody()->write(json_encode($fighters));
 		return $response->withHeader('Content-Type', 'application/json');
 	}
 
 	public function fetchFighter(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+		global $ndb;
 		$id = $args['id'];
 		$query = "
 			SELECT f.id, f.fighter_name, f.heirarchy_role, f.backstory, f.advancements, 
 			f.movement, f.weapon_skill, f.balistic_skill, f.strength, f.toughness, f.toughness_side, f.toughness_rear,  
 			f.handling, f.save_roll, f.wounds, f.initiative, f.attacks, f.leadership, f.cool, f.willpower, f.intelligence, 
 			f.is_vehicle, f.is_convalescence, f.is_captured, f.experience, f.base_value, f.view_order
-			FROM necro_fighter f
+			FROM {$ndb->user_fighter} f
 			WHERE f.id = :id
 			ORDER BY f.view_order
 		";
-		$fighter = dbQueryFirst($query, ['id' => $id]);
+		$fighter = $ndb->queryFirst($query, ['id' => $id]);
 		$fighter['weapons'] = WeaponController::getWeaponsForFighter($id);
 
 		$response->getBody()->write(json_encode($fighter));
@@ -52,11 +55,12 @@ class FighterController extends SlimController {
 	}
 
 	public function addFighter(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+		global $ndb;
 		$fighter = json_decode($response->getBody());
 
 		if ($fighter['is_vehicle']) {
 			$query = "
-				INSERT INTO necro_fighter
+				INSERT INTO {$ndb->user_fighter}
 				(
 					gang_id, fighter_name, heirarchy_role, backstory, movement, weapon_skill, balistic_skill, strength,
 					toughness, toughness_side, toughness_rear, wounds, initiative, attacks, handling, leadership, cool, willpower, intelligence,
@@ -69,7 +73,7 @@ class FighterController extends SlimController {
 			";
 		} else {
 			$query = "
-				INSERT INTO necro_fighter
+				INSERT INTO {$ndb->user_fighter}
 				(
 					gang_id, fighter_name, heirarchy_role, backstory, movement, weapon_skill, balistic_skill, strength,
 					toughness, wounds, initiative, attacks, leadership, cool, willpower, intelligence,
@@ -82,7 +86,7 @@ class FighterController extends SlimController {
 			";
 		}
 
-		$result = dbInsert($query, $fighter);
+		$result = $ndb->insert($query, $fighter);
 		if ($result) {
 			$fighter['id'] = $result;
 			$response->getBody()->write(json_encode($fighter));
@@ -92,10 +96,11 @@ class FighterController extends SlimController {
 	}
 
 	public function updateFighter(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+		global $ndb;
 		$fighter = json_decode($response->getBody());
 		if ($fighter['is_vehicle']) {
 			$query = "
-				UPDATE necro_fighter SET
+				UPDATE {$ndb->user_fighter} SET
 				gang_id = :gang_id, fighter_name = :fighter_name, heirarchy_role = :heirarchy_role, backstory = :backstory, 
 				movement = :movement, weapon_skill = :weapon_skill, balistic_skill = :balistic_skill, strength = :strength,
 				toughness = :toughness, toughness_side = :toughness_side, toughness_rear = :toughness_rear, wounds = :wounds, 
@@ -107,7 +112,7 @@ class FighterController extends SlimController {
 			";
 		} else {
 			$query = "
-				UPDATE necro_fighter SET
+				UPDATE {$ndb->user_fighter} SET
 				gang_id = :gang_id, fighter_name = :fighter_name, heirarchy_role = :heirarchy_role, backstory = :backstory, 
 				movement = :movement, weapon_skill = :weapon_skill, balistic_skill = :balistic_skill, strength = :strength,
 				toughness = :toughness, wounds = :wounds, initiative = :initiative, attacks = :attacks,
@@ -117,7 +122,7 @@ class FighterController extends SlimController {
 				WHERE id = :id
 			";
 		}
-		$result = dbUpdate($query, $fighter);
+		$result = $ndb->update($query, $fighter);
 		if ($result) {
 			$response->getBody()->write(json_encode($fighter));
 			return $response->withHeader('Content-Type', 'application/json');

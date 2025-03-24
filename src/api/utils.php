@@ -1,46 +1,4 @@
 <?php
-function getDb() {
-	$dsn = DB_TYPE.':dbname='.DB_NAME.';host='.DB_HOST;
-	$db = new PDO($dsn, DB_USER, DB_PASS);
-	return $db;
-}
-
-function dbQuery($query, $args = array(), $db = null) {
-	if (is_null($db)) $db = getDb();
-	$data = array();
-
-	$stmt = $db->prepare($query);
-	$stmt->setFetchMode(PDO::FETCH_ASSOC);
-	$stmt->execute($args);
-	return $stmt->fetchAll();
-}
-
-function dbQueryFirst($query, $args = array(), $db = null) {
-	if (is_null($db)) $db = getDb();
-	$data = array();
-
-	$stmt = $db->prepare($query);
-	$stmt->setFetchMode(PDO::FETCH_ASSOC);
-	$stmt->execute($args);
-	return $stmt->fetch();
-}
-
-function dbUpdate($query, $args) {
-	$db = getDb();
-	$stmt = $db->prepare($query);
-	$stmt->setFetchMode(PDO::FETCH_ASSOC);
-	return $stmt->execute($args);
-}
-
-function dbInsert($query, $args) {
-	$db = getDb();
-	$stmt = $db->prepare($query);
-	$result = $stmt->execute($args);
-	if ($result) {
-		return $db->lastInsertId;
-	}
-	return $result;
-}
 
 $authCheck = function($request, $response, $next) {
 	$oauth = $request->getHeaderLine("Authorization");
@@ -87,4 +45,78 @@ $authCheck = function($request, $response, $next) {
 
 class AuthenticationException extends Exception {}
 class DatabaseException extends Exception {}
+
+class NecroDB {
+	public var $prefix = 'necro_';
+	public var $user = $prefix.'user';
+	public var $gang_type = $prefix.'gang_type';
+	public var $fighter_template $prefix.'fighter_template';
+	public var $fighter_role = $prefix.'gang_fighter_role';
+	public var $fighter_role_skill_set_map = $prefix.'gang_fighter_role_skill_set_map';
+	public var $weapon = $prefix.'weapon';
+	public var $weapon_category = $prefix.'weapon_category';
+	public var $weapon_characteristic = $prefix.'weapon_characteristic';
+	public var $weapon_trait = $prefix.'weapon_trait';
+	public var $weapon_trait_characteristic_map = $prefix.'weapon_trait_characteristic_map';
+	public var $skill_set = $prefix.'fighter_skill_set';
+	public var $skill = $prefix.'fighter_skill';
+	public var $wargear = $prefix.'fighter_gear';
+	
+	public var $user_gang = $prefix.'user_gang';
+	public var $user_fighter = $prefix.'user_fighter';
+	public var $user_gang_stash_map = $prefix.'user_gang_stash_map';
+	public var $user_fighter_weapon_map = $prefix.'user_fighter_weapon_map';
+	public var $user_fighter_skill_map = $prefix.'user_fighter_skill_map';
+	public var $user_fighter_gear_map = $prefix.'user_fighter_gear_map';
+	
+	private var $db = null;
+	
+	public function getInstance() {
+		if (is_null($this->db)) {
+			$dsn = DB_TYPE.':dbname='.DB_NAME.';host='.DB_HOST;
+			$this->db = new PDO($dsn, DB_USER, DB_PASS);
+		}
+		return $this->db;
+	}
+	
+	public function query($query, $args = array()) {
+		$db = $this->getInstance();
+		$data = array();
+	
+		$stmt = $db->prepare($query);
+		$stmt->setFetchMode(PDO::FETCH_ASSOC);
+		$stmt->execute($args);
+		return $stmt->fetchAll();
+	}
+	
+	public function queryFirst($query, $args = array()) {
+		$db = $this->getInstance();
+		$data = array();
+	
+		$stmt = $db->prepare($query);
+		$stmt->setFetchMode(PDO::FETCH_ASSOC);
+		$stmt->execute($args);
+		return $stmt->fetch();
+	}
+	
+	function update($query, $args) {
+		$db = $this->getInstance();
+		
+		$stmt = $db->prepare($query);
+		$stmt->setFetchMode(PDO::FETCH_ASSOC);
+		return $stmt->execute($args);
+	}
+	
+	function insert($query, $args) {
+		$db = $this->getInstance();
+		
+		$stmt = $db->prepare($query);
+		$result = $stmt->execute($args);
+		if ($result) {
+			return $db->lastInsertId;
+		}
+		return $result;
+	}
+}
+$ndb = new NecroDB();
 ?>

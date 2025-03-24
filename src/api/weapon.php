@@ -6,40 +6,42 @@ use Psr\Http\Message\ServerRequestInterface;
 class WeaponController extends SlimController {
 
 	public static function getTraits() {
+		global $ndb;
 		$query = "
-			SELECT t.id, t.trait_name, t.trait_value FROM necro_weapon_trait t ORDER BY t.trait_name ASC
+			SELECT t.id, t.trait_name, t.trait_value FROM {$ndb->weapon_trait} t ORDER BY t.trait_name ASC
 		";
-		return dbQuery($query);
+		return $ndb->query($query);
 	}
 
 	public static function getWeaponsForFighter($id) {
+		global $ndb;
 		$query = "
 			SELECT w.id, w.weapon_category_id, wc.category_name, w.weapon_name, w.weapon_value, w.rarity
-			FROM necro_weapon w, necro_weapon_category wc, necro_weapon_fighter_map wfm
+			FROM {$ndb->weapon} w, {$ndb->weapon_category} wc, {$ndb->user_fighter_weapon_map} wfm
 			WHERE 1 = 1
 			AND w.weapon_category_id = wc.id
 			AND wfm.weapon_id = w.id
 			AND wfm.fighter_id = :id
 		";
-		$weapons = dbQuery($query, ['id' => $id]);
+		$weapons = $ndb->query($query, ['id' => $id]);
 
 		foreach ($weapons as &$weapon) {
 			$charSQL = "
 				SELECT id, ammo_type, range_short, range_long, accuracy_short, accuracy_long, strength, armor_penetration, damage, ammo_check 
-				FROM necro_weapon_characteristic
+				FROM {$ndb->weapon_characteristic}
 				WHERE weapon_id = :weapon_id
 			";
-			$chars = dbQuery($charSQL, ['weapon_id' => $weapon['id']]);
+			$chars = $ndb->query($charSQL, ['weapon_id' => $weapon['id']]);
 
 			foreach($chars as &$char) {
 				$traitSQL = "
 					SELECT t.id, t.trait_name, t.trait_value 
-					FROM necro_weapon_trait t, necro_weapon_trait_characteristic_map wtcm
+					FROM {$ndb->weapon_trait} t, {$ndb->weapon_trait_characteristic_map} wtcm
 					WHERE t.id = wtcm.trait_id
 					AND wtcm.characteristic_id = :char_id
 					ORDER BY t.trait_name ASC
 				";
-				$traits = dbQuery($traitSQL, ['char_id' => $char['id']]);
+				$traits = $ndb->query($traitSQL, ['char_id' => $char['id']]);
 				$char['traits'] = $traits;
 			}
 			$weapon['characteristics'] = $chars;
@@ -54,24 +56,26 @@ class WeaponController extends SlimController {
 	}
 
 	public function fetchTrait(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+		global $ndb;
 		$id = $args['id'];
 		$query = "
-			SELECT t.id, t.trait_name, t.trait_value FROM necro_weapon_trait t WHERE t.id = :id ORDER BY t.trait_name ASC
+			SELECT t.id, t.trait_name, t.trait_value FROM {$ndb->weapon_trait} t WHERE t.id = :id ORDER BY t.trait_name ASC
 		";
-		$data = dbQuery($query, ['id' => $id]);
+		$data = $ndb->query($query, ['id' => $id]);
 		$response->getBody()->write(json_encode($data));
 		return $response->withHeader('Content-Type', 'application/json');
 	}
 
 	public function addTrait(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+		global $ndb;
 		$trait = json_decode($response->getBody());
 		$query = "
-			INSERT INTO necro_weapon_trait
+			INSERT INTO {$ndb->weapon_trait}
 			(trait_name, trait_value)
 			VALUES
 			(:trait_name, :trait_value)
 		";
-		$result = dbInsert($query, $trait);
+		$result = $ndb->insert($query, $trait);
 		if ($result) {
 			$trait['id'] = $result;
 			$response->getBody()->write(json_encode($trait));
@@ -81,13 +85,14 @@ class WeaponController extends SlimController {
 	}
 
 	public function updateTrait(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+		global $ndb;
 		$trait = json_decode($response->getBody());
 		$query = "
-			UPDATE necro_weapon_trait
+			UPDATE {$ndb->weapon_trait}
 			SET trait_name = :trait_name, trait_value = :trait_value
 			WHERE id = :id
 		";
-		$result = dbUpdate($query, $trait);
+		$result = $ndb->update($query, $trait);
 		if ($result) {
 			$response->getBody()->write(json_encode($trait));
 			return $response->withHeader('Content-Type', 'application/json');
@@ -96,10 +101,11 @@ class WeaponController extends SlimController {
 	}
 
 	public function fetchWeapons(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+		global $ndb;
 		$dbparams = [];
 		$query = "
 			SELECT CASE WHEN COUNT(ca.ammo_type) > 1 THEN CONCAT(w.weapon_name, GROUP_CONCAT(ca.ammo_type SEPARATOR '/')) ELSE w.weapon_name END as weapon_name, COUNT(ca.ammo_type) AS ammo_types, c.category_name
-			FROM necro_weapon_category c, necro_weapon w, necro_weapon_characteristic ca
+			FROM {$ndb->weapon_category} c, {$ndb->weapon} w, {$ndb->weapon_characteristic} ca
 			WHERE c.id = w.weapon_category_id
 			AND w.id = ca.weapon_id
 			GROUP BY weapon_name, category_name
@@ -120,7 +126,7 @@ class WeaponController extends SlimController {
 			ORDER BY w.weapon_name ASC
 		";
 
-		$data = dbQuery($query, $dbparams);
+		$data = $ndb->query($query, $dbparams);
 		$response->getBody()->write(json_encode($data));
 		return $response->withHeader('Content-Type', 'application/json');
 	}
