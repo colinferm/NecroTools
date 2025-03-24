@@ -8,7 +8,7 @@ class FighterController extends SlimController {
 	public static function getSkills() {
 		global $ndb;
 		$query = "
-			SELECT s.id, s.skill_name FROM {$ndb->fighter_skill} s ORDER BY s.skill_name ASC
+			SELECT s.id, s.skill_name FROM {$ndb->skill} s ORDER BY s.skill_name ASC
 		";
 		return $ndb->query($query);
 	}

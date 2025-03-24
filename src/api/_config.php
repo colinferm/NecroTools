@@ -4,6 +4,7 @@ define('DB_TYPE','mysql');
 define('DB_NAME', getenv('DATABASE_USER'));
 define('DB_USER', getenv('DATABASE_USER'));
 define('DB_PASS', getenv('DATABASE_PASSWORD'));
+define('DB_PREFIX', 'necro_');
 
 define('IS_REDIS_ACTIVE', 1);
 define('REDIS_HOST', getenv('REDIS_HOST'));

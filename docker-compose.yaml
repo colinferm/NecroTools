@@ -11,7 +11,7 @@ services:
       DATABASE_HOST: mysql-server
       DATABASE_USER: necromunda
       DATABASE_PASSWORD: necromunda
-      REDIS_HOST: redis
+      REDIS_HOST: "127.0.0.1"
       NODE_ENV: development
       DOMAIN_NAME: localhost:8080
       XDEBUG_SESSION: 1
@@ -35,12 +35,5 @@ services:
       - mysql-data:/var/lib/mysql
       - ./data:/docker-entrypoint-initdb.d
 
-  redis:
-    image: redis:7.0.4-alpine
-    container_name: necro-redis
-    volumes:
-      - redis-data:/data
-
 volumes:
   mysql-data:
-  redis-data:

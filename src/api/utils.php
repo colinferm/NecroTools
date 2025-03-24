@@ -47,29 +47,28 @@ class AuthenticationException extends Exception {}
 class DatabaseException extends Exception {}
 
 class NecroDB {
-	public var $prefix = 'necro_';
-	public var $user = $prefix.'user';
-	public var $gang_type = $prefix.'gang_type';
-	public var $fighter_template $prefix.'fighter_template';
-	public var $fighter_role = $prefix.'gang_fighter_role';
-	public var $fighter_role_skill_set_map = $prefix.'gang_fighter_role_skill_set_map';
-	public var $weapon = $prefix.'weapon';
-	public var $weapon_category = $prefix.'weapon_category';
-	public var $weapon_characteristic = $prefix.'weapon_characteristic';
-	public var $weapon_trait = $prefix.'weapon_trait';
-	public var $weapon_trait_characteristic_map = $prefix.'weapon_trait_characteristic_map';
-	public var $skill_set = $prefix.'fighter_skill_set';
-	public var $skill = $prefix.'fighter_skill';
-	public var $wargear = $prefix.'fighter_gear';
+	public $user = DB_PREFIX.'user';
+	public $gang_type = DB_PREFIX.'gang_type';
+	public $fighter_template = DB_PREFIX.'fighter_template';
+	public $fighter_role = DB_PREFIX.'gang_fighter_role';
+	public $fighter_role_skill_set_map = DB_PREFIX.'gang_fighter_role_skill_set_map';
+	public $weapon = DB_PREFIX.'weapon';
+	public $weapon_category = DB_PREFIX.'weapon_category';
+	public $weapon_characteristic = DB_PREFIX.'weapon_characteristic';
+	public $weapon_trait = DB_PREFIX.'weapon_trait';
+	public $weapon_trait_characteristic_map = DB_PREFIX.'weapon_trait_characteristic_map';
+	public $skill_set = DB_PREFIX.'fighter_skill_set';
+	public $skill = DB_PREFIX.'fighter_skill';
+	public $wargear = DB_PREFIX.'fighter_gear';
 	
-	public var $user_gang = $prefix.'user_gang';
-	public var $user_fighter = $prefix.'user_fighter';
-	public var $user_gang_stash_map = $prefix.'user_gang_stash_map';
-	public var $user_fighter_weapon_map = $prefix.'user_fighter_weapon_map';
-	public var $user_fighter_skill_map = $prefix.'user_fighter_skill_map';
-	public var $user_fighter_gear_map = $prefix.'user_fighter_gear_map';
+	public $user_gang = DB_PREFIX.'user_gang';
+	public $user_fighter = DB_PREFIX.'user_fighter';
+	public $user_gang_stash_map = DB_PREFIX.'user_gang_stash_map';
+	public $user_fighter_weapon_map = DB_PREFIX.'user_fighter_weapon_map';
+	public $user_fighter_skill_map = DB_PREFIX.'user_fighter_skill_map';
+	public $user_fighter_gear_map = DB_PREFIX.'user_fighter_gear_map';
 	
-	private var $db = null;
+	private $db = null;
 	
 	public function getInstance() {
 		if (is_null($this->db)) {

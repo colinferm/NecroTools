@@ -1,4 +1,5 @@
-@import '_settings';
+$white: #FFF;
+$black: #000;
 
 @mixin dark() {
 	&.dark {
