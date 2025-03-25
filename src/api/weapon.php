@@ -13,6 +13,16 @@ class WeaponController extends SlimController {
 		return $ndb->query($query);
 	}
 
+	public static function getTraitsJSON() {
+		global $cache;
+		$traits = $cache->get("weapon-traits");
+		if (!$traits) {
+			$traits = json_encode(WeaponController::getTraits());
+			$cache->set("weapon-traits", $traits);
+		}
+		return $traits;
+	}
+
 	public static function getWeaponsForFighter($id) {
 		global $ndb;
 		$query = "

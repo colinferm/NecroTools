@@ -1,13 +1,63 @@
 <?php
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
+
+$authCheck = function(Request $request, RequestHandler $handler) {
+
+	$oauth = $request->getHeaderLine("Authorization");
+	$token = null;
+
+	if (isset($oauth) && !empty($oauth)) {
+		$token = $pairs[1];
+	}
+	$sessionToken = isset($_COOKIE['auth']) ? $_COOKIE['auth'] : null;
+
+	if (empty($token) && !empty($sessionToken)) {
+		$token = $sessionToken;
+	}
+
+	if (!is_null($token)) {
+		if (isset($_SESSION['user'])) $user = $_SESSION['user'];
+
+		if (isset($user) && !is_null($user)) {
+			if (!isset($user['oauth_key']) || $user['oauth_key'] != $token) {
+				$oauth = UserController::findOauth($token);
+
+				if (!isset($oauth) || empty($oauth) || $oauth->id != $user->id) {
+					unset($user);
+				}
+			}
+		} 
+
+		if (!isset($user) || is_null($user)) {
+			$user = UserController::findOauth($token);
+			if (!empty($user)) $_SESSION['user'] = $user;
+		}
+	}
+
+	if (!isset($_SESSION['user'])) {
+		error_log('  Not authorized', 0);
+		throw new AuthenticationException();
+	} 
+	//$response = $next($request, $response);
+	//return $response;
+	return $handler->handle($request);
+};
 
 class UserController extends SlimController {
 
 	public static function findOauth($token) {
-		global $ndb;
-		return $ndb->queryFirst("SELECT id, username, email_address, confirmed, registered, last_login, is_admin, oauth_key FROM {$ndb->user} WHERE oauth_key = :token", ['token' => $token]);
+		global $ndb, $cache;
+		$userJSON = $cache->get("user-{$token}");
+		if ($userJSON) return json_decode($userJSON, true);
+
+		$user = $ndb->queryFirst("SELECT id, username, email_address, confirmed, registered, last_login, is_admin, oauth_key FROM {$ndb->user} WHERE oauth_key = :token", ['token' => $token]);
+		if ($user) {
+			$cache->setEx("user-{$token}", 300, json_encode($user));
+			return $user;
+		}
 	}
 
 	public static function doLogin($params) {
@@ -27,6 +77,7 @@ class UserController extends SlimController {
 		$_SESSION['user'] = $user;
 
 		$ndb->update("UPDATE {$ndb->user} SET oauth_key = :token, last_login = NOW() WHERE id = :id", ['token' => $token, 'id' => $user['id']]);
+		$cache->setEx("user-{$token}", 300, json_encode($user));
 
 		return [$user, $token];
 	}

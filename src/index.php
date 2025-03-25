@@ -1,7 +1,8 @@
 <?php
 require_once 'api/_config.php';
-require_once('api/lib/vendor/autoload.php');
-require_once('api/slim_controller.php');
+require_once 'api/necrodb.php';
+require_once 'api/lib/vendor/autoload.php';
+require_once 'api/slim_controller.php';
 require_once 'api/utils.php';
 require_once 'api/weapon.php';
 require_once 'api/fighter.php';
@@ -37,8 +38,8 @@ require_once 'api/fighter.php';
 				Necro.Utils.UI.TPL.loadAllTemplates(function(count) {
 					console.log("Templates loaded: " + count );
 				});
-				Necro.Apps.Data.Traits = <?php echo json_encode(WeaponController::getTraits()); ?>;
-				Necro.Apps.Data.Skills = <?php echo json_encode(FighterController::getSkills()); ?>;
+				Necro.Apps.Data.Traits = <?php echo WeaponController::getTraitsJSON(); ?>;
+				Necro.Apps.Data.Skills = <?php echo json_encode(FighterController::getSkillsJSON()); ?>;
 
 				window.necro = new Necro.Routers.NecroRouter();
 				necro.load();

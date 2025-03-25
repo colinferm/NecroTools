@@ -5,7 +5,8 @@ Necro.Views.Login = Backbone.View.extend({
 	pageTitle: 'Log In',
 
 	events: {
-		'click .loginButton': 'login'
+		'click .loginButton': 'login',
+		'keypress': 'keyAction'
 	},
 
 	initialize : function(options) {
@@ -17,6 +18,14 @@ Necro.Views.Login = Backbone.View.extend({
 	render: function() {
 		this.$el.html(this.template());
 		return this.$el;
+	},
+
+	keyAction: function(e) {
+		if (e.keyCode === 13) {
+			if ($('.passwordInput', this.el).is(":focus")) {
+				this.login();
+			}
+		}
 	},
 
 	login: function() {

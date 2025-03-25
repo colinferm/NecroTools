@@ -13,6 +13,16 @@ class FighterController extends SlimController {
 		return $ndb->query($query);
 	}
 
+	public static function getSkillsJSON() {
+		global $cache;
+		$skills = $cache->get("fighter-skills");
+		if (!$skills) {
+			$skills = json_encode(FighterController::getSkills());
+			$cache->set("fighter-skills", $skills);
+		}
+		return $skills;
+	}
+
 	public static function getFightersForGang($gangId) {
 		global $ndb;
 		$query = "
