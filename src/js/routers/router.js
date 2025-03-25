@@ -56,7 +56,12 @@ Necro.Routers.NecroRouter = Backbone.Router.extend({
 			//this.session.set("oauth_key", auth);
 			this.session.url = "/api/verify";
 			var location = window.location.href;
-			location = location.substring(location.indexOf('#'), location.length)
+			var i = location.indexOf('#');
+			if (i == -1) {
+				location = "#gangs";
+			} else {
+				location = location.substring(i, location.length);
+			}
 			this.session.save({
 				oauth_key: auth
 			}, {

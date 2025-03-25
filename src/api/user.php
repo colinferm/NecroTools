@@ -1,10 +1,10 @@
 <?php
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface as Request;
+use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 
-$authCheck = function(Request $request, RequestHandler $handler) {
+$authCheck = function(ServerRequestInterface $request, RequestHandler $handler) {
 
 	$oauth = $request->getHeaderLine("Authorization");
 	$token = null;
