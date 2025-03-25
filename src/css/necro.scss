@@ -46,6 +46,28 @@ body {
 		}
 	}
 
+	.menu a {
+		&.primary {
+			color: #1779ba;
+		}
+
+		&.secondary {
+			color: #767676;
+		}
+
+		&.success {
+			color: #3adb76;
+		}
+
+		&.alert {
+			color: #cc4b37;
+		}
+
+		&.warning {
+			color: #ffae00;
+		}
+	}
+
 	.form-row {
 		display: flex;
 	}

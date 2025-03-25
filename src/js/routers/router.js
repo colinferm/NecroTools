@@ -38,6 +38,19 @@ Necro.Routers.NecroRouter = Backbone.Router.extend({
 		this.contentWell = $('.main-content');
 		//this.menu = new MenuView({ el: $('.breadLine'), collection: this.session.taskList });
 
+		// On route change event handler.
+		$(window).on('hashchange', function (event) {
+			window.tabindex = 0;
+		});
+	},
+
+	load: function (callback) {
+		this.header.render();
+		this.footer.render();
+		this.contentWell.append(this.leftContent.render());
+		this.contentWell.append(this.rightContent.render());
+		Backbone.history.start();
+
 		var auth = $.cookie('auth');
 		if (auth) {
 			//this.session.set("oauth_key", auth);
@@ -58,19 +71,6 @@ Necro.Routers.NecroRouter = Backbone.Router.extend({
 			this.navigate("login", {trigger: true});
 		}
 		this.updateFoundation();
-
-		// On route change event handler.
-		$(window).on('hashchange', function (event) {
-			window.tabindex = 0;
-		});
-	},
-
-	load: function (callback) {
-		this.header.render();
-		this.footer.render();
-		this.contentWell.append(this.leftContent.render());
-		this.contentWell.append(this.rightContent.render());
-		Backbone.history.start();
 	},
 
 	updateRight: function(elem, title) {

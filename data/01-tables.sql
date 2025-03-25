@@ -139,7 +139,7 @@ CREATE TABLE necro_user_fighter (
 	view_order TINYINT NOT NULL DEFAULT '0',
 	created DATETIME NOT NULL,
 	PRIMARY KEY (id),
-	INDEX idx_user_fighter_gang (gang_id)
+	INDEX idx_user_fighter_gang (user_gang_id)
 );
 INSERT INTO necro_user_fighter VALUES(1, 1, 'Joe Blow', '1', NULL, '5', '3', '3', '3', '3', '0', '0', '2', '4', '2', 0, 0, '7', '8', '8', '8', 0, 0, 0, 0, 6, 2, 125, 1, NOW());
 INSERT INTO necro_user_fighter VALUES(2, 1, 'Jill Jones', '3', NULL, '5', '4', '3', '3', '3', '0', '0', '2', '4', '2', 0, 0, '8', '8', '8', '8', 0, 0, 0, 0, 4, 1, 115, 1, NOW());
@@ -382,7 +382,7 @@ CREATE TABLE necro_user_gang_stash_map (
 	user_gang_id INT NOT NULL,
 	gear_id INT,
 	weapon_id INT,
-	INDEX idx_gang_stash_map (gang_id, gear_id, weapon_id)
+	INDEX idx_gang_stash_map (user_gang_id, gear_id, weapon_id)
 );
 
 DROP TABLE IF EXISTS necro_weapon_trait_characteristic_map;
@@ -410,7 +410,7 @@ DROP TABLE IF EXISTS necro_user_fighter_weapon_map;
 CREATE TABLE necro_user_fighter_weapon_map (
 	user_fighter_id INT NOT NULL,
 	weapon_id INT NOT NULL,
-	INDEX idx_weapon_fighter_map (fighter_id, weapon_id)
+	INDEX idx_weapon_fighter_map (user_fighter_id, weapon_id)
 );
 INSERT INTO necro_user_fighter_weapon_map VALUES (1, 1);
 INSERT INTO necro_user_fighter_weapon_map VALUES (1, 3);
@@ -421,7 +421,7 @@ DROP TABLE IF EXISTS necro_user_fighter_skill_map;
 CREATE TABLE necro_user_fighter_skill_map (
 	user_fighter_id INT NOT NULL,
 	skill_id INT NOT NULL,
-	INDEX idx_fighter_trait_map (fighter_id, skill_id)
+	INDEX idx_fighter_trait_map (user_fighter_id, skill_id)
 );
 INSERT INTO necro_user_fighter_skill_map VALUES (1, 53);
 INSERT INTO necro_user_fighter_skill_map VALUES (2, 71);
@@ -430,7 +430,7 @@ DROP TABLE IF EXISTS necro_user_fighter_gear_map;
 CREATE TABLE necro_user_fighter_gear_map (
 	user_fighter_id INT NOT NULL,
 	gear_id INT NOT NULL,
-	INDEX idx_fighter_gear_map (fighter_id, gear_id)
+	INDEX idx_fighter_gear_map (user_fighter_id, gear_id)
 );
 INSERT INTO necro_user_fighter_gear_map VALUES (1, 1);
 INSERT INTO necro_user_fighter_gear_map VALUES (2, 1);

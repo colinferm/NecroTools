@@ -21,7 +21,7 @@ class WeaponController extends SlimController {
 			WHERE 1 = 1
 			AND w.weapon_category_id = wc.id
 			AND wfm.weapon_id = w.id
-			AND wfm.fighter_id = :id
+			AND wfm.user_fighter_id = :id
 		";
 		$weapons = $ndb->query($query, ['id' => $id]);
 
@@ -108,7 +108,6 @@ class WeaponController extends SlimController {
 			FROM {$ndb->weapon_category} c, {$ndb->weapon} w, {$ndb->weapon_characteristic} ca
 			WHERE c.id = w.weapon_category_id
 			AND w.id = ca.weapon_id
-			GROUP BY weapon_name, category_name
 		";
 
 		$params = $request->getQueryParams();

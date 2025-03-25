@@ -16,15 +16,15 @@ class FighterController extends SlimController {
 	public static function getFightersForGang($gangId) {
 		global $ndb;
 		$query = "
-			SELECT f.id, f.fighter_name, f.heirarchy_role, f.backstory, 
+			SELECT f.id, f.fighter_name, f.fighter_role, f.backstory, 
 			f.movement, f.weapon_skill, f.balistic_skill, f.strength, f.toughness, f.wounds, f.initiative, f.attacks,
 			f.leadership, f.cool, f.willpower, f.intelligence, 
 			f.is_vehicle, f.is_convalescence, f.is_captured, f.experience, f.advancements, f.base_value, f.view_order
 			FROM {$ndb->user_fighter} f
-			WHERE f.gang_id = :gang_id
+			WHERE f.user_gang_id = :user_gang_id
 			ORDER BY f.view_order
 		";
-		return $ndb->query($query, ['gang_id' => $gangId]);
+		return $ndb->query($query, ['user_gang_id' => $gangId]);
 	}
 
 	public function fetchGangFighters(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
@@ -39,7 +39,7 @@ class FighterController extends SlimController {
 		global $ndb;
 		$id = $args['id'];
 		$query = "
-			SELECT f.id, f.fighter_name, f.heirarchy_role, f.backstory, f.advancements, 
+			SELECT f.id, f.fighter_name, f.fighter_role, f.backstory, f.advancements, 
 			f.movement, f.weapon_skill, f.balistic_skill, f.strength, f.toughness, f.toughness_side, f.toughness_rear,  
 			f.handling, f.save_roll, f.wounds, f.initiative, f.attacks, f.leadership, f.cool, f.willpower, f.intelligence, 
 			f.is_vehicle, f.is_convalescence, f.is_captured, f.experience, f.base_value, f.view_order
@@ -62,11 +62,11 @@ class FighterController extends SlimController {
 			$query = "
 				INSERT INTO {$ndb->user_fighter}
 				(
-					gang_id, fighter_name, heirarchy_role, backstory, movement, weapon_skill, balistic_skill, strength,
+					user_gang_id, fighter_name, fighter_role, backstory, movement, weapon_skill, balistic_skill, strength,
 					toughness, toughness_side, toughness_rear, wounds, initiative, attacks, handling, leadership, cool, willpower, intelligence,
 					save_roll, is_vehicle, is_convalescence, is_captured, experience, advancements, base_value, view_order, created
 				) VALUES (
-					:gang_id, :fighter_name, :heirarchy_role, :backstory, :movement, :weapon_skill, :balistic_skill, :strength,
+					:user_gang_id, :fighter_name, :fighter_role, :backstory, :movement, :weapon_skill, :balistic_skill, :strength,
 					:toughness, :toughness_side, :toughness_rear, :wounds, :initiative, :attacks, :handling, :leadership, :cool, :willpower, :intelligence,
 					:save_roll, :is_vehicle, :is_convalescence, :is_captured, :experience, 0, :base_value, :view_order, NOW()
 				)
@@ -75,11 +75,11 @@ class FighterController extends SlimController {
 			$query = "
 				INSERT INTO {$ndb->user_fighter}
 				(
-					gang_id, fighter_name, heirarchy_role, backstory, movement, weapon_skill, balistic_skill, strength,
+					user_gang_id, fighter_name, fighter_role, backstory, movement, weapon_skill, balistic_skill, strength,
 					toughness, wounds, initiative, attacks, leadership, cool, willpower, intelligence,
 					is_vehicle, is_convalescence, is_captured, experience, advancements, base_value, view_order, created
 				) VALUES (
-					:gang_id, :fighter_name, :heirarchy_role, :backstory, :movement, :weapon_skill, :balistic_skill, :strength,
+					:user_gang_id, :fighter_name, :fighter_role, :backstory, :movement, :weapon_skill, :balistic_skill, :strength,
 					:toughness, :wounds, :initiative, :attacks, :leadership, :cool, :willpower, :intelligence,
 					:is_vehicle, :is_convalescence, :is_captured, :experience, 0, :base_value, :view_order, NOW()
 				)
@@ -101,7 +101,7 @@ class FighterController extends SlimController {
 		if ($fighter['is_vehicle']) {
 			$query = "
 				UPDATE {$ndb->user_fighter} SET
-				gang_id = :gang_id, fighter_name = :fighter_name, heirarchy_role = :heirarchy_role, backstory = :backstory, 
+				user_gang_id = :user_gang_id, fighter_name = :fighter_name, fighter_role = :fighter_role, backstory = :backstory, 
 				movement = :movement, weapon_skill = :weapon_skill, balistic_skill = :balistic_skill, strength = :strength,
 				toughness = :toughness, toughness_side = :toughness_side, toughness_rear = :toughness_rear, wounds = :wounds, 
 				initiative = :initiative, attacks = :attacks, handling = :handling, save_roll = :save_roll
@@ -113,7 +113,7 @@ class FighterController extends SlimController {
 		} else {
 			$query = "
 				UPDATE {$ndb->user_fighter} SET
-				gang_id = :gang_id, fighter_name = :fighter_name, heirarchy_role = :heirarchy_role, backstory = :backstory, 
+				user_gang_id = :user_gang_id, fighter_name = :fighter_name, fighter_role = :fighter_role, backstory = :backstory, 
 				movement = :movement, weapon_skill = :weapon_skill, balistic_skill = :balistic_skill, strength = :strength,
 				toughness = :toughness, wounds = :wounds, initiative = :initiative, attacks = :attacks,
 				leadership = :leadership, cool = :cool, willpower = :willpower, intelligence = :intelligence,
