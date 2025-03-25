@@ -1,5 +1,12 @@
 <?php
 require_once('./_config.php');
+
+$cache = new Redis();
+$isCache = $cache->pconnect(REDIS_HOST);
+
+error_log("Caching? {$isCache}");
+
+require_once('./necrodb.php');
 require_once('./utils.php');
 require_once('./lib/vendor/autoload.php');
 require_once('./slim_controller.php');
@@ -37,4 +44,6 @@ $app->put('/trait/{id}', [\WeaponController::class, 'updateTrait']);
 $app->get('/weapons', [\WeaponController::class, 'fetchWeapons']);
 
 $app->run();
+
+if ($isCache) $cache->close();
 ?>

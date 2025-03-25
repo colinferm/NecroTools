@@ -31,6 +31,14 @@ class UserController extends SlimController {
 		return [$user, $token];
 	}
 
+	public static function getCurrentUser() {
+		if (isset($_SESSION['user'])) return $_SESSION['user'];
+	}
+
+	public static function getCurrentUserId() {
+		if (isset($_SESSION['user'])) return $_SESSION['user']['id'];
+	}
+
 	public function login(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
 		$params = $request->getParsedBody();
 		

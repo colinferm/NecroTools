@@ -19,3 +19,9 @@ Development is handled through the use of Docker. Simply check out the project, 
 Current environment targets are:
 * PHP 8.2
 * MySQL 8.3
+
+## License
+
+Copyright 2025 by Colin Andrew Ferm.
+
+This project is distributed under the terms of the EPL-2.0 license.
