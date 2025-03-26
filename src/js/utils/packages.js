@@ -81,7 +81,7 @@ Necro.Utils.Resolver = {
 	//creates objects from classes that are namespaced.  ie:   new package.package.Object();
 	getNewInstance : function(classNameWithNamespace, params) {
 		params = params || {};
-		var MyClass = Utils.Resolver.stringToObject(classNameWithNamespace,'function');
+		var MyClass = Necro.Utils.Resolver.stringToObject(classNameWithNamespace,'function');
 		return new MyClass(params);
 	}
 };

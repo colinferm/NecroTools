@@ -1,0 +1,12 @@
+<div>
+    Add an injury to <b>{{model.fighter_name}}</b>:
+
+    <select name="injury_type" class="injury_selector">
+        <option value="0">--SELECT--</option>
+        {{#each injuries}}
+            <option value="{{id}}">{{name}}</option>
+        {{/each}}
+    </select>
+
+    <p class="injury_result"></p>
+</div>

@@ -38,6 +38,7 @@ require_once 'api/fighter.php';
 				});
 				Necro.Apps.Data.Traits = <?php echo WeaponController::getTraitsJSON(); ?>;
 				Necro.Apps.Data.Skills = <?php echo FighterController::getSkillsJSON(); ?>;
+				Necro.Apps.Data.Injuries = <?php echo FighterController::getInjuriesJSON(); ?>;
 				Necro.Apps.Data.FighterRoles = <?php echo FighterController::getFighterRolesJSON(); ?>;
 
 				window.necro = new Necro.Routers.NecroRouter();

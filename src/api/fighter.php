@@ -47,6 +47,24 @@ class FighterController extends SlimController {
 		return $roles;
 	}
 
+	public static function getInjuries() {
+		global $ndb;
+		$query = "
+			SELECT id, name, description, convalescence FROM {$ndb->injury} ORDER BY id ASC
+		";
+		return $ndb->query($query);
+	}
+
+	public static function getInjuriesJSON() {
+		global $cache;
+		$inj = $cache->get("fighter-injuries");
+		if (!$inj) {
+			$inj = json_encode(FighterController::getInjuries());
+			$cache->set("fighter-injuries", $inj);
+		}
+		return $inj;
+	}
+
 	public static function getFightersForGang($gangId) {
 		global $ndb;
 		$query = "

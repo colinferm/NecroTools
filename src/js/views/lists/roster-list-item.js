@@ -39,6 +39,11 @@ Necro.Views.RosterItem = Backbone.View.extend({
 
 	injureFighter: function() {
 		console.log("Injure Fighter");
+		var modal = new Necro.Views.Modal({
+			class: 'Necro.Views.InjuryModal',
+			title: 'Add Injury',
+			model: this.model
+		});
 	},
 
 	killFighter: function() {
