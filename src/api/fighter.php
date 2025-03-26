@@ -23,14 +23,39 @@ class FighterController extends SlimController {
 		return $skills;
 	}
 
+	public static function getFighterRoles() {
+		global $ndb;
+		$query = "
+			SELECT r.id, r.role_name, r.heirarchy_role, r.gang_id, t.type_name AS gang FROM {$ndb->fighter_role} r, {$ndb->gang_type} t WHERE r.gang_id = t.id ORDER BY r.gang_id ASC, id ASC
+		";
+		$results = $ndb->query($query);
+		$roles = array();
+		foreach ($results as $r) {
+			$gangId = $r['gang_id'];
+			$roles[$gangId][] = $r;
+		}
+ 		return $roles;
+	}
+
+	public static function getFighterRolesJSON() {
+		global $cache;
+		$roles = $cache->get("fighter-roles");
+		if (!$roles) {
+			$roles = json_encode(FighterController::getFighterRoles());
+			$cache->set("fighter-roles", $roles);
+		}
+		return $roles;
+	}
+
 	public static function getFightersForGang($gangId) {
 		global $ndb;
 		$query = "
-			SELECT f.id, f.fighter_name, f.fighter_role, f.backstory, 
+			SELECT f.id, f.fighter_name, fr.role_name, f.backstory, 
 			f.movement, f.weapon_skill, f.balistic_skill, f.strength, f.toughness, f.wounds, f.initiative, f.attacks,
 			f.leadership, f.cool, f.willpower, f.intelligence, 
 			f.is_vehicle, f.is_convalescence, f.is_captured, f.experience, f.advancements, f.base_value, f.view_order
 			FROM {$ndb->user_fighter} f
+			LEFT JOIN {$ndb->fighter_role} fr ON (fr.id = f.fighter_role)
 			WHERE f.user_gang_id = :user_gang_id
 			ORDER BY f.view_order
 		";

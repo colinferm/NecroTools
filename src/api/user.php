@@ -61,7 +61,7 @@ class UserController extends SlimController {
 	}
 
 	public static function doLogin($params) {
-		global $ndb;
+		global $ndb, $cache;
 		$email = $params['email_address'];
 		$password = $params['userpassword'];
 

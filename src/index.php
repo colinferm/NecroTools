@@ -6,8 +6,6 @@ require_once 'api/slim_controller.php';
 require_once 'api/utils.php';
 require_once 'api/weapon.php';
 require_once 'api/fighter.php';
-// SET UP BACKBONE
-
 ?>
 <!doctype html>
 <html class="no-js" lang="en">
@@ -21,7 +19,7 @@ require_once 'api/fighter.php';
 		<link href="/css/jquery.tagit.css" rel="stylesheet" type="text/css" />
 		<link href="/css/necro.css" rel="stylesheet" type="text/css" />
 		<script src="/js/libs/jquery-3.7.1.min.js"></script>
-		<title>Bootstrap demo</title>
+		<title>Necro Tools</title>
 	</head>
 	<body>
 		<div class="nav-content"></div>
@@ -39,7 +37,8 @@ require_once 'api/fighter.php';
 					console.log("Templates loaded: " + count );
 				});
 				Necro.Apps.Data.Traits = <?php echo WeaponController::getTraitsJSON(); ?>;
-				Necro.Apps.Data.Skills = <?php echo json_encode(FighterController::getSkillsJSON()); ?>;
+				Necro.Apps.Data.Skills = <?php echo FighterController::getSkillsJSON(); ?>;
+				Necro.Apps.Data.FighterRoles = <?php echo FighterController::getFighterRolesJSON(); ?>;
 
 				window.necro = new Necro.Routers.NecroRouter();
 				necro.load();
