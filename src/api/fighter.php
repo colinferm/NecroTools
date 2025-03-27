@@ -8,13 +8,36 @@ class FighterController extends SlimController {
 	public static function getSkills() {
 		global $ndb;
 		$query = "
-			SELECT s.id, s.skill_name FROM {$ndb->skill} s ORDER BY s.skill_name ASC
+			SELECT ss.id, ss.skill_set_name, ss.limited_to_gang, ss.gang_type_id
+			FROM {$ndb->skill_set} ss
+			ORDER BY ss.skill_set_name ASC
 		";
-		return $ndb->query($query);
+		$results = $ndb->query($query);
+
+		$skillSets = array();
+		foreach ($results as $s) {
+			$query = "
+				SELECT s.id, s.skill_name 
+				FROM {$ndb->skill} s 
+				WHERE s.skill_set_id = :skillset_id
+				ORDER BY s.skill_name ASC
+			";
+			$skills = $ndb->query($query, array("skillset_id" => $s['id']));
+			$s['skills'] = $skills;
+			$skillSets[] = $s;
+		}
+		return $skillSets;
+	}
+
+	public function skills(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+		$skills = $this->getSkills();
+		$response->getBody()->write(json_encode($skills));
+		return $response->withHeader('Content-Type', 'application/json');
 	}
 
 	public static function getSkillsJSON() {
 		global $cache;
+		$skills = null;
 		$skills = $cache->get("fighter-skills");
 		if (!$skills) {
 			$skills = json_encode(FighterController::getSkills());
@@ -69,7 +92,7 @@ class FighterController extends SlimController {
 		global $ndb;
 		$query = "
 			SELECT f.id, f.fighter_name, fr.role_name, f.backstory, 
-			f.movement, f.weapon_skill, f.balistic_skill, f.strength, f.toughness, f.wounds, f.initiative, f.attacks,
+			f.movement, f.weapon_skill, f.ballistic_skill, f.strength, f.toughness, f.wounds, f.initiative, f.attacks,
 			f.leadership, f.cool, f.willpower, f.intelligence, 
 			f.is_vehicle, f.is_convalescence, f.is_captured, f.experience, f.advancements, f.base_value, f.view_order
 			FROM {$ndb->user_fighter} f
@@ -99,7 +122,7 @@ class FighterController extends SlimController {
 		global $ndb;
 		$query = "
 			SELECT f.id, f.fighter_name, f.fighter_role, f.backstory, f.advancements, 
-			f.movement, f.weapon_skill, f.balistic_skill, f.strength, f.toughness, f.toughness_side, f.toughness_rear,  
+			f.movement, f.weapon_skill, f.ballistic_skill, f.strength, f.toughness, f.toughness_side, f.toughness_rear,  
 			f.handling, f.save_roll, f.wounds, f.initiative, f.attacks, f.leadership, f.cool, f.willpower, f.intelligence, 
 			f.is_vehicle, f.is_convalescence, f.is_captured, f.experience, f.base_value, f.view_order
 			FROM {$ndb->user_fighter} f
@@ -120,11 +143,11 @@ class FighterController extends SlimController {
 			$query = "
 				INSERT INTO {$ndb->user_fighter}
 				(
-					user_gang_id, fighter_name, fighter_role, backstory, movement, weapon_skill, balistic_skill, strength,
+					user_gang_id, fighter_name, fighter_role, backstory, movement, weapon_skill, ballistic_skill, strength,
 					toughness, toughness_side, toughness_rear, wounds, initiative, attacks, handling, leadership, cool, willpower, intelligence,
 					save_roll, is_vehicle, is_convalescence, is_captured, experience, advancements, base_value, view_order, created
 				) VALUES (
-					:user_gang_id, :fighter_name, :fighter_role, :backstory, :movement, :weapon_skill, :balistic_skill, :strength,
+					:user_gang_id, :fighter_name, :fighter_role, :backstory, :movement, :weapon_skill, :ballistic_skill, :strength,
 					:toughness, :toughness_side, :toughness_rear, :wounds, :initiative, :attacks, :handling, :leadership, :cool, :willpower, :intelligence,
 					:save_roll, :is_vehicle, :is_convalescence, :is_captured, :experience, 0, :base_value, :view_order, NOW()
 				)
@@ -133,11 +156,11 @@ class FighterController extends SlimController {
 			$query = "
 				INSERT INTO {$ndb->user_fighter}
 				(
-					user_gang_id, fighter_name, fighter_role, backstory, movement, weapon_skill, balistic_skill, strength,
+					user_gang_id, fighter_name, fighter_role, backstory, movement, weapon_skill, ballistic_skill, strength,
 					toughness, wounds, initiative, attacks, leadership, cool, willpower, intelligence,
 					is_vehicle, is_convalescence, is_captured, experience, advancements, base_value, view_order, created
 				) VALUES (
-					:user_gang_id, :fighter_name, :fighter_role, :backstory, :movement, :weapon_skill, :balistic_skill, :strength,
+					:user_gang_id, :fighter_name, :fighter_role, :backstory, :movement, :weapon_skill, :ballistic_skill, :strength,
 					:toughness, :wounds, :initiative, :attacks, :leadership, :cool, :willpower, :intelligence,
 					:is_vehicle, :is_convalescence, :is_captured, :experience, 0, :base_value, :view_order, NOW()
 				)
@@ -194,21 +217,14 @@ class FighterController extends SlimController {
 	}
 
 	public function addInjury(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
-		$fighterId = $args['id'];
-		$injury = json_decode($request->getBody(), true);
-
-
-	}
-
-	public function addInjury(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
 		global $ndb;
 
 		$auditMessage;
 		$fighterId = $args['id'];
 		$injury = json_decode($request->getBody(), true);
 
-		$insertInjurySQL = "INSERT INTO {$ndb->user_fighter_injury_map} (user_fighter_id, injury_id) VALUES (:user_fighter_id, :injury_id);
-		$result = $ndb->update($query, array('user_fighter_id' => $fighterId, 'injury_id' => $injury->id);
+		$insertInjurySQL = "INSERT INTO {$ndb->user_fighter_injury_map} (user_fighter_id, injury_id) VALUES (:user_fighter_id, :injury_id)";
+		$result = $ndb->update($query, array('user_fighter_id' => $fighterId, 'injury_id' => $injury->id));
 
 		$fighter = $this->getFighterByID($fighterId);
 		if ($injury['id'] == 1) {
@@ -236,7 +252,7 @@ class FighterController extends SlimController {
 			$auditMessage = "Injury: Humiliated: -1 Cool";
 			
 		} else if ($injury['id'] == 7) {
-			$fighter['balistic_skill'] -= 1;
+			$fighter['ballistic_skill'] -= 1;
 			$auditMessage = "Injury: Eye Injury: -1 BS";
 			
 		} else if ($injury['id'] == 8) {
@@ -261,7 +277,6 @@ class FighterController extends SlimController {
 			$auditMessage = "Injury: Head Injury: Int -1, Will -1";
 			
 		}
-
 
 		if ($result) {
 			if (strlen($auditMessage)) $this->addFighterAudit($fighterId, $auditMessage);

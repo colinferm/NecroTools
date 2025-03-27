@@ -28,6 +28,10 @@ Necro.Views.RosterItem = Backbone.View.extend({
 
 	editFighter: function() {
 		console.log("Edit Fighter: " + this.model.get('fighter_name'));
+		var modal = new Necro.Views.Modal({
+			class: "Necro.Views.FighterModal",
+			model: this.model
+		});
 	},
 
 	cloneFighter: function() {

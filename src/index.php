@@ -37,7 +37,7 @@ require_once 'api/fighter.php';
 					console.log("Templates loaded: " + count );
 				});
 				Necro.Apps.Data.Traits = <?php echo WeaponController::getTraitsJSON(); ?>;
-				Necro.Apps.Data.Skills = <?php echo FighterController::getSkillsJSON(); ?>;
+				Necro.Apps.Data.Skills = new Necro.Models.SkillSetCollection(<?php echo FighterController::getSkillsJSON(); ?>);
 				Necro.Apps.Data.Injuries = <?php echo FighterController::getInjuriesJSON(); ?>;
 				Necro.Apps.Data.FighterRoles = <?php echo FighterController::getFighterRolesJSON(); ?>;
 

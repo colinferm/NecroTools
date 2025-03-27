@@ -31,14 +31,16 @@ $app->post('/fighter', [\FighterController::class, 'addFighter'])->add($authChec
 $app->get('/fighter/{id}', [\FighterController::class, 'fetchFighter'])->add($authCheck);
 $app->put('/fighter/{id}', [\FighterController::class, 'updateFighter'])->add($authCheck);
 
+$app->post('/injury/{id}', [\FighterController::class, 'addInjury'])->add($authCheck);
+
 $app->get('/traits', [\WeaponController::class, 'fetchTraits'])->add($authCheck);
 $app->post('/trait', [\WeaponController::class, 'addTrait'])->add($authCheck);
 $app->get('/trait/{id}', [\WeaponController::class, 'fetchTrait'])->add($authCheck);
 $app->put('/trait/{id}', [\WeaponController::class, 'updateTrait'])->add($authCheck);
 
-$app->get('/weapons', [\WeaponController::class, 'fetchWeapons'])->add($authCheck);
+$app->get('/skills', [\FighterController::class, 'skills']);
 
-$app->post('/injury/{id}', [\FighterController::class, 'addInjury'])->add($authCheck);
+$app->get('/weapons', [\WeaponController::class, 'fetchWeapons'])->add($authCheck);
 
 $app->run();
 

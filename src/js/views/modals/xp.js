@@ -1,16 +1,9 @@
-Necro.Views.XPModal = Backbone.View.extend({
+Necro.Views.XPModal = Necro.Views.BaseModal.extend({
     templateName: 'modal-xp',
 
     events: {
         'change .xp_field': 'grabXP'
     },
-
-    initialize : function(options) {
-        this.opts = options;
-        this.model = options.model;
-		var html = Necro.Utils.UI.TPL.get(this.templateName);
-		this.template = Handlebars.compile(html);
-	},
 
     render: function() {
 		//this.$el.html(this.template(this.model.toJSON()));

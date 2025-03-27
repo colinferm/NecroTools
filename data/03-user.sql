@@ -49,7 +49,7 @@ CREATE TABLE necro_user_fighter (
 	backstory TEXT,
 	movement TINYINT NOT NULL,
 	weapon_skill TINYINT NOT NULL,
-	balistic_skill TINYINT NOT NULL,
+	ballistic_skill TINYINT NOT NULL,
 	strength TINYINT NOT NULL,
 	toughness TINYINT NOT NULL,
 	toughness_side TINYINT NOT NULL,
