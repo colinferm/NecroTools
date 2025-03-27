@@ -25,107 +25,123 @@ $black: #000;
 	}
 }
 
-body {
-	
-	[type="text"] {
-		border: none;
-		box-shadow: none;
-		background-color: transparent;
-	}
-	
-	.main-content {
-		.right-content {
-			min-height: 600px;
-
-			.right-content-container {
-				height: 100%;
-				display: flex;
-				flex-direction: column;
-				justify-content: center;
-			}
+html {
+	body {
+		
+		[type="text"] {
+			border: none;
+			box-shadow: none;
+			background-color: transparent;
 		}
-	}
+		
+		.main-content {
+			.right-content {
+				min-height: 600px;
 
-	.menu a {
-		&.primary {
-			color: #1779ba;
-		}
-
-		&.secondary {
-			color: #767676;
-		}
-
-		&.success {
-			color: #3adb76;
-		}
-
-		&.alert {
-			color: #cc4b37;
-		}
-
-		&.warning {
-			color: #ffae00;
-		}
-	}
-
-	.form-row {
-		display: flex;
-	}
-
-	table {
-		&.fighter-weapon {
-			th, td {
-				text-align: center;
-			}
-			
-			td {
-				&.two-stat {
-					text-wrap: nowrap;
-					input {
-						display: inline-block;
-						max-width: 44%;
-					}
+				.right-content-container {
+					height: 100%;
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
 				}
 			}
-			
-			.fighter_basic {
-				background-color: light-gray;
+		}
+
+		.menu a {
+			&.primary {
+				color: #1779ba;
+			}
+
+			&.secondary {
+				color: #767676;
+			}
+
+			&.success {
+				color: #3adb76;
+			}
+
+			&.alert {
+				color: #cc4b37;
+			}
+
+			&.warning {
+				color: #ffae00;
 			}
 		}
 
-		thead {
-			@include dark {
-				tr {
-					&:hover {
+		.form-row {
+			display: flex;
+		}
+
+		table {
+			&.fighter-weapon {
+				th, td {
+					text-align: center;
+				}
+				
+				td {
+					&.two-stat {
+						text-wrap: nowrap;
+						input {
+							display: inline-block;
+							max-width: 44%;
+						}
+					}
+				}
+				
+				.fighter_basic {
+					background-color: light-gray;
+				}
+			}
+
+			thead {
+				@include dark {
+					tr {
+						&:hover {
+							color: $white;
+							background-color: $black;
+						}
 						color: $white;
 						background-color: $black;
 					}
-					color: $white;
-					background-color: $black;
+				}
+			}
+			
+			.head_stat {
+				input
+					&::placeholder {
+					color: #000;
+				}
+				background-color: #DEB887;
+			}
+			
+			.xp_stat {
+				background-color: #D2691E;
+			}
+		}
+
+		.reveal-overlay {
+			.reveal {
+				.modal-container {
+					padding: 20px 0;
+					justify-content: center;
+
+					.xp_field {
+						 max-width: 80px;
+						 margin: 0 auto;
+					}
 				}
 			}
 		}
-		
-		.head_stat {
-			input
-				&::placeholder {
-				color: #000;
-			}
-			background-color: #DEB887;
-		}
-		
-		.xp_stat {
-			background-color: #D2691E;
-		}
-	}
 
-	.left-content {
-		background-color: rgb(222, 226, 230);
-	}
+		.left-content {
+			background-color: rgb(222, 226, 230);
+		}
 
-	.footer {
-		min-height: 250px;
-		color: $white;
-		background-color: $black;
+		.footer {
+			min-height: 250px;
+			color: $white;
+			background-color: $black;
+		}
 	}
 }

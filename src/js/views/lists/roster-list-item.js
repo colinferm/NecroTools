@@ -17,6 +17,7 @@ Necro.Views.RosterItem = Backbone.View.extend({
 		this.model.fetch({
 			success: _.bind(this.render, this)
 		});
+		this.model.on("change", _.bind(this.render, this));
 	},
 
 	render: function() {
@@ -35,6 +36,10 @@ Necro.Views.RosterItem = Backbone.View.extend({
 
 	addXP: function() {
 		console.log("Add XP");
+		var modal = new Necro.Views.Modal({
+			class: 'Necro.Views.XPModal',
+			model: this.model
+		});
 	},
 
 	injureFighter: function() {

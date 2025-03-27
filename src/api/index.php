@@ -38,6 +38,8 @@ $app->put('/trait/{id}', [\WeaponController::class, 'updateTrait'])->add($authCh
 
 $app->get('/weapons', [\WeaponController::class, 'fetchWeapons'])->add($authCheck);
 
+$app->post('/injury/{id}', [\FighterController::class, 'addInjury'])->add($authCheck);
+
 $app->run();
 
 if ($isCache) $cache->close();

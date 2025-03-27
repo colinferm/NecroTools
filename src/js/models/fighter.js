@@ -7,7 +7,7 @@ Necro.Models.Fighter = Backbone.Model.extend({
 		"fighter_name": "",
 		"movement": "",
 		"weapon_skill": "",
-		"balistic_kill": "",
+		"balistic_skill": "",
 		"strength": "",
 		"toughness": "",
 		"wounds": "1",

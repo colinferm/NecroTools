@@ -20,8 +20,18 @@ Necro.Views.InjuryModal = Backbone.View.extend({
 
     populateDescription: function() {
         var val = $('.injury_selector', this.$el).val();
-        var inj = Necro.Apps.Data.Injuries[val];
-        $('.injury_result', this.$el).html("Result: <b>"+inj.description+"</b>");
+        for (var i = 0; i < Necro.Apps.Data.Injuries.length; i++) {
+            this.inj = Necro.Apps.Data.Injuries[i];
+            if (this.inj.id == val) break;
+        }
+        $('.injury_result', this.$el).html("Result: <b>"+this.inj.description+"</b>");
+    },
+
+    save: function(cb) {
+        if (this.inj) {
+            console.log("Saving injury: " + this.inj.name);
+        }
+        cb(true);
     }
 
 });

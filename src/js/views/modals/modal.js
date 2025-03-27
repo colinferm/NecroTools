@@ -4,9 +4,9 @@ Necro.Views.Modal = Backbone.View.extend({
     id: "fighterModal",
 	templateName: 'modal-wrapper',
 
-	events: {
-		
-	},
+    events: {
+        'click .action_save': 'saveData'
+    },
 
 	initialize : function(options) {
         this.opts = options;
@@ -16,26 +16,32 @@ Necro.Views.Modal = Backbone.View.extend({
 	},
 
 	render: function() {
-		//this.$el.html(this.template(this.model.toJSON()));
-        $("#"+this.id).remove();
         this.$el.html(this.template({modal_title: this.opts.title}));
         this.$el.attr('data-reveal', '');
         this.$el.attr('data-overlay', 'true');
 
-        var content = Necro.Utils.Resolver.getNewInstance(this.opts.class, {model: this.model});
-        $('.modal-container', this.$el).html(content.render());
+        this.content = Necro.Utils.Resolver.getNewInstance(this.opts.class, {model: this.model});
+        $('.modal-container', this.$el).html(this.content.render());
 
         $('body').append(this.$el);
 
         var popup = new Foundation.Reveal(this.$el);
-        this.$el.on('closed.zf.reveal', this.close);
+        this.$el.on('closed.zf.reveal', _.bind(this.close, this));
         popup.open();
+
 		return this.$el;
 	},
 
+    saveData: function() {
+        this.content.save(_.bind(function(success) {
+            if (success) this.close();
+        }, this));
+    },
+
     close: function() {
+        console.log("Closing...");
         $(".reveal-overlay").remove();
-        $("#"+this.id).remove();
+        //$("#"+this.id).remove();
     }
 
 
