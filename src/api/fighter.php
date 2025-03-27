@@ -210,19 +210,22 @@ class FighterController extends SlimController {
 		$insertInjurySQL = "INSERT INTO {$ndb->user_fighter_injury_map} (user_fighter_id, injury_id) VALUES (:user_fighter_id, :injury_id);
 		$result = $ndb->update($query, array('user_fighter_id' => $fighterId, 'injury_id' => $injury->id);
 
-		$fighter = $this->getFighterByID($args['id']);
+		$fighter = $this->getFighterByID($fighterId);
 		if ($injury['id'] == 1) {
 			$fighter['cool'] += 1;
-			$auditMessage = "Injury: Impressive Scars: Cool +1";
+			$auditMessage = 'Injury: Impressive Scars: Cool +1';
 
 		} else if ($injury['id'] == 2) {
 			// add skill fearsome
+			error_log('Add fearsome skill');
 
 		} else if ($injury['id'] == 3) {
 			// add skill beserker
+			error_log('Add beserker skill');
 
 		} else if ($injury['id'] == 4) {
 			// add old battle wound
+			error_log('Stack battle wound');
 
 		} else if ($injury['id'] == 5) {
 			$fighter['leadership'] -= 1;
