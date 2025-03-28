@@ -22,7 +22,8 @@ Necro.Models.Fighter = Backbone.Model.extend({
 		"experience": 0,
 		"base_value": 0,
 		"weapons": Necro.Models.WeaponCollection,
-		"gear": Necro.Models.GearCollection
+		"gear": Necro.Models.GearCollection,
+		"skills": Necro.Models.SkillCollection
 	},
 
 	getValue: function() {
@@ -49,6 +50,7 @@ Necro.Models.Fighter = Backbone.Model.extend({
 			});
 			response.weapons = new Necro.Models.WeaponCollection(weapons);
 		}
+		response.skills = new Necro.Models.SkillCollection();
 		return response;
 	}
 });

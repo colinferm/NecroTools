@@ -16,6 +16,18 @@ Necro.Models.SkillSetCollection = Backbone.Collection.extend({
 		console.log(resp);
 		this.add(resp);
 		return resp;
+	},
+	getSkill: function(id) {
+		var skillId = parseInt(id);
+		var skill;
+		this.models.forEach(function(ss){
+			ss.attributes.skills.forEach(function(s){
+				if (s.id == skillId) {
+					skill = s;
+				}
+			});
+		});
+		return skill;
 	}
 });
 

@@ -30,6 +30,7 @@ Necro.Views.RosterItem = Backbone.View.extend({
 		console.log("Edit Fighter: " + this.model.get('fighter_name'));
 		var modal = new Necro.Views.Modal({
 			class: "Necro.Views.FighterModal",
+			title: "Edit Fighter",
 			model: this.model
 		});
 	},
@@ -42,6 +43,7 @@ Necro.Views.RosterItem = Backbone.View.extend({
 		console.log("Add XP");
 		var modal = new Necro.Views.Modal({
 			class: 'Necro.Views.XPModal',
+			title: "Add XP",
 			model: this.model
 		});
 	},
@@ -57,6 +59,11 @@ Necro.Views.RosterItem = Backbone.View.extend({
 
 	killFighter: function() {
 		console.log("Kill Fighter");
+		var modal = new Necro.Views.Modal({
+			class: 'Necro.Views.SkillsModal',
+			title: 'Select Skills',
+			model: this.model
+		});
 	},
 
 	removeFighter: function() {

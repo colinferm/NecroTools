@@ -136,6 +136,24 @@ html {
 						 max-width: 80px;
 						 margin: 0 auto;
 					}
+
+					.skillset {
+						padding: 0 10px;
+						margin-bottom: 10px;
+						
+						h5 {
+							text-align: center;
+							border-bottom: 1px solid lightgray;
+							text-transform: uppercase;
+							font-weight: 500;
+							letter-spacing: 2px;
+						}
+						ul {
+							li {
+								list-style: none;
+							}
+						}
+					}
 				}
 			}
 		}

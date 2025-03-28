@@ -1,0 +1,12 @@
+<div class="grid-x">
+    {{#each skillsets}}
+        <div class="skillset cell small-6">
+            <h5>{{skill_set_name}}</h5>
+            <ul>
+            {{#each skills}}
+                <li>{{#checkbox}}{{/checkbox}}</li>
+            {{/each}}
+            </ul>
+        </div>
+    {{/each}}
+</div>
