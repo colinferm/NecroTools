@@ -5,6 +5,8 @@ Necro.Models.Fighter = Backbone.Model.extend({
 		"id": null,
 		"gang": Necro.Models.Gang,
 		"fighter_name": "",
+		"fighter_role_id": "",
+		"backstory": "",
 		"movement": "",
 		"weapon_skill": "",
 		"ballistic_skill": "",

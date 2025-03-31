@@ -7,6 +7,13 @@ $black: #000;
 	}
 }
 
+@mixin crossBrowser($property, $css...) {
+    -webkit-#{$property} : $css;
+    -moz-#{$property} : $css;
+    -o-#{$property} : $css;
+    #{$property} : $css;
+}
+
 .no {
 	color: red;
 	font-weight: bold;
@@ -32,6 +39,7 @@ html {
 			border: none;
 			box-shadow: none;
 			background-color: transparent;
+			@include crossBrowser(transition, none);
 		}
 		
 		.main-content {
@@ -72,6 +80,13 @@ html {
 		.form-row {
 			display: flex;
 		}
+		
+		.fighter-details {
+
+			#base_cost {
+				text-align: right;
+			}
+		}
 
 		table {
 			&.fighter-weapon {
@@ -84,6 +99,13 @@ html {
 
 					input {
 						text-align: center;
+						
+						&:focus {
+							background-color: transparent;
+							border: none;
+							@include crossBrowser(transition, none);
+							@include crossBrowser(box-shadow, none);
+						}
 					}
 
 					&.two-stat {
@@ -114,9 +136,10 @@ html {
 			}
 			
 			.head_stat {
-				input
+				input {
 					&::placeholder {
-					color: #000;
+						color: #000;
+					}
 				}
 				background-color: #DEB887;
 			}

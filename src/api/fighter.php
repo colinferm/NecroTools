@@ -52,12 +52,26 @@ class FighterController extends SlimController {
 			SELECT r.id, r.role_name, r.heirarchy_role, r.gang_id, t.type_name AS gang FROM {$ndb->fighter_role} r, {$ndb->gang_type} t WHERE r.gang_id = t.id ORDER BY r.gang_id ASC, id ASC
 		";
 		$results = $ndb->query($query);
-		$roles = array();
+		$gangRoles = array();
+		$gangId = 0;
+		$gang = array();
 		foreach ($results as $r) {
-			$gangId = $r['gang_id'];
-			$roles[$gangId][] = $r;
+			if ($gangId != $r['gang_id']) {
+				if ($gangId > 0) $gangRoles[] = $gang;
+				$gangId = $r['gang_id'];
+				$gang = array(
+					'gang_id' => $gangId,
+					'gang_name' => $r['gang'],
+					'roles' => array()
+				);
+			}
+			unset($r['gang_id']);
+			unset($r['gang']);
+			$gang['roles'][] = $r;
 		}
- 		return $roles;
+		$gangRoles[] = $gang;
+
+ 		return $gangRoles;
 	}
 
 	public static function getFighterRolesJSON() {
@@ -96,7 +110,7 @@ class FighterController extends SlimController {
 			f.leadership, f.cool, f.willpower, f.intelligence, 
 			f.is_vehicle, f.is_convalescence, f.is_captured, f.experience, f.advancements, f.base_value, f.view_order
 			FROM {$ndb->user_fighter} f
-			LEFT JOIN {$ndb->fighter_role} fr ON (fr.id = f.fighter_role)
+			LEFT JOIN {$ndb->fighter_role} fr ON (fr.id = f.fighter_role_id)
 			WHERE f.user_gang_id = :user_gang_id
 			ORDER BY f.view_order
 		";
@@ -121,7 +135,7 @@ class FighterController extends SlimController {
 	public function getFighterByID($fighterId): array {
 		global $ndb;
 		$query = "
-			SELECT f.id, f.fighter_name, f.fighter_role, f.backstory, f.advancements, 
+			SELECT f.id, f.fighter_name, f.fighter_role_id, f.backstory, f.advancements, 
 			f.movement, f.weapon_skill, f.ballistic_skill, f.strength, f.toughness, f.toughness_side, f.toughness_rear,  
 			f.handling, f.save_roll, f.wounds, f.initiative, f.attacks, f.leadership, f.cool, f.willpower, f.intelligence, 
 			f.is_vehicle, f.is_convalescence, f.is_captured, f.experience, f.base_value, f.view_order
@@ -143,11 +157,11 @@ class FighterController extends SlimController {
 			$query = "
 				INSERT INTO {$ndb->user_fighter}
 				(
-					user_gang_id, fighter_name, fighter_role, backstory, movement, weapon_skill, ballistic_skill, strength,
+					user_gang_id, fighter_name, fighter_role_id, backstory, movement, weapon_skill, ballistic_skill, strength,
 					toughness, toughness_side, toughness_rear, wounds, initiative, attacks, handling, leadership, cool, willpower, intelligence,
 					save_roll, is_vehicle, is_convalescence, is_captured, experience, advancements, base_value, view_order, created
 				) VALUES (
-					:user_gang_id, :fighter_name, :fighter_role, :backstory, :movement, :weapon_skill, :ballistic_skill, :strength,
+					:user_gang_id, :fighter_name, :fighter_role_id, :backstory, :movement, :weapon_skill, :ballistic_skill, :strength,
 					:toughness, :toughness_side, :toughness_rear, :wounds, :initiative, :attacks, :handling, :leadership, :cool, :willpower, :intelligence,
 					:save_roll, :is_vehicle, :is_convalescence, :is_captured, :experience, 0, :base_value, :view_order, NOW()
 				)
@@ -156,11 +170,11 @@ class FighterController extends SlimController {
 			$query = "
 				INSERT INTO {$ndb->user_fighter}
 				(
-					user_gang_id, fighter_name, fighter_role, backstory, movement, weapon_skill, ballistic_skill, strength,
+					user_gang_id, fighter_name, fighter_role_id, backstory, movement, weapon_skill, ballistic_skill, strength,
 					toughness, wounds, initiative, attacks, leadership, cool, willpower, intelligence,
 					is_vehicle, is_convalescence, is_captured, experience, advancements, base_value, view_order, created
 				) VALUES (
-					:user_gang_id, :fighter_name, :fighter_role, :backstory, :movement, :weapon_skill, :ballistic_skill, :strength,
+					:user_gang_id, :fighter_name, :fighter_role_id, :backstory, :movement, :weapon_skill, :ballistic_skill, :strength,
 					:toughness, :wounds, :initiative, :attacks, :leadership, :cool, :willpower, :intelligence,
 					:is_vehicle, :is_convalescence, :is_captured, :experience, 0, :base_value, :view_order, NOW()
 				)

@@ -45,7 +45,7 @@ CREATE TABLE necro_user_fighter (
 	id INT NOT NULL AUTO_INCREMENT,
 	user_gang_id INT NOT NULL,
 	fighter_name VARCHAR(255) NOT NULL,
-	fighter_role INT NOT NULL,
+	fighter_role_id INT NOT NULL,
 	backstory TEXT,
 	movement TINYINT NOT NULL,
 	weapon_skill TINYINT NOT NULL,
