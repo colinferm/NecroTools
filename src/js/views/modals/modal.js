@@ -21,7 +21,7 @@ Necro.Views.Modal = Backbone.View.extend({
         this.$el.attr('data-overlay', 'true');
 
         this.content = Necro.Utils.Resolver.getNewInstance(this.opts.class, {model: this.model});
-        $('.modal-container', this.$el).html(this.content.render());
+        $('.modal-container', this.$el).html(this.content.render().$el);
 
         $('body').append(this.$el);
 
@@ -33,8 +33,11 @@ Necro.Views.Modal = Backbone.View.extend({
 	},
 
     saveData: function() {
-        this.content.save(_.bind(function(success) {
-            if (success) this.close();
+        this.content.save(_.bind(function(success, model) {
+            if (success) {
+                this.close();
+                if (this.opts.callback) this.opts.callback(model);
+            }
         }, this));
     },
 

@@ -35,19 +35,43 @@ $black: #000;
 html {
 	body {
 		
-		[type="text"] {
+		[type="text"], [type="number"], textarea {
 			border: none;
 			box-shadow: none;
 			background-color: transparent;
 			@include crossBrowser(transition, none);
 		}
+
+		.left-content {
+			.top_section {
+				margin-left: 0;
+
+				.section_title {
+					list-style: none;
+					text-transform: uppercase;
+					font-size: 20px;
+					font-weight: 500;
+					letter-spacing: 1px;
+					border-bottom: 1px solid #000;
+					margin: 15px 0;
+				}
+				.subsection {
+					margin-left: 20px;
+				}
+			}
+		}
 		
 		.main-content {
 			.right-content {
 				min-height: 600px;
+				flex-direction: column;
+				justify-content: start;
+
+				.header {
+					margin-bottom: 30px;
+				}
 
 				.right-content-container {
-					height: 100%;
 					display: flex;
 					flex-direction: column;
 					justify-content: center;
@@ -154,6 +178,16 @@ html {
 				.modal-container {
 					padding: 20px 0;
 					justify-content: center;
+
+					.trait-editor {
+						.cell {
+							padding: 5px;
+
+							[type="text"], [type="number"], textarea {
+								border: 0.5px solid #000;
+							}
+						}
+					}
 
 					.xp_field {
 						 max-width: 80px;

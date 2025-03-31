@@ -19,7 +19,7 @@ Necro.Views.FighterModal = Necro.Views.BaseModal.extend({
 			}
 		}
 		this.$el.html(this.template({roles: roles.roles, fighterRole: fighterRole, model: this.model.toJSON()}));
-		return this.$el;
+		return this;
 	},
 
 	save: function(cb) {

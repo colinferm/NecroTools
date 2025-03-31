@@ -8,7 +8,7 @@ Necro.Views.InjuryModal = Necro.Views.BaseModal.extend({
 	render: function() {
 		//this.$el.html(this.template(this.model.toJSON()));
 		this.$el.html(this.template({injuries: Necro.Apps.Data.Injuries, model: this.model.toJSON()}));
-		return this.$el;
+		return this;
 	},
 
 	populateDescription: function() {
@@ -24,7 +24,7 @@ Necro.Views.InjuryModal = Necro.Views.BaseModal.extend({
 		if (this.inj) {
 			console.log("Saving injury: " + this.inj.name);
 		}
-		cb(true);
+		cb(true, this.inj);
 	}
 
 });

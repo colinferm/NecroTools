@@ -8,7 +8,7 @@ Necro.Views.XPModal = Necro.Views.BaseModal.extend({
     render: function() {
 		//this.$el.html(this.template(this.model.toJSON()));
         this.$el.html(this.template({model: this.model.toJSON()}));
-        return this.$el;
+        return this;
     },
 
     grabXP: function() {
@@ -24,7 +24,7 @@ Necro.Views.XPModal = Necro.Views.BaseModal.extend({
             this.model.set("audit", "Added " + this.xp + "xp");
             this.model.save({
                 success: cb(true),
-                errpr: cb(false)
+                error: cb(false)
             });
         }
     }

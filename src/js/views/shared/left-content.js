@@ -6,11 +6,49 @@ Necro.Views.LeftContent = Backbone.View.extend({
 	initialize : function(options) {
 		var html = Necro.Utils.UI.TPL.get(this.templateName);
 		this.template = _.template(html);
+
+		this.gangCollection = new Necro.Models.GangCollection({});
+		//this.listenTo(this.collecton, 'update', this.addItems)
+		this.gangCollection.fetch({
+			success: _.bind(this.userGangs, this)
+		});
+
+		Necro.Events.on("gangs_updated", this.gangsUpdated);
+		Necro.Events.on("roster_updated", this.gangFighters);
 	},
 
 	render: function() {
 		this.$el.append(this.template);
-		return this.$el;
+		$('.gang_fighter_title', this.$el).css('display', 'none');
+		$('.gang_fighters', this.$el).css('display', 'none');
+		return this;
+	},
+
+	gangsUpdated: function(gangs) {
+		this.gangCollection = gangs;
+		this.userGangs();
+	},
+
+	userGangs: function() {
+		$('.gang_fighter_title', this.$el).css('display', 'none');
+		$('.gang_fighters', this.$el).css('display', 'none');
+		var list = $('.gang_list', this.$el);
+		list.empty();
+
+		_.each(this.gangCollection.models, function(item) {
+			list.append('<li><a href="#roster/'+item.get("id")+'">'+item.get("gang_name")+'</a></li>');
+		}, this);
+	},
+
+	gangFighters: function(gang) {
+		/*
+		$('.gang_fighter_title', this.$el).css('display', 'none');
+		var fighters = $('.gang_fighters', this.$el);
+
+		_.each(gang.models, function(item) {
+			list.append('<li><a href="#roster/'+item.get("id")+'">'+item.get("gang_name")+'</a></li>');
+		}, this);
+		*/
 	}
 
 });

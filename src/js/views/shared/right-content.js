@@ -12,7 +12,7 @@ Necro.Views.RightContent = Backbone.View.extend({
 
 	render: function() {
 		this.$el.html(this.template({title: this.pageTitle}));
-		return this.$el;
+		return this;
 	}
 
 });

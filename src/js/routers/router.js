@@ -10,7 +10,9 @@ Necro.Routers.NecroRouter = Backbone.Router.extend({
 		"register": "register",
 		"gangs":"listGangs",
 		"roster": "rosterForm",
-		"roster/:id": "rosterForm"
+		"roster/:id": "rosterForm",
+		"weaponTraits": "weaponTraits",
+		"weaponTrait/:id": "editTrait"
 		/*
 		"entities/list":"entityListSearch",
 		"entities/new":"entityForm",
@@ -47,8 +49,8 @@ Necro.Routers.NecroRouter = Backbone.Router.extend({
 	load: function (callback) {
 		this.header.render();
 		this.footer.render();
-		this.contentWell.append(this.leftContent.render());
-		this.contentWell.append(this.rightContent.render());
+		this.contentWell.append(this.leftContent.render().$el);
+		this.contentWell.append(this.rightContent.render().$el);
 		Backbone.history.start();
 
 		var auth = $.cookie('auth');
@@ -100,7 +102,7 @@ Necro.Routers.NecroRouter = Backbone.Router.extend({
 		var loginView = new Necro.Views.Login({
 			model: this.session
 		});
-		this.updateRight(loginView.render(), "Log In");
+		this.updateRight(loginView.render().$el, "Log In");
 	}, 
 
 	logout: function() {
@@ -113,7 +115,7 @@ Necro.Routers.NecroRouter = Backbone.Router.extend({
 
 	listGangs: function() {
 		var gangListView = new Necro.Views.GangList({});
-		this.updateRight(gangListView.render(), "Gangs");
+		this.updateRight(gangListView.render().$el, "Gangs");
 	},
 
 	rosterForm: function(id) {
@@ -133,6 +135,16 @@ Necro.Routers.NecroRouter = Backbone.Router.extend({
 		var title = "Create Roster";
 		if (gang.get("id")) title = gang.get("gang_name");
 		var rosterListView = new Necro.Views.Roster({model: gang});
-		this.updateRight(rosterListView.render(), title);
+		this.updateRight(rosterListView.render().$el, title);
+	},
+
+	weaponTraits: function() {
+		var title = "Weapon Traits";
+		var traitList = new Necro.Views.TraitList({});
+		this.updateRight(traitList.render().$el, title);
+	},
+
+	editTrait: function(traitId) {
+
 	}
 });

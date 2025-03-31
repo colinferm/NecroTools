@@ -8,8 +8,8 @@ Necro.Views.BaseModal = Backbone.View.extend({
 		this.template = Handlebars.compile(html);
 	},
 
-	save: function(cb) {
-		cb(true);
+	save: function(callback) {
+		callback(true);
 	}
 
 });

@@ -27,6 +27,8 @@ class NecroDB {
 	public $user_fighter_audit = DB_PREFIX.'user_fighter_audit';
 	
 	private $db = null;
+
+	public $lastInsertId;
 	
 	public function getInstance() {
 		if (is_null($this->db)) {
@@ -34,6 +36,13 @@ class NecroDB {
 			$this->db = new PDO($dsn, DB_USER, DB_PASS);
 		}
 		return $this->db;
+	}
+
+	public function delete($query, $id) {
+		$db = $this->getInstance();
+	
+		$stmt = $db->prepare($query);
+		return $stmt->execute(['id' => $id]);
 	}
 	
 	public function query($query, $args = array()) {
@@ -60,7 +69,8 @@ class NecroDB {
 		$db = $this->getInstance();
 		
 		$stmt = $db->prepare($query);
-		$stmt->setFetchMode(PDO::FETCH_ASSOC);
+		//$this->bindParams($stmt, $args);
+
 		return $stmt->execute($args);
 	}
 	
@@ -68,11 +78,19 @@ class NecroDB {
 		$db = $this->getInstance();
 		
 		$stmt = $db->prepare($query);
-		$result = $stmt->execute($args);
-		if ($result) {
-			return $db->lastInsertId;
+		$status = $stmt->execute($args);
+		$this->lastInsertId = $db->lastInsertId();
+		return $status;
+	}
+
+	function bindParams(&$stmt, $args) {
+		foreach ($args as $key => $val) {
+			if (strpos($key, 'id')) {
+				$stmt->bindParam(':'.$key, intval($val), PDO::PARAM_INT);
+			} else {
+				$stmt->bindParam(':'.$key, $val, PDO::PARAM_STR);
+			}
 		}
-		return $result;
 	}
 }
 $ndb = new NecroDB();

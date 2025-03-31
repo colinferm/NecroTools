@@ -7,7 +7,7 @@ Necro.Views.SkillsModal = Necro.Views.BaseModal.extend({
 
 	render: function() {
 		this.$el.html(this.template({skillsets: Necro.Apps.Data.Skills.toJSON(), model: this.model.toJSON()}));
-		return this.$el;
+		return this;
 	},
 
 	addSkill: function(e) {
@@ -29,7 +29,7 @@ Necro.Views.SkillsModal = Necro.Views.BaseModal.extend({
 		if (this.inj) {
 			console.log("Saving injury: " + this.inj.name);
 		}
-		cb(true);
+		cb(true, this.inj);
 	}
 });
 

@@ -37,6 +37,7 @@ $app->get('/traits', [\WeaponController::class, 'fetchTraits'])->add($authCheck)
 $app->post('/trait', [\WeaponController::class, 'addTrait'])->add($authCheck);
 $app->get('/trait/{id}', [\WeaponController::class, 'fetchTrait'])->add($authCheck);
 $app->put('/trait/{id}', [\WeaponController::class, 'updateTrait'])->add($authCheck);
+$app->delete('/trait/{id}', [\WeaponController::class, 'deleteTrait'])->add($authCheck);
 
 $app->get('/skills', [\FighterController::class, 'skills']);
 

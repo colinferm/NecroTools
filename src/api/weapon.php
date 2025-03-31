@@ -8,7 +8,7 @@ class WeaponController extends SlimController {
 	public static function getTraits() {
 		global $ndb;
 		$query = "
-			SELECT t.id, t.trait_name, t.trait_value FROM {$ndb->weapon_trait} t ORDER BY t.trait_name ASC
+			SELECT t.id, t.trait_name, t.trait_value, t.notes FROM {$ndb->weapon_trait} t ORDER BY t.trait_name ASC
 		";
 		return $ndb->query($query);
 	}
@@ -69,25 +69,35 @@ class WeaponController extends SlimController {
 		global $ndb;
 		$id = $args['id'];
 		$query = "
-			SELECT t.id, t.trait_name, t.trait_value FROM {$ndb->weapon_trait} t WHERE t.id = :id ORDER BY t.trait_name ASC
+			SELECT t.id, t.trait_name, t.trait_value, t.notes FROM {$ndb->weapon_trait} t WHERE t.id = :id ORDER BY t.trait_name ASC
 		";
 		$data = $ndb->query($query, ['id' => $id]);
 		$response->getBody()->write(json_encode($data));
 		return $response->withHeader('Content-Type', 'application/json');
 	}
 
+	public function deleteTrait(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+		global $ndb;
+		$id = $args['id'];
+		$result = $ndb->delete("DELETE FROM {$ndb->weapon_trait_characteristic_map} WHERE trait_id = :id", $id);
+		$result = $ndb->delete("DELETE FROM {$ndb->weapon_trait} WHERE id = :id", $id);
+		$response->withStatus(200);
+		return $response;
+	}
+
 	public function addTrait(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
 		global $ndb;
-		$trait = json_decode($response->getBody());
+		$trait = json_decode($request->getBody(), true);
+		unset($trait['id']);
 		$query = "
 			INSERT INTO {$ndb->weapon_trait}
-			(trait_name, trait_value)
+				(trait_name, trait_value, notes)
 			VALUES
-			(:trait_name, :trait_value)
+				(:trait_name, :trait_value, :notes)
 		";
 		$result = $ndb->insert($query, $trait);
 		if ($result) {
-			$trait['id'] = $result;
+			$trait['id'] = $ndb->lastInsertId;
 			$response->getBody()->write(json_encode($trait));
 			return $response->withHeader('Content-Type', 'application/json');
 		}
@@ -96,10 +106,10 @@ class WeaponController extends SlimController {
 
 	public function updateTrait(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
 		global $ndb;
-		$trait = json_decode($response->getBody());
+		$trait = json_decode($request->getBody(), true);
 		$query = "
 			UPDATE {$ndb->weapon_trait}
-			SET trait_name = :trait_name, trait_value = :trait_value
+			SET trait_name = :trait_name, trait_value = :trait_value, notes = :notes
 			WHERE id = :id
 		";
 		$result = $ndb->update($query, $trait);

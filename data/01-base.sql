@@ -127,9 +127,10 @@ CREATE TABLE necro_weapon_trait (
 	id INT NOT NULL AUTO_INCREMENT,
 	trait_name VARCHAR(255) NOT NULL,
 	trait_value INT NOT NULL DEFAULT '0',
+	notes TEXT NULL,
 	PRIMARY KEY (id)
 );
-INSERT INTO necro_weapon_trait (id, trait_name) VALUES (1, 'Rapid Fire (1)');
+INSERT INTO necro_weapon_trait (id, trait_name, notes) VALUES (1, 'Rapid Fire (1)', 'All ranged weapons roll an ammo check die but weapons with this trait count the number of hits that are rolled.');
 INSERT INTO necro_weapon_trait (id, trait_name) VALUES (2, 'Backstab');
 INSERT INTO necro_weapon_trait (id, trait_name) VALUES (3, 'Toxin');
 INSERT INTO necro_weapon_trait (id, trait_name) VALUES (4, 'Parry');
