@@ -69,6 +69,7 @@ Necro.Routers.NecroRouter = Backbone.Router.extend({
 			}, {
 				success: _.bind(function() {
 					this.navigate(location, {trigger: true});
+					Necro.Events.trigger('user:loggedin');
 				}, this),
 				error: _.bind(function() {
 					this.navigate(location, {trigger: true});

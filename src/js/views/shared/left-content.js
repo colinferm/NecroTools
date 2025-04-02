@@ -2,10 +2,11 @@ Necro.Views.LeftContent = Backbone.View.extend({
 	tagName: 'div',
 	className: 'cell large-3 left-content',
 	templateName: 'left-content',
+	loggedIn: false,
 
 	initialize : function(options) {
 		var html = Necro.Utils.UI.TPL.get(this.templateName);
-		this.template = _.template(html);
+		this.template = Handlebars.compile(html);
 
 		this.gangCollection = new Necro.Models.GangCollection({});
 		//this.listenTo(this.collecton, 'update', this.addItems)
@@ -13,12 +14,17 @@ Necro.Views.LeftContent = Backbone.View.extend({
 			success: _.bind(this.userGangs, this)
 		});
 
+		Necro.Events.on("user:loggedin", function(){
+			this.loggedIn = true;
+			this.render();
+			this.userGangs();
+		}, this);
 		Necro.Events.on("gangs_updated", this.gangsUpdated);
 		Necro.Events.on("roster_updated", this.gangFighters);
 	},
 
 	render: function() {
-		this.$el.append(this.template);
+		this.$el.html(this.template({loggedIn: this.loggedIn}));
 		$('.gang_fighter_title', this.$el).css('display', 'none');
 		$('.gang_fighters', this.$el).css('display', 'none');
 		return this;

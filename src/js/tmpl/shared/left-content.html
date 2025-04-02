@@ -1,20 +1,22 @@
 <ul class="top_section">
-	<li class="section_title">Admin</li>
-	<ul class="subsection">
-		<li>Fighter Templates</li>
-		<li>Fighter Skills</li>
-		<li>Gang Setup</li>
-		<li>Weapons</li>
-		<li><a href="#weaponTraits">Weapon Traits</a></li>
-	</ul>
-	<li class="section_title">Gangs</li>
-	<ul class="subsection gang_list">
-		<li>Gang Name</li>
-		<li>Add Gang</li>
-	</ul>
-	<li class="section_title gang_fighter_title">Fighters</li>
-	<ul class="subsection gang_fighters">
-		<li>Fighter Name</li>
-		<li>Add Fighter</li>
-	</ul>
+	{{#if loggedIn}}
+		<li class="section_title">Admin</li>
+		<ul class="subsection">
+			<li>Fighter Templates</li>
+			<li>Fighter Skills</li>
+			<li>Gang Setup</li>
+			<li>Weapons</li>
+			<li><a href="#weaponTraits">Weapon Traits</a></li>
+		</ul>
+		<li class="section_title">Gangs</li>
+		<ul class="subsection gang_list">
+			<li>Gang Name</li>
+			<li>Add Gang</li>
+		</ul>
+		<li class="section_title gang_fighter_title">Fighters</li>
+		<ul class="subsection gang_fighters">
+			<li>Fighter Name</li>
+			<li>Add Fighter</li>
+		</ul>
+	{{/if}}
 </ul>

@@ -17,7 +17,7 @@ Necro.Views.Login = Backbone.View.extend({
 
 	render: function() {
 		this.$el.html(this.template());
-		return this.$el;
+		return this;
 	},
 
 	keyAction: function(e) {
