@@ -16,7 +16,7 @@ Necro.Views.TraitList = Backbone.View.extend({
 		this.collection.fetch({
 			success: _.bind(this.addItems, this)
 		});
-		this.collection.on("add", this.addItems, this);
+		this.collection.on("add", this.addItem, this);
 	},
 
 	render: function() {
@@ -34,7 +34,6 @@ Necro.Views.TraitList = Backbone.View.extend({
 	addItem: function(item) {
 		var row = new Necro.Views.TraitItem({model: item});
 		$('tbody', this.$el).append(row.render().$el);
-		Necro.Events.trigger('stylize');
 	},
 
 	addTrait: function() {
@@ -69,6 +68,7 @@ Necro.Views.TraitItem = Backbone.View.extend({
 
 	render: function() {
 		this.$el.html(this.template(this.model.toJSON()));
+		var menu = new Foundation.DropdownMenu($('ul.dropdown.menu', this.$el));
 		return this;
 	},
 

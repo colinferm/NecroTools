@@ -30,7 +30,6 @@ Necro.Views.Roster = Backbone.View.extend({
 			var item = new Necro.Views.RosterItem({model: model});
 			$('tbody', this.el).append(item.render().$el);
 		});
-		Necro.Events.trigger('stylize');
 		Necro.Events.trigger("roster_updated", this.collection);
 	}
 
@@ -61,7 +60,7 @@ Necro.Views.RosterItem = Backbone.View.extend({
 
 	render: function() {
 		this.$el.html(this.template(this.model.toJSON()));
-		Necro.Events.trigger('stylize');
+		var menu = new Foundation.DropdownMenu($('ul.dropdown.menu', this.$el));
 		return this;
 	},
 
