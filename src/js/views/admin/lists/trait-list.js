@@ -16,7 +16,7 @@ Necro.Views.TraitList = Backbone.View.extend({
 		this.collection.fetch({
 			success: _.bind(this.addItems, this)
 		});
-		this.collection.on("add", this.addItem, this);
+		this.collection.on("add", this.addItems, this);
 	},
 
 	render: function() {

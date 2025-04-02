@@ -173,6 +173,17 @@ html {
 			}
 		}
 
+		.accordion {
+			.accordion-item {
+				.accordion-title {
+					color: $white;
+					background-color: darkgray;
+					font-size: 20px;
+					font-weight: bold;
+				}
+			}
+		}
+
 		.reveal-overlay {
 			.reveal {
 				.modal-container {

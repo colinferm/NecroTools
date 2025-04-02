@@ -5,7 +5,7 @@ Necro.Views.Roster = Backbone.View.extend({
 	pageTitle: 'Gang',
 
 	events: {
-		
+		'click .add_fighter': 'addFighter'
 	},
 
 	initialize : function(options) {
@@ -31,6 +31,14 @@ Necro.Views.Roster = Backbone.View.extend({
 			$('tbody', this.el).append(item.render().$el);
 		});
 		Necro.Events.trigger("roster_updated", this.collection);
+	},
+
+	addFighter: function() {
+		var modal = new Necro.Views.Modal({
+			class: "Necro.Views.FighterModal",
+			title: "Edit Fighter",
+			model: new Necro.Models.Fighter()
+		});
 	}
 
 });

@@ -1,0 +1,109 @@
+Necro.Views.AdminSkillList = Backbone.View.extend({
+	tagName: 'div',
+	className: 'large-12',
+	templateName: 'skill-list',
+	pageTitle: 'Skills',
+
+	events: {
+		'click .addSkill': 'addSkill'
+	},
+
+	initialize : function(options) {
+		var html = Necro.Utils.UI.TPL.get(this.templateName);
+		this.template = Handlebars.compile(html);
+
+		this.collection = new Necro.Models.SkillSetCollection({});
+		this.collection.fetch({
+			success: _.bind(this.addItems, this)
+		});
+		this.collection.on("add", this.addItem, this);
+	},
+
+	render: function() {
+		this.$el.html(this.template);
+		return this;
+	},
+
+	addItems: function() {
+		$('accordion', this.$el).empty()
+		_.each(this.collection.models, function(model) {
+			var row = new Necro.Views.AdminSkillSet({model: model});
+            $('.accordion', this.$el).append(row.render().$el);
+		}, this);
+		new Foundation.ResponsiveAccordionTabs($('.accordion', this.$el));
+	},
+
+	addSkill: function() {
+		var m = new Necro.Models.Skill();
+		var modal = new Necro.Views.Modal({
+			class: "Necro.Views.AdminSkillEditModal",
+			title: "Add Skill",
+			model: m,
+			callback: _.bind(function() {
+				if (m) this.collection.add(m);
+			}, this)
+		});
+	}
+
+});
+
+Necro.Views.AdminSkillSet = Backbone.View.extend({
+    tagName: 'li',
+    className: 'accordion-item',
+    templateName: 'skill-list-set',
+
+    initialize : function(options) {
+		var html = Necro.Utils.UI.TPL.get(this.templateName);
+		this.template = Handlebars.compile(html);
+	},
+
+	render: function() {
+		this.$el.html(this.template(this.model.toJSON()));
+		this.$el.attr('data-accordion-item', '');
+
+		_.each(this.model.attributes.skills, function(skill) {
+			var item = new Necro.Views.AdminSkillItem({model: new Necro.Models.Skill(skill)});
+			$('tbody', this.$el).append(item.render().$el);
+		}, this);
+
+		return this;
+	}
+
+});
+
+Necro.Views.AdminSkillItem = Backbone.View.extend({
+	tagName: 'tr',
+	templateName: 'skill-list-item',
+
+	events: {
+		'click .action_edit': 'editSkill',
+		'click .action_remove': 'deleteSkill',
+	},
+
+	initialize : function(options) {
+		var html = Necro.Utils.UI.TPL.get(this.templateName);
+		this.template = Handlebars.compile(html);
+		//this.model.on("change", this.render, this);
+		//this.model.on("destroy", this.remove, this);
+	},
+
+	render: function() {
+		console.log(this.model.toJSON());
+		this.$el.html(this.template(this.model.toJSON()));
+		var menu = new Foundation.DropdownMenu($('ul.dropdown.menu', this.$el));
+		return this;
+	},
+
+	editSkill: function() {
+		var modal = new Necro.Views.Modal({
+			class: "Necro.Views.AdminSkillEditModal",
+			title: "Edit Skill",
+			model: this.model
+		});
+	},
+
+	deleteSkill: function() {
+		this.model.destroy();
+	}
+
+});

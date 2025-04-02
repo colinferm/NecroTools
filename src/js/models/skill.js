@@ -12,11 +12,17 @@ Necro.Models.SkillSet = Backbone.Model.extend({
 Necro.Models.SkillSetCollection = Backbone.Collection.extend({
 	model: Necro.Models.SkillSet,
 	url:   '/api/skills',
+
+	initialize: function() {
+		this.comparator = "skill_set_name";
+	},
+
 	parse: function(resp) {
 		console.log(resp);
 		this.add(resp);
 		return resp;
 	},
+	
 	getSkill: function(id) {
 		var skillId = parseInt(id);
 		var skill;
@@ -43,6 +49,11 @@ Necro.Models.Skill = Backbone.Model.extend({
 Necro.Models.SkillCollection = Backbone.Collection.extend({
 	model: Necro.Models.Skill,
 	url:   '/api/skills',
+
+	initialize: function() {
+		this.comparator = "skill_name";
+	},
+
 	parse: function(resp) {
 		console.log(resp);
 		this.add(resp);

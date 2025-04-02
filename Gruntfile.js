@@ -43,7 +43,7 @@ module.exports = function (grunt) {
           banner: '',
           stripBanners: true
         },
-        src: ['/var/www/html/js/utils/packages.js', '/var/www/html/js/utils/**', '/var/www/html/js/routers/**', '/var/www/html/js/models/**', '/var/www/html/js/views/**'],
+        src: ['/var/www/html/js/utils/packages.js', '/var/www/html/js/utils/router.js', '/var/www/html/js/utils/base-modal.js', '/var/www/html/js/utils/modal.js', '/var/www/html/js/models/**', '/var/www/html/js/views/**/**'],
         dest: '/var/www/html/js/necro.js'
       },
       toCompiled: {
@@ -52,7 +52,7 @@ module.exports = function (grunt) {
           stripBanners: true,
           sourceMap: false
         },
-        src: ['/var/www/html/js/utils/packages.js', '/var/www/html/js/utils/**', '/var/www/html/js/routers/**', '/var/www/html/js/models/**', '/var/www/html/js/views/**'],
+        src: ['/var/www/html/js/utils/packages.js', '/var/www/html/js/utils/router.js', '/var/www/html/js/utils/base-modal.js', '/var/www/html/js/utils/modal.js', '/var/www/html/js/models/**', '/var/www/html/js/views/**/**'],
         dest: '/var/www/html/js/necro.js'
       },
       toCompiledDist: {
@@ -61,7 +61,7 @@ module.exports = function (grunt) {
           stripBanners: true,
           sourceMap: false
         },
-        src: ['/var/www/html/js/utils/packages.js', '/var/www/html/js/utils/**', '/var/www/html/js/routers/**', '/var/www/html/js/models/**', '/var/www/html/js/views/**'],
+        src: ['/var/www/html/js/utils/packages.js', '/var/www/html/js/utils/router.js', '/var/www/html/js/utils/base-modal.js', '/var/www/html/js/utils/modal.js', '/var/www/html/js/models/**', '/var/www/html/js/views/**/**'],
         dest: '/usr/src/necro/necro-compiled.js'
       },
       templates: {

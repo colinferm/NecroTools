@@ -11,19 +11,24 @@ Necro.Routers.NecroRouter = Backbone.Router.extend({
 		"gangs":"listGangs",
 		"roster": "rosterForm",
 		"roster/:id": "rosterForm",
-		"weaponTraits": "weaponTraits",
-		"weaponTrait/:id": "editTrait"
-		/*
-		"entities/list":"entityListSearch",
-		"entities/new":"entityForm",
-		"entities/:id":"entityForm",
-		*/
+
+		"adminGangs": "adminGangList",
+		"adminGangs/:id": "adminGangForm",
+		"adminSkills": "adminSkillsList",
+		"adminSkills/:id": "adminSkillForm",
+		"adminFighters": "adminFighterList",
+		"adminFighters/:id": "adminFighterForm",
+		"adminWeaponTraits": "adminWeaponTraitList",
+		"adminWeaponTraits/:id": "adminEditTrait"
 	},
 
 	initialize: function () {
 		_.bindAll(this, 
 			'home', 'login', 'logout', 'register', 'listGangs', 'rosterForm',
-			'updateRight', 'updateLeft', 'updateFoundation', 'showRoster'
+			'updateRight', 'updateLeft', 'updateFoundation', 'showRoster',
+			/** Admin */
+			'adminGangList', 'adminGangForm', 'adminSkillsList', 'adminSkillForm',
+			'adminFighterList', 'adminFighterForm', 'adminWeaponTraitList', 'adminEditTrait'
 		);
 
 		Necro.Events.on('stylize', this.updateFoundation);
@@ -139,13 +144,43 @@ Necro.Routers.NecroRouter = Backbone.Router.extend({
 		this.updateRight(rosterListView.render().$el, title);
 	},
 
-	weaponTraits: function() {
+
+	/**
+	 * Admin
+	 */
+	adminGangList: function() {
+
+	},
+
+	adminGangForm: function(id) {
+
+	},
+
+	adminSkillsList: function() {
+		var title = "Fighter Skills";
+		var skillList = new Necro.Views.AdminSkillList({});
+		this.updateRight(skillList.render().$el, title);
+	},
+
+	adminSkillForm: function(id) {
+
+	},
+
+	adminFighterList: function() {
+
+	},
+
+	adminFighterForm: function(id) {
+
+	},
+
+	adminWeaponTraitList: function() {
 		var title = "Weapon Traits";
 		var traitList = new Necro.Views.TraitList({});
 		this.updateRight(traitList.render().$el, title);
 	},
 
-	editTrait: function(traitId) {
+	adminEditTrait: function(traitId) {
 
 	}
 });

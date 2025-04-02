@@ -26,7 +26,7 @@ Necro.Views.Modal = Backbone.View.extend({
 		$('body').append(this.$el);
 
 		var popup = new Foundation.Reveal(this.$el);
-		//this.$el.on('closed.zf.reveal', _.bind(this.close, this));
+		this.$el.on('closed.zf.reveal', _.bind(this.removeSelf, this));
 		popup.open();
 
 		return this.$el;
@@ -46,8 +46,12 @@ Necro.Views.Modal = Backbone.View.extend({
 		if (document.activeElement) {
 			document.activeElement.blur();
 		}
-		this.$el.foundation('close');
-		//$("#"+this.id).remove();
+		this.removeSelf();
+	},
+
+	removeSelf: function() {
+		$(this.$el).foundation('close');
+		$('.reveal-overlay').remove();
 	}
 
 

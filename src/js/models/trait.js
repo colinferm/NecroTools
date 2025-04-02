@@ -12,6 +12,11 @@ Necro.Models.Trait = Backbone.Model.extend({
 Necro.Models.TraitCollection = Backbone.Collection.extend({
 	model: Necro.Models.Trait,
 	url:   '/api/traits',
+	
+	initialize: function() {
+		this.comparator = "trait_name";
+	},
+
 	parse: function(resp) {
 		console.log(resp);
 		this.add(resp);
