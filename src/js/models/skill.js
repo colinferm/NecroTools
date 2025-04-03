@@ -31,7 +31,7 @@ Necro.Models.SkillSetCollection = Backbone.Collection.extend({
 
 	parse: function(resp) {
 		console.log(resp);
-		this.add(resp);
+		this.add(resp, {silent: true});
 		return resp;
 	},
 

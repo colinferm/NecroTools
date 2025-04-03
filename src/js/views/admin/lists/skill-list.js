@@ -110,7 +110,7 @@ Necro.Views.AdminSkillSet = Backbone.View.extend({
 			model: m,
 			callback: _.bind(function() {
 				if (m) {
-					var collection = this.model.get("skills");
+					var collection = this.model.attributes.skills;
 					collection.add(m);
 				}
 			}, this)

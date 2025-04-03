@@ -82,7 +82,7 @@ module.exports = function (grunt) {
               grunt.util.linefeed;
           }
         },
-        src: ['/var/www/html/js/tmpl/**/*.html'],
+        src: ['/var/www/html/tmpl/**/*.html'],
         dest: '/var/www/html/js/templates.js'
       },
       templatesDist: {
