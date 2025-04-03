@@ -113,6 +113,23 @@ html {
 		}
 
 		table {
+			&.skill-list {
+				th.child-content {
+					display: flex;
+					justify-content: space-between;
+
+					div {
+						min-height: 40px;
+						display: flex;
+						flex-direction: column;
+						justify-content: center;
+
+						font-weight: bold;
+						text-transform: uppercase;
+						letter-spacing: 1px;
+					}
+				}
+			}
 			&.fighter-weapon {
 				th, td {
 					text-align: center;

@@ -6,6 +6,7 @@ require_once 'api/slim_controller.php';
 require_once 'api/utils.php';
 require_once 'api/weapon.php';
 require_once 'api/fighter.php';
+require_once 'api/gang.php';
 ?>
 <!doctype html>
 <html class="no-js" lang="en">
@@ -40,6 +41,7 @@ require_once 'api/fighter.php';
 				Necro.Apps.Data.Skills = new Necro.Models.SkillSetCollection(<?php echo FighterController::getSkillsJSON(); ?>);
 				Necro.Apps.Data.Injuries = <?php echo FighterController::getInjuriesJSON(); ?>;
 				Necro.Apps.Data.FighterRoles = <?php echo FighterController::getFighterRolesJSON(); ?>;
+				Necro.Apps.Data.GangTypes = <?php echo GangController::getGangTypesJSON(); ?>;
 
 				window.necro = new Necro.Routers.NecroRouter();
 				necro.load();

@@ -9,7 +9,7 @@
 		<select name="heirarchy_role" id="heirarchy_role" class="form-select form-select-sm" aria-label="Role">
 			<option value="">Role</option>
 			{{#each roles}}
-				{{#form-option}}{{/form-option}}
+				{{#form-option selected-id="fighter_role_id" name-param="role_name"}}{{/form-option}}
 			{{/each}}
 		</select>
 	</div>

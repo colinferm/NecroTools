@@ -1,0 +1,14 @@
+<div class="grid-x trait-editor">
+    <div class="cell small-8">
+        <input class="skill_set_name" value="{{model.skill_set_name}}" type="text" placeholder="Name">
+    </div>
+    <div class="cell small-12">
+        {{#checkbox name-param="limited_to_gang" class-name="limited_to_gang" text="Limited to Gang:"}}{{/checkbox}}
+        <select name="gang_type" id="gang_type_id" class="form-select form-select-sm" aria-label="Role">
+			<option value="0">Gangs</option>
+			{{#each gangTypes}}
+                {{#form-option selected-id="gang_type_id" name-param="type_name"}}{{/form-option}}
+			{{/each}}
+		</select>
+    </div>
+</div>

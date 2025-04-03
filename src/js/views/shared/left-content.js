@@ -19,7 +19,7 @@ Necro.Views.LeftContent = Backbone.View.extend({
 			this.render();
 			this.userGangs();
 		}, this);
-		Necro.Events.on("gangs_updated", this.gangsUpdated);
+		Necro.Events.on("gangs_updated", _.bind(this.gangsUpdated, this));
 		Necro.Events.on("roster_updated", this.gangFighters);
 	},
 

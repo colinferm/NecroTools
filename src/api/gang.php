@@ -82,5 +82,32 @@ class GangController extends SlimController {
 		}
 		throw new DatabaseException();
 	}
+
+	public static function getGangTypes() {
+		global $ndb;
+		$query = "
+			SELECT gt.id, gt.type_name, gt.house_gang
+			FROM {$ndb->gang_type} gt
+			ORDER BY gt.type_name ASC
+		";
+		return $ndb->query($query);;
+	}
+
+	public static function getGangTypesJSON() {
+		global $cache;
+		$types = null;
+		$types = $cache->get("gang-types");
+		if (!$types) {
+			$types = json_encode(GangController::getGangTypes());
+			$cache->set("gang-types", $types);
+		}
+		return $types;
+	}
+
+	public function gangTypes(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+		$types = $this->getGangTypes();
+		$response->getBody()->write(json_encode($types));
+		return $response->withHeader('Content-Type', 'application/json');
+	}
 }
 ?>

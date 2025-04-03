@@ -26,10 +26,3 @@ Necro.Views.FighterModal = Necro.Views.BaseModal.extend({
 		cb(true);
 	}
 });
-
-Handlebars.registerHelper("form-option", function(options) {
-	var model = options.data.root.model;
-	var selected = "";
-	if (this.id == model.fighter_role_id) selected = "selected";
-	return '<option value="' + this.id + '" ' + selected + '>' + this.role_name + '</option>';
-});

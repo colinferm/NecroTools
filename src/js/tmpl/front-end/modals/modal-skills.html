@@ -4,7 +4,7 @@
             <h5>{{skill_set_name}}</h5>
             <ul>
             {{#each skills}}
-                <li>{{#checkbox}}{{/checkbox}}</li>
+                <li>{{#checkbox-skill name-param="skill_name" class-name="skill_box"}}{{/checkbox-skill}}</li>
             {{/each}}
             </ul>
         </div>

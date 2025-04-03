@@ -32,15 +32,3 @@ Necro.Views.SkillsModal = Necro.Views.BaseModal.extend({
 		cb(true, this.inj);
 	}
 });
-
-Handlebars.registerHelper("checkbox", function(options) {
-	var model = options.data.root.model;
-	var checked = "";
-	model.skills.models.forEach(function(skill){
-		if (skill.id == this.id) {
-			checked = "checked";
-			return;
-		}
-	});
-	return '<input type="checkbox" class="skill_box" value="' + this.id + ' ' + checked + '">&nbsp;' + this.skill_name;
-});

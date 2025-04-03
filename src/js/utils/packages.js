@@ -43,6 +43,48 @@ Necro.Utils.UI.TPL = {
 	}
 };
 
+Necro.Utils.UI.Helpers = {
+	TemplateOptions: function(options) {
+		var item = this;
+		var model = options.data.root.model;
+		var selectKey = options.hash['selected-id'];
+		var nameParam = options.hash['name-param'];
+		var selected = "";
+		if (this.id == model[selectKey]) selected = "selected";
+		return '<option value="' + this.id + '" ' + selected + '>' + this[nameParam] + '</option>';
+	},
+
+	TemplateCheckbox: function(options, context) {
+		var model = options.data.root.model;
+
+		var className = options.hash['class-name'];
+		var nameParam = options.hash['name-param'];
+		var text = (options.hash['text']) ? options.hash['text'] : this[nameParam];
+		var checked = "";
+		if (model[nameParam] == 1) checked = "checked";
+		return '<input type="checkbox" class="' + className + '" value="' + this.model.id + '" ' + checked + '>&nbsp;' + text;
+	},
+
+	TemplateCheckboxSkill: function(options) {
+		var model = options.data.root.model;
+
+		var className = options.hash['class-name'];
+		var nameParam = options.hash['name-param'];
+
+		var checked = "";
+		model.skills.models.forEach(function(item) {
+			if (item.id == this.id) {
+				checked = "checked";
+				return;
+			}
+		});
+		return '<input type="checkbox" class="' + className + '" value="' + this.id + '" ' + checked + '>&nbsp;' + this[nameParam];
+	}
+}
+Handlebars.registerHelper("form-option", Necro.Utils.UI.Helpers.TemplateOptions);
+Handlebars.registerHelper("checkbox-skill", Necro.Utils.UI.Helpers.TemplateCheckboxSkill);
+Handlebars.registerHelper("checkbox", Necro.Utils.UI.Helpers.TemplateCheckbox);
+
 //helper class for working with packages
 Necro.Utils.Resolver = {	
 	//return a nested property from an object.  

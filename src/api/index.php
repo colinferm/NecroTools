@@ -39,7 +39,14 @@ $app->get('/trait/{id}', [\WeaponController::class, 'fetchTrait'])->add($authChe
 $app->put('/trait/{id}', [\WeaponController::class, 'updateTrait'])->add($authCheck);
 $app->delete('/trait/{id}', [\WeaponController::class, 'deleteTrait'])->add($authCheck);
 
+$app->get('/gang-types', [\GangController::class, 'gangTypes'])->add($authCheck);
+
 $app->get('/skills', [\FighterController::class, 'skills']);
+
+$app->get('/skill-set/{id}', [\FighterController::class, 'getSkillSet']);
+$app->post('/skill-set', [\FighterController::class, 'addUpdateSkillSet']);
+$app->put('/skill-set/{id}', [\FighterController::class, 'addUpdateSkillSet']);
+//$app->delete('/skill-set/{id}', [\FighterController::class, 'skillSet']);
 
 $app->get('/weapons', [\WeaponController::class, 'fetchWeapons'])->add($authCheck);
 

@@ -5,7 +5,7 @@ Necro.Views.AdminSkillList = Backbone.View.extend({
 	pageTitle: 'Skills',
 
 	events: {
-		'click .addSkill': 'addSkill'
+		'click .addSkillSet': 'addSkillSet'
 	},
 
 	initialize : function(options) {
@@ -25,19 +25,18 @@ Necro.Views.AdminSkillList = Backbone.View.extend({
 	},
 
 	addItems: function() {
-		$('accordion', this.$el).empty()
+		$('skill-sets', this.$el).empty()
 		_.each(this.collection.models, function(model) {
 			var row = new Necro.Views.AdminSkillSet({model: model});
-            $('.accordion', this.$el).append(row.render().$el);
+            $('.skill-sets', this.$el).append(row.render().$el);
 		}, this);
-		new Foundation.ResponsiveAccordionTabs($('.accordion', this.$el));
 	},
 
-	addSkill: function() {
-		var m = new Necro.Models.Skill();
+	addSkillSet: function() {
+		var m = new Necro.Models.SkillSet();
 		var modal = new Necro.Views.Modal({
-			class: "Necro.Views.AdminSkillEditModal",
-			title: "Add Skill",
+			class: "Necro.Views.SkillSetModal",
+			title: "Add Skill Set",
 			model: m,
 			callback: _.bind(function() {
 				if (m) this.collection.add(m);
@@ -48,25 +47,46 @@ Necro.Views.AdminSkillList = Backbone.View.extend({
 });
 
 Necro.Views.AdminSkillSet = Backbone.View.extend({
-    tagName: 'li',
-    className: 'accordion-item',
+    tagName: 'table',
+    className: 'hover skill-list',
     templateName: 'skill-list-set',
 
-    initialize : function(options) {
+	events: {
+		'click .action_edit': 'editSkillSet'
+	},
+
+    initialize: function(options) {
 		var html = Necro.Utils.UI.TPL.get(this.templateName);
 		this.template = Handlebars.compile(html);
+		this.model.on("sync", this.render, this);
 	},
 
 	render: function() {
-		this.$el.html(this.template(this.model.toJSON()));
-		this.$el.attr('data-accordion-item', '');
+		var table = null;
+		if ($('tbody', this.$el).length) table = $('tbody',this.$el).detach();
 
-		_.each(this.model.attributes.skills, function(skill) {
-			var item = new Necro.Views.AdminSkillItem({model: new Necro.Models.Skill(skill)});
-			$('tbody', this.$el).append(item.render().$el);
-		}, this);
+		this.$el.html(this.template(this.model.toJSON()));
+		var menu = new Foundation.DropdownMenu($('ul.dropdown.menu', this.$el));
+
+		if (table) {
+			this.$el.append(table);
+		} else {
+			this.$el.append('<tbody></tbody>');
+			_.each(this.model.attributes.skills, function(skill) {
+				var item = new Necro.Views.AdminSkillItem({model: new Necro.Models.Skill(skill)});
+				$('tbody', this.$el).append(item.render().$el);
+			}, this);
+		}
 
 		return this;
+	},
+
+	editSkillSet: function() {
+		var modal = new Necro.Views.Modal({
+			class: "Necro.Views.SkillSetModal",
+			title: "Edit Skill Set",
+			model: this.model
+		});
 	}
 
 });
@@ -83,12 +103,12 @@ Necro.Views.AdminSkillItem = Backbone.View.extend({
 	initialize : function(options) {
 		var html = Necro.Utils.UI.TPL.get(this.templateName);
 		this.template = Handlebars.compile(html);
-		//this.model.on("change", this.render, this);
+		this.model.on("change", this.render, this);
 		//this.model.on("destroy", this.remove, this);
 	},
 
 	render: function() {
-		console.log(this.model.toJSON());
+		//console.log(this.model.toJSON());
 		this.$el.html(this.template(this.model.toJSON()));
 		var menu = new Foundation.DropdownMenu($('ul.dropdown.menu', this.$el));
 		return this;
