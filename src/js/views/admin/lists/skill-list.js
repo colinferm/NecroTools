@@ -57,7 +57,8 @@ Necro.Views.AdminSkillSet = Backbone.View.extend({
 
 	events: {
 		'click .action_edit': 'editSkillSet',
-		'click .action_add': 'addNewSkill'
+		'click .action_add': 'addNewSkill',
+		'click .child-content': 'reveal'
 	},
 
     initialize: function(options) {
@@ -78,7 +79,7 @@ Necro.Views.AdminSkillSet = Backbone.View.extend({
 		if (table) {
 			this.$el.append(table);
 		} else {
-			this.$el.append('<tbody></tbody>');
+			this.$el.append('<tbody class="hide"></tbody>');
 			_.each(this.model.attributes.skills, function(skill) {
 				this.addItem(skill);
 			}, this);
@@ -114,6 +115,10 @@ Necro.Views.AdminSkillSet = Backbone.View.extend({
 				}
 			}, this)
 		});
+	},
+
+	reveal: function() {
+		$('tbody', this.$el).toggleClass('hide');
 	}
 
 });
