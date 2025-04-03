@@ -30,7 +30,7 @@ class FighterController extends SlimController {
 		$skillSets = array();
 		foreach ($results as $s) {
 			$query = "
-				SELECT s.id, s.skill_name 
+				SELECT s.id, s.skill_name, s.skill_set_id, s.skill_description  
 				FROM {$ndb->skill} s 
 				WHERE s.skill_set_id = :skillset_id
 				ORDER BY s.skill_name ASC
@@ -83,7 +83,8 @@ class FighterController extends SlimController {
 			}
 
 		} else {
-			$updateQuery = "UPDATE {$ndb->skill_set} SET ";
+			$ndb->updateTable($ndb->skill_set, $skillSet);
+			/* $updateQuery = "UPDATE {$ndb->skill_set} SET ";
 			$i = 0;
 			foreach ($skillSet as $key => $val) {
 				if ($key == 'id') continue;
@@ -92,11 +93,55 @@ class FighterController extends SlimController {
 				$i++;
 			}
 			$updateQuery .= " WHERE id = :id";
-			$result = $ndb->update($updateQuery, $skillSet);
+			$result = $ndb->update($updateQuery, $skillSet); */
 			$skillSet = FighterController::getSkills($id);
 		}
 
 		$response->getBody()->write(json_encode($skillSet));
+		return $response->withHeader('Content-Type', 'application/json');
+	}
+
+	public function fetchSkill($id) {
+		global $ndb;
+
+		$skillQuery = "
+			SELECT s.id, s.skill_set_id, s.skill_name, s.skill_description, ss.skill_set_name
+			FROM {$ndb->skill} s, {$ndb->skill_set} ss 
+			WHERE s.skill_set_id = ss.id
+			AND s.id = :id
+		";
+		return $ndb->query($skillQuery, array("id" => $id));
+	}
+
+	public function getSkill(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+		global $ndb;
+		$id = $args['id'];
+
+		$skill = $this->fetchSkill($id);
+
+		$response->getBody()->write(json_encode($skill));
+		return $response->withHeader('Content-Type', 'application/json');
+	}
+
+	public function addUpdateSkill(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+		global $ndb;
+
+		$id = (array_key_exists('id', $args)) ? $args['id'] : 0;
+		$skill = json_decode($request->getBody(), true);
+		unset($skill['skill_set_name']);
+
+		if ($request->getMethod() == 'POST') {
+			unset($skill['id']);
+			$insertQuery = "INSERT INTO {$ndb->skill} (skill_set_id, skill_name, skill_description) VALUES (:skill_set_id, :skill_name, :skill_description)";
+			if ($result = $ndb->insert($insertQuery, $skill)) {
+				$id = $ndb->lastInsertId;
+			}
+		} else {
+			$ndb->updateTable($ndb->skill, $skill);
+		}
+		$skills = $this->fetchSkill($id);
+		if (is_array($skills)) $skill = $skills[0];
+		$response->getBody()->write(json_encode($skill));
 		return $response->withHeader('Content-Type', 'application/json');
 	}
 

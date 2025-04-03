@@ -39,7 +39,7 @@ Necro.Views.AdminSkillList = Backbone.View.extend({
 	addSkillSet: function() {
 		var m = new Necro.Models.SkillSet();
 		var modal = new Necro.Views.Modal({
-			class: "Necro.Views.SkillSetModal",
+			class: "Necro.Views.AdminEditSkillSetModal",
 			title: "Add Skill Set",
 			model: m,
 			callback: _.bind(function() {
@@ -56,13 +56,16 @@ Necro.Views.AdminSkillSet = Backbone.View.extend({
     templateName: 'skill-list-set',
 
 	events: {
-		'click .action_edit': 'editSkillSet'
+		'click .action_edit': 'editSkillSet',
+		'click .action_add': 'addNewSkill'
 	},
 
     initialize: function(options) {
 		var html = Necro.Utils.UI.TPL.get(this.templateName);
 		this.template = Handlebars.compile(html);
 		this.model.on("sync", this.render, this);
+		var collection = this.model.attributes.skills;
+		//collection.on('add', this.addItem, this);
 	},
 
 	render: function() {
@@ -77,19 +80,39 @@ Necro.Views.AdminSkillSet = Backbone.View.extend({
 		} else {
 			this.$el.append('<tbody></tbody>');
 			_.each(this.model.attributes.skills, function(skill) {
-				var item = new Necro.Views.AdminSkillItem({model: new Necro.Models.Skill(skill)});
-				$('tbody', this.$el).append(item.render().$el);
+				this.addItem(skill);
 			}, this);
 		}
 
 		return this;
 	},
 
+	addItem: function(skill) {
+		var item = new Necro.Views.AdminSkillItem({model: new Necro.Models.Skill(skill)});
+		$('tbody', this.$el).append(item.render().$el);
+	},
+
 	editSkillSet: function() {
 		var modal = new Necro.Views.Modal({
-			class: "Necro.Views.SkillSetModal",
+			class: "Necro.Views.AdminEditSkillSetModal",
 			title: "Edit Skill Set",
 			model: this.model
+		});
+	},
+
+	addNewSkill: function() {
+		var skillSet = this.model.get('skill_set_name');
+		var m = new Necro.Models.Skill({skill_set_id: this.model.get('id'), skill_set_name: skillSet});
+		var modal = new Necro.Views.Modal({
+			class: "Necro.Views.AdminSkillEditModal",
+			title: "Add " + skillSet + " Skill",
+			model: m,
+			callback: _.bind(function() {
+				if (m) {
+					var collection = this.model.get("skills");
+					collection.add(m);
+				}
+			}, this)
 		});
 	}
 
@@ -100,14 +123,14 @@ Necro.Views.AdminSkillItem = Backbone.View.extend({
 	templateName: 'skill-list-item',
 
 	events: {
-		'click .action_edit': 'editSkill',
+		'click .action_edit_skill': 'editSkill',
 		'click .action_remove': 'deleteSkill',
 	},
 
 	initialize : function(options) {
 		var html = Necro.Utils.UI.TPL.get(this.templateName);
 		this.template = Handlebars.compile(html);
-		this.model.on("change", this.render, this);
+		this.model.on("sync", this.render, this);
 		//this.model.on("destroy", this.remove, this);
 	},
 

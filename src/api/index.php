@@ -48,6 +48,11 @@ $app->post('/skill-set', [\FighterController::class, 'addUpdateSkillSet']);
 $app->put('/skill-set/{id}', [\FighterController::class, 'addUpdateSkillSet']);
 //$app->delete('/skill-set/{id}', [\FighterController::class, 'skillSet']);
 
+$app->get('/skill/{id}', [\FighterController::class, 'getSkill']);
+$app->post('/skill', [\FighterController::class, 'addUpdateSkill']);
+$app->put('/skill/{id}', [\FighterController::class, 'addUpdateSkill']);
+$app->delete('/skill/{id}', [\FighterController::class, 'deleteSkill']);
+
 $app->get('/weapons', [\WeaponController::class, 'fetchWeapons'])->add($authCheck);
 
 $app->run();

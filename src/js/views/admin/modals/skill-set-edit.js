@@ -1,4 +1,4 @@
-Necro.Views.SkillSetModal = Necro.Views.BaseModal.extend({
+Necro.Views.AdminEditSkillSetModal = Necro.Views.BaseModal.extend({
 	templateName: 'modal-edit-skill-set',
 
 	events: {

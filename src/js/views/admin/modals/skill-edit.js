@@ -6,16 +6,14 @@ Necro.Views.AdminSkillEditModal = Necro.Views.BaseModal.extend({
 	},
 
 	render: function() {
-		//this.$el.html(this.template(this.model.toJSON()));
 		this.$el.html(this.template(this.model.toJSON()));
 		return this;
 	},
 
 	save: function(callback) {
         var m = this.model;
-        m.set("trait_name", $('.trait_name', this.$el).val());
-        m.set("trait_value", $('.trait_value', this.$el).val());
-        m.set("notes", $('.notes', this.$el).val());
+        m.set("skill_name", $('.skill_name', this.$el).val());
+        m.set("skill_description", $('.skill_description', this.$el).val());
 
         m.save({
             success: callback(true, m),

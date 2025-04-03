@@ -73,6 +73,22 @@ class NecroDB {
 
 		return $stmt->execute($args);
 	}
+
+	function updateTable($table, $args) {
+		$db = $this->getInstance();
+
+		$sql = "UPDATE {$table} SET ";
+		$i = 0;
+		foreach ($args as $key => $val) {
+			if ($key == 'id') continue;
+			if ($i > 0) $sql .= ", ";
+			$sql .= "{$key} = :{$key}";
+			$i++;
+		}
+		$sql .= " WHERE id = :id";
+
+		return $this->update($sql, $args);
+	}
 	
 	function insert($query, $args) {
 		$db = $this->getInstance();
