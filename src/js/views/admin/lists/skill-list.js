@@ -26,10 +26,14 @@ Necro.Views.AdminSkillList = Backbone.View.extend({
 
 	addItems: function() {
 		$('skill-sets', this.$el).empty()
-		_.each(this.collection.models, function(model) {
-			var row = new Necro.Views.AdminSkillSet({model: model});
-            $('.skill-sets', this.$el).append(row.render().$el);
+		_.each(this.collection.models, function(item) {
+			this.addItem(item);
 		}, this);
+	},
+
+	addItem: function(item) {
+		var row = new Necro.Views.AdminSkillSet({model: item});
+		$('.skill-sets', this.$el).append(row.render().$el);
 	},
 
 	addSkillSet: function() {

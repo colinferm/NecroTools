@@ -69,11 +69,14 @@ class FighterController extends SlimController {
 	public function addUpdateSkillSet(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
 		global $ndb;
 
-		$id = $args['id'];
+		$id = (array_key_exists('id', $args)) ? $args['id'] : 0;
+
 		$skillSet = json_decode($request->getBody(), true);
 		unset($skillSet['skills']);
 		unset($skillSet['gang_name']);
 		if ($request->getMethod() == 'POST') {
+			unset($skillSet['id']);
+
 			$insertQuery = "INSERT INTO {$ndb->skill_set} (skill_set_name, limited_to_gang, gang_type_id) VALUES (:skill_set_name, :limited_to_gang, :gang_type_id)";
 			if ($ndb->insert($insertQuery, $skillSet)) {
 				$skillSet['id'] = $ndb->lastInsertId;
