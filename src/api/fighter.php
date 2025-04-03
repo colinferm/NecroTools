@@ -145,6 +145,18 @@ class FighterController extends SlimController {
 		return $response->withHeader('Content-Type', 'application/json');
 	}
 
+	public function deleteSkill(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+		global $ndb;
+		$id = $args['id'];
+		$result = $ndb->deleteFromTable($ndb->skill, $id);
+		if ($result) {
+			$response->withStatus(200);
+		} else {
+			$response->withStatus(500);
+		}
+		return $response;
+	}
+
 	public static function getFighterRoles() {
 		global $ndb;
 		$query = "

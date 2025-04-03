@@ -129,14 +129,14 @@ Necro.Views.AdminSkillItem = Backbone.View.extend({
 
 	events: {
 		'click .action_edit_skill': 'editSkill',
-		'click .action_remove': 'deleteSkill',
+		'click .action_remove_skill': 'deleteSkill',
 	},
 
 	initialize : function(options) {
 		var html = Necro.Utils.UI.TPL.get(this.templateName);
 		this.template = Handlebars.compile(html);
 		this.model.on("sync", this.render, this);
-		//this.model.on("destroy", this.remove, this);
+		this.model.on("destroy", this.remove, this);
 	},
 
 	render: function() {

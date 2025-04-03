@@ -44,6 +44,11 @@ class NecroDB {
 		$stmt = $db->prepare($query);
 		return $stmt->execute(['id' => $id]);
 	}
+
+	public function deleteFromTable($tableName, $id) {
+		$query = "DELETE FROM {$tableName} WHERE id = :id";
+		return $this->delete($query, $id);
+	}
 	
 	public function query($query, $args = array()) {
 		$db = $this->getInstance();
