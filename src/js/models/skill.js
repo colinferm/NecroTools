@@ -11,12 +11,12 @@ Necro.Models.SkillSet = Backbone.Model.extend({
 	},
 	parse: function(resp) {
 		//console.log(resp);
-		this.skills = new Necro.Models.SkillCollection();
+		this.attributes.skills = new Necro.Models.SkillCollection();
 		_.each(resp.skills, function(s) {
 			var skill = new Necro.Models.Skill(s, {parse: true});
-			this.skills.add(skill);
+			this.attributes.skills.add(skill);
 		}, this);
-		delete resp.skill;
+		delete resp.skills;
 		return resp;
 	},
 });

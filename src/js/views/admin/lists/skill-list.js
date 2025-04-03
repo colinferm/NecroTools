@@ -66,7 +66,7 @@ Necro.Views.AdminSkillSet = Backbone.View.extend({
 		this.template = Handlebars.compile(html);
 		this.model.on("sync", this.render, this);
 		var collection = this.model.attributes.skills;
-		//collection.on('add', this.addItem, this);
+		collection.on('add', this.addItem, this);
 	},
 
 	render: function() {
@@ -80,7 +80,7 @@ Necro.Views.AdminSkillSet = Backbone.View.extend({
 			this.$el.append(table);
 		} else {
 			this.$el.append('<tbody class="hide"></tbody>');
-			_.each(this.model.attributes.skills, function(skill) {
+			_.each(this.model.attributes.skills.models, function(skill) {
 				this.addItem(skill);
 			}, this);
 		}
@@ -89,7 +89,7 @@ Necro.Views.AdminSkillSet = Backbone.View.extend({
 	},
 
 	addItem: function(skill) {
-		var item = new Necro.Views.AdminSkillItem({model: new Necro.Models.Skill(skill)});
+		var item = new Necro.Views.AdminSkillItem({model: skill});
 		$('tbody', this.$el).append(item.render().$el);
 	},
 
