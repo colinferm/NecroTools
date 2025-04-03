@@ -1,11 +1,11 @@
-Necro.Views.TraitList = Backbone.View.extend({
+Necro.Views.AdminWargearList = Backbone.View.extend({
 	tagName: 'div',
 	className: 'large-12',
-	templateName: 'trait-list',
-	pageTitle: 'War Gear',
+	templateName: 'wargear-list',
+	pageTitle: 'Traits',
 
 	events: {
-		'click .addGear': 'addGear'
+		'click .addTrait': 'addWargear'
 	},
 
 	initialize : function(options) {
@@ -32,11 +32,12 @@ Necro.Views.TraitList = Backbone.View.extend({
 	},
 
 	addItem: function(item) {
-		var row = new Necro.Views.TraitItem({model: item});
+		var row = new Necro.Views.AdminWargearItem({model: item});
 		$('tbody', this.$el).append(row.render().$el);
 	},
 
-	addGear: function() {
+	addWargear
+    : function() {
 		var m = new Necro.Models.Trait();
 		var modal = new Necro.Views.Modal({
 			class: "Necro.Views.TraitModal",
@@ -50,9 +51,9 @@ Necro.Views.TraitList = Backbone.View.extend({
 
 });
 
-Necro.Views.TraitItem = Backbone.View.extend({
+Necro.Views.AdminWargearItem = Backbone.View.extend({
 	tagName: 'tr',
-	templateName: 'trait-list-item',
+	templateName: 'wargear-list-item',
 
 	events: {
 		'click .action_edit': 'editTrait',

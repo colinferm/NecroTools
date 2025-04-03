@@ -23,9 +23,9 @@ Necro.Models.Fighter = Backbone.Model.extend({
 		"is_convalescence": false,
 		"experience": 0,
 		"base_value": 0,
-		"weapons": Necro.Models.WeaponCollection,
-		"gear": Necro.Models.GearCollection,
-		"skills": Necro.Models.SkillCollection
+		"weapons": Necro.Collections.Weapon,
+		"gear": Necro.Collections.Gear,
+		"skills": Necro.Collections.Skill
 	},
 
 	getValue: function() {
@@ -50,13 +50,13 @@ Necro.Models.Fighter = Backbone.Model.extend({
 			_.each(response.weapons, function(weapon) {
 				weapons.push(new Necro.Models.Weapon(weapon));
 			});
-			response.weapons = new Necro.Models.WeaponCollection(weapons);
+			response.weapons = new Necro.Collections.Weapons(weapons);
 		}
-		response.skills = new Necro.Models.SkillCollection();
+		response.skills = new Necro.Collections.Skills();
 		return response;
 	}
 });
-Necro.Models.FighterCollection = Backbone.Collection.extend({
+Necro.Collections.Fighters = Backbone.Collection.extend({
 	model: Necro.Models.Fighter,
 	url:   '/api/fighters'
 });
@@ -70,7 +70,7 @@ Necro.Models.Gear = Backbone.Model.extend({
 		"base_value": 0
 	}
 });
-Necro.Models.GearCollection = Backbone.Collection.extend({
+Necro.Collections.Gear = Backbone.Collection.extend({
 	model: Necro.Models.Gear,
 	url:   '/api/gear'
 });

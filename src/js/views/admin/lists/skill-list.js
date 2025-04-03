@@ -12,7 +12,7 @@ Necro.Views.AdminSkillList = Backbone.View.extend({
 		var html = Necro.Utils.UI.TPL.get(this.templateName);
 		this.template = Handlebars.compile(html);
 
-		this.collection = new Necro.Models.SkillSetCollection({});
+		this.collection = new Necro.Collection.SkillSets({});
 		this.collection.fetch({
 			success: _.bind(this.addItems, this)
 		});

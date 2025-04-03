@@ -14,7 +14,7 @@ Necro.Views.GangList = Backbone.View.extend({
 		var html = Necro.Utils.UI.TPL.get(this.templateName);
 		this.template = Handlebars.compile(html);
 
-		this.collection = new Necro.Models.GangCollection({});
+		this.collection = new Necro.Collections.Gangs({});
 		//this.listenTo(this.collecton, 'update', this.addItems)
 		this.collection.fetch({
 			success: _.bind(this.addItems, this)

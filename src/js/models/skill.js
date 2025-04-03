@@ -7,11 +7,11 @@ Necro.Models.SkillSet = Backbone.Model.extend({
         "limited_to_gang": "0",
 		"gang_type_id": "0",
 		"gang_name": "",
-		"skills": Necro.Models.SkillCollection,
+		"skills": Necro.Collections.Skills,
 	},
 	parse: function(resp) {
 		//console.log(resp);
-		this.attributes.skills = new Necro.Models.SkillCollection();
+		this.attributes.skills = new Necro.Collections.Skills();
 		_.each(resp.skills, function(s) {
 			var skill = new Necro.Models.Skill(s, {parse: true});
 			this.attributes.skills.add(skill);
@@ -21,7 +21,7 @@ Necro.Models.SkillSet = Backbone.Model.extend({
 	},
 });
 
-Necro.Models.SkillSetCollection = Backbone.Collection.extend({
+Necro.Collections.SkillSets = Backbone.Collection.extend({
 	model: Necro.Models.SkillSet,
 	url:   '/api/skills',
 
@@ -61,7 +61,7 @@ Necro.Models.Skill = Backbone.Model.extend({
 	}
 });
 
-Necro.Models.SkillCollection = Backbone.Collection.extend({
+Necro.Collections.Skills = Backbone.Collection.extend({
 	model: Necro.Models.Skill,
 	url:   '/api/skill',
 

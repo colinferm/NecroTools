@@ -5,7 +5,7 @@ Necro.Models.Weapon = Backbone.Model.extend({
 		"id": null,
 		"weapon_name": "",
 		"weapon_value": 0,
-		"characteristics":  Necro.Models.WeaponCharacteristicCollection
+		"characteristics":  Necro.Collections.WeaponCharacteristics
 	},
 
 	getValue: function() {
@@ -28,12 +28,12 @@ Necro.Models.Weapon = Backbone.Model.extend({
 			_.each(response.characteristics, function(char) {
 				characteristics.push(new Necro.Models.WeaponCharacteristic(weapon));
 			});
-			response.characteristics = Necro.Models.WeaponCharacteristicCollection(characteristics);
+			response.characteristics = Necro.Collections.WeaponCharacteristics(characteristics);
 		}
 		return response;
 	}
 });
-Necro.Models.WeaponCollection = Backbone.Collection.extend({
+Necro.Collections.Weapons = Backbone.Collection.extend({
 	model: Necro.Models.Weapon,
 	url:   '/api/weapons'
 });
@@ -51,7 +51,7 @@ Necro.Models.WeaponCharacteristic = Backbone.Model.extend({
 		"armor_penetration": "",
 		"damage": 1,
 		"ammo_check": 4,
-		"traits": Necro.Models.WeaponTraitCollection
+		"traits": Necro.Collections.WeaponTraits
 	},
 
 	parse: function(response) {
@@ -62,12 +62,13 @@ Necro.Models.WeaponCharacteristic = Backbone.Model.extend({
 			_.each(response.traits, function(trait) {
 				traits.push(new Necro.Models.WeaponTrait(trait));
 			});
-			response.traits = Necro.Models.WeaponCharacteristicCollection(traits);
+			response.traits = Necro.Collections.WeaponCharacteristics(traits);
 		}
 		return response;
 	}
 });
-Necro.Models.WeaponCharacteristicCollection = Backbone.Collection.extend({
+
+Necro.Collections.WeaponCharacteristics = Backbone.Collection.extend({
 	model: Necro.Models.WeaponCharacteristic,
 	url:   '/api/weapon_characteristics'
 });
@@ -80,7 +81,7 @@ Necro.Models.WeaponTrait = Backbone.Model.extend({
 		"trait_value": 0
 	}
 });
-Necro.Models.WeaponTraitCollection = Backbone.Collection.extend({
+Necro.Collections.WeaponTraits = Backbone.Collection.extend({
 	model: Necro.Models.WeaponCharacteristic,
 	url:   '/api/weapon_traits'
 });

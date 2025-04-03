@@ -8,7 +8,7 @@ Necro.Views.LeftContent = Backbone.View.extend({
 		var html = Necro.Utils.UI.TPL.get(this.templateName);
 		this.template = Handlebars.compile(html);
 
-		this.gangCollection = new Necro.Models.GangCollection({});
+		this.gangCollection = new Necro.Collections.Gangs({});
 		//this.listenTo(this.collecton, 'update', this.addItems)
 		this.gangCollection.fetch({
 			success: _.bind(this.userGangs, this)

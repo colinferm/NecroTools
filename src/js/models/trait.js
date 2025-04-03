@@ -9,7 +9,7 @@ Necro.Models.Trait = Backbone.Model.extend({
 	}
 });
 
-Necro.Models.TraitCollection = Backbone.Collection.extend({
+Necro.Collections.Traits = Backbone.Collection.extend({
 	model: Necro.Models.Trait,
 	url:   '/api/traits',
 	

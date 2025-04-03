@@ -6,6 +6,7 @@ var Necro = {
 		UI: {}
 	},
 	Routers: {},
+	Collections: {},
 	Models: {},
 	Views: {},
 	Events: {}

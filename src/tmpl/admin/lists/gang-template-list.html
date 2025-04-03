@@ -1,0 +1,23 @@
+<div class="cell small-12 text-right">
+	<a class="button addGang"><i class="fi-plus"></i> <span>Add New Gang</span></a>
+</div>
+<div class="gangs">
+    <thead class="dark">
+		<tr>
+			<th class="child-content"><div class="h5 skill-name">{{skill_set_name}}</div></th>
+			<th class="text-right" style="width: 50%">{{#if limited_to_gang}}<div class="skill-limit">Limited to {{gang_name}}</div>{{/if}}</th>
+			<th style="width: 10%">
+				<ul class="dropdown menu" data-dropdown-menu data-disable-hover="true" data-click-open="true" data-close-on-click="true">
+					<li>
+						<a class="button hollow">Action</a>
+						<ul class="menu icons icon-left">
+							<li><a class="action_add"><i class="fi-plus"></i> <span>Add Skill</span></a></li>
+							<li><a class="action_edit"><i class="fi-info"></i> <span>Edit Set</span></a></li>
+							<!-- <li><a class="action_remove alert"><i class="fi-trash"></i> <span>Delete Set</span></a></li> -->
+						</ul>
+					</li>
+				</ul>
+			</th>
+		</tr>
+	</thead>
+</div>
