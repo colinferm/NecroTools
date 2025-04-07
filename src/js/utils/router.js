@@ -50,6 +50,14 @@ Necro.Routers.NecroRouter = Backbone.Router.extend({
 		$(window).on('hashchange', function (event) {
 			window.tabindex = 0;
 		});
+
+		Necro.Events.on("user:loggedin", function() {
+			this.navigate("gangs", {trigger: true});
+		}, this);
+
+		Necro.Events.on("user:loggedout", function() {
+			this.navigate("login", {trigger: true});
+		}, this);
 	},
 
 	load: function (callback) {
@@ -75,7 +83,7 @@ Necro.Routers.NecroRouter = Backbone.Router.extend({
 			}, {
 				success: _.bind(function() {
 					this.navigate(location, {trigger: true});
-					Necro.Events.trigger('user:loggedin');
+					Necro.Events.trigger('user:verified');
 				}, this),
 				error: _.bind(function() {
 					this.navigate(location, {trigger: true});

@@ -14,7 +14,7 @@ Necro.Views.LeftContent = Backbone.View.extend({
 			success: _.bind(this.userGangs, this)
 		});
 
-		Necro.Events.on("user:loggedin", function(){
+		Necro.Events.on("user:verified", function(){
 			this.loggedIn = true;
 			this.render();
 			this.userGangs();

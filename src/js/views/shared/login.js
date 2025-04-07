@@ -44,8 +44,7 @@ Necro.Views.Login = Backbone.View.extend({
 				this.model.set(data);
 				if (this.model.isLoggedIn()) {
 					console.log("Logged in!")
-					Necro.Events.trigger('user:loggedin');
-					window.necro.navigate("gangs", {trigger: true});
+					Necro.Events.trigger('user:loggedin user:verified');
 				} else {
 					console.log("Failed login");
 				}

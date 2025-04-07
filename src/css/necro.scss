@@ -77,6 +77,10 @@ html {
 					display: flex;
 					flex-direction: column;
 					justify-content: center;
+
+					form {
+						width: 100%;
+					}
 				}
 			}
 		}
@@ -116,7 +120,7 @@ html {
 
 		table {
 			@include formStyles();
-			
+
 			&.skill-list {
 				th.child-content {
 					display: flex;
