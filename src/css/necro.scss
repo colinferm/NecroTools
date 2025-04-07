@@ -41,10 +41,39 @@ $black: #000;
 	}
 }
 
+/*
+.button {
+	background: repeating-linear-gradient(
+		-45deg,  
+		#000,  
+		#000 30px,  
+		#FFC900 25px,  
+		#FFC900 50px
+	);
+}
+*/
+
 html {
 	body {
 
+		.title-bar {
+			background: repeating-linear-gradient(
+				-45deg,  
+				#000,  
+				#000 30px,  
+				#FFC900 25px,  
+				#FFC900 50px
+			);
+
+			.title-bar-left {
+				font-size: 20px;
+				font-weight: bold;
+				background-color: #000;
+			}
+		}
+
 		.left-content {
+
 			.top_section {
 				margin-left: 0;
 
@@ -68,6 +97,11 @@ html {
 				min-height: 600px;
 				flex-direction: column;
 				justify-content: start;
+
+				background-image: url('/img/book-texture.jpg');
+				background-position: top;
+				background-repeat: no-repeat;
+				background-size: cover;
 
 				.header {
 					margin-bottom: 30px;

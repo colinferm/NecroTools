@@ -1,6 +1,6 @@
 Necro.Views.RightContent = Backbone.View.extend({
 	tagName: 'div',
-	className: 'cell large-9 grid-x right-content',
+	className: 'cell large-10 grid-x right-content',
 	templateName: 'right-content',
 	pageTitle: 'Blah',
 
