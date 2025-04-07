@@ -19,6 +19,10 @@ Necro.Views.LeftContent = Backbone.View.extend({
 			this.render();
 			this.userGangs();
 		}, this);
+		Necro.Events.on('user:loggedout', function() {
+			this.loggedIn = false;
+			this.render();
+		}, this);
 		Necro.Events.on("gangs_updated", _.bind(this.gangsUpdated, this));
 		Necro.Events.on("roster_updated", this.gangFighters);
 	},

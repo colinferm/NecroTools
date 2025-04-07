@@ -4,7 +4,7 @@
 		<ul class="subsection">
 			<li><a href="#adminFighters">Fighter Templates</a></li>
 			<li><a href="#adminSkills">Fighter Skills</a></li>
-			<li><a href="#wargear">War Gear</a></li>
+			<li><a href="#adminWargear">War Gear</a></li>
 			<li><a href="#adminGangs">Gang Setup</a></li>
 			<li><a href="#adminWeapons">Weapons</a></li>
 			<li><a href="#adminWeaponTraits">Weapon Traits</a></li>
@@ -16,4 +16,14 @@
 		<ul class="subsection gang_fighters">
 		</ul>
 	{{/if}}
+
+	<li class="section_title">User</li>
+		<ul class="subsection">
+			{{#if loggedIn}}
+				<li><a href="#logout">Logout</a></li>
+			{{else}}
+				<li><a href="#login">Log In</a></li>
+				<li><a href="#register">Register</a></li>
+			{{/if}}
+		</ul>
 </ul>

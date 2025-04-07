@@ -14,6 +14,15 @@ $black: #000;
     #{$property} : $css;
 }
 
+@mixin formStyles() {
+	[type="text"], [type="number"], textarea {
+		border: none;
+		box-shadow: none;
+		background-color: transparent;
+		@include crossBrowser(transition, none);
+	}
+}
+
 .no {
 	color: red;
 	font-weight: bold;
@@ -34,13 +43,6 @@ $black: #000;
 
 html {
 	body {
-		
-		[type="text"], [type="number"], textarea {
-			border: none;
-			box-shadow: none;
-			background-color: transparent;
-			@include crossBrowser(transition, none);
-		}
 
 		.left-content {
 			.top_section {
@@ -113,6 +115,8 @@ html {
 		}
 
 		table {
+			@include formStyles();
+			
 			&.skill-list {
 				th.child-content {
 					display: flex;

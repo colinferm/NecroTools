@@ -1,6 +1,6 @@
 Necro.Views.Login = Backbone.View.extend({
 	tagName: 'div',
-	className: 'large-6',
+	className: 'large-6 grid-x',
 	templateName: 'login',
 	pageTitle: 'Log In',
 
@@ -16,7 +16,7 @@ Necro.Views.Login = Backbone.View.extend({
 	},
 
 	render: function() {
-		this.$el.html(this.template());
+		this.$el.html(this.template(this.model.toJSON()));
 		return this;
 	},
 
@@ -44,6 +44,7 @@ Necro.Views.Login = Backbone.View.extend({
 				this.model.set(data);
 				if (this.model.isLoggedIn()) {
 					console.log("Logged in!")
+					Necro.Events.trigger('user:loggedin');
 					window.necro.navigate("gangs", {trigger: true});
 				} else {
 					console.log("Failed login");

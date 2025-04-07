@@ -13,5 +13,11 @@ Necro.Models.User = Backbone.Model.extend({
 
 	isAdmin: function() {
 		return this.get('is_admin');
+	},
+
+	logout: function() {
+		this.id = 0;
+		this.oauth_key = null,
+		this.is_admin = false;
 	}
 });

@@ -1,0 +1,49 @@
+
+<div class="cell small-12">
+	<form data-abide>
+		<div data-abide-error class="alert callout" style="display: none;">
+			<p><i class="fi-alert"></i> There are some errors in your form.</p>
+		</div>
+		<div class="cell small-12">
+			<label>
+				Email address
+				<input type="email" class="emailInput" placeholder="name@example.com" tabindex="1" aria-describedby="emailHelpText" pattern="email" required>
+				<p class="help-text" id="emailHelpText">Your email address <i>and</i> user name must be unique.</p>
+				<span class="form-error">
+					This field is required and must be an email address.
+				</span>
+			</label>
+
+			<label>
+				Username
+				<input type="text" class="usernameInput" tabindex="2" pattern="alpha_numeric" required>
+				<span class="form-error">
+					This field is required.
+				</span>
+			</label>
+
+			<label>
+				Password
+				<input type="password" id="passwordInput" class="passwordInput" tabindex="3" aria-describedby="passwordHelpText" required>
+				<p class="help-text" id="passwordHelpText">Consider a passsword of ten characters or more.</p>
+				<span class="form-error">
+					This field is required.
+				</span>
+			</label>
+
+			<label>
+				Confirm Password
+				<input type="password" class="confirmPasswordInput" tabindex="4" data-equalto="passwordInput" required>
+				<span class="form-error">
+					This field is required and must match the password field.
+				</span>
+			</label>
+		</div>
+		<div class="cell small-6">
+			<button type="submit" class="button registerButton" tabindex="4">Register</button>
+		</div>
+		<div class="cell small-6 text-right">
+			<a href="#login">or Log In</a>
+		</div>
+	</form>
+</div>

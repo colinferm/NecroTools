@@ -113,11 +113,17 @@ Necro.Routers.NecroRouter = Backbone.Router.extend({
 	}, 
 
 	logout: function() {
-
+		$.cookie('auth', '');
+		this.session.logout();
+		Necro.Events.trigger('user:loggedout');
+		this.navigate("login", {trigger: true});
 	},
 
 	register: function() {
-
+		var registerView = new Necro.Views.Register({
+			model: this.session
+		});
+		this.updateRight(registerView.render().$el, "Register");
 	},
 
 	listGangs: function() {
@@ -189,6 +195,6 @@ Necro.Routers.NecroRouter = Backbone.Router.extend({
 	},
 
 	adminWargearlist: function() {
-		
+
 	}
 });

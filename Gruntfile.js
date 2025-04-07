@@ -19,7 +19,7 @@ module.exports = function (grunt) {
         interrupt: true
       },
       concatTemplates: {
-        files: ['/var/www/html/js/**/*.html'],
+        files: ['/var/www/html/tmpl/**/*.html'],
         tasks: ['concat:templates'],
         interrupt: true
       },
@@ -102,7 +102,7 @@ module.exports = function (grunt) {
               grunt.util.linefeed;
           }
         },
-        src: ['/var/www/html/js/tpl/**/*.html'],
+        src: ['/var/www/html/tmpl/**/*.html'],
         dest: '/usr/src/necro/package/js/templates.js'
       }
     },

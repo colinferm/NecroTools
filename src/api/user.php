@@ -65,7 +65,7 @@ class UserController extends SlimController {
 		$email = $params['email_address'];
 		$password = $params['userpassword'];
 
-		$user = $ndb->queryFirst("SELECT id, username, userpassword, email_address, confirmed, registered, last_login, is_admin, oauth_key FROM necro_user WHERE email_address = :email_address", ['email_address' => $email]);
+		$user = $ndb->queryFirst("SELECT id, username, userpassword, email_address, confirmed, registered, last_login, is_admin, oauth_key FROM necro_user WHERE (email_address = :email_address OR username = :email_address)", ['email_address' => $email]);
 		if (password_verify($email, PEPPER.$user['userpassword'])) {
 			throw new AuthenticationException();
 		}
