@@ -56,6 +56,7 @@ Necro.Views.Admin.GangItem = Backbone.View.extend({
 	templateName: 'gang-template-list-item',
 
 	events: {
+		'click .type_name': 'editGang',
 		'click .action_edit': 'editGang',
 		'click .action_remove': 'deleteGang',
 	},

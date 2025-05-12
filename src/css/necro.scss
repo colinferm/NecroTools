@@ -211,7 +211,8 @@ html {
 				font-family: $font-shade;
 				font-style: italic;
 				font-weight: bold;
-				background-color: #000;
+				background-color: $color-black;
+				color: $color-necro-yellow
 			}
 		}
 
@@ -377,6 +378,20 @@ html {
 
 						th {
 							font-family: $font-dirt;
+						}
+					}
+				}
+			}
+
+			tbody {
+				tr {
+					td {
+						a {
+							&:hover {
+								text-decoration: underline;
+								color: $color-black
+							}
+							color: $color-black
 						}
 					}
 				}

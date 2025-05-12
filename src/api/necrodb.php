@@ -39,10 +39,14 @@ class NecroDB {
 	}
 
 	public function delete($query, $id) {
+		return deleteWithParams($query, ['id' => $id]);
+	}
+
+	public function deleteWithParams($query, $params) {
 		$db = $this->getInstance();
 	
 		$stmt = $db->prepare($query);
-		return $stmt->execute(['id' => $id]);
+		return $stmt->execute($params);
 	}
 
 	public function deleteFromTable($tableName, $id) {

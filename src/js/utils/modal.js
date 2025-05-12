@@ -21,6 +21,7 @@ Necro.Views.Modal = Backbone.View.extend({
 		this.$el.attr('data-overlay', 'true');
 
 		this.content = Necro.Utils.Resolver.getNewInstance(this.opts.class, {model: this.model});
+		this.content.options = this.opts;
 		$('.modal-container', this.$el).html(this.content.render().$el);
 
 		$('body').append(this.$el);

@@ -128,6 +128,7 @@ Necro.Views.Admin.SkillItem = Backbone.View.extend({
 	templateName: 'skill-list-item',
 
 	events: {
+		'click .skill_name': 'editSkill',
 		'click .action_edit_skill': 'editSkill',
 		'click .action_remove_skill': 'deleteSkill',
 	},

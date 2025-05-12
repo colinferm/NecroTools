@@ -40,6 +40,7 @@ $app->post('/fighter', [\FighterController::class, 'addFighter'])->add($authChec
 
 $app->get('/fighter/roles', [\FighterController::class, 'fetchFighterRoles'])->add($authCheck);
 $app->get('/fighter/role/{id}', [\FighterController::class, 'fetchFighterRole'])->add($authCheck);
+$app->put('/fighter/role/{id}/{primary}/skills', [\FighterController::class, 'updateTemplateSkills'])->add($authCheck);
 
 $app->get('/fighter/template/{id}', [\FighterController::class, 'fetchFighterTemplate'])->add($authCheck);
 

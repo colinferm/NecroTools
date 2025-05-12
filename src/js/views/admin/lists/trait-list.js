@@ -55,6 +55,7 @@ Necro.Views.TraitItem = Backbone.View.extend({
 	templateName: 'trait-list-item',
 
 	events: {
+		'click .trait_name': 'editTrait',
 		'click .action_edit': 'editTrait',
 		'click .action_remove': 'deleteTrait',
 	},

@@ -23,7 +23,13 @@ Necro.Models.SkillSet = Backbone.Model.extend({
 
 Necro.Collections.SkillSets = Backbone.Collection.extend({
 	model: Necro.Models.SkillSet,
-	url:   '/api/skills',
+
+	url: function() {
+		if (this.roleId && this.primary != null) {
+			return '/api/fighter/role/' + this.roleId + '/' + this.primary + '/skills';
+		}
+		return '/api/skills';
+	},
 
 	initialize: function() {
 		this.comparator = "skill_set_name";

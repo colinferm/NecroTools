@@ -160,7 +160,7 @@ class FighterController extends SlimController {
 	public static function getFighterRoles() {
 		global $ndb;
 		$query = "
-			SELECT r.id, r.role_name, r.hierarchy_role, r.gang_id, t.type_name AS gang FROM {$ndb->fighter_role} r, {$ndb->gang_type} t WHERE r.gang_type_id = t.id ORDER BY r.gang_id ASC, id ASC
+			SELECT r.id, r.role_name, r.hierarchy_role, r.gang_type_id, t.type_name AS gang FROM {$ndb->fighter_role} r, {$ndb->gang_type} t WHERE r.gang_type_id = t.id ORDER BY r.gang_type_id ASC, id ASC
 		";
 		$results = $ndb->query($query);
 		$gangRoles = array();
@@ -183,6 +183,14 @@ class FighterController extends SlimController {
 		$gangRoles[] = $gang;
 
  		return $gangRoles;
+	}
+
+	public static function getFighterRole($roleId) {
+		global $ndb;
+		$query = "
+			SELECT r.id, r.role_name, r.hierarchy_role, r.gang_type_id, t.type_name AS gang FROM {$ndb->fighter_role} r, {$ndb->gang_type} t WHERE r.gang_type_id = t.id AND r.id = :role_id ORDER BY r.gang_type_id ASC, id ASC
+		";
+		return $ndb->queryFirst($query, ['role_id' => $roleId]);
 	}
 
 	public static function getFighterRolesJSON() {
@@ -291,7 +299,7 @@ class FighterController extends SlimController {
 		$gangId = $args['id'];
 		$gang = GangController::getGang($gangId);
 		$templates = null;
-		$templates = $cache->get("gang-roles-templates-{$gangId}");
+		//$templates = $cache->get("gang-roles-templates-{$gangId}");
 		if (!$templates) {
 			$query = "
 				SELECT 
@@ -305,11 +313,57 @@ class FighterController extends SlimController {
 				$template = FighterController::getFighterTemplate($r['id']);
 				$r['template'] = $template;
 				$r['gang'] = $gang;
+				$r['primary_skills'] = FighterController::getTemplateSkills($r['id'], $gangId, true);
+				$r['secondary_skills'] = FighterController::getTemplateSkills($r['id'], $gangId, false);
 			}
 			$templates = json_encode($results);
 			$cache->set("gang-roles-templates-{$gangId}", $templates);
 		}
 		$response->getBody()->write($templates);
+		return $response->withHeader('Content-Type', 'application/json');
+	}
+
+	public static function getTemplateSkills($roleId, $gangId, $primarySkill) {
+		global $ndb;
+		$isPrimary = 0;
+		if ($primarySkill) $isPrimary = 1;
+		$query = "
+			SELECT s.id, s.skill_set_name, s.limited_to_gang
+			FROM {$ndb->skill_set} s, {$ndb->fighter_role_skill_set_map} m
+			WHERE s.id = m.skill_set_id
+			AND m.fighter_role_id = :role_id
+			AND m.is_primary = :primary_skill
+		";
+
+		$results = $ndb->query($query, [
+			'role_id' => $roleId, 
+			'primary_skill' => $isPrimary
+		]);
+		if ($results) return $results;
+		return [];
+	}
+
+	public function updateTemplateSkills(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+		global $ndb, $cache;
+		$roleId = $args['id'];
+		$primary = $args['primary'];
+		$skillSets = json_decode($request->getBody(), true);
+
+		$role = FighterController::getFighterRole($roleId);
+		$gangId = $role['gang_type_id'];
+
+		$deleteSetMapping = "DELETE FROM {$ndb->fighter_role_skill_set_map} WHERE fighter_role_id = :role_id AND is_primary = :primary";
+		$ndb->deleteWithParams($deleteSetMapping, [ 'role_id' => $roleId, 'primary' => $primary ]);
+
+		foreach($skillSets as $ss) {
+			$setId = $ss['id'];
+			$insertQuery = "INSERT INTO {$ndb->fighter_role_skill_set_map} VALUES (:role_id, :set_id, :primary)";
+			$ndb->insert($insertQuery, [ 'role_id' => $roleId, 'set_id' => $setId, 'primary' => $primary ]);
+		}
+
+		$cache->del(["gang-roles-templates-{$gangId}", "gang-roles-{$gangId}"]);
+
+		$response->getBody()->write(json_encode($skillSets));
 		return $response->withHeader('Content-Type', 'application/json');
 	}
 

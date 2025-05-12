@@ -1,7 +1,15 @@
 <td>{{role_name}}</td>
 <td>{{hierarchy_role}}</td>
-<td>Primary Skills</td>
-<td>Secondary Skills</td>
+<td>
+	{{#each primary_skills}}
+		{{skill_set_name}}<br/>
+	{{/each}}
+</td>
+<td>
+	{{#each secondary_skills}}
+		{{skill_set_name}}<br/>
+	{{/each}}
+</td>
 <td>
 	{{#if template}}
 		<span class="yes">&#x2714;</span>

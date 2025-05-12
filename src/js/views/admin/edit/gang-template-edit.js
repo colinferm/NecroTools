@@ -11,7 +11,7 @@ Necro.Views.Admin.GangEdit = Backbone.View.extend({
 	initialize : function(options) {
 		var isNew = this.model.isNew();
 		console.log("Is new: " + isNew);
-		this.pageTitle = "Edit " + this.model.get("type_name") + "s";
+		this.pageTitle = "Edit " + this.model.get("type_name");
 		var html = Necro.Utils.UI.TPL.get(this.templateName);
 		this.template = Handlebars.compile(html);
 		

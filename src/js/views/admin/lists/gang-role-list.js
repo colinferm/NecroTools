@@ -39,7 +39,8 @@ Necro.Views.Admin.GangRoleListItem = Backbone.View.extend({
 	templateName: 'gang-role-list-item',
 
 	events: {
-		'click .action_edit': 'editGang',
+		'click .action_primary': 'addPrimarySkills',
+		'click .action_secondary': 'addSecondarySkills',
 		'click .action_remove': 'deleteGang',
 	},
 
@@ -54,6 +55,23 @@ Necro.Views.Admin.GangRoleListItem = Backbone.View.extend({
 		this.$el.html(this.template(this.model.toJSON()));
 		var menu = new Foundation.DropdownMenu($('ul.dropdown.menu', this.$el));
 		return this;
+	},
+
+	addPrimarySkills: function() {
+		this.popSkillSetModal(true);
+	},
+
+	addSecondarySkills: function() {
+		this.popSkillSetModal(false);
+	},
+
+	popSkillSetModal: function(primary) {
+		var modal = new Necro.Views.Modal({
+			class: "Necro.Views.Admin.AssignSkillSet",
+			title: "Assign Skill Set",
+			model: this.model,
+			primarySkill: primary
+		});
 	},
 
 	deleteGang: function() {

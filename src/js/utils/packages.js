@@ -99,11 +99,34 @@ Necro.Utils.UI.Helpers = {
 			}
 		});
 		return '<input type="checkbox" class="' + className + '" value="' + this.id + '" ' + checked + '>&nbsp;' + this[nameParam];
+	},
+
+	TemplateCheckboxSkillSet: function(options) {
+		var model = options.data.root.model;
+
+		var className = options.hash['class-name'];
+		var nameParam = options.hash['name-param'];
+
+		var checked = "";
+		var skills = [];
+		if (options.data.root.primary && model.primary_skills) {
+			skills = model.primary_skills.models;
+		} else if (model.secondary_skills) {
+			skills = model.secondary_skills.models;
+		}
+		skills.forEach(function(item) {
+			if (item.id == this.id) {
+				checked = "checked";
+				return;
+			}
+		});
+		return '<input type="checkbox" class="' + className + '" value="' + this.id + '" ' + checked + '>&nbsp;' + this[nameParam];
 	}
 }
 Handlebars.registerHelper("form-option", Necro.Utils.UI.Helpers.TemplateOptions);
 Handlebars.registerHelper("gang-select", Necro.Utils.UI.Helpers.GangSelectBox);
 Handlebars.registerHelper("checkbox-skill", Necro.Utils.UI.Helpers.TemplateCheckboxSkill);
+Handlebars.registerHelper("checkbox-skillset", Necro.Utils.UI.Helpers.TemplateCheckboxSkillSet);
 Handlebars.registerHelper("checkbox", Necro.Utils.UI.Helpers.TemplateCheckbox);
 
 Necro.Utils.Functions = {
