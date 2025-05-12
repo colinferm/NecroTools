@@ -3,23 +3,27 @@ CREATE TABLE necro_gang_type (
 	id INT NOT NULL AUTO_INCREMENT,
 	type_name VARCHAR(255) NOT NULL,
 	house_gang TINYINT NOT NULL DEFAULT '1',
+	outlaw TINYINT NOT NULL DEFAULT '0',
+	gang_description TEXT NULL,
+	created DATETIME NOT NULL,
+	last_mod DATETIME NOT NULL,
 	PRIMARY KEY (id)
 );
-INSERT INTO necro_gang_type VALUES (1, 'Orlock', 1);
-INSERT INTO necro_gang_type VALUES (2, 'Escher', 1);
-INSERT INTO necro_gang_type VALUES (3, 'Goliath', 1);
-INSERT INTO necro_gang_type VALUES (4, 'Cawdor', 1);
-INSERT INTO necro_gang_type VALUES (5, 'Delaque', 1);
-INSERT INTO necro_gang_type VALUES (6, 'Van Saar', 1);
-INSERT INTO necro_gang_type VALUES (7, 'Ironhead Squat', 0);
-INSERT INTO necro_gang_type VALUES (8, 'Ash Waste Nomad', 0);
-INSERT INTO necro_gang_type VALUES (9, 'Enforcer', 0);
-INSERT INTO necro_gang_type VALUES (10, 'Corpse Grinder', 0);
+INSERT INTO necro_gang_type VALUES (1, 'Orlock', 1, 0, NULL, NOW(), NOW());
+INSERT INTO necro_gang_type VALUES (2, 'Escher', 1, 0, NULL, NOW(), NOW());
+INSERT INTO necro_gang_type VALUES (3, 'Goliath', 1, 0, NULL, NOW(), NOW());
+INSERT INTO necro_gang_type VALUES (4, 'Cawdor', 1, 0, NULL, NOW(), NOW());
+INSERT INTO necro_gang_type VALUES (5, 'Delaque', 1, 0, NULL, NOW(), NOW());
+INSERT INTO necro_gang_type VALUES (6, 'Van Saar', 1, 0, NULL, NOW(), NOW());
+INSERT INTO necro_gang_type VALUES (7, 'Ironhead Squat', 0, 0, NULL, NOW(), NOW());
+INSERT INTO necro_gang_type VALUES (8, 'Ash Waste Nomad', 0, 1, NULL, NOW(), NOW());
+INSERT INTO necro_gang_type VALUES (9, 'Enforcer', 0, 0, NULL, NOW(), NOW());
+INSERT INTO necro_gang_type VALUES (10, 'Corpse Grinder', 0, 1, NULL, NOW(), NOW());
 
 DROP TABLE IF EXISTS necro_gang_fighter_role;
 CREATE TABLE necro_gang_fighter_role (
 	id INT NOT NULL AUTO_INCREMENT,
-	heirarchy_role ENUM('leader', 'champion', 'fighter', 'prospect', 'juve', 'crew', 'brute', 'hanger-on', 'pet'),
+	hierarchy_role ENUM('leader', 'champion', 'fighter', 'prospect', 'juve', 'crew', 'brute', 'hanger-on', 'pet'),
 	gang_id INT NOT NULL,
 	role_name VARCHAR(100),
 	PRIMARY KEY (id)

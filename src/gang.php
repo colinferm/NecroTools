@@ -169,7 +169,7 @@
 						<input type="text" name="fighter_name" id="fighter_name" class="form-control form-control-sm" placeholder="Fighter Name" aria-label="Fighter Name">
 					</div>
 					<div class="cell small-3">
-						<select name="heirarchy_role" id="heirarchy_role" class="form-select form-select-sm" aria-label="Role">
+						<select name="hierarchy_role" id="hierarchy_role" class="form-select form-select-sm" aria-label="Role">
 							<option value="">Role</option>
 							<option value="leader">Leader</option>
 							<option value="champion">Champion</option>

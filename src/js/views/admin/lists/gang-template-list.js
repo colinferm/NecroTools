@@ -1,8 +1,9 @@
 Necro.Views.AdminGangList = Backbone.View.extend({
 	tagName: 'div',
 	className: 'large-12',
-	templateName: 'gang-list',
-	pageTitle: 'Gangs',
+	templateName: 'gang-template-list',
+	pageTitle: 'Admin Gang Lists',
+	model: null,
 
 	events: {
 		'click .add_gang': 'addGang'
@@ -12,7 +13,7 @@ Necro.Views.AdminGangList = Backbone.View.extend({
 		var html = Necro.Utils.UI.TPL.get(this.templateName);
 		this.template = Handlebars.compile(html);
 
-        this.collection = new Necro.Collections.Gangs({});
+        this.collection = new Necro.Collections.GangTypes({});
 		this.collection.fetch({
 			success: _.bind(this.addItems, this)
 		});
@@ -52,7 +53,7 @@ Necro.Views.AdminGangList = Backbone.View.extend({
 
 Necro.Views.AdminGangItem = Backbone.View.extend({
 	tagName: 'tr',
-	templateName: 'gang-list-item',
+	templateName: 'gang-template-list-item',
 
 	events: {
 		'click .action_edit': 'editGang',

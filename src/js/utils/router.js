@@ -165,8 +165,8 @@ Necro.Routers.NecroRouter = Backbone.Router.extend({
 	 */
 	adminGangList: function() {
 		var gangList = new Necro.Views.AdminGangList();
-		var title = "Gang Lists";
-		this.updateRight(gangList.render().$el, title);
+		//var title = "Gang Lists";
+		this.updateRight(gangList.render().$el, gangList.pageTitle);
 
 	},
 

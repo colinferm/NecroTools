@@ -1,9 +1,115 @@
-$white: #FFF;
-$black: #000;
+$color-white: #FFF;
+$color-transparent-white: rgba(255, 255, 255, 0.5);
+$color-transparent: transparent;
+$color-black: #000;
+$color-necro-yellow: #FFC900;
+
+$font-hairline: "BungeeHairline-Regular";
+$font-outline: "BungeeOutline-Regular";
+$font-shade: "BungeeShade-Regular";
+$font-spice: "BungeeSpice-Regular";
+$font-monoton: "Monoton-Regular";
+$font-dirt: "RubikDirt-Regular";
+$font-glitch: "RubikGlitch-Regular";
+$font-iso: "RubikIso-Regular";
+$font-honk: "Honk-Regular";
+$font-default: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+
+@font-face {
+	font-family: $font-hairline;
+	src: url("../fonts/BungeeHairline-Regular.ttf") format("truetype");
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: $font-outline;
+	src: url("../fonts/BungeeOutline-Regular.ttf") format("truetype");
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: $font-shade;
+	src: url("../fonts/BungeeShade-Regular.ttf") format("truetype");
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: $font-spice;
+	src: url("../fonts/BungeeSpice-Regular.ttf") format("truetype");
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: $font-monoton;
+	src: url("../fonts/Monoton-Regular.ttf") format("truetype");
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: $font-dirt;
+	src: url("../fonts/RubikDirt-Regular.ttf") format("truetype");
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: $font-glitch;
+	src: url("../fonts/RubikGlitch-Regular.ttf") format("truetype");
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: $font-iso;
+	src: url("../fonts/RubikIso-Regular.ttf") format("truetype");
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: $font-iso;
+	src: url("../fonts/RubikIso-Regular.ttf") format("truetype");
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: $font-honk;
+	src: url('../fonts/Honk-Regular-VariableFont_MORF,SHLN.ttf');
+	font-weight: normal;
+	font-style: normal;
+}
+
+
+.honk-font {
+	font-family: $font-honk, sans-serif;
+	font-optical-sizing: auto;
+	font-weight: 400;
+	font-style: normal;
+	font-variation-settings: "MORF" 13, "SHLN" 100;
+}
 
 @mixin dark() {
 	&.dark {
 		@content;
+
+		.button {
+			&.hollow {
+				border: 1px solid $color-necro-yellow;
+				color: $color-necro-yellow;
+			}
+			&:hover {
+				background-color: $color-black;
+				color: $color-necro-yellow;
+			}
+			background-color: $color-black;
+			color: $color-necro-yellow;
+		}
 	}
 }
 
@@ -18,7 +124,7 @@ $black: #000;
 	[type="text"], [type="number"], textarea {
 		border: none;
 		box-shadow: none;
-		background-color: transparent;
+		background-color: $color-transparent;
 		@include crossBrowser(transition, none);
 	}
 }
@@ -54,7 +160,42 @@ $black: #000;
 */
 
 html {
+	.dropdown.menu {
+		li.is-dropdown-submenu-parent {
+			a {
+				&::after {
+					border-color: $color-black $color-transparent $color-transparent;
+				}
+			}
+			ul {
+				li {
+					a {
+						font-family: $font-default;
+					}
+				}
+			}
+		}
+	}
+	.button {
+		&.hollow {
+			border: 1px solid $color-necro-yellow;
+			color: $color-black;
+		}
+		&:hover {
+			background-color: $color-black;
+			color: $color-necro-yellow;
+		}
+		background-color: $color-necro-yellow;
+		color: $color-black;
+		font-family: $font-default;
+	}
+
 	body {
+		background-color: $color-black;
+		background-image: url('/img/book-texture.jpg');
+		background-position: top;
+		background-repeat: no-repeat;
+		background-size: cover;
 
 		.title-bar {
 			background: repeating-linear-gradient(
@@ -67,27 +208,45 @@ html {
 
 			.title-bar-left {
 				font-size: 20px;
+				font-family: $font-shade;
+				font-style: italic;
 				font-weight: bold;
 				background-color: #000;
 			}
 		}
 
 		.left-content {
+			background-color: $color-transparent-white;
 
 			.top_section {
 				margin-left: 0;
 
 				.section_title {
+					font-family: $font-dirt;
 					list-style: none;
 					text-transform: uppercase;
 					font-size: 20px;
 					font-weight: 500;
 					letter-spacing: 1px;
-					border-bottom: 1px solid #000;
+					border-bottom: 1px solid $color-necro-yellow;
 					margin: 15px 0;
+					color: $color-necro-yellow;
+					
+					a {
+						color: $color-necro-yellow;
+					}
 				}
 				.subsection {
 					margin-left: 20px;
+
+					a {
+						&:hover {
+							text-decoration: underline;
+						}
+
+						color: $color-black;
+						text-decoration: none;
+					}
 				}
 			}
 		}
@@ -98,13 +257,14 @@ html {
 				flex-direction: column;
 				justify-content: start;
 
-				background-image: url('/img/book-texture.jpg');
-				background-position: top;
-				background-repeat: no-repeat;
-				background-size: cover;
-
 				.header {
 					margin-bottom: 30px;
+
+					h3 {
+						&.subheader {
+							font-family: $font-dirt;
+						}
+					}
 				}
 
 				.right-content-container {
@@ -184,7 +344,7 @@ html {
 						text-align: center;
 						
 						&:focus {
-							background-color: transparent;
+							background-color: $color-transparent;
 							border: none;
 							@include crossBrowser(transition, none);
 							@include crossBrowser(box-shadow, none);
@@ -209,11 +369,15 @@ html {
 				@include dark {
 					tr {
 						&:hover {
-							color: $white;
-							background-color: $black;
+							color: $color-white;
+							background-color: $color-black;
 						}
-						color: $white;
-						background-color: $black;
+						color: $color-white;
+						background-color: $color-black;
+
+						th {
+							font-family: $font-dirt;
+						}
 					}
 				}
 			}
@@ -235,7 +399,7 @@ html {
 		.accordion {
 			.accordion-item {
 				.accordion-title {
-					color: $white;
+					color: $color-white;
 					background-color: darkgray;
 					font-size: 20px;
 					font-weight: bold;
@@ -285,14 +449,10 @@ html {
 			}
 		}
 
-		.left-content {
-			background-color: rgb(222, 226, 230);
-		}
-
 		.footer {
 			min-height: 250px;
-			color: $white;
-			background-color: $black;
+			color: $color-white;
+			background-color: $color-transparent;
 		}
 	}
 }

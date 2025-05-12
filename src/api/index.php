@@ -27,9 +27,25 @@ $app->get('/gang/{id}', [\GangController::class, 'fetchGang'])->add($authCheck);
 $app->put('/gang/{id}', [\GangController::class, 'updateGang'])->add($authCheck);
 $app->get('/gang/{id}/fighters', [\FighterController::class, 'fetchGangFighters'])->add($authCheck);
 
+$app->post('/gang-type', [\GangController::class, 'addGangType'])->add($authCheck);
+$app->get('/gang-types', [\GangController::class, 'fetchGangTypes'])->add($authCheck);
+$app->get('/gang-type/{id}', [\GangController::class, 'fetchGangType'])->add($authCheck);
+$app->put('/gang-type/{id}', [\GangController::class, 'updateGangType'])->add($authCheck);
+$app->get('/gang-type/{id}/fighters', [\FighterController::class, 'fetchGangTypeFighters'])->add($authCheck);
+
+$app->get('/gang-types/{id}/roles', [\FighterController::class, 'fetchGangTemplates'])->add($authCheck);
+
+
 $app->post('/fighter', [\FighterController::class, 'addFighter'])->add($authCheck);
+
+$app->get('/fighter/roles', [\FighterController::class, 'fetchFighterRoles'])->add($authCheck);
+$app->get('/fighter/role/{id}', [\FighterController::class, 'fetchFighterRole'])->add($authCheck);
+
+$app->get('/fighter/template/{id}', [\FighterController::class, 'fetchFighterTemplate'])->add($authCheck);
+
 $app->get('/fighter/{id}', [\FighterController::class, 'fetchFighter'])->add($authCheck);
 $app->put('/fighter/{id}', [\FighterController::class, 'updateFighter'])->add($authCheck);
+
 
 $app->post('/injury/{id}', [\FighterController::class, 'addInjury'])->add($authCheck);
 
@@ -38,8 +54,6 @@ $app->post('/trait', [\WeaponController::class, 'addTrait'])->add($authCheck);
 $app->get('/trait/{id}', [\WeaponController::class, 'fetchTrait'])->add($authCheck);
 $app->put('/trait/{id}', [\WeaponController::class, 'updateTrait'])->add($authCheck);
 $app->delete('/trait/{id}', [\WeaponController::class, 'deleteTrait'])->add($authCheck);
-
-$app->get('/gang-types', [\GangController::class, 'gangTypes'])->add($authCheck);
 
 $app->get('/skills', [\FighterController::class, 'skills']);
 

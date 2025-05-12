@@ -22,6 +22,20 @@ class GangController extends SlimController {
 		return $response->withHeader('Content-Type', 'application/json');
 	}
 
+	public static function getGang($gangId) {
+		global $ndb;
+		$query = "
+			SELECT g.id, g.gang_name, g.gang_type_id, gt.type_name, gt.house_gang, g.outlaw, COUNT(f.id) AS num_fighters, unix_timestamp(g.created) * 1000 AS created, unix_timestamp(g.last_mod) * 1000 AS last_mod 
+			FROM {$ndb->user_gang} g
+			JOIN {$ndb->gang_type} gt ON (g.gang_type_id = gt.id)
+			LEFT JOIN {$ndb->user_fighter} f ON (g.id = f.user_gang_id)
+			WHERE g.id = :id
+			GROUP BY g.id, g.gang_name, g.gang_type_id, gt.type_name, gt.house_gang, g.outlaw, g.last_mod
+			ORDER BY g.last_mod
+		";
+		return $ndb->queryFirst($query, ['id' => $gangId]);
+	}
+
 	public function fetchGang(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
 		global $ndb, $cache;
 		$id = $args['id'];
@@ -86,11 +100,12 @@ class GangController extends SlimController {
 	public static function getGangTypes() {
 		global $ndb;
 		$query = "
-			SELECT gt.id, gt.type_name, gt.house_gang
+			SELECT 
+				gt.id, gt.type_name, gt.house_gang, gt.outlaw, gt.last_mod
 			FROM {$ndb->gang_type} gt
 			ORDER BY gt.type_name ASC
 		";
-		return $ndb->query($query);;
+		return $ndb->query($query);
 	}
 
 	public static function getGangTypesJSON() {
@@ -104,7 +119,7 @@ class GangController extends SlimController {
 		return $types;
 	}
 
-	public function gangTypes(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+	public function fetchGangTypes(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
 		$types = $this->getGangTypes();
 		$response->getBody()->write(json_encode($types));
 		return $response->withHeader('Content-Type', 'application/json');

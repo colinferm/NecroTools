@@ -160,7 +160,7 @@ class FighterController extends SlimController {
 	public static function getFighterRoles() {
 		global $ndb;
 		$query = "
-			SELECT r.id, r.role_name, r.heirarchy_role, r.gang_id, t.type_name AS gang FROM {$ndb->fighter_role} r, {$ndb->gang_type} t WHERE r.gang_id = t.id ORDER BY r.gang_id ASC, id ASC
+			SELECT r.id, r.role_name, r.hierarchy_role, r.gang_id, t.type_name AS gang FROM {$ndb->fighter_role} r, {$ndb->gang_type} t WHERE r.gang_id = t.id ORDER BY r.gang_id ASC, id ASC
 		";
 		$results = $ndb->query($query);
 		$gangRoles = array();
@@ -193,6 +193,124 @@ class FighterController extends SlimController {
 			$cache->set("fighter-roles", $roles);
 		}
 		return $roles;
+	}
+
+	public function fetchFighterRoles(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface {
+		$roles = FighterController::getFighterRolesJSON();
+		$response->getBody()->write($roles);
+		return $response->withHeader('Content-Type', 'application/json');
+	}
+
+	public static function fetchFighterRole(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+		global $ndb, $cache;
+		$roleId = $args['id'];
+		$role = null;
+		//$role = $cache->get("gang-role-{$roleId}");
+		if (!$role) {
+			$query = "
+				SELECT 
+					r.id AS role_id, r.role_name, r.hierarchy_role, r.gang_id,
+					ft.id AS template_id, ft.movement, ft.weapon_skill, ft.balistic_skill, ft.strength, ft.toughness, ft.toughness_side, ft.toughness_rear,
+					ft.wounds, ft.initiative, ft.attacks, ft.handling, ft.save_roll, ft.leadership, ft.cool, ft.willpower, ft.intelligence, 
+					ft.is_vehicle, ft.is_dramatis, ft.base_value, ft.view_order, created
+				FROM {$ndb->fighter_role} r
+				LEFT JOIN {$ndb->fighter_template} ft ON (ft.fighter_role = r.id)
+				WHERE r.id = :id 
+				AND (ft.is_dramatis = 0 OR ft.is_dramatis IS NULL)
+				ORDER BY r.hierarchy_role ASC, role_id ASC
+				LIMIT 1
+			";
+			$results = $ndb->queryFirst($query, ['id' => $roleId]);
+			$templates = json_encode($results);
+			$cache->set("gang-role-{$roleId}", $role);
+		}
+		$response->getBody()->write($templates);
+		return $response->withHeader('Content-Type', 'application/json');
+	}
+
+	public function fetchFighterRolesForGang(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+		global $ndb, $cache;
+		$gangId = $args['id'];
+		$roles = $cache->get("gang-roles-{$gangId}");
+		if (!$roles) {
+			$query = "
+				SELECT r.id, r.role_name, r.hierarchy_role, r.gang_id
+				FROM {$ndb->fighter_role} r 
+				WHERE r.gang_id = :gang_id ORDER BY r.hierarchy_role ASC, id ASC
+			";
+			$results = $ndb->query($query, ['gang_id' => $gangId]);
+			$roles = json_encode($results);
+			$cache->set("gang-roles-{$gangId}", $roles);
+		}
+		$response->getBody()->write($roles);
+		return $response->withHeader('Content-Type', 'application/json');
+	}
+
+	public static function getFighterTemplate($roleId) {
+		global $ndb;
+		$query = "
+			SELECT 
+				ft.id AS template_id, ft.movement, ft.weapon_skill, ft.balistic_skill, ft.strength, ft.toughness, ft.toughness_side, ft.toughness_rear,
+				ft.wounds, ft.initiative, ft.attacks, ft.handling, ft.save_roll, ft.leadership, ft.cool, ft.willpower, ft.intelligence, 
+				ft.is_vehicle, ft.is_dramatis, ft.base_value, ft.view_order, created
+			FROM {$ndb->fighter_template} ft
+			WHERE ft.fighter_role = :role_id 
+			AND (ft.is_dramatis = 0 OR ft.is_dramatis IS NULL)
+		";
+		return $ndb->queryFirst($query, ['role_id' => $roleId]);
+	}
+
+	public function fetchFighterTemplate(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+		global $ndb, $cache;
+		$templateId = $args['id'];
+
+		$template = null;
+		$template = $cache->get("gang-fighter-template-{$templateId}");
+		if (!$template) {
+			$query = "
+				SELECT 
+					ft.id AS template_id, ft.movement, ft.weapon_skill, ft.balistic_skill, ft.strength, ft.toughness, ft.toughness_side, ft.toughness_rear,
+					ft.wounds, ft.initiative, ft.attacks, ft.handling, ft.save_roll, ft.leadership, ft.cool, ft.willpower, ft.intelligence, 
+					ft.is_vehicle, ft.is_dramatis, ft.base_value, ft.view_order, created
+				FROM {$ndb->fighter_template} ft
+				WHERE ft.id = :id 
+				AND (ft.is_dramatis = 0 OR ft.is_dramatis IS NULL)
+			";
+			$result = $ndb->queryFirst($query, ['id' => $templateId]);
+			$template = json_encode($result);
+			$cache->set("gang-fighter-template-{$templateId}", $template);
+		}
+
+		$response->getBody()->write($template);
+		return $response->withHeader('Content-Type', 'application/json');
+	}
+
+
+	public function fetchGangTemplates(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+		global $ndb, $cache;
+		$gangId = $args['id'];
+		$gang = GangController::getGang($gangId);
+		$templates = null;
+		$templates = $cache->get("gang-roles-templates-{$gangId}");
+		if (!$templates) {
+			$query = "
+				SELECT 
+					r.id, r.role_name, r.hierarchy_role, r.gang_id
+				FROM {$ndb->fighter_role} r
+				WHERE r.gang_id = :gang_id 
+				ORDER BY r.hierarchy_role ASC, r.id ASC
+			";
+			$results = $ndb->query($query, ['gang_id' => $gangId]);
+			foreach ($results as &$r) {
+				$template = FighterController::getFighterTemplate($r['id']);
+				$r['template'] = $template;
+				$r['gang'] = $gang;
+			}
+			$templates = json_encode($results);
+			$cache->set("gang-roles-templates-{$gangId}", $templates);
+		}
+		$response->getBody()->write($templates);
+		return $response->withHeader('Content-Type', 'application/json');
 	}
 
 	public static function getInjuries() {

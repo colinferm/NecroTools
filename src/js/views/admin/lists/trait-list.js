@@ -2,10 +2,10 @@ Necro.Views.TraitList = Backbone.View.extend({
 	tagName: 'div',
 	className: 'large-12',
 	templateName: 'trait-list',
-	pageTitle: 'War Gear',
+	pageTitle: 'Weapon Traits',
 
 	events: {
-		'click .addGear': 'addGear'
+		'click .addTrait': 'addTrait'
 	},
 
 	initialize : function(options) {
@@ -36,7 +36,7 @@ Necro.Views.TraitList = Backbone.View.extend({
 		$('tbody', this.$el).append(row.render().$el);
 	},
 
-	addGear: function() {
+	addTrait: function() {
 		var m = new Necro.Models.Trait();
 		var modal = new Necro.Views.Modal({
 			class: "Necro.Views.TraitModal",
