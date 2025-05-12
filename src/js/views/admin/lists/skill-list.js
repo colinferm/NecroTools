@@ -1,4 +1,4 @@
-Necro.Views.AdminSkillList = Backbone.View.extend({
+Necro.Views.Admin.SkillList = Backbone.View.extend({
 	tagName: 'div',
 	className: 'large-12',
 	templateName: 'skill-list',
@@ -32,7 +32,7 @@ Necro.Views.AdminSkillList = Backbone.View.extend({
 	},
 
 	addItem: function(item) {
-		var row = new Necro.Views.AdminSkillSet({model: item});
+		var row = new Necro.Views.Admin.SkillSet({model: item});
 		$('.skill-sets', this.$el).append(row.render().$el);
 	},
 
@@ -50,7 +50,7 @@ Necro.Views.AdminSkillList = Backbone.View.extend({
 
 });
 
-Necro.Views.AdminSkillSet = Backbone.View.extend({
+Necro.Views.Admin.SkillSet = Backbone.View.extend({
     tagName: 'table',
     className: 'hover skill-list',
     templateName: 'skill-list-set',
@@ -89,13 +89,13 @@ Necro.Views.AdminSkillSet = Backbone.View.extend({
 	},
 
 	addItem: function(skill) {
-		var item = new Necro.Views.AdminSkillItem({model: skill});
+		var item = new Necro.Views.Admin.SkillItem({model: skill});
 		$('tbody', this.$el).append(item.render().$el);
 	},
 
 	editSkillSet: function() {
 		var modal = new Necro.Views.Modal({
-			class: "Necro.Views.AdminEditSkillSetModal",
+			class: "Necro.Views.Admin.EditSkillSetModal",
 			title: "Edit Skill Set",
 			model: this.model
 		});
@@ -105,7 +105,7 @@ Necro.Views.AdminSkillSet = Backbone.View.extend({
 		var skillSet = this.model.get('skill_set_name');
 		var m = new Necro.Models.Skill({skill_set_id: this.model.get('id'), skill_set_name: skillSet});
 		var modal = new Necro.Views.Modal({
-			class: "Necro.Views.AdminSkillEditModal",
+			class: "Necro.Views.Admin.SkillEditModal",
 			title: "Add " + skillSet + " Skill",
 			model: m,
 			callback: _.bind(function() {
@@ -123,7 +123,7 @@ Necro.Views.AdminSkillSet = Backbone.View.extend({
 
 });
 
-Necro.Views.AdminSkillItem = Backbone.View.extend({
+Necro.Views.Admin.SkillItem = Backbone.View.extend({
 	tagName: 'tr',
 	templateName: 'skill-list-item',
 
@@ -148,7 +148,7 @@ Necro.Views.AdminSkillItem = Backbone.View.extend({
 
 	editSkill: function() {
 		var modal = new Necro.Views.Modal({
-			class: "Necro.Views.AdminSkillEditModal",
+			class: "Necro.Views.Admin.SkillEditModal",
 			title: "Edit Skill",
 			model: this.model
 		});

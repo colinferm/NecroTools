@@ -4,14 +4,18 @@ Necro.Models.GangType = Backbone.Model.extend({
 	defaults:    {
 		"id": null,
 		"type_name": "",
-		"house_gang": true
+		"house_gang": true,
+		"outlaw": false,
+		"gang_description": "",
+		"created": "",
+		"last_mod": ""
 	}
 });
 
 Necro.Collections.GangTypes = Backbone.Collection.extend({
 	model: Necro.Models.GangType,
 	url:   '/api/gang-types',
-	
+
 	parse: function(resp) {
 		console.log(resp);
 		this.add(resp);

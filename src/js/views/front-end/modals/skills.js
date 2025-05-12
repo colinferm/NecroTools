@@ -6,7 +6,7 @@ Necro.Views.SkillsModal = Necro.Views.BaseModal.extend({
 	},
 
 	render: function() {
-		this.$el.html(this.template({skillsets: Necro.Apps.Data.Skills.toJSON(), model: this.model.toJSON()}));
+		this.$el.html(this.template({skillsets: Necro.Apps.Data.SkillSets.toJSON(), model: this.model.toJSON()}));
 		return this;
 	},
 
@@ -16,7 +16,7 @@ Necro.Views.SkillsModal = Necro.Views.BaseModal.extend({
 		var checked = target.is(':checked');
 		var skillId = target.val();
 		//console.log("Checked: " + checked + ", Skill: " + skillId);
-		var skill = Necro.Apps.Data.Skills.getSkill(skillId)
+		var skill = Necro.Apps.Data.SkillSets.getSkill(skillId)
 		if (checked) {
 			this.model.attributes.skills.add(skill);
 		} else {

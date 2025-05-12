@@ -1,0 +1,24 @@
+<td>{{role_name}}</td>
+<td>{{hierarchy_role}}</td>
+<td>Primary Skills</td>
+<td>Secondary Skills</td>
+<td>
+	{{#if template}}
+		<span class="yes">&#x2714;</span>
+	{{else}} 
+		<span class="no">&cross;</span>
+	{{/if}}
+</td>
+<td>
+	<ul class="dropdown menu" data-dropdown-menu data-disable-hover="true" data-click-open="true" data-close-on-click="true">
+		<li>
+			<a class="button hollow">Action</a>
+			<ul class="menu icons icon-left">
+				<li><a class="action_edit"><i class="fi-info"></i> <span>Edit</span></a></a></li>
+				<li><a class="action_primary"><i class="fi-checkbox"></i> <span>Primary Skills</span></a></a></li>
+				<li><a class="action_secondary"><i class="fi-checkbox"></i> <span>Secondary Skills</span></a></a></li>
+				<li><a class="action_remove alert"><i class="fi-trash"></i> <span>Delete</span></a></li>
+			</ul>
+		</li>
+	</ul>
+</td>

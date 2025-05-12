@@ -3,12 +3,15 @@ var Necro = {
 		Data: {}
 	},
 	Utils: {
-		UI: {}
+		UI: {},
+		Functions: {}
 	},
 	Routers: {},
 	Collections: {},
 	Models: {},
-	Views: {},
+	Views: {
+		Admin: {}
+	},
 	Events: {}
 };
 
@@ -55,6 +58,22 @@ Necro.Utils.UI.Helpers = {
 		return '<option value="' + this.id + '" ' + selected + '>' + this[nameParam] + '</option>';
 	},
 
+	GangSelectBox: function(options) {
+		var item = this;
+		var model = options.data.root.model;
+		var selectedId = options.hash['selected-id'];
+		var fieldName = options.hash['field-name'];
+		let gangs = Necro.Apps.Data.GangTypes;
+		var html = '<select name="' + fieldName + '">';
+		_.each(gangs, function(gang, i) {
+			var selected = "";
+			if (gang.id == selectedId) selected = "selected";
+			html += '<option value="' + gang.id + '" ' + selected + '>' + gang.type_name + '</option>';
+		});
+		html += "</select>";
+		return html;
+	},
+
 	TemplateCheckbox: function(options, context) {
 		var model = options.data.root.model;
 
@@ -83,8 +102,21 @@ Necro.Utils.UI.Helpers = {
 	}
 }
 Handlebars.registerHelper("form-option", Necro.Utils.UI.Helpers.TemplateOptions);
+Handlebars.registerHelper("gang-select", Necro.Utils.UI.Helpers.GangSelectBox);
 Handlebars.registerHelper("checkbox-skill", Necro.Utils.UI.Helpers.TemplateCheckboxSkill);
 Handlebars.registerHelper("checkbox", Necro.Utils.UI.Helpers.TemplateCheckbox);
+
+Necro.Utils.Functions = {
+	getGangById: function(id) {
+		for(var i = 0; i < Necro.Apps.Data.GangTypes.length; i++) {
+			let gang = Necro.Apps.Data.GangTypes[i];
+			if (gang.id == id) {
+				var model = new Necro.Models.GangType(gang);
+				return model;
+			}
+		}
+	}
+}
 
 //helper class for working with packages
 Necro.Utils.Resolver = {	

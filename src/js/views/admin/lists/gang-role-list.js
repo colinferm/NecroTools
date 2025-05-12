@@ -1,27 +1,22 @@
-Necro.Views.Admin.GangList = Backbone.View.extend({
+Necro.Views.Admin.GangRoleList = Backbone.View.extend({
 	tagName: 'div',
 	className: 'large-12',
-	templateName: 'gang-template-list',
-	pageTitle: 'Admin Gang Lists',
+	templateName: 'gang-role-list',
 	model: null,
 
 	events: {
-		'click .add_gang': 'addGang'
 	},
 
 	initialize : function(options) {
 		var html = Necro.Utils.UI.TPL.get(this.templateName);
 		this.template = Handlebars.compile(html);
-
-        this.collection = new Necro.Collections.GangTypes({});
-		this.collection.fetch({
-			success: _.bind(this.addItems, this)
-		});
-		this.collection.on("add", this.addItems, this);
+        this.collection = new Necro.Collections.GangRoles({gangId: this.model.get('id')});
+		this.collection.fetch({ success: _.bind(this.addItems, this) });
 	},
 
 	render: function() {
 		this.$el.html(this.template);
+		if (this.collection && this.collection.length > 0) this.addItems();
 		return this;
 	},
 
@@ -33,27 +28,15 @@ Necro.Views.Admin.GangList = Backbone.View.extend({
 	},
 
 	addItem: function(item) {
-		var row = new Necro.Views.Admin.GangItem({model: item});
+		var row = new Necro.Views.Admin.GangRoleListItem({model: item});
 		$('tbody', this.$el).append(row.render().$el);
-	},
-
-	addGang: function() {
-		var m = new Necro.Models.Gang();
-		var modal = new Necro.Views.Modal({
-			class: "Necro.Views.Admin.GangEditModal",
-			title: "Add Gang",
-			model: m,
-			callback: _.bind(function() {
-				if (m) this.collection.add(m);
-			}, this)
-		});
 	}
 
 });
 
-Necro.Views.Admin.GangItem = Backbone.View.extend({
+Necro.Views.Admin.GangRoleListItem = Backbone.View.extend({
 	tagName: 'tr',
-	templateName: 'gang-template-list-item',
+	templateName: 'gang-role-list-item',
 
 	events: {
 		'click .action_edit': 'editGang',
@@ -71,11 +54,6 @@ Necro.Views.Admin.GangItem = Backbone.View.extend({
 		this.$el.html(this.template(this.model.toJSON()));
 		var menu = new Foundation.DropdownMenu($('ul.dropdown.menu', this.$el));
 		return this;
-	},
-
-	editGang: function() {
-		necro.passMode = this.model;
-		necro.navigate("adminGangs/" + this.model.get("id"), true);
 	},
 
 	deleteGang: function() {

@@ -1,6 +1,7 @@
 Necro.Routers.NecroRouter = Backbone.Router.extend({
 	savedSearches: {},
 	history: [],
+	passModel: null,
 
 	routes:{
 		"":"home",
@@ -164,19 +165,28 @@ Necro.Routers.NecroRouter = Backbone.Router.extend({
 	 * Admin
 	 */
 	adminGangList: function() {
-		var gangList = new Necro.Views.AdminGangList();
+		var gangList = new Necro.Views.Admin.GangList();
 		//var title = "Gang Lists";
 		this.updateRight(gangList.render().$el, gangList.pageTitle);
 
 	},
 
 	adminGangForm: function(id) {
+		var gang = null;
+		if (this.passModel) {
+			gang = this.passModel;
+			this.passModel = null;
+		} else {
+			gang = Necro.Utils.Functions.getGangById(id);
+		}
 
+		var gangEdit = new Necro.Views.Admin.GangEdit({model: gang});
+		this.updateRight(gangEdit.render().$el, gangEdit.pageTitle);
 	},
 
 	adminSkillsList: function() {
 		var title = "Fighter Skills";
-		var skillList = new Necro.Views.AdminSkillList({});
+		var skillList = new Necro.Views.Admin.SkillList({});
 		this.updateRight(skillList.render().$el, title);
 	},
 

@@ -24,7 +24,7 @@ DROP TABLE IF EXISTS necro_gang_fighter_role;
 CREATE TABLE necro_gang_fighter_role (
 	id INT NOT NULL AUTO_INCREMENT,
 	hierarchy_role ENUM('leader', 'champion', 'fighter', 'prospect', 'juve', 'crew', 'brute', 'hanger-on', 'pet'),
-	gang_id INT NOT NULL,
+	gang_type_id INT NOT NULL,
 	role_name VARCHAR(100),
 	PRIMARY KEY (id)
 );

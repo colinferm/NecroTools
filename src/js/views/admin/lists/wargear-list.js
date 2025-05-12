@@ -1,4 +1,4 @@
-Necro.Views.AdminWargearList = Backbone.View.extend({
+Necro.Views.Admin.WargearList = Backbone.View.extend({
 	tagName: 'div',
 	className: 'large-12',
 	templateName: 'wargear-list',
@@ -32,7 +32,7 @@ Necro.Views.AdminWargearList = Backbone.View.extend({
 	},
 
 	addItem: function(item) {
-		var row = new Necro.Views.AdminWargearItem({model: item});
+		var row = new Necro.Views.Admin.WargearItem({model: item});
 		$('tbody', this.$el).append(row.render().$el);
 	},
 
@@ -51,7 +51,7 @@ Necro.Views.AdminWargearList = Backbone.View.extend({
 
 });
 
-Necro.Views.AdminWargearItem = Backbone.View.extend({
+Necro.Views.Admin.WargearItem = Backbone.View.extend({
 	tagName: 'tr',
 	templateName: 'wargear-list-item',
 

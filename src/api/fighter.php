@@ -160,7 +160,7 @@ class FighterController extends SlimController {
 	public static function getFighterRoles() {
 		global $ndb;
 		$query = "
-			SELECT r.id, r.role_name, r.hierarchy_role, r.gang_id, t.type_name AS gang FROM {$ndb->fighter_role} r, {$ndb->gang_type} t WHERE r.gang_id = t.id ORDER BY r.gang_id ASC, id ASC
+			SELECT r.id, r.role_name, r.hierarchy_role, r.gang_id, t.type_name AS gang FROM {$ndb->fighter_role} r, {$ndb->gang_type} t WHERE r.gang_type_id = t.id ORDER BY r.gang_id ASC, id ASC
 		";
 		$results = $ndb->query($query);
 		$gangRoles = array();
@@ -236,7 +236,7 @@ class FighterController extends SlimController {
 			$query = "
 				SELECT r.id, r.role_name, r.hierarchy_role, r.gang_id
 				FROM {$ndb->fighter_role} r 
-				WHERE r.gang_id = :gang_id ORDER BY r.hierarchy_role ASC, id ASC
+				WHERE r.gang_type_id = :gang_id ORDER BY r.hierarchy_role ASC, id ASC
 			";
 			$results = $ndb->query($query, ['gang_id' => $gangId]);
 			$roles = json_encode($results);
@@ -295,9 +295,9 @@ class FighterController extends SlimController {
 		if (!$templates) {
 			$query = "
 				SELECT 
-					r.id, r.role_name, r.hierarchy_role, r.gang_id
+					r.id, r.role_name, r.hierarchy_role, r.gang_type_id
 				FROM {$ndb->fighter_role} r
-				WHERE r.gang_id = :gang_id 
+				WHERE r.gang_type_id = :gang_id 
 				ORDER BY r.hierarchy_role ASC, r.id ASC
 			";
 			$results = $ndb->query($query, ['gang_id' => $gangId]);

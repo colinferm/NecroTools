@@ -101,7 +101,7 @@ class GangController extends SlimController {
 		global $ndb;
 		$query = "
 			SELECT 
-				gt.id, gt.type_name, gt.house_gang, gt.outlaw, gt.last_mod
+				gt.id, gt.type_name, gt.house_gang, gt.outlaw, gt.created, gt.last_mod
 			FROM {$ndb->gang_type} gt
 			ORDER BY gt.type_name ASC
 		";
