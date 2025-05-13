@@ -52,7 +52,7 @@ Necro.Views.Admin.SkillList = Backbone.View.extend({
 
 Necro.Views.Admin.SkillSet = Backbone.View.extend({
     tagName: 'table',
-    className: 'hover skill-list',
+    className: 'table table-striped skill-list',
     templateName: 'skill-list-set',
 
 	events: {
@@ -74,12 +74,12 @@ Necro.Views.Admin.SkillSet = Backbone.View.extend({
 		if ($('tbody', this.$el).length) table = $('tbody',this.$el).detach();
 
 		this.$el.html(this.template(this.model.toJSON()));
-		var menu = new Foundation.DropdownMenu($('ul.dropdown.menu', this.$el));
+		//var menu = new Foundation.DropdownMenu($('ul.dropdown.menu', this.$el));
 
 		if (table) {
 			this.$el.append(table);
 		} else {
-			this.$el.append('<tbody class="hide"></tbody>');
+			this.$el.append('<tbody class="d-none"></tbody>');
 			_.each(this.model.attributes.skills.models, function(skill) {
 				this.addItem(skill);
 			}, this);
@@ -118,7 +118,7 @@ Necro.Views.Admin.SkillSet = Backbone.View.extend({
 	},
 
 	reveal: function() {
-		$('tbody', this.$el).toggleClass('hide');
+		$('tbody', this.$el).toggleClass('d-none');
 	}
 
 });
@@ -141,9 +141,8 @@ Necro.Views.Admin.SkillItem = Backbone.View.extend({
 	},
 
 	render: function() {
-		//console.log(this.model.toJSON());
 		this.$el.html(this.template(this.model.toJSON()));
-		var menu = new Foundation.DropdownMenu($('ul.dropdown.menu', this.$el));
+		//var menu = new Foundation.DropdownMenu($('ul.dropdown.menu', this.$el));
 		return this;
 	},
 

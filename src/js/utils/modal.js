@@ -1,7 +1,6 @@
 Necro.Views.Modal = Backbone.View.extend({
 	tagName: 'div',
-	className: 'reveal',
-	id: "fighterModal",
+	className: 'modal',
 	templateName: 'modal-wrapper',
 
 	events: {
@@ -17,18 +16,17 @@ Necro.Views.Modal = Backbone.View.extend({
 
 	render: function() {
 		this.$el.html(this.template({modal_title: this.opts.title}));
-		this.$el.attr('data-reveal', '');
-		this.$el.attr('data-overlay', 'true');
 
 		this.content = Necro.Utils.Resolver.getNewInstance(this.opts.class, {model: this.model});
 		this.content.options = this.opts;
-		$('.modal-container', this.$el).html(this.content.render().$el);
+		$('.modal-body', this.$el).html(this.content.render().$el);
 
 		$('body').append(this.$el);
 
-		var popup = new Foundation.Reveal(this.$el);
-		this.$el.on('closed.zf.reveal', _.bind(this.removeSelf, this));
-		popup.open();
+
+		var modal = new bootstrap.Modal(this.el);
+		this.$el.on('hidden.bs.modal', _.bind(this.removeSelf, this))
+		modal.show();
 
 		return this.$el;
 	},
@@ -51,8 +49,7 @@ Necro.Views.Modal = Backbone.View.extend({
 	},
 
 	removeSelf: function() {
-		$(this.$el).foundation('close');
-		$('.reveal-overlay').remove();
+		this.$el.remove();
 	}
 
 

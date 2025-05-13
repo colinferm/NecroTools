@@ -1,6 +1,6 @@
 Necro.Views.LeftContent = Backbone.View.extend({
 	tagName: 'div',
-	className: 'cell large-2 left-content',
+	className: 'col-2 left-content',
 	templateName: 'left-content',
 	loggedIn: false,
 

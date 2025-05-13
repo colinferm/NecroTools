@@ -16,9 +16,9 @@ Necro.Views.Register = Backbone.View.extend({
 
 	render: function() {
 		this.$el.html(this.template(this.model.toJSON()));
-		new Foundation.Abide($('form', this.$el));
-		$('form', this.$el).on('forminvalid.zf.abide', _.bind(this.formInValid, this));
-		$('form', this.$el).on('formvalid.zf.abide', _.bind(this.formValid, this));
+		//new Foundation.Abide($('form', this.$el));
+		//$('form', this.$el).on('forminvalid.zf.abide', _.bind(this.formInValid, this));
+		//$('form', this.$el).on('formvalid.zf.abide', _.bind(this.formValid, this));
 		return this;
 	},
 

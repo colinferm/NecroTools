@@ -2,37 +2,31 @@
 <td>{{hierarchy_role}}</td>
 <td>
 	{{#each primary_skills.models}}
-		{{#if @index}}
-			&nbsp;&ndash;&nbsp;
-		{{/if}}
-		{{attributes.skill_set_name}}
+		<span class="badge bg-secondary">{{attributes.skill_set_name}}</span>
 	{{/each}}
 </td>
 <td>
 	{{#each secondary_skills.models}}
-		{{#if @index}}
-			&nbsp;&ndash;&nbsp;
-		{{/if}}
-		{{attributes.skill_set_name}}
+		<span class="badge bg-dark">{{attributes.skill_set_name}}</span>
 	{{/each}}
 </td>
 <td>
 	{{#if template}}
-		<span class="yes">&#x2714;</span>
+		<span class="badge rounded-pill bg-success"><i class="bi bi-check-circle fs-6"></i></span>
 	{{else}} 
-		<span class="no">&cross;</span>
+		<span class="badge rounded-pill bg-danger"><i class="bi bi-x-circle fs-6"></i></span>
 	{{/if}}
 </td>
-<td class="flex-container align-center-middle">
-	<ul class="dropdown menu" data-dropdown-menu data-disable-hover="true" data-click-open="true" data-close-on-click="true">
-		<li>
-			<a class="button hollow">Action</a>
-			<ul class="menu icons icon-left">
-				<li><a class="action_edit"><i class="fi-info"></i> <span>Edit</span></a></a></li>
-				<li><a class="action_primary"><i class="fi-checkbox"></i> <span>Primary Skills</span></a></a></li>
-				<li><a class="action_secondary"><i class="fi-checkbox"></i> <span>Secondary Skills</span></a></a></li>
-				<li><a class="action_remove alert"><i class="fi-trash"></i> <span>Delete</span></a></li>
-			</ul>
-		</li>
-	</ul>
+<td class="d-flex justify-content-center">
+	<div class="btn-group" role="group">
+		<button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+		  Action
+		</button>
+		<ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+			<li class="d-flex flex-row align-items-start p-1 action_edit"><i class="fi-info ms-1 me-2"></i> <span>Edit</span></li>
+			<li class="d-flex flex-row align-items-start p-1 action_primary"><i class="fi-checkbox ms-1 me-2"></i> <span>Primary Skills</span></li>
+			<li class="d-flex flex-row align-items-start p-1 action_secondary"><i class="fi-checkbox ms-1 me-2"></i> <span>Secondary Skills</span></li>
+			<li class="d-flex flex-row align-items-start p-1 action_remove"><i class="fi-trash ms-1 me-2"></i> <span>Delete</span></li>
+		</ul>
+	</div>
 </td>

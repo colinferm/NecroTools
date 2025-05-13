@@ -44,7 +44,6 @@ Necro.Collections.Gangs = Backbone.Collection.extend({
 	model: Necro.Models.Gang,
 	url:   '/api/gangs',
 	parse: function(resp) {
-		console.log(resp);
 		this.add(resp);
 		return resp;
 	}
@@ -96,7 +95,6 @@ Necro.Collections.GangTemplates = Backbone.Collection.extend({
 	model: Necro.Models.GangTemplate,
 	url:   '/api/gangs',
 	parse: function(resp) {
-		console.log(resp);
 		this.add(resp);
 		return resp;
 	}

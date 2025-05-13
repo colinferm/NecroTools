@@ -1,11 +1,13 @@
-<div class="grid-x trait-editor">
-    <div class="cell small-8">
-        <input class="trait_name" value="{{trait_name}}" type="text" placeholder="Name">
+<div class="trait-editor">
+    <div class="mb-3">
+        <input class="trait_name form-control" value="{{trait_name}}" type="text" placeholder="Name">
     </div>
-    <div class="cell small-4">
-        <input class="trait_value" value="{{trait_value}}" type="number" placeholder="0" size="40">
-    </div>
-    <div class="cell small-12">
-        <textarea class="notes" rows="6" placeholder="Any special information about this trait.">{{notes}}</textarea>
+    <div class="row">
+        <div class="col-4 mb-3">
+            <input class="trait_value form-control" value="{{trait_value}}" type="number" placeholder="0" size="40">
+        </div>
+        <div class="col-12">
+            <textarea class="notes form-control" rows="6" placeholder="Any special information about this trait.">{{notes}}</textarea>
+        </div>
     </div>
 </div>

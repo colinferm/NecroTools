@@ -13,7 +13,10 @@ Necro.Views.Admin.AssignSkillSet = Necro.Views.BaseModal.extend({
 	},
 
 	render: function() {
-		this.$el.html(this.template({skillsets: Necro.Apps.Data.SkillSets.toJSON(), model: this.model.toJSON(), primary: this.options.primarySkill }));
+		//this.$el.html(this.template({skillsets: Necro.Apps.Data.SkillSets.getSkillSetsForGang().toJSON(), model: this.model.toJSON(), primary: this.options.primarySkill }));
+		var ss = Necro.Apps.Data.SkillSets.getSkillSetsForGang(this.model.get("gang_type_id"));
+		var passed = JSON.stringify(ss);
+		this.$el.html(this.template({skillsets: ss, model: this.model.toJSON(), primary: this.options.primarySkill }));
 		return this;
 	},
 

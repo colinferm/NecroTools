@@ -1,8 +1,6 @@
-<div class="grid-x">
-    <div class="cell small-12">
-        <input class="role_name" value="{{model.role_name}}" type="text" placeholder="Role Name">
-    </div>
-	<div class="cell small-12">
-		{{{select-box field-name="hierarchy_role" collection-property="roles" item-id="type" item-name="name" model-property="hierarchy_role"}}}
-    </div>
+<div class="mb-3">
+    <input class="role_name form-control" value="{{model.role_name}}" type="text" placeholder="Role Name">
+</div>
+<div>
+    {{{select-box field-name="hierarchy_role" collection-property="roles" item-id="type" item-name="name" model-property="hierarchy_role"}}}
 </div>

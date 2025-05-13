@@ -1,9 +1,11 @@
-<div class="grid-x trait-editor">
-	<div class="cell small-8">
-		<input class="skill_set_name" value="{{model.skill_set_name}}" type="text" placeholder="Name">
-	</div>
-	<div class="cell small-12">
-		{{{checkbox name-param="limited_to_gang" class-name="limited_to_gang" text="Limited to Gang:"}}}
-		{{{select-box field-name="gang_type" collection-property="gangTypes" item-id="id" item-name="type_name" model-property="gang_type_id" with-blank="true"}}}
-	</div>
+<div class="container-fluid trait-editor">
+	<form>
+		<div class="mb-3">
+			<input class="form-control skill_set_name" value="{{model.skill_set_name}}" type="text" placeholder="Name">
+		</div>
+		<div>
+			{{{checkbox name-param="limited_to_gang" class-name="limited_to_gang" text="Limited to Gang:"}}}
+			{{{select-box field-name="gang_type" collection-property="gangTypes" item-id="id" item-name="type_name" model-property="gang_type_id" with-blank="true"}}}
+		</div>
+	</form>
 </div>

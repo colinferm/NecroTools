@@ -1,4 +1,4 @@
-<td>{{gang_name}}</td>
+<td><b>{{gang_name}}</b></td>
 <td>{{type_name}}</td>
 <td>{{num_fighters}}</td>
 <td>
@@ -9,15 +9,15 @@
 	{{/if}}
 </td>
 <td>{{last_mod}}</td>
-<td class="flex-container align-center-middle">
-	<ul class="dropdown menu" data-dropdown-menu data-disable-hover="true" data-click-open="true" data-close-on-click="true">
-		<li>
-			<a class="button hollow">Action</a>
-			<ul class="menu icons icon-left">
-				<li><a class="action_edit"><i class="fi-info"></i> <span>Edit</span></a></a></li>
-				<li><a class="action_clone"><i class="fi-torsos"></i> <span>Clone</span></a></a></li>
-				<li><a class="action_remove alert"><i class="fi-trash"></i> <span>Delete</span></a></li>
-			</ul>
-		</li>
-	</ul>
+<td class="d-flex justify-content-center">
+	<div class="btn-group" role="group">
+		<button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+		  Action
+		</button>
+		<ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+			<li><a class="action_edit"><i class="fi-info"></i> <span>Edit</span></a></a></li>
+			<li><a class="action_clone"><i class="fi-torsos"></i> <span>Clone</span></a></a></li>
+			<li><a class="action_remove"><i class="fi-trash"></i> <span>Delete</span></a></li>
+		</ul>
+	</div>
 </td>

@@ -52,6 +52,19 @@ Necro.Collections.SkillSets = Backbone.Collection.extend({
 			});
 		});
 		return skill;
+	},
+
+	getSkillSetsForGang(gangId) {
+		var gId = parseInt(gangId);
+		var sets = [];
+		for (var i = 0; i < this.models.length; i++) {
+			var set = this.models[i];
+			if (!set.attributes.limited_to_gang || (set.attributes.limited_to_gang && set.attributes.limited_to_gang == gId)) {
+				sets.push(set);
+				continue;
+			}
+		}
+		return sets;
 	}
 });
 

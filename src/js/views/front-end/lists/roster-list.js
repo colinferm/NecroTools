@@ -68,7 +68,7 @@ Necro.Views.RosterItem = Backbone.View.extend({
 
 	render: function() {
 		this.$el.html(this.template(this.model.toJSON()));
-		var menu = new Foundation.DropdownMenu($('ul.dropdown.menu', this.$el));
+		//var menu = new Foundation.DropdownMenu($('ul.dropdown.menu', this.$el));
 		return this;
 	},
 

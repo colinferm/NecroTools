@@ -1,5 +1,5 @@
 Necro.Views.BaseModal = Backbone.View.extend({
-	templateName: 'modal-injury',
+	class: "row",
 
 	initialize : function(options) {
 		this.opts = options;

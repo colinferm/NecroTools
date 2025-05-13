@@ -67,7 +67,7 @@ Necro.Utils.UI.Helpers = {
 		var modelProperty = options.hash['model-property'];
 		var withBlank = (options.hash['with-blank']) ? true : false;
 
-		var html = '<select name="' + fieldName + '">';
+		var html = '<select name="' + fieldName + '" class="form-control">';
 		if (withBlank) {
 			html += '<option value="0">--</option>';
 		}
@@ -116,7 +116,7 @@ Necro.Utils.UI.Helpers = {
 		var text = (options.hash['text']) ? options.hash['text'] : this[nameParam];
 		var checked = "";
 		if (model[nameParam] == 1) checked = "checked";
-		return '<input type="checkbox" class="' + className + '" value="' + this.model.id + '" ' + checked + '>&nbsp;' + text;
+		return '<input type="checkbox" class="' + className + ' form-check-input" value="' + this.model.id + '" ' + checked + '>&nbsp;' + text;
 	},
 
 	TemplateCheckboxSkill: function(options) {
@@ -132,7 +132,7 @@ Necro.Utils.UI.Helpers = {
 				return;
 			}
 		});
-		return '<input type="checkbox" class="' + className + '" value="' + this.id + '" ' + checked + '>&nbsp;' + this[nameParam];
+		return '<input type="checkbox" class="' + className + ' form-check-input" value="' + this.id + '" ' + checked + '>&nbsp;' + this[nameParam];
 	},
 
 	TemplateCheckboxSkillSet: function(options) {
@@ -156,7 +156,14 @@ Necro.Utils.UI.Helpers = {
 				break
 			}
 		}
-		return '<input type="checkbox" class="' + className + ' blah" value="' + checkId + '" ' + checked + '>&nbsp;' + this[nameParam];
+		return '<input type="checkbox" class="' + className + ' form-check-input" value="' + checkId + '" ' + checked + '>&nbsp;' + this[nameParam];
+	},
+
+	TemplateDateFormat: function(options) {
+		var modelProperty = options.hash['model-property'];
+		var dateProp = this[modelProperty];
+
+		return this;
 	}
 }
 Handlebars.registerHelper("select-box", Necro.Utils.UI.Helpers.TemplateSelectBox);
@@ -165,6 +172,7 @@ Handlebars.registerHelper("gang-select", Necro.Utils.UI.Helpers.GangSelectBox);
 Handlebars.registerHelper("checkbox-skill", Necro.Utils.UI.Helpers.TemplateCheckboxSkill);
 Handlebars.registerHelper("checkbox-skillset", Necro.Utils.UI.Helpers.TemplateCheckboxSkillSet);
 Handlebars.registerHelper("checkbox", Necro.Utils.UI.Helpers.TemplateCheckbox);
+Handlebars.registerHelper("date-format", Necro.Utils.UI.Helpers.TemplateDateFormat);
 
 Necro.Utils.Functions = {
 	getGangById: function(id) {

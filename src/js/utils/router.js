@@ -39,7 +39,7 @@ Necro.Routers.NecroRouter = Backbone.Router.extend({
 		this.session = new Necro.Models.User();
 
 		//generate the top nav
-		this.header = new Necro.Views.Header({ el: $('.nav-content') });
+		this.header = new Necro.Views.Header({ el: $('nav') });
 		this.footer = new Necro.Views.Footer({ el: $('.footer-content') });
 		this.leftContent = new Necro.Views.LeftContent({});
 		this.rightContent = new Necro.Views.RightContent({});
@@ -117,7 +117,7 @@ Necro.Routers.NecroRouter = Backbone.Router.extend({
 	},
 
 	updateFoundation: function() {
-		$(document).foundation();
+		//$(document).foundation();
 	},
 
 	home: function() {

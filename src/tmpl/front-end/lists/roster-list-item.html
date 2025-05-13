@@ -1,34 +1,34 @@
-	<td>{{fighter_name}}</td>
-	<td>{{role_name}}</td>
-	<td>{{base_value}}</td>
-	<td class="text-center">{{experience}}</td>
-	<td class="text-center">{{advancements}}</td>
-	<td class="text-center">
-		{{#if is_convalescence}}
-			<span class="yes inverse">&#x2714;</span>
-		{{else}} 
-			<span class="no inverse">&cross;</span>
-		{{/if}}
-	</td>
-	<td class="text-center">
-		{{#if is_captured}}
-			<span class="yes inverse">&#x2714;</span>
-		{{else}} 
-			<span class="no inverse">&cross;</span>
-		{{/if}}
-	</td>
-	<td class="flex-container align-center-middle">
-		<ul class="dropdown menu" data-dropdown-menu data-disable-hover="true" data-click-open="true" data-close-on-click="true">
-			<li>
-				<a class="button hollow">Action</a>
-				<ul class="menu icons icon-left">
-					<li><a class="action_edit"><i class="fi-info"></i> <span>Edit</span></a></li>
-					<li><a class="action_clone"><i class="fi-torsos"></i> <span>Clone</span></a></li>
-					<li><a class="action_xp success"><i class="fi-die-three"></i> <span>Add XP</span></a></li>
-					<li><a class="action_injure warning"><i class="fi-blind"></i> <span>Add Injury</span></a></li>
-					<li><a class="action_kill alert"><i class="fi-skull"></i> <span>Kill</span></a></li>
-					<li><a class="action_remove alert"><i class="fi-trash"></i> <span>Delete</span></a></li>
-				</ul>
-			</li>
+<td>{{fighter_name}}</td>
+<td>{{role_name}}</td>
+<td>{{base_value}}</td>
+<td class="text-center">{{experience}}</td>
+<td class="text-center">{{advancements}}</td>
+<td class="text-center">
+	{{#if is_convalescence}}
+		<span class="yes inverse">&#x2714;</span>
+	{{else}} 
+		<span class="no inverse">&cross;</span>
+	{{/if}}
+</td>
+<td class="text-center">
+	{{#if is_captured}}
+		<span class="yes inverse">&#x2714;</span>
+	{{else}} 
+		<span class="no inverse">&cross;</span>
+	{{/if}}
+</td>
+<td class="d-flex justify-content-center">
+	<div class="btn-group" role="group">
+		<button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+			Action
+		</button>
+		<ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+			<li><a class="action_edit"><i class="fi-info"></i> <span>Edit</span></a></li>
+			<li><a class="action_clone"><i class="fi-torsos"></i> <span>Clone</span></a></li>
+			<li><a class="action_xp success"><i class="fi-die-three"></i> <span>Add XP</span></a></li>
+			<li><a class="action_injure"><i class="fi-blind"></i> <span>Add Injury</span></a></li>
+			<li><a class="action_kill"><i class="fi-skull"></i> <span>Kill</span></a></li>
+			<li><a class="action_remove"><i class="fi-trash"></i> <span>Delete</span></a></li>
 		</ul>
-	</td>
+	</div>
+</td>

@@ -14,7 +14,8 @@ require_once 'api/gang.php';
 		<meta charset="utf-8" />
 		<meta http-equiv="x-ua-compatible" content="ie=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<link href="/css/foundation.css" rel="stylesheet" type="text/css" />
+		<link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+		<link href="/css/bootstrap-icons.min.css" rel="stylesheet" type="text/css" />
 		<link href="/css/foundation-icons.css" rel="stylesheet" type="text/css" />
 		<link href="/css/jquery-ui.theme.min.css" rel="stylesheet" type="text/css" />
 		<link href="/css/jquery.tagit.css" rel="stylesheet" type="text/css" />
@@ -23,9 +24,9 @@ require_once 'api/gang.php';
 		<title>Necro Tools</title>
 	</head>
 	<body>
-		<div class="nav-content"></div>
-		<div class="grid-container fluid">
-			<div class="grid-x grid-padding-x main-content">
+		<nav class="navbar fixed-top navbar-dark bg-dark"></nav>
+		<div class="container-fluid pt-5">
+			<div class="row main-content">
 
 			</div>
 		</div>
@@ -63,7 +64,7 @@ require_once 'api/gang.php';
 		<script src="/js/libs/underscore-umd-1.13.7.min.js"></script>
 		<script src="/js/libs/handlebars.min-v4.7.8.js"></script>
 		<script src="/js/libs/backbone-1.6.0.min.js"></script>
-		<script src="/js/libs/foundation.min.js"></script>
+		<script src="/js/libs/bootstrap.bundle.min.js"></script>
 		<script src="/js/libs/jquery.cookie-1.3.js"></script>
 		<script src="/js/libs/jquery-ui.min.js"></script>
 		<script src="/js/libs/tag-it.min.js"></script>

@@ -1,6 +1,5 @@
 Necro.Views.Admin.GangList = Backbone.View.extend({
 	tagName: 'div',
-	className: 'large-12',
 	templateName: 'gang-template-list',
 	pageTitle: 'Admin Gang Lists',
 	model: null,
@@ -70,7 +69,7 @@ Necro.Views.Admin.GangItem = Backbone.View.extend({
 
 	render: function() {
 		this.$el.html(this.template(this.model.toJSON()));
-		var menu = new Foundation.DropdownMenu($('ul.dropdown.menu', this.$el));
+		//var menu = new Foundation.DropdownMenu($('ul.dropdown.menu', this.$el));
 		return this;
 	},
 

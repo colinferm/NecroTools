@@ -1,13 +1,13 @@
 <td class="skill_name">{{skill_name}}</td>
 <td>{{skill_description}}</td>
 <td>
-    <ul class="dropdown menu" data-dropdown-menu data-disable-hover="true" data-click-open="true" data-close-on-click="true">
-		<li>
-			<a class="button hollow">Action</a>
-			<ul class="menu icons icon-left">
-				<li><a class="action_edit_skill"><i class="fi-info"></i> <span>Edit</span></a></a></li>
-				<li><a class="action_remove_skill alert"><i class="fi-trash"></i> <span>Delete</span></a></li>
-			</ul>
-		</li>
-	</ul>
+	<div class="btn-group" role="group">
+		<button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+		  Action
+		</button>
+		<ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+			<li class="d-flex flex-row align-items-start p-1 action_edit_skill"><i class="fi-info ms-1 me-2"></i> <span>Edit</span></li>
+			<li class="d-flex flex-row align-items-start p-1 action_remove_skill"><i class="fi-trash ms-1 me-2"></i> <span>Delete</span></li>
+		</ul>
+	</div>
 </td>
