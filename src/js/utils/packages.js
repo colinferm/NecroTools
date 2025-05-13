@@ -48,6 +48,36 @@ Necro.Utils.UI.TPL = {
 };
 
 Necro.Utils.UI.Helpers = {
+	TemplateSelectBox: function(options) {
+		/* 
+		{{select-box 
+			field-name="hierarchy_role" 
+			collection-property="roles" 
+			item-id="type" 
+			item-name="name" 
+			value-property="model.hierarchy_role"
+		}}
+		*/
+		var model = options.data.root.model;
+			
+		var fieldName = options.hash['field-name'];
+		var itemId = options.hash['item-id'];
+		var itemName = options.hash['item-name'];
+		var collectionName = options.hash['collection-property']; 
+		var modelProperty = options.hash['model-property'];
+
+		var html = '<select name="' + fieldName + '">';
+		var collection = this[collectionName];
+		for (var i = 0; i < collection.length; i++) {
+			var elem = collection[i];
+			var selected = '';
+			if (elem[itemId] == model[modelProperty]) selected = 'selected';
+			html += '<option value="' + elem[itemId] + '" ' + selected + '>' + elem[itemName] + '</option>';
+		}
+		html += '</select>'
+		return html;
+	},
+
 	TemplateOptions: function(options) {
 		var item = this;
 		var model = options.data.root.model;
@@ -125,6 +155,7 @@ Necro.Utils.UI.Helpers = {
 		return '<input type="checkbox" class="' + className + ' blah" value="' + checkId + '" ' + checked + '>&nbsp;' + this[nameParam];
 	}
 }
+Handlebars.registerHelper("select-box", Necro.Utils.UI.Helpers.TemplateSelectBox);
 Handlebars.registerHelper("form-option", Necro.Utils.UI.Helpers.TemplateOptions);
 Handlebars.registerHelper("gang-select", Necro.Utils.UI.Helpers.GangSelectBox);
 Handlebars.registerHelper("checkbox-skill", Necro.Utils.UI.Helpers.TemplateCheckboxSkill);

@@ -1,15 +1,25 @@
 Necro.Models.GangRole = Backbone.Model.extend({
-	urlRoot:     "/api/gang",
 	idAttribute: "id",
+	url: function() {
+		if (this.id && this.id > 0) {
+			return "/api/fighter/role/" + this.id;
+		}
+		return "/api/fighter/role";
+	},
 	defaults:    {
 		"id": null,
-		"gang_name": "",
-		"outlaw": false,
-		"num_fighters": 0,
-		"fighters": null,
-		"stash": null,
+		"hierarchy_role": "",
+		"role_name": "",
+		"gang_type_id": "",
+		"gang": null,
+		"template": null,
 		"primary_skills": null,
 		"secondary_skills": null
+	},
+
+	initialize: function(options) {
+		this.attributes.primary_skills = new Necro.Collections.SkillSets();
+		this.attributes.secondary_skills = new Necro.Collections.SkillSets();
 	},
 
 	parse: function(resp) {

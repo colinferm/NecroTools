@@ -236,6 +236,32 @@ class FighterController extends SlimController {
 		return $response->withHeader('Content-Type', 'application/json');
 	}
 
+	public function addUpdateFighterRole(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+		global $ndb;
+
+		$id = (array_key_exists('id', $args)) ? $args['id'] : 0;
+
+		$role = json_decode($request->getBody(), true);
+		$params = [
+			'gang_type_id' => $role['gang_type_id'],
+			'hierarchy_role' => $role['hierarchy_role'],
+			'role_name' => $role['role_name']
+		];
+		if ($request->getMethod() == 'POST' && $id == 0) {
+			$insertQuery = "INSERT INTO {$ndb->fighter_role} (gang_type_id, hierarchy_role, role_name) VALUES (:gang_type_id, :hierarchy_role, :role_name)";
+			if ($ndb->insert($insertQuery, $params)) {
+				$role['id'] = $ndb->lastInsertId;
+			}
+
+		} else {
+			$params['id'] = $id;
+			$ndb->updateTable($ndb->fighter_role, $params);
+		}
+
+		$response->getBody()->write(json_encode($role));
+		return $response->withHeader('Content-Type', 'application/json');
+	}
+
 	public function fetchFighterRolesForGang(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
 		global $ndb, $cache;
 		$gangId = $args['id'];

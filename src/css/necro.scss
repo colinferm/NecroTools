@@ -181,13 +181,19 @@ html {
 			border: 1px solid $color-necro-yellow;
 			color: $color-black;
 		}
-		&:hover {
+		&:hover, &:focus, &:active {
 			background-color: $color-black;
 			color: $color-necro-yellow;
 		}
 		background-color: $color-necro-yellow;
 		color: $color-black;
 		font-family: $font-default;
+	}
+
+	input {
+		&.error {
+			border: 1px solid $color-necro-yellow;
+		}
 	}
 
 	body {

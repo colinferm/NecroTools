@@ -83,7 +83,7 @@ Necro.Routers.NecroRouter = Backbone.Router.extend({
 					Necro.Events.trigger('user:verified');
 				}, this),
 				error: _.bind(function() {
-					this.navigate(location, {trigger: true});
+					this.navigate("login", {trigger: true});
 				}, this)
 			});
 		} else {

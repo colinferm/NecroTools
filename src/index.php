@@ -42,6 +42,17 @@ require_once 'api/gang.php';
 				Necro.Apps.Data.Injuries = <?php echo FighterController::getInjuriesJSON(); ?>;
 				Necro.Apps.Data.FighterRoles = <?php echo FighterController::getFighterRolesJSON(); ?>;
 				Necro.Apps.Data.GangTypes = <?php echo GangController::getGangTypesJSON(); ?>;
+				Necro.Apps.Data.RoleClasses = [
+					{name: 'Leader', type: 'leader'},
+					{name: 'Champion', type: 'champion'},
+					{name: 'Fighter', type: 'fighter'},
+					{name: 'Prospect', type: 'prospect'},
+					{name: 'Juve', type: 'juve'},
+					{name: 'Crew', type: 'crew'},
+					{name: 'Brute', type: 'brute'},
+					{name: 'Hanger-on', type: 'hanger-on'},
+					{name: 'Pet', type: 'pet'}
+				];
 
 				window.necro = new Necro.Routers.NecroRouter();
 				necro.load();

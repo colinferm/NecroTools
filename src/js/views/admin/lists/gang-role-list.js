@@ -5,6 +5,7 @@ Necro.Views.Admin.GangRoleList = Backbone.View.extend({
 	model: null,
 
 	events: {
+		'click .addRole': 'addRole'
 	},
 
 	initialize : function(options) {
@@ -32,6 +33,20 @@ Necro.Views.Admin.GangRoleList = Backbone.View.extend({
 	addItem: function(item) {
 		var row = new Necro.Views.Admin.GangRoleListItem({model: item});
 		$('tbody', this.$el).append(row.render().$el);
+	},
+
+	addRole: function() {
+		var roles = this.gangRoles;
+		roles.on('add', _.bind(this.addItem, this));
+		var m = new Necro.Models.GangRole({gang_type_id: this.model.get('id')});
+		var modal = new Necro.Views.Modal({
+			class: "Necro.Views.Admin.GangRoleEditModal",
+			title: "Add Gang Role",
+			model: m,
+			callback: function(model) {
+				roles.add(model);
+			}
+		});
 	}
 
 });
@@ -41,6 +56,7 @@ Necro.Views.Admin.GangRoleListItem = Backbone.View.extend({
 	templateName: 'gang-role-list-item',
 
 	events: {
+		'click .action_edit': 'popRoleModal',
 		'click .action_primary': 'addPrimarySkills',
 		'click .action_secondary': 'addSecondarySkills',
 		'click .action_remove': 'deleteGang',
@@ -76,6 +92,14 @@ Necro.Views.Admin.GangRoleListItem = Backbone.View.extend({
 			title: "Assign Skill Set",
 			model: this.model,
 			primarySkill: primary
+		});
+	},
+
+	popRoleModal: function(primary) {
+		var modal = new Necro.Views.Modal({
+			class: "Necro.Views.Admin.GangRoleEditModal",
+			title: "Add Gang Role",
+			model: this.model,
 		});
 	},
 

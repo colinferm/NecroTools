@@ -35,10 +35,11 @@ $app->get('/gang-type/{id}/fighters', [\FighterController::class, 'fetchGangType
 
 $app->get('/gang-types/{id}/roles', [\FighterController::class, 'fetchGangTemplates'])->add($authCheck);
 
-
 $app->post('/fighter', [\FighterController::class, 'addFighter'])->add($authCheck);
 
 $app->get('/fighter/roles', [\FighterController::class, 'fetchFighterRoles'])->add($authCheck);
+$app->post('/fighter/role', [\FighterController::class, 'addUpdateFighterRole'])->add($authCheck);
+$app->put('/fighter/role/{id}', [\FighterController::class, 'addUpdateFighterRole'])->add($authCheck);
 $app->get('/fighter/role/{id}', [\FighterController::class, 'fetchFighterRole'])->add($authCheck);
 $app->put('/fighter/role/{id}/{primary}/skills', [\FighterController::class, 'updateTemplateSkills'])->add($authCheck);
 
