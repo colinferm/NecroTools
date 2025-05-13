@@ -41,6 +41,7 @@ $app->get('/fighter/roles', [\FighterController::class, 'fetchFighterRoles'])->a
 $app->post('/fighter/role', [\FighterController::class, 'addUpdateFighterRole'])->add($authCheck);
 $app->put('/fighter/role/{id}', [\FighterController::class, 'addUpdateFighterRole'])->add($authCheck);
 $app->get('/fighter/role/{id}', [\FighterController::class, 'fetchFighterRole'])->add($authCheck);
+$app->delete('/fighter/role/{id}', [\FighterController::class, 'deleteFighterRole'])->add($authCheck);
 $app->put('/fighter/role/{id}/{primary}/skills', [\FighterController::class, 'updateTemplateSkills'])->add($authCheck);
 
 $app->get('/fighter/template/{id}', [\FighterController::class, 'fetchFighterTemplate'])->add($authCheck);

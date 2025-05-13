@@ -59,7 +59,7 @@ Necro.Views.Admin.GangRoleListItem = Backbone.View.extend({
 		'click .action_edit': 'popRoleModal',
 		'click .action_primary': 'addPrimarySkills',
 		'click .action_secondary': 'addSecondarySkills',
-		'click .action_remove': 'deleteGang',
+		'click .action_remove': 'deleteRole',
 	},
 
 	initialize : function(options) {
@@ -103,7 +103,7 @@ Necro.Views.Admin.GangRoleListItem = Backbone.View.extend({
 		});
 	},
 
-	deleteGang: function() {
+	deleteRole: function() {
 		this.model.destroy();
 	}
 

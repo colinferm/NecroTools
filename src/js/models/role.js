@@ -18,8 +18,15 @@ Necro.Models.GangRole = Backbone.Model.extend({
 	},
 
 	initialize: function(options) {
-		this.attributes.primary_skills = new Necro.Collections.SkillSets();
-		this.attributes.secondary_skills = new Necro.Collections.SkillSets();
+		if (!this.attributes.primary_skills) {
+			this.attributes.primary_skills = new Necro.Collections.SkillSets();
+			this.attributes.primary_skills.roleId = this.id;
+		}
+
+		if (!this.attributes.secondary_skills) {
+			this.attributes.secondary_skills = new Necro.Collections.SkillSets();
+			this.attributes.secondary_skills.roleId = this.id;
+		}
 	},
 
 	parse: function(resp) {
@@ -29,14 +36,16 @@ Necro.Models.GangRole = Backbone.Model.extend({
 		pskills.roleId = resp.id;
 		sskills.roleId = resp.id;
 
+		/* var pskills = [];
+		var sskills = []; */
 		_.each(resp.primary_skills, function(s) {
 			var skillSet = new Necro.Models.SkillSet(s, {parse: true});
-			pskills.add(skillSet);
+			pskills.push(skillSet);
 		}, this);
 
 		_.each(resp.secondary_skills, function(s) {
 			var skillSet = new Necro.Models.SkillSet(s, {parse: true});
-			sskills.add(skillSet);
+			sskills.push(skillSet);
 		}, this);
 
 		resp.primary_skills = pskills;

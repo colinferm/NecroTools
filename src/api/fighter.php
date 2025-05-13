@@ -262,6 +262,16 @@ class FighterController extends SlimController {
 		return $response->withHeader('Content-Type', 'application/json');
 	}
 
+	public function deleteFighterRole(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+		global $ndb;
+		$id = $args['id'];
+		$result = $ndb->delete("DELETE FROM {$ndb->fighter_template} WHERE id = :id", $id);
+		$result = $ndb->delete("DELETE FROM {$ndb->fighter_role_skill_set_map} WHERE fighter_role_id = :id", $id);
+		$result = $ndb->delete("DELETE FROM {$ndb->fighter_role} WHERE id = :id", $id);
+		$response->withStatus(200);
+		return $response;
+	}
+
 	public function fetchFighterRolesForGang(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
 		global $ndb, $cache;
 		$gangId = $args['id'];
