@@ -51,6 +51,8 @@ Necro.Views.Admin.GangRoleListItem = Backbone.View.extend({
 		this.template = Handlebars.compile(html);
 		this.model.on("change", this.render, this);
 		this.model.on("destroy", this.remove, this);
+		this.model.attributes.primary_skills.on("update", this.render, this);
+		this.model.attributes.secondary_skills.on("update", this.render, this);
 	},
 
 	render: function() {

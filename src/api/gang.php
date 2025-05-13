@@ -103,7 +103,7 @@ class GangController extends SlimController {
 			SELECT 
 				gt.id, gt.type_name, gt.house_gang, gt.outlaw, gt.created, gt.last_mod
 			FROM {$ndb->gang_type} gt
-			ORDER BY gt.type_name ASC
+			ORDER BY gt.house_gang DESC, gt.outlaw ASC, gt.type_name ASC
 		";
 		return $ndb->query($query);
 	}
@@ -120,8 +120,9 @@ class GangController extends SlimController {
 	}
 
 	public function fetchGangTypes(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
-		$types = $this->getGangTypes();
-		$response->getBody()->write(json_encode($types));
+		global $cache;
+		$gangs = GangController::getGangTypesJSON();
+		$response->getBody()->write($gangs);
 		return $response->withHeader('Content-Type', 'application/json');
 	}
 }

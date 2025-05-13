@@ -72,13 +72,9 @@ Necro.Routers.NecroRouter = Backbone.Router.extend({
 		if (auth) {
 			//this.session.set("oauth_key", auth);
 			this.session.url = "/api/verify";
-			var location = window.location.href;
-			var i = location.indexOf('#');
-			if (i == -1) {
-				location = "#gangs";
-			} else {
-				location = location.substring(i, location.length);
-			}
+
+			var location = this.whereAmI();
+
 			this.session.save({
 				oauth_key: auth
 			}, {
@@ -91,9 +87,23 @@ Necro.Routers.NecroRouter = Backbone.Router.extend({
 				}, this)
 			});
 		} else {
+			var location = this.whereAmI();
+			if (location == "#register") return;
 			this.navigate("login", {trigger: true});
 		}
 		this.updateFoundation();
+	},
+
+	whereAmI: function() {
+		var location = window.location.href;
+		var i = location.indexOf('#');
+		var loc = "/";
+		if (i == -1) {
+			loc = "#gangs";
+		} else {
+			loc = location.substring(i, location.length);
+		}
+		return loc;
 	},
 
 	updateRight: function(elem, title) {
