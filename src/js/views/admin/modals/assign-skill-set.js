@@ -10,10 +10,6 @@ Necro.Views.Admin.AssignSkillSet = Necro.Views.BaseModal.extend({
 		
 		var html = Necro.Utils.UI.TPL.get(this.templateName);
 		this.template = Handlebars.compile(html);
-
-		this.model.fetch({
-			success: _.bind(this.render, this)
-		});
 	},
 
 	render: function() {

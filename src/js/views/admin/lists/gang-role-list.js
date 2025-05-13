@@ -10,19 +10,21 @@ Necro.Views.Admin.GangRoleList = Backbone.View.extend({
 	initialize : function(options) {
 		var html = Necro.Utils.UI.TPL.get(this.templateName);
 		this.template = Handlebars.compile(html);
-        this.collection = new Necro.Collections.GangRoles({gangId: this.model.get('id')});
-		this.collection.fetch({ success: _.bind(this.addItems, this) });
+        this.gangRoles = new Necro.Collections.GangRoles();
+		this.gangRoles.gangId = this.model.get('id');
+		//this.collection.empty();
+		this.gangRoles.fetch({ success: _.bind(this.addItems, this) });
 	},
 
 	render: function() {
 		this.$el.html(this.template);
-		if (this.collection && this.collection.length > 0) this.addItems();
+		//if (this.collection && this.collection.length > 0) this.addItems();
 		return this;
 	},
 
 	addItems: function() {
 		$('tbody', this.$el).empty()
-		_.each(this.collection.models, function(model) {
+		_.each(this.gangRoles.models, function(model) {
 			this.addItem(model);
 		}, this);
 	},
@@ -52,6 +54,7 @@ Necro.Views.Admin.GangRoleListItem = Backbone.View.extend({
 	},
 
 	render: function() {
+		console.log(this.model.toJSON());
 		this.$el.html(this.template(this.model.toJSON()));
 		var menu = new Foundation.DropdownMenu($('ul.dropdown.menu', this.$el));
 		return this;

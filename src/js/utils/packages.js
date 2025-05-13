@@ -103,6 +103,7 @@ Necro.Utils.UI.Helpers = {
 
 	TemplateCheckboxSkillSet: function(options) {
 		var model = options.data.root.model;
+		var checkId = this.id;
 
 		var className = options.hash['class-name'];
 		var nameParam = options.hash['name-param'];
@@ -114,13 +115,14 @@ Necro.Utils.UI.Helpers = {
 		} else if (model.secondary_skills) {
 			skills = model.secondary_skills.models;
 		}
-		skills.forEach(function(item) {
-			if (item.id == this.id) {
+		for (var i = 0; i < skills.length; i++) {
+			let s = skills[i];
+			if (s.id == checkId) {
 				checked = "checked";
-				return;
+				break
 			}
-		});
-		return '<input type="checkbox" class="' + className + '" value="' + this.id + '" ' + checked + '>&nbsp;' + this[nameParam];
+		}
+		return '<input type="checkbox" class="' + className + ' blah" value="' + checkId + '" ' + checked + '>&nbsp;' + this[nameParam];
 	}
 }
 Handlebars.registerHelper("form-option", Necro.Utils.UI.Helpers.TemplateOptions);

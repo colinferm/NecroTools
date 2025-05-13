@@ -1,13 +1,19 @@
 <td>{{role_name}}</td>
 <td>{{hierarchy_role}}</td>
 <td>
-	{{#each primary_skills}}
-		{{skill_set_name}}<br/>
+	{{#each primary_skills.models}}
+		{{#if @index}}
+			&nbsp;&mdash;&nbsp;
+		{{/if}}
+		{{attributes.skill_set_name}}
 	{{/each}}
 </td>
 <td>
-	{{#each secondary_skills}}
-		{{skill_set_name}}<br/>
+	{{#each secondary_skills.models}}
+		{{#if @index}}
+			&nbsp;&mdash;&nbsp;
+		{{/if}}
+		{{attributes.skill_set_name}}
 	{{/each}}
 </td>
 <td>
