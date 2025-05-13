@@ -166,7 +166,7 @@ INSERT INTO necro_fighter_skill_set (id, skill_set_name, limited_to_gang, gang_t
 INSERT INTO necro_fighter_skill_set (id, skill_set_name, limited_to_gang, gang_type_id) VALUES (12, 'Tech', 1, 6);
 INSERT INTO necro_fighter_skill_set (id, skill_set_name, limited_to_gang, gang_type_id) VALUES (13, 'Piety', 1, 4);
 INSERT INTO necro_fighter_skill_set (id, skill_set_name, limited_to_gang, gang_type_id) VALUES (14, 'Obfuscation', 1, 5);
-INSERT INTO necro_fighter_skill_set (id, skill_set_name, limited_to_gang, gang_type_id) VALUES (15, 'Palatite Drill', 1, 9);
+INSERT INTO necro_fighter_skill_set (id, skill_set_name, limited_to_gang, gang_type_id) VALUES (15, 'Palanite Drill', 1, 9);
 INSERT INTO necro_fighter_skill_set (id, skill_set_name, limited_to_gang, gang_type_id) VALUES (16, 'Savagery', 1, 10);
 INSERT INTO necro_fighter_skill_set (id, skill_set_name, limited_to_gang, gang_type_id) VALUES (17, 'Wastelands', 1, 8);
 INSERT INTO necro_fighter_skill_set (id, skill_set_name, limited_to_gang, gang_type_id) VALUES (18, 'Wisdom of the Ancients', 1, 7);

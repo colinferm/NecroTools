@@ -59,14 +59,18 @@ Necro.Utils.UI.Helpers = {
 		}}
 		*/
 		var model = options.data.root.model;
-			
+
 		var fieldName = options.hash['field-name'];
 		var itemId = options.hash['item-id'];
 		var itemName = options.hash['item-name'];
 		var collectionName = options.hash['collection-property']; 
 		var modelProperty = options.hash['model-property'];
+		var withBlank = (options.hash['with-blank']) ? true : false;
 
 		var html = '<select name="' + fieldName + '">';
+		if (withBlank) {
+			html += '<option value="0">--</option>';
+		}
 		var collection = this[collectionName];
 		for (var i = 0; i < collection.length; i++) {
 			var elem = collection[i];

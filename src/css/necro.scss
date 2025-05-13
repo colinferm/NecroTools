@@ -206,10 +206,10 @@ html {
 		.title-bar {
 			background: repeating-linear-gradient(
 				-45deg,  
-				#000,  
-				#000 30px,  
-				#FFC900 25px,  
-				#FFC900 50px
+				$color-black,  
+				$color-black 30px,  
+				$color-necro-yellow 25px,  
+				$color-necro-yellow 50px
 			);
 
 			.title-bar-left {
@@ -430,6 +430,9 @@ html {
 
 		.reveal-overlay {
 			.reveal {
+				.modal-title {
+					font-family: $font-dirt;
+				}
 				.modal-container {
 					padding: 20px 0;
 					justify-content: center;

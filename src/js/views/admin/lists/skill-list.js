@@ -39,7 +39,7 @@ Necro.Views.Admin.SkillList = Backbone.View.extend({
 	addSkillSet: function() {
 		var m = new Necro.Models.SkillSet();
 		var modal = new Necro.Views.Modal({
-			class: "Necro.Views.AdminEditSkillSetModal",
+			class: "Necro.Views.Admin.EditSkillSetModal",
 			title: "Add Skill Set",
 			model: m,
 			callback: _.bind(function() {
