@@ -5,7 +5,8 @@ Necro.Views.Modal = Backbone.View.extend({
 	modalSize: null,
 
 	events: {
-		'click .action_save': 'saveData'
+		'click .action_save': 'saveData',
+		'keypress': 'keyAction'
 	},
 
 	initialize : function(options) {
@@ -22,8 +23,8 @@ Necro.Views.Modal = Backbone.View.extend({
 
 		this.content = Necro.Utils.Resolver.getNewInstance(this.opts.class, {model: this.model});
 		this.content.options = this.opts;
+		
 		$('.modal-body', this.$el).html(this.content.render().$el);
-
 		$('body').append(this.$el);
 
 
@@ -32,6 +33,13 @@ Necro.Views.Modal = Backbone.View.extend({
 		this.modal.show();
 
 		return this.$el;
+	},
+
+	keyAction: function(e) {
+		console.log(e.keyCode);
+		if (e.keyCode === 27) {
+			this.removeSelf();
+		}
 	},
 
 	saveData: function() {

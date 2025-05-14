@@ -87,9 +87,13 @@ Necro.Views.Admin.GangRoleListItem = Backbone.View.extend({
 	},
 
 	popSkillSetModal: function(primary) {
+		var title = "Assign Primary Skills";
+		if (!primary) {
+			title = "Assign Secondary Skills";
+		}
 		var modal = new Necro.Views.Modal({
 			class: "Necro.Views.Admin.AssignSkillSet",
-			title: "Assign Skill Set",
+			title: title,
 			model: this.model,
 			primarySkill: primary
 		});
@@ -104,16 +108,18 @@ Necro.Views.Admin.GangRoleListItem = Backbone.View.extend({
 	},
 
 	editStatline: function() {
-		var template = this.model.get("template");
-		if (!template) template = new Necro.Models.FighterTemplate();
+		var m = this.model;
+		var template = m.get("template");
+		var title = "Edit " + m.get("role_name") + " Statline";
+		if (!template) template = new Necro.Models.FighterTemplate({gang_type_id: this.model.attributes.gang_type_id, fighter_role: this.model.id});
 		var modal = new Necro.Views.Modal({
 			class: "Necro.Views.Admin.StatLineModal",
-			title: "Edit Statline",
+			title: title,
 			model: template,
 			modalSize: 'modal-lg',
-			callback: _.bind(function() {
-				if (m) {
-					this.collection.add(m);
+			callback: _.bind(function(t) {
+				if (t) {
+					m.set('template', t);
 				}
 			}, this)
 		});

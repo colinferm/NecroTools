@@ -26,7 +26,7 @@ Necro.Collections.SkillSets = Backbone.Collection.extend({
 
 	url: function() {
 		if (this.roleId && this.primary != null) {
-			return '/api/fighter/role/' + this.roleId + '/' + this.primary + '/skills';
+			return '/api/fighter/role/' + this.roleId + '/skills/' + this.primary;
 		}
 		return '/api/skills';
 	},

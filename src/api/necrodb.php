@@ -90,11 +90,18 @@ class NecroDB {
 		$i = 0;
 		foreach ($args as $key => $val) {
 			if ($key == 'id') continue;
+			if ($key == 'created') continue;
 			if ($i > 0) $sql .= ", ";
-			$sql .= "{$key} = :{$key}";
+			if ($key == 'last_mod') {
+				$sql .= "last_mod = NOW()";
+			} else {
+				$sql .= "{$key} = :{$key}";
+			}
 			$i++;
 		}
 		$sql .= " WHERE id = :id";
+		unset($args['created']);
+		unset($args['last_mod']);
 
 		return $this->update($sql, $args);
 	}

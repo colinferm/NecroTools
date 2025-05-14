@@ -213,7 +213,7 @@ class FighterController extends SlimController {
 		global $ndb, $cache;
 		$roleId = $args['id'];
 		$role = null;
-		//$role = $cache->get("gang-role-{$roleId}");
+		$role = $cache->get("gang-role-{$roleId}");
 		if (!$role) {
 			$query = "
 				SELECT 
@@ -408,6 +408,59 @@ class FighterController extends SlimController {
 		$cache->del(["gang-roles-templates-{$gangId}", "gang-roles-{$gangId}"]);
 
 		$response->getBody()->write(json_encode($skillSets));
+		return $response->withHeader('Content-Type', 'application/json');
+	}
+
+	public function addUpdateTemplateStats(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+		global $ndb, $cache;
+
+		$roleId = $args['id'];
+		$fighterRole = FighterController::getFighterRole($roleId);
+		$gangId = $fighterRole['gang_type_id'];
+		$statline = json_decode($request->getBody(), true);
+
+		$templateId = (array_key_exists('template_id', $statline)) ? $statline['template_id'] : 0;
+		unset($statline['template_id']);
+
+		$statline['gang_type_id'] = $gangId;
+		$statline['fighter_role'] = $roleId;
+
+		if ($request->getMethod() == 'POST') {
+			unset($statline['created']);
+			unset($statline['last_mod']);
+
+			$insertQuery = "
+				INSERT INTO {$ndb->fighter_template}
+				(
+					gang_type_id, fighter_role, 
+					movement, weapon_skill, balistic_skill, strength, toughness, toughness_side, toughness_rear,
+					wounds, initiative, attacks, handling, save_roll, 
+					leadership, cool, willpower, intelligence, 
+					num_start_skills, is_vehicle, is_dramatis, 
+					base_value, view_order, created, last_mod
+				) VALUES (
+					:gang_type_id, :fighter_role, 
+					:movement, :weapon_skill, :balistic_skill, :strength, :toughness, :toughness_side, :toughness_rear,
+					:wounds, :initiative, :attacks, :handling, :save_roll, 
+					:leadership, :cool, :willpower, :intelligence, 
+					:num_start_skills, :is_vehicle, :is_dramatis, 
+					:base_value, :view_order, NOW(), NOW()
+				)
+			";
+			$ndb->insert($insertQuery, $statline);
+			$templateId = $ndb->lastInsertId;
+			$statline['created'] = date("M d Y H:i:s");
+		} else {
+			$statline['id'] = $templateId;
+			$ndb->updateTable($ndb->fighter_template, $statline);
+			$statline['template_id'] = $templateId;
+			unset($statline['id']);
+		}
+		$statline['last_mod'] = date("M d Y H:i:s");
+
+		$cache->del(["gang-roles-templates-{$gangId}", "gang-roles-{$gangId}", "gang-role-{$roleId}"]);
+
+		$response->getBody()->write(json_encode($statline));
 		return $response->withHeader('Content-Type', 'application/json');
 	}
 

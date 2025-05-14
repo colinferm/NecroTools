@@ -50,6 +50,7 @@ Necro.Models.GangRole = Backbone.Model.extend({
 
 		if (resp.template) {
 			var template = new Necro.Models.FighterTemplate(resp.template);
+			template.set({gang_type_id: resp.gang_type_id, fighter_role: resp.id});
 			resp.template = template;
 		}
 
@@ -62,10 +63,8 @@ Necro.Models.GangRole = Backbone.Model.extend({
 Necro.Models.FighterTemplate = Backbone.Model.extend({
 	idAttribute: "template_id",
 	url: function() {
-		if (this.id && this.id > 0) {
-			return "/api/fighter/role/" + this.id;
-		}
-		return "/api/fighter/role";
+		let roleId = this.attributes.fighter_role;
+		return "/api/fighter/role/" + roleId + "/stats";
 	},
 	defaults:    {
 		"template_id": null,
@@ -85,11 +84,13 @@ Necro.Models.FighterTemplate = Backbone.Model.extend({
 		"cool": null,
 		"willpower": null,
 		"intelligence": null,
-		"is_vehicle": null,
-		"is_dramatis": null,
-		"base_value": null,
-		"view_order": null,
+		"num_start_skills": 0,
+		"is_vehicle": 0,
+		"is_dramatis": 0,
+		"base_value": 0,
+		"view_order": 0,
 		"created": null,
+		"last_mod": null
 
 	},
 
