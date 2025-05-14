@@ -40,6 +40,7 @@ Necro.Views.Admin.WargearItem = Backbone.View.extend({
 	templateName: 'weapon-list-item',
 
 	events: {
+		'click .action_edit': 'editWeapon'
 	},
 
 	initialize : function(options) {
@@ -54,12 +55,13 @@ Necro.Views.Admin.WargearItem = Backbone.View.extend({
 		return this;
 	},
 
-	editTrait: function() {
-		/* var modal = new Necro.Views.Modal({
-			class: "Necro.Views.TraitModal",
-			title: "Edit Trait",
+	editWeapon: function() {
+		var modal = new Necro.Views.Modal({
+			class: "Necro.Views.Admin.WeaponModal",
+			title: "Edit Weapon",
+			modalSize: 'modal-lg',
 			model: this.model
-		}); */
+		});
 	},
 
 	deleteWeapon: function() {

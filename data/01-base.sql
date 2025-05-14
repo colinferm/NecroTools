@@ -92,6 +92,7 @@ CREATE TABLE necro_weapon (
 	weapon_name VARCHAR(255) NOT NULL,
 	weapon_value INT NOT NULL,
 	rarity VARCHAR(10),
+	INDEX idx_weapon_category (weapon_category_id),
 	PRIMARY KEY (id)
 );
 INSERT INTO necro_weapon VALUES (1, 2, 'Boltgun', 55, 'R8');
@@ -178,6 +179,7 @@ CREATE TABLE necro_fighter_skill (
 	skill_set_id INT NOT NULL,
 	skill_name VARCHAR(255),
 	skill_description TEXT NULL,
+	INDEX idx_skill_skillset (skill_set_id),
 	PRIMARY KEY (id)
 );
 INSERT INTO necro_fighter_skill (id, skill_set_id, skill_name) VALUES (1, 1, 'Catfall');
@@ -294,15 +296,25 @@ INSERT INTO necro_fighter_skill (id, skill_set_id, skill_name) VALUES (112, 18, 
 INSERT INTO necro_fighter_skill (id, skill_set_id, skill_name) VALUES (113, 18, 'Stubborn to the Last');
 INSERT INTO necro_fighter_skill (id, skill_set_id, skill_name) VALUES (114, 18, "There's Always Another Secret");
 
+DROP TABLE IF EXISTS necro_fighter_gear_category;
+CREATE TABLE necro_fighter_gear_category (
+	id INT NOT NULL AUTO_INCREMENT,
+	category_name VARCHAR(255) NOT NULL,
+	PRIMARY KEY (id)
+);
+INSERT INTO necro_fighter_gear_category VALUES (1, 'Armor');
+
 DROP TABLE IF EXISTS necro_fighter_gear;
 CREATE TABLE necro_fighter_gear (
 	id INT NOT NULL AUTO_INCREMENT,
+	gear_category_id INT NOT NULL,
 	gear_name VARCHAR(255),
 	base_value INT,
 	notes VARCHAR(255) NULL,
+	INDEX idx_gear_category (gear_category_id),
 	PRIMARY KEY (id)
 );
-INSERT INTO necro_fighter_gear VALUES (1, 'Flak Armor', 10, NULL);
+INSERT INTO necro_fighter_gear VALUES (1, 1, 'Flak Armor', 10, NULL);
 
 DROP TABLE IF EXISTS necro_weapon_trait_characteristic_map;
 CREATE TABLE necro_weapon_trait_characteristic_map (

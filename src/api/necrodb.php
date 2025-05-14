@@ -13,6 +13,7 @@ class NecroDB {
 	public $weapon_trait_characteristic_map = DB_PREFIX.'weapon_trait_characteristic_map';
 	public $skill_set = DB_PREFIX.'fighter_skill_set';
 	public $skill = DB_PREFIX.'fighter_skill';
+	public $wargear_category = DB_PREFIX.'fighter_gear_category';
 	public $wargear = DB_PREFIX.'fighter_gear';
 	
 	public $user_gang = DB_PREFIX.'user_gang';

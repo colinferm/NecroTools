@@ -1,0 +1,55 @@
+<div class="continer-fluid">
+	<div class="mb-3 form-floating">
+		<input type="text" name="weapon_name" class="form-control" id="weaponName" placeholder="Name" aria-label="Weapon Name" value="{{model.weapon_name}}">
+		<label for="weaponName" class="form-label">Name</label>
+	</div>
+	<div class="mb-3">
+		{{{select-box field-name="weapon_category" collection-property="categories" item-id="id" item-name="category_name" model-property="category_id"}}}
+	</div>
+	<div class="mb-3 form-floating">
+		<input type="number" name="weapon_value" class="form-control form-control-sm" id="weaponValue" placeholder="Value" aria-label="Weapon Value" value="{{model.weapon_value}}">
+		<label for="weaponValue" class="form-label">Value</label>
+	</div>
+	<table class="table weapon-stats">
+		<tbody>
+			<tr>
+				<td class="form-floating">
+					<input type="text" name="ammo_type" class="form-control form-control-md" id="ammoType" placeholder="Ammo" aria-label="Ammo Type" value="{{model.movement}}">
+					<label for="ammoType" class="form-label">Ammo</label>
+				</td>
+				<td class="form-floating">
+					<input type="text" name="range_short" class="form-control form-control-sm" id="rangeShort" placeholder="S" aria-label="Short Range" value="{{model.movement}}">
+					<label for="rangeShort" class="form-label">S</label>
+				</td>
+				<td class="form-floating">
+					<input type="text" name="range_long" class="form-control form-control-sm" id="rangeLong" placeholder="L" aria-label="Long Range" value="{{model.weapon_skill}}">
+					<label for="rangeLong" class="form-label">L</label>
+				</td>
+				<td class="form-floating">
+					<input type="text" name="accuracy_short" class="form-control form-control-sm" id="accuracyShort" placeholder="S" aria-label="Accuracy Short" value="{{model.balistic_skill}}">
+					<label for="accuracyShort" class="form-label">S</label>
+				</td>
+				<td class="form-floating">
+					<input type="text" name="accuracy_long" class="form-control form-control-sm" id="accuracyLong" placeholder="L" aria-label="Accuracy Long" value="{{model.strength}}">
+					<label for="accuracyLong" class="form-label">S</label>
+				</td>
+				<td class="form-floating">
+					<input type="text" name="strength" class="form-control form-control-sm" id="statStrength" placeholder="S" aria-label="Strength" value="{{model.toughness}}">
+					<label for="statStrength" class="form-label">S</label>
+				</td>
+				<td class="form-floating">
+					<input type="text" name="armor_penetration" class="form-control form-control-sm" id="statArmorPenetration" placeholder="AP" aria-label="Armor Penetration" value="{{model.wounds}}">
+					<label for="statArmorPenetration" class="form-label">AP</label>
+				</td>
+				<td class="form-floating">
+					<input type="text" name="damage" class="form-control form-control-sm" id="statDamage" placeholder="D" aria-label="Damage" value="{{model.initiative}}">
+					<label for="statDamage" class="form-label">D</label>
+				</td>
+				<td class="form-floating">
+					<input type="text" name="ammo_check" class="form-control form-control-sm" id="ammoCheck" placeholder="Ammo" aria-label="Ammo" value="{{model.attacks}}">
+					<label for="ammoCheck" class="form-label">Ammo</label>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
