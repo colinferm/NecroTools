@@ -48,8 +48,55 @@ Necro.Models.GangRole = Backbone.Model.extend({
 			sskills.push(skillSet);
 		}, this);
 
+		if (resp.template) {
+			var template = new Necro.Models.FighterTemplate(resp.template);
+			resp.template = template;
+		}
+
 		resp.primary_skills = pskills;
 		resp.secondary_skills = sskills;
+		return resp;
+	},
+});
+
+Necro.Models.FighterTemplate = Backbone.Model.extend({
+	idAttribute: "template_id",
+	url: function() {
+		if (this.id && this.id > 0) {
+			return "/api/fighter/role/" + this.id;
+		}
+		return "/api/fighter/role";
+	},
+	defaults:    {
+		"template_id": null,
+		"movement": null,
+		"weapon_skill": null,
+		"balistic_skill": null,
+		"strength": null,
+		"toughness": null,
+		"toughness_side": null,
+		"toughness_rear": null,
+		"wounds": null,
+		"initiative": null,
+		"attacks": null,
+		"handling": null,
+		"save_roll": null,
+		"leadership": null,
+		"cool": null,
+		"willpower": null,
+		"intelligence": null,
+		"is_vehicle": null,
+		"is_dramatis": null,
+		"base_value": null,
+		"view_order": null,
+		"created": null,
+
+	},
+
+	initialize: function(options) {
+	},
+
+	parse: function(resp) {
 		return resp;
 	},
 });

@@ -12,9 +12,9 @@
 </td>
 <td>
 	{{#if template}}
-		<span class="badge rounded-pill bg-success"><i class="bi bi-check-circle fs-6"></i></span>
+		<span class="badge rounded-pill bg-success stat-line"><i class="bi bi-check-circle fs-6"></i></span>
 	{{else}} 
-		<span class="badge rounded-pill bg-danger"><i class="bi bi-x-circle fs-6"></i></span>
+		<span class="badge rounded-pill bg-danger stat-line"><i class="bi bi-x-circle fs-6"></i></span>
 	{{/if}}
 </td>
 <td class="d-flex justify-content-center">
@@ -24,6 +24,7 @@
 		</button>
 		<ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
 			<li class="d-flex flex-row align-items-start p-1 action_edit"><i class="fi-info ms-1 me-2"></i> <span>Edit</span></li>
+			<li class="d-flex flex-row align-items-start p-1 action_stats"><i class="fi-info ms-1 me-2"></i> <span>Edit Statline</span></li>
 			<li class="d-flex flex-row align-items-start p-1 action_primary"><i class="fi-checkbox ms-1 me-2"></i> <span>Primary Skills</span></li>
 			<li class="d-flex flex-row align-items-start p-1 action_secondary"><i class="fi-checkbox ms-1 me-2"></i> <span>Secondary Skills</span></li>
 			<li class="d-flex flex-row align-items-start p-1 action_remove"><i class="fi-trash ms-1 me-2"></i> <span>Delete</span></li>

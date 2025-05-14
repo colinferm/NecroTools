@@ -343,6 +343,20 @@ html {
 			background-color: $color-white;
 			@include formStyles();
 
+			&.fighter-stats {
+				tbody {
+					border-bottom: none;
+
+					tr {
+						border-bottom: none;
+
+						td {
+							border-bottom: none;
+						}
+					}
+				}
+			}
+
 			&.skill-list {
 				thead {
 					border: none;

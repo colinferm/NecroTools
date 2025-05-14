@@ -2,6 +2,7 @@ Necro.Views.Modal = Backbone.View.extend({
 	tagName: 'div',
 	className: 'modal',
 	templateName: 'modal-wrapper',
+	modalSize: null,
 
 	events: {
 		'click .action_save': 'saveData'
@@ -9,6 +10,7 @@ Necro.Views.Modal = Backbone.View.extend({
 
 	initialize : function(options) {
 		this.opts = options;
+		this.modalSize = options.modalSize;
 		var html = Necro.Utils.UI.TPL.get(this.templateName);
 		this.template = Handlebars.compile(html);
 		this.render();
@@ -16,6 +18,7 @@ Necro.Views.Modal = Backbone.View.extend({
 
 	render: function() {
 		this.$el.html(this.template({modal_title: this.opts.title}));
+		if (this.modalSize) $('.modal-dialog', this.$el).addClass(this.modalSize);
 
 		this.content = Necro.Utils.Resolver.getNewInstance(this.opts.class, {model: this.model});
 		this.content.options = this.opts;

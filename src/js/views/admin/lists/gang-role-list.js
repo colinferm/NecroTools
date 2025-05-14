@@ -60,6 +60,8 @@ Necro.Views.Admin.GangRoleListItem = Backbone.View.extend({
 		'click .action_primary': 'addPrimarySkills',
 		'click .action_secondary': 'addSecondarySkills',
 		'click .action_remove': 'deleteRole',
+		'click .stat-line': 'editStatline',
+		'click .action_stats': 'editStatline'
 	},
 
 	initialize : function(options) {
@@ -98,6 +100,22 @@ Necro.Views.Admin.GangRoleListItem = Backbone.View.extend({
 			class: "Necro.Views.Admin.GangRoleEditModal",
 			title: "Add Gang Role",
 			model: this.model,
+		});
+	},
+
+	editStatline: function() {
+		var template = this.model.get("template");
+		if (!template) template = new Necro.Models.FighterTemplate();
+		var modal = new Necro.Views.Modal({
+			class: "Necro.Views.Admin.StatLineModal",
+			title: "Edit Statline",
+			model: template,
+			modalSize: 'modal-lg',
+			callback: _.bind(function() {
+				if (m) {
+					this.collection.add(m);
+				}
+			}, this)
 		});
 	},
 
