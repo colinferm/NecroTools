@@ -1,6 +1,7 @@
-<div class="mb-3">
-    <input class="role_name form-control" value="{{model.role_name}}" type="text" placeholder="Role Name">
+<div class="form-floating mb-3">
+    <input class="role_name form-control" value="{{model.role_name}}" id="roleName" type="text" placeholder="Role Name" tabindex="1">
+    <label for="roleName">Role Name</label>
 </div>
-<div>
+<div class="">
     {{{select-box field-name="hierarchy_role" collection-property="roles" item-id="type" item-name="name" model-property="hierarchy_role"}}}
 </div>

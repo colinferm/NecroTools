@@ -1,10 +1,11 @@
 <div class="container-fluid trait-editor">
 	<form>
-		<div class="mb-3">
-			<input class="form-control skill_set_name" value="{{model.skill_set_name}}" type="text" placeholder="Name">
+		<div class="form-floating mb-3">
+			<input class="form-control skill_set_name" value="{{model.skill_set_name}}" id="skillName" type="text" placeholder="Skill Set Name">
+			<label for="skillName">Skill Set Name</label>
 		</div>
 		<div>
-			{{{checkbox name-param="limited_to_gang" class-name="limited_to_gang" text="Limited to Gang:"}}}
+			{{{checkbox name-param="limited_to_gang" class-name="limited_to_gang" text=" Limited to Gang:"}}}<br/>
 			{{{select-box field-name="gang_type" collection-property="gangTypes" item-id="id" item-name="type_name" model-property="gang_type_id" with-blank="true"}}}
 		</div>
 	</form>
