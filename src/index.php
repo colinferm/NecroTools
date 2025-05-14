@@ -21,7 +21,6 @@ require_once 'api/gang.php';
 		<link href="/css/jquery.tagit.css" rel="stylesheet" type="text/css" />
 		<link href="/css/necro.css" rel="stylesheet" type="text/css" />
 		<script src="/js/libs/jquery-3.7.1.min.js"></script>
-		<script src="/js/libs/moment.js"></script>
 		<title>Necro Tools</title>
 	</head>
 	<body>
@@ -62,6 +61,7 @@ require_once 'api/gang.php';
 		</script>
 
 		<?php require_once 'js/templates.js'; ?>
+		<script src="/js/libs/moment.js"></script>
 		<script src="/js/libs/underscore-umd-1.13.7.min.js"></script>
 		<script src="/js/libs/handlebars.min-v4.7.8.js"></script>
 		<script src="/js/libs/backbone-1.6.0.min.js"></script>
