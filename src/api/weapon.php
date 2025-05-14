@@ -120,11 +120,34 @@ class WeaponController extends SlimController {
 		throw new DatabaseException();
 	}
 
+	public static function getWeapons($wci = 0) {
+		global $ndb;
+		$dbparams = [];
+		$query = "
+			SELECT w.id AS id, CASE WHEN COUNT(ca.ammo_type) > 1 THEN CONCAT(w.weapon_name, GROUP_CONCAT(ca.ammo_type SEPARATOR '/')) ELSE w.weapon_name END as weapon_name, w.weapon_value, COUNT(ca.ammo_type) AS ammo_types, c.category_name, c.id AS category_id
+			FROM {$ndb->weapon_category} c, {$ndb->weapon} w, {$ndb->weapon_characteristic} ca
+			WHERE c.id = w.weapon_category_id
+			AND w.id = ca.weapon_id
+		";
+
+		if ($wci > 0) {
+			$dbparams['weapon_category_id'] = $wci;
+			$query .= " AND c.id = :weapon_category_id ";
+		}
+
+		$query .= "
+			GROUP BY w.id, weapon_name, w.weapon_value, c.category_name, c.id
+			ORDER BY c.id ASC
+		";
+
+		return $ndb->query($query, $dbparams);
+	}
+
 	public function fetchWeapons(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
 		global $ndb;
 		$dbparams = [];
 		$query = "
-			SELECT CASE WHEN COUNT(ca.ammo_type) > 1 THEN CONCAT(w.weapon_name, GROUP_CONCAT(ca.ammo_type SEPARATOR '/')) ELSE w.weapon_name END as weapon_name, COUNT(ca.ammo_type) AS ammo_types, c.category_name
+			SELECT w.id AS id, CASE WHEN COUNT(ca.ammo_type) > 1 THEN CONCAT(w.weapon_name, GROUP_CONCAT(ca.ammo_type SEPARATOR '/')) ELSE w.weapon_name END as weapon_name, w.weapon_value, COUNT(ca.ammo_type) AS ammo_types, c.category_name, c.id AS category_id
 			FROM {$ndb->weapon_category} c, {$ndb->weapon} w, {$ndb->weapon_characteristic} ca
 			WHERE c.id = w.weapon_category_id
 			AND w.id = ca.weapon_id
@@ -139,14 +162,46 @@ class WeaponController extends SlimController {
 			$dbparams['weapon_category'] =  $params['wc'];
 			$query .= " AND w.weapon_category_id = :weapon_category ";
 		}
+		if (array_key_exists("wci", $params)) {
+			$dbparams['weapon_category_id'] =  $params['wci'];
+			$query .= " AND c.id = :weapon_category_id ";
+		}
 
 		$query .= "
-			GROUP BY weapon_name, c.category_name
-			ORDER BY w.weapon_name ASC
+			GROUP BY w.id, weapon_name, w.weapon_value, c.category_name, c.id
+			ORDER BY c.id ASC
 		";
 
 		$data = $ndb->query($query, $dbparams);
 		$response->getBody()->write(json_encode($data));
+		return $response->withHeader('Content-Type', 'application/json');
+	}
+
+	public static function getWeaponCategories() {
+		global $ndb;
+		$query = "SELECT c.id, c.category_name FROM {$ndb->weapon_category} c ORDER BY c.id ASC";
+		return $ndb->query($query);
+	}
+
+	public static function getWeaponCategoryJSON() {
+		global $cache;
+		$cats = $cache->get("weapon-categories");
+		if (!$cats) {
+			$cats = json_encode(WeaponController::getWeaponCategories());
+			$cache->set("weapon-categories", $cats);
+		}
+		return $cats;
+	}
+
+	public function fetchWeaponsByCategory(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+		global $ndb, $cache;
+		$catId = $args['id'];
+		$weapons = $cache->get("weapon-cat-{$catId}");
+		if (!$weapons) {
+			$weapons = json_encode(WeaponController::getWeapons($catId));
+			$cache->set("weapon-cat-{$catId}", $weapons);
+		}
+		$response->getBody()->write($weapons);
 		return $response->withHeader('Content-Type', 'application/json');
 	}
 }

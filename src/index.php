@@ -38,7 +38,8 @@ require_once 'api/gang.php';
 				Necro.Utils.UI.TPL.loadAllTemplates(function(count) {
 					console.log("Templates loaded: " + count );
 				});
-				Necro.Apps.Data.Traits = <?php echo WeaponController::getTraitsJSON(); ?>;
+				Necro.Apps.Data.WeaponTraits = <?php echo WeaponController::getTraitsJSON(); ?>;
+				Necro.Apps.Data.WeaponCategories = <?php echo WeaponController::getWeaponCategoryJSON(); ?>;
 				Necro.Apps.Data.SkillSets = new Necro.Collections.SkillSets(<?php echo FighterController::getSkillsJSON(); ?>);
 				Necro.Apps.Data.Injuries = <?php echo FighterController::getInjuriesJSON(); ?>;
 				Necro.Apps.Data.FighterRoles = <?php echo FighterController::getFighterRolesJSON(); ?>;

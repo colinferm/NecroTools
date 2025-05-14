@@ -5,6 +5,7 @@ Necro.Models.Weapon = Backbone.Model.extend({
 		"id": null,
 		"weapon_name": "",
 		"weapon_value": 0,
+		"category_id": null,
 		"characteristics":  Necro.Collections.WeaponCharacteristics
 	},
 
