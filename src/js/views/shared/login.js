@@ -1,6 +1,6 @@
 Necro.Views.Login = Backbone.View.extend({
 	tagName: 'div',
-	className: 'large-6 grid-x',
+	className: 'p-5',
 	templateName: 'login',
 	pageTitle: 'Log In',
 

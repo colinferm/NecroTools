@@ -329,6 +329,16 @@ html {
 			}
 		}
 
+		.registerForm {
+			.help-text {
+				color: $color-transparent-white;
+			} 
+			.form-error {
+				display: none;
+				color: $color-necro-yellow;
+			}
+		}
+
 		table {
 			background-color: $color-white;
 			@include formStyles();

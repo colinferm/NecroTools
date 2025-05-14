@@ -1,17 +1,14 @@
-<div class="cell small-12">
-    <label>
-        Email address
-        <input type="email" class="emailInput" placeholder="name@example.com" tabindex="1">
-    </label>
-
-    <label>
-        Password
-        <input type="password" class="passwordInput" tabindex="2">
-    </label>
-</div>
-<div class="cell small-6">
-    <button type="submit" class="button loginButton" tabindex="3">Login</button>
-</div>
-<div class="cell small-6 text-right">
-    <a href="#register" tabindex="4">Register</a>
+<div class="w-25">
+	<div class="form-floating mb-3">
+		<input class="form-control emailInput" type="email" id="loginEmailInput" placeholder="name@example.com" tabindex="1">
+		<label for="loginEmailInput">Email address</label>
+	</div>
+	<div class="form-floating mb-3">
+		<input class="form-control passwordInput" type="password" id="loginPasswordInput" placeholder="Password" tabindex="2">
+		<label for="loginPasswordInput">Password</label>
+	</div>
+	<div class="mb-3">
+		<button type="submit" class="btn loginButton" tabindex="3">Login</button>
+		<a href="#register" tabindex="4" class="btn">Register</a>
+	</div>
 </div>

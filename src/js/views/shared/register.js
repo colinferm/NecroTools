@@ -1,6 +1,6 @@
 Necro.Views.Register = Backbone.View.extend({
 	tagName: 'div',
-	className: 'large-6 grid-x',
+	className: 'registerForm',
 	templateName: 'register',
 	pageTitle: 'Register',
 
