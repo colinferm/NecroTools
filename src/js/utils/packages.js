@@ -113,10 +113,13 @@ Necro.Utils.UI.Helpers = {
 
 		var className = options.hash['class-name'];
 		var nameParam = options.hash['name-param'];
-		var text = (options.hash['text']) ? options.hash['text'] : this[nameParam];
+		var idParam = (options.hash['id-param']) ? options.hash['id-param'] : '';
+		var text = (options.hash['text']) ? options.hash['text'] : '';
 		var checked = "";
+		var formId = "";
+		if (idParam) formId = 'id="'+idParam+'"';
 		if (model[nameParam] == 1) checked = "checked";
-		return '<input type="checkbox" class="' + className + ' form-check-input" value="' + this.model.id + '" ' + checked + '>&nbsp;' + text;
+		return '<input type="checkbox" class="' + className + ' form-check-input" value="' + this.model.id + '" ' + formId + ' ' + checked + '>' + text;
 	},
 
 	TemplateCheckboxSkill: function(options) {
@@ -161,12 +164,13 @@ Necro.Utils.UI.Helpers = {
 
 	TemplateDateFormat: function(options) {
 		var modelProperty = options.hash['model-property'];
+		var formatString = (options.hash['format']) ? options.hash['format'] : 'MM/DD/YYYY';
 		var dateProp = this[modelProperty];
 
 		if (dateProp) {
-			var dateParse = Date.parse(dateProp);
+			var dateParse = moment(dateProp);
 
-			return this;
+			return dateParse.format(formatString);
 		}
 	}
 }

@@ -5,7 +5,7 @@ Necro.Views.Admin.GangList = Backbone.View.extend({
 	model: null,
 
 	events: {
-		'click .add_gang': 'addGang'
+		'click .addGang': 'addGang'
 	},
 
 	initialize : function(options) {
@@ -37,13 +37,16 @@ Necro.Views.Admin.GangList = Backbone.View.extend({
 	},
 
 	addGang: function() {
-		var m = new Necro.Models.Gang();
+		var m = new Necro.Models.GangType();
 		var modal = new Necro.Views.Modal({
-			class: "Necro.Views.Admin.GangEditModal",
-			title: "Add Gang",
+			class: "Necro.Views.Admin.GangTemplateModal",
+			title: "Add Gang Type",
 			model: m,
 			callback: _.bind(function() {
-				if (m) this.collection.add(m);
+				if (m) {
+					this.collection.add(m);
+					Necro.Apps.Data.GangTypes.push(m.toJSON());
+				}
 			}, this)
 		});
 	}

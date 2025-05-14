@@ -125,5 +125,54 @@ class GangController extends SlimController {
 		$response->getBody()->write($gangs);
 		return $response->withHeader('Content-Type', 'application/json');
 	}
+
+	public function addUpdateGangType(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+		global $ndb, $cache;
+		$gang = json_decode($request->getBody());
+
+		$id = (array_key_exists('id', $args)) ? $args['id'] : 0;
+		$params = [
+			'type_name' => $gang->type_name,
+			'description' => $gang->gang_description,
+			'house_gang' => $gang->house_gang,
+			'outlaw' => $gang->outlaw
+		];
+
+		if ($request->getMethod() == 'POST') {
+			$insertQuery = "INSERT INTO {$ndb->gang_type} (type_name, gang_description, house_gang, outlaw, created, last_mod) VALUES (:type_name, :description, :house_gang, :outlaw, NOW(), NOW())";
+			if ($ndb->insert($insertQuery, $params)) {
+				$gang->id = $ndb->lastInsertId;
+				$gang->created = date("M d Y H:i:s");
+				$gang->last_mod = date("M d Y H:i:s");
+			}
+		} else {
+			$updateQuery = "UPDATE {$ndb->gang_type} SET type_name = :type_name, gang_description = :description, house_gang = :house_gang, outlaw = :outlaw, last_mod = NOW() WHERE id = :id";
+			$params['id'] = $id;
+			$ndb->update($updateQuery, $params);
+			$gang->last_mod = date("M d Y H:i:s");
+		}
+
+		$cache->del("gang-types");
+
+		$response->getBody()->write(json_encode($gang));
+		return $response->withHeader('Content-Type', 'application/json');
+	}
+
+	public function deleteGangType(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+		global $ndb, $cache;
+		$gangTypeId = $args['id'];
+
+		$selectGangRoles = "SELECT r.id FROM {$ndb->fighter_role} r WHERE r.gang_type_id = :gang_type_id";
+		$roles = $ndb->query($selectGangRoles, ['gang_type_id' => $gangTypeId]);
+		foreach ($roles as $role) {
+			FighterController::deleteTemplateFighter($role['id']);
+		}
+		$result = $ndb->delete("DELETE FROM {$ndb->gang_type} WHERE id = :id", $gangTypeId);
+
+		$cache->del("gang-types");
+
+		$response->withStatus(200);
+		return $response;
+	}
 }
 ?>

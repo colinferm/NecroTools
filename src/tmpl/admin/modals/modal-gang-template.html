@@ -1,0 +1,16 @@
+<div class="form-floating mb-3">
+	<input type="text" class="form-control gangName" id="gangName" placeholder="Gang Name" tabindex="1" value="{{type_name}}">
+	<label for="gangName">Gang Name</label>
+</div>
+<div class="form-floating mb-3">
+	<textarea class="form-control gangDescription" id="gangDescription" placeholder="Gang Description" tabindex="2">{{gang_description}}</textarea>
+	<label for="gangDescription" class="form-label">Gang Description</label>
+  </div>
+<div class="form-check mb-3">
+	{{{checkbox class-name="isHouseGang" name-param="house_gang" id-param="isHouseGang"}}}
+	<label class="form-check-label" for="isHouseGang">House Gang
+</div>
+<div class="form-check mb-3">
+	{{{checkbox class-name="isOutlaw" name-param="outlaw" id-param="isOutlawGang"}}}
+	<label class="form-check-label" for="isOutlawGang">Outlaw Gang</label>
+</div>

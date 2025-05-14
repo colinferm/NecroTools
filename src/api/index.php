@@ -27,10 +27,11 @@ $app->get('/gang/{id}', [\GangController::class, 'fetchGang'])->add($authCheck);
 $app->put('/gang/{id}', [\GangController::class, 'updateGang'])->add($authCheck);
 $app->get('/gang/{id}/fighters', [\FighterController::class, 'fetchGangFighters'])->add($authCheck);
 
-$app->post('/gang-type', [\GangController::class, 'addGangType'])->add($authCheck);
+$app->post('/gang-type', [\GangController::class, 'addUpdateGangType'])->add($authCheck);
 $app->get('/gang-types', [\GangController::class, 'fetchGangTypes'])->add($authCheck);
 $app->get('/gang-type/{id}', [\GangController::class, 'fetchGangType'])->add($authCheck);
-$app->put('/gang-type/{id}', [\GangController::class, 'updateGangType'])->add($authCheck);
+$app->put('/gang-type/{id}', [\GangController::class, 'addUpdateGangType'])->add($authCheck);
+$app->delete('/gang-type/{id}', [\GangController::class, 'deleteGangType'])->add($authCheck);
 $app->get('/gang-type/{id}/fighters', [\FighterController::class, 'fetchGangTypeFighters'])->add($authCheck);
 
 $app->get('/gang-types/{id}/roles', [\FighterController::class, 'fetchGangTemplates'])->add($authCheck);

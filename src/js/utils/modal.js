@@ -24,9 +24,9 @@ Necro.Views.Modal = Backbone.View.extend({
 		$('body').append(this.$el);
 
 
-		var modal = new bootstrap.Modal(this.el);
+		this.modal = new bootstrap.Modal(this.el);
 		this.$el.on('hidden.bs.modal', _.bind(this.removeSelf, this))
-		modal.show();
+		this.modal.show();
 
 		return this.$el;
 	},
@@ -49,6 +49,7 @@ Necro.Views.Modal = Backbone.View.extend({
 	},
 
 	removeSelf: function() {
+		this.modal.hide();
 		this.$el.remove();
 	}
 

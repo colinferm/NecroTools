@@ -250,7 +250,8 @@ class FighterController extends SlimController {
 		if ($request->getMethod() == 'POST' && $id == 0) {
 			$insertQuery = "INSERT INTO {$ndb->fighter_role} (gang_type_id, hierarchy_role, role_name) VALUES (:gang_type_id, :hierarchy_role, :role_name)";
 			if ($ndb->insert($insertQuery, $params)) {
-				$role['id'] = $ndb->lastInsertId;
+				$id = $ndb->lastInsertId;
+				$role['id'] = $id;
 			}
 
 		} else {
@@ -258,18 +259,25 @@ class FighterController extends SlimController {
 			$ndb->updateTable($ndb->fighter_role, $params);
 		}
 
+		$cache->del("gang-role-{$id}");
+
 		$response->getBody()->write(json_encode($role));
 		return $response->withHeader('Content-Type', 'application/json');
 	}
 
 	public function deleteFighterRole(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
-		global $ndb;
 		$id = $args['id'];
+		FighterController::deleteTemplateFighter($id);
+		$response->withStatus(200);
+		return $response;
+	}
+
+	public static function deleteTemplateFighter($id) {
+		global $ndb, $cache;
 		$result = $ndb->delete("DELETE FROM {$ndb->fighter_template} WHERE id = :id", $id);
 		$result = $ndb->delete("DELETE FROM {$ndb->fighter_role_skill_set_map} WHERE fighter_role_id = :id", $id);
 		$result = $ndb->delete("DELETE FROM {$ndb->fighter_role} WHERE id = :id", $id);
-		$response->withStatus(200);
-		return $response;
+		$cache->del("gang-role-{$id}");
 	}
 
 	public function fetchFighterRolesForGang(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {

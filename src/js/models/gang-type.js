@@ -17,7 +17,6 @@ Necro.Collections.GangTypes = Backbone.Collection.extend({
 	url:   '/api/gang-types',
 
 	parse: function(resp) {
-		console.log(resp);
 		this.add(resp);
 		return resp;
 	}

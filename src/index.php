@@ -21,6 +21,7 @@ require_once 'api/gang.php';
 		<link href="/css/jquery.tagit.css" rel="stylesheet" type="text/css" />
 		<link href="/css/necro.css" rel="stylesheet" type="text/css" />
 		<script src="/js/libs/jquery-3.7.1.min.js"></script>
+		<script src="/js/libs/moment.js"></script>
 		<title>Necro Tools</title>
 	</head>
 	<body>
