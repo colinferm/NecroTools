@@ -156,14 +156,18 @@ Necro.Utils.UI.Helpers = {
 				break
 			}
 		}
-		return '<input type="checkbox" class="' + className + ' form-check-input" value="' + checkId + '" ' + checked + '>&nbsp;' + this[nameParam];
+		return '<input type="checkbox" class="' + className + ' form-check-input" value="' + checkId + '" ' + checked + '>&nbsp;' + this.attributes[nameParam];
 	},
 
 	TemplateDateFormat: function(options) {
 		var modelProperty = options.hash['model-property'];
 		var dateProp = this[modelProperty];
 
-		return this;
+		if (dateProp) {
+			var dateParse = Date.parse(dateProp);
+
+			return this;
+		}
 	}
 }
 Handlebars.registerHelper("select-box", Necro.Utils.UI.Helpers.TemplateSelectBox);

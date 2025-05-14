@@ -350,12 +350,15 @@ html {
 									flex-direction: column;
 									justify-content: center;
 			
-									font-weight: bold;
+									/* font-weight: bold; */
 									text-transform: uppercase;
 									letter-spacing: 1px;
 								}
 							}
 
+							.btn-group {
+								font-family: $font-default;
+							}
 						}
 					}
 				}
