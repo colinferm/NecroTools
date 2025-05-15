@@ -366,9 +366,29 @@ html {
 						td {
 							border-bottom: none;
 
-							.tagify {
-								flex-wrap: nowrap;
-							}
+
+						}
+					}
+				}
+			}
+
+			&.weapon-stats {
+				tr.ammo_type_row {
+					&.sample-row {
+						display: none;
+					}
+					td {
+						input.small-stat {
+							max-width: 50px;
+						}
+
+						[name="ammo_type"] {
+							width: 200px;
+						}
+
+						.tagify {
+							width: 100%;
+							min-width: 300px;
 						}
 					}
 				}

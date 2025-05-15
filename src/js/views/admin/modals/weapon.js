@@ -53,8 +53,8 @@ Necro.Views.Admin.WeaponModal = Necro.Views.BaseModal.extend({
 
 	addAmmoType: function() {
 		$('.add_ammo').attr('disabled', '');
-		var row = $('.ammo_type_row.sample-row', this.el).first().clone();
-		row.removeClass('sample-row');
+		var row = $('.ammo_type_row.d-none', this.el).first().clone();
+		row.removeClass('d-none').addClass('d-flex');
 		$('.add_ammo_row', this.el).before(row);
 
 		var options = this.tagsOptions;
