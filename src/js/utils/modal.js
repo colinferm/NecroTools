@@ -36,7 +36,7 @@ Necro.Views.Modal = Backbone.View.extend({
 	},
 
 	keyAction: function(e) {
-		console.log(e.keyCode);
+		//console.log(e.keyCode);
 		if (e.keyCode === 27) {
 			this.removeSelf();
 		}

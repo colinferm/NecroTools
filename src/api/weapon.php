@@ -58,6 +58,29 @@ class WeaponController extends SlimController {
 		}
 		return $weapons;
 	}
+
+	public static function getCharacteristicsForWeaponId($weaponId) {
+		global $ndb;
+		$charSQL = "
+			SELECT id, ammo_type, range_short, range_long, accuracy_short, accuracy_long, strength, armor_penetration, damage, ammo_check 
+			FROM {$ndb->weapon_characteristic}
+			WHERE weapon_id = :weapon_id
+		";
+		$chars = $ndb->query($charSQL, ['weapon_id' => $weaponId]);
+
+		foreach($chars as &$char) {
+			$traitSQL = "
+				SELECT t.id, t.trait_name, t.trait_value 
+				FROM {$ndb->weapon_trait} t, {$ndb->weapon_trait_characteristic_map} wtcm
+				WHERE t.id = wtcm.trait_id
+				AND wtcm.characteristic_id = :char_id
+				ORDER BY t.trait_name ASC
+			";
+			$traits = $ndb->query($traitSQL, ['char_id' => $char['id']]);
+			$char['traits'] = $traits;
+		}
+		return $chars;
+	}
 	
 	public function fetchTraits(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
 		$data = WeaponController::getTraits();
@@ -120,7 +143,7 @@ class WeaponController extends SlimController {
 		throw new DatabaseException();
 	}
 
-	public static function getWeapons($wci = 0) {
+	public static function getWeapons($id = 0, $wci = 0) {
 		global $ndb;
 		$dbparams = [];
 		$query = "
@@ -133,6 +156,11 @@ class WeaponController extends SlimController {
 		if ($wci > 0) {
 			$dbparams['weapon_category_id'] = $wci;
 			$query .= " AND c.id = :weapon_category_id ";
+		}
+
+		if ($id > 0) {
+			$dbparams['id'] = $id;
+			$query .= " AND w.id = :id ";
 		}
 
 		$query .= "
@@ -177,6 +205,21 @@ class WeaponController extends SlimController {
 		return $response->withHeader('Content-Type', 'application/json');
 	}
 
+	public function fetchWeaponById(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+		global $ndb, $cache;
+		$weaponId = $args['id'];
+		$weapon = null;
+		$weapons = WeaponController::getWeapons($weaponId);
+		if (!count($weapons)) return $response->withStatus(404);
+		$weapon = $weapons[0];
+
+		$characteristics = WeaponController::getCharacteristicsForWeaponId($weaponId);
+		$weapon['characteristics'] = $characteristics;
+
+		$response->getBody()->write(json_encode($weapon));
+		return $response->withHeader('Content-Type', 'application/json');
+	}
+
 	public static function getWeaponCategories() {
 		global $ndb;
 		$query = "SELECT c.id, c.category_name FROM {$ndb->weapon_category} c ORDER BY c.id ASC";
@@ -198,7 +241,7 @@ class WeaponController extends SlimController {
 		$catId = $args['id'];
 		$weapons = $cache->get("weapon-cat-{$catId}");
 		if (!$weapons) {
-			$weapons = json_encode(WeaponController::getWeapons($catId));
+			$weapons = json_encode(WeaponController::getWeapons(0, $catId));
 			$cache->set("weapon-cat-{$catId}", $weapons);
 		}
 		$response->getBody()->write($weapons);

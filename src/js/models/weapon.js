@@ -22,14 +22,12 @@ Necro.Models.Weapon = Backbone.Model.extend({
 	},
 
 	parse: function(response) {
-		if (response.created) response.created = new Date(response.created);
-		if (response.last_mod) response.last_mod = new Date(response.last_mod);
 		var characteristics = [];
 		if (response.characteristics) {
 			_.each(response.characteristics, function(char) {
-				characteristics.push(new Necro.Models.WeaponCharacteristic(weapon));
+				characteristics.push(new Necro.Models.WeaponCharacteristic(char));
 			});
-			response.characteristics = Necro.Collections.WeaponCharacteristics(characteristics);
+			response.characteristics = new Necro.Collections.WeaponCharacteristics(characteristics);
 		}
 		return response;
 	}
@@ -44,6 +42,7 @@ Necro.Models.WeaponCharacteristic = Backbone.Model.extend({
 	idAttribute: "id",
 	defaults:    {
 		"id": null,
+		"ammo_type": null,
 		"range_short": "",
 		"range_long": "",
 		"accuracy_short": "",
@@ -56,14 +55,12 @@ Necro.Models.WeaponCharacteristic = Backbone.Model.extend({
 	},
 
 	parse: function(response) {
-		if (response.created) response.created = new Date(response.created);
-		if (response.last_mod) response.last_mod = new Date(response.last_mod);
 		var traits = [];
 		if (response.traits) {
 			_.each(response.traits, function(trait) {
 				traits.push(new Necro.Models.WeaponTrait(trait));
 			});
-			response.traits = Necro.Collections.WeaponCharacteristics(traits);
+			response.traits = Necro.Collections.WeaponTraits(traits);
 		}
 		return response;
 	}
@@ -79,7 +76,9 @@ Necro.Models.WeaponTrait = Backbone.Model.extend({
 	idAttribute: "id",
 	defaults:    {
 		"id": null,
-		"trait_value": 0
+		"trait_name": null,
+		"trait_value": 0,
+		"notes": null
 	}
 });
 Necro.Collections.WeaponTraits = Backbone.Collection.extend({

@@ -75,7 +75,7 @@ $app->delete('/skill/{id}', [\FighterController::class, 'deleteSkill']);
 
 $app->get('/weapons', [\WeaponController::class, 'fetchWeapons'])->add($authCheck);
 $app->get('/weapons/category/{id}', [\WeaponController::class, 'fetchWeaponsByCategory'])->add($authCheck);
-$app->get('/weapon/{id}', [\WeaponController::class, 'fetchWeapons'])->add($authCheck);
+$app->get('/weapon/{id}', [\WeaponController::class, 'fetchWeaponById'])->add($authCheck);
 
 $app->run();
 

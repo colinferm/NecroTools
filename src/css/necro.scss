@@ -160,6 +160,16 @@ $font-default: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
 */
 
 html {
+	ul.tagit-autocomplete {
+		z-index: 10000;
+		list-style: none;
+		padding-left: 10px;
+
+		li {
+			font-weight: bold;
+		}
+	}
+
 	.dropdown.menu {
 		li.is-dropdown-submenu-parent {
 			a {
@@ -343,15 +353,22 @@ html {
 			background-color: $color-white;
 			@include formStyles();
 
-			&.fighter-stats {
+			&.fighter-stats, &.weapon-stats {
 				tbody {
 					border-bottom: none;
 
 					tr {
+						&.sample-row {
+							display: none;
+						}
 						border-bottom: none;
 
 						td {
 							border-bottom: none;
+
+							.tagify {
+								flex-wrap: nowrap;
+							}
 						}
 					}
 				}
