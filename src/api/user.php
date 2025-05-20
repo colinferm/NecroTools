@@ -165,7 +165,7 @@ class UserController extends SlimController {
 		$params = json_decode($request->getBody());
 		$username = $params['username'];
 		$password = password_hash(PEPPER.$params['password'], PASSWORD_DEFAULT);
-		$email = $password['email_address'];
+		$email = $params['email_address'];
 
 		$result = $ndb->insert("
 			INSERT INTO {$ndb->user}
@@ -177,6 +177,36 @@ class UserController extends SlimController {
 		if ($result) {
 			list($user, $token) = UserController::doLogin($params);
 			$this->assignPermissions($user);
+
+			$response->getBody()->write(json_encode($user));
+			return $response->withHeader('Content-Type', 'application/json')->withHeader("Authorization", "OAuth oauth_token=".$token);
+		} else {
+			throw new AuthenticationException();
+		}
+	}
+
+	public function addSiteUser(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+		global $ndb;
+		$params = json_decode($request->getBody());
+		$username = $params['username'];
+		$email = $params['email_address'];
+		$permissions = $params['permissions'];
+
+		if ($params['generate_password']) {
+			$params['password'] = static::buildPassword();
+		}
+		$password = password_hash(PEPPER.$params['password'], PASSWORD_DEFAULT);
+
+		$result = $ndb->insert("
+			INSERT INTO {$ndb->user}
+				(user_name, userpassword, email_address, confirmed, last_login, is_admin, oauth_key) 
+			VALUES 
+				(:username, :userpassword, :email, 0, NOW(), 0, '')
+		", ['username' => $username, 'userpassword' => $password, 'email' => $email]);
+
+		if ($result) {
+			list($user, $token) = UserController::doLogin($params);
+			$this->assignPermissions($user, $permissions);
 
 			$response->getBody()->write(json_encode($user));
 			return $response->withHeader('Content-Type', 'application/json')->withHeader("Authorization", "OAuth oauth_token=".$token);
@@ -199,6 +229,21 @@ class UserController extends SlimController {
 	public static function getPermissionsForUserId($userId) {
 		global $ndb;
 		return $ndb->query("SELECT p.id, p.code FROM {$ndb->permission} p, {$ndb->permission_map} pm WHERE p.id = pm.permission_id AND pm.user_id = :user_id", ['user_id' => $userId]);
+	}
+
+	public static function getUserPermissionsJSON() {
+		global $ndb, $cache;
+		$perms = $cache->get("user-permissions");
+		if (!$perms) {
+			$results = $ndb->query("SELECT p.id, p.permisson, p.code FROM {$ndb->permission} p ORDER BY p.id ASC");
+			$perms = json_encode($results);
+			$cache->set("user-permissions", $perms);
+		}
+		return $perms;
+	}
+
+	public static function buildPassword($minLen = 10, $maxLen = 12) {
+		return PasswordUtils::buildPassword($minLen, $maxLen);
 	}
 
 	public function passwordGen(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {

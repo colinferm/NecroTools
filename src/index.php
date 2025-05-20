@@ -7,6 +7,7 @@ require_once 'api/utils.php';
 require_once 'api/weapon.php';
 require_once 'api/fighter.php';
 require_once 'api/gang.php';
+require_once 'api/user.php';
 ?>
 <!doctype html>
 <html class="no-js" lang="en">
@@ -38,6 +39,7 @@ require_once 'api/gang.php';
 				Necro.Utils.UI.TPL.loadAllTemplates(function(count) {
 					console.log("Templates loaded: " + count );
 				});
+				Necro.Apps.Data.UserPermissions = <?php echo UserController::getUserPermissionsJSON(); ?>;
 				Necro.Apps.Data.WeaponTraits = <?php echo WeaponController::getTraitsJSON(); ?>;
 				Necro.Apps.Data.WeaponCategories = <?php echo WeaponController::getWeaponCategoryJSON(); ?>;
 				Necro.Apps.Data.SkillSets = new Necro.Collections.SkillSets(<?php echo FighterController::getSkillsJSON(); ?>);

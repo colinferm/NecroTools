@@ -22,15 +22,15 @@ Necro.Views.Admin.GangRoleEditModal = Necro.Views.BaseModal.extend({
 			roleNameField.removeClass('error');
 		}
 		var m = this.model;
-        m.set("role_name", roleName);
-        m.set("hierarchy_role", hierarchy);
+		m.set("role_name", roleName);
+		m.set("hierarchy_role", hierarchy);
 
 		console.log(m.toJSON());
 
-        m.save({
-            success: callback(true, m),
-            error: callback(false)
-        });
+		m.save({
+			success: callback(true, m),
+			error: callback(false)
+		});
 	}
 
 });

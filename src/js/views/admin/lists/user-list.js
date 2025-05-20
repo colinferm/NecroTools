@@ -38,7 +38,7 @@ Necro.Views.Admin.SiteUserList = Backbone.View.extend({
 	},
 
 	addUser: function() {
-		var user = new Necro.Models.User({});
+		var user = new Necro.Models.User({permissions: []});
 		var modal = new Necro.Views.Modal({
 			class: "Necro.Views.Admin.AddSiteUserModal",
 			title: "Add User",

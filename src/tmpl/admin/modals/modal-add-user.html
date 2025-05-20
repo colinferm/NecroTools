@@ -35,3 +35,13 @@
 		This field is required.
 	</span>
 </div>
+<div class="mb3">
+	<h5>Permissions</h5>
+</div>
+<div class="row">
+	{{#each permissions}}
+		<div class="col-6 skillset">
+			{{{checkbox-permission name-param="permisson" class-name="permission_box"}}}
+		</div>
+	{{/each}}
+</div>

@@ -5,11 +5,12 @@ Necro.Views.Admin.AddSiteUserModal = Necro.Views.BaseModal.extend({
 		'click .registerButton': 'save',
 		'click [name="generatePassword"]': 'showHidePasswords',
 		'focusout .emailInput': 'checkFieldValid',
-		'focusout .usernameInput': 'checkFieldValid'
+		'focusout .usernameInput': 'checkFieldValid',
+		'click [type="checkbox"]': 'addPermissions'
 	},
 
 	render: function() {
-		this.$el.html(this.template());
+		this.$el.html(this.template({model: this.model, permissions: Necro.Apps.Data.UserPermissions}));
 		return this;
 	},
 
@@ -86,5 +87,24 @@ Necro.Views.Admin.AddSiteUserModal = Necro.Views.BaseModal.extend({
 			}, this),
 		});
 	},
+
+	addPermissions: function(e) {
+		console.log(e);
+
+	},
+
+	registerUser: function() {
+		var userName = $('.usernameInput', this.$el).val();
+		var emailAddr = $('.emailInput', this.$el).val();
+		var password = $('.passwordInput', this.$el).val();
+		var generatePassword = $('[name="generatePassword"]:checked').val();
+
+		/* this.model.set({
+			username: userName,
+			userpassword: password,
+			email: emailAddr,
+			permissions: []
+		}) */
+	}
 
 });

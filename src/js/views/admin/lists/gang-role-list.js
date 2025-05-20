@@ -37,7 +37,7 @@ Necro.Views.Admin.GangRoleList = Backbone.View.extend({
 
 	addRole: function() {
 		var roles = this.gangRoles;
-		roles.on('add', _.bind(this.addItem, this));
+		//roles.on('add', _.bind(this.addItem, this));
 		var m = new Necro.Models.GangRole({gang_type_id: this.model.get('id')});
 		var modal = new Necro.Views.Modal({
 			class: "Necro.Views.Admin.GangRoleEditModal",

@@ -59,7 +59,7 @@ Necro.Collections.SkillSets = Backbone.Collection.extend({
 		var sets = [];
 		for (var i = 0; i < this.models.length; i++) {
 			var set = this.models[i];
-			if (!set.attributes.limited_to_gang || (set.attributes.limited_to_gang && set.attributes.limited_to_gang == gId)) {
+			if (!set.attributes.limited_to_gang || (set.attributes.limited_to_gang && set.attributes.gang_type_id == gId)) {
 				sets.push(set);
 				continue;
 			}

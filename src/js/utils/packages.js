@@ -162,6 +162,32 @@ Necro.Utils.UI.Helpers = {
 		return '<input type="checkbox" class="' + className + ' form-check-input" value="' + checkId + '" ' + checked + '>&nbsp;' + this.attributes[nameParam];
 	},
 
+	TemplateCheckboxPermissions: function(options) {
+		var model = options.data.root.model;
+		var checkId = this.id;
+
+		var className = options.hash['class-name'];
+		var nameParam = options.hash['name-param'];
+
+		var checked = "";
+		if (model.attributes.permissions) {
+			var perms = model.attributes.permissions;
+			
+			for (var i = 0; i < perms.length; i++) {
+				let p = perms[i];
+				if (p.id == checkId) {
+					checked = "checked";
+					break
+				}
+			}
+			if (perms.length == 0 && checkId == 4) {
+				checked = "checked";
+				model.attributes.permissions.push(this);	
+			}
+		}
+		return '<input type="checkbox" class="' + className + ' form-check-input" value="' + checkId + '" ' + checked + '>&nbsp;' + this[nameParam];
+	},
+
 	TemplateDateFormat: function(options) {
 		var modelProperty = options.hash['model-property'];
 		var formatString = (options.hash['format']) ? options.hash['format'] : 'MM/DD/YYYY';
@@ -179,6 +205,7 @@ Handlebars.registerHelper("form-option", Necro.Utils.UI.Helpers.TemplateOptions)
 Handlebars.registerHelper("gang-select", Necro.Utils.UI.Helpers.GangSelectBox);
 Handlebars.registerHelper("checkbox-skill", Necro.Utils.UI.Helpers.TemplateCheckboxSkill);
 Handlebars.registerHelper("checkbox-skillset", Necro.Utils.UI.Helpers.TemplateCheckboxSkillSet);
+Handlebars.registerHelper("checkbox-permission", Necro.Utils.UI.Helpers.TemplateCheckboxPermissions);
 Handlebars.registerHelper("checkbox", Necro.Utils.UI.Helpers.TemplateCheckbox);
 Handlebars.registerHelper("date-format", Necro.Utils.UI.Helpers.TemplateDateFormat);
 
