@@ -113,6 +113,26 @@ class UserController extends SlimController {
 		}
 	}
 
+	public function registerValidation(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+		global $ndb;
+		$params = $request->getParsedBody();
+		$field = $params['field'];
+		$value = $params['value'];
+
+		if ($field == 'email_address') {
+			$validationQuery = "SELECT * FROM {$ndb->user} WHERE email_address = :value";
+		} else {
+			$validationQuery = "SELECT * FROM {$ndb->user} WHERE username = :value";
+		}
+		//$validationQuery = "SELECT * FROM {$ndb->user} WHERE :field = :value";
+		$exists = $ndb->queryFirst($validationQuery, ['value' => $value]);
+
+		if ($exists) {
+			return $response->withStatus(406);
+		}
+		return $response->withStatus(200);
+	}
+
 	public function register(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
 		global $ndb;
 		$params = json_decode($request->getBody());

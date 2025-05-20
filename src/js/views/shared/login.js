@@ -24,6 +24,9 @@ Necro.Views.Login = Backbone.View.extend({
 		if (e.keyCode === 13) {
 			if ($('.passwordInput', this.el).is(":focus")) {
 				this.login();
+			} else {
+				var password =  $('.passwordInput', this.el).val();
+				var strength = passwordStrength(password).value;
 			}
 		}
 	},

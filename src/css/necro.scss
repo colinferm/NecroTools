@@ -147,6 +147,18 @@ $font-default: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
 	}
 }
 
+input {
+	&.invalidField {
+		border: 2px solid red;
+		color: red;
+	}
+
+	&.validField {
+		border: 1px solid green;
+		color: green;
+	}
+}
+
 /*
 .button {
 	background: repeating-linear-gradient(
