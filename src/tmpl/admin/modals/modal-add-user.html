@@ -1,0 +1,37 @@
+<div class="mb-3 d-none">
+	<p><i class="fi-alert"></i> There are some errors in your form.</p>
+</div>
+<div class="form-floating mb-3">
+	<input type="email" id="registerEmailInput" class="form-control emailInput" placeholder="name@example.com" tabindex="1">
+	<label for="registerEmailInput">Email address</label>
+	<p class="help-text" id="emailHelpText">Your email address <i>and</i> user name must be unique.</p>
+	<span class="form-error d-none">
+		This field is required and must be an email address.
+	</span>
+</div>
+<div class="form-floating mb-3">
+	<input type="text" id="registerUsernameInput" class="form-control usernameInput" tabindex="2" placeholder="Username">
+	<label for="registerUsernameInput">Username</label>
+	<span class="form-error d-none">
+		This field is required.
+	</span>
+</div>
+<div class="form-check">
+	<input class="form-check-input" type="radio" name="generatePassword" id="generatePasswordYes" value="generate-password" checked>
+	<label class="form-check-label" for="generatePasswordYes">
+		Generate Password
+	</label>
+</div>
+<div class="form-check mb-3">
+	<input class="form-check-input" type="radio" name="generatePassword" id="generatePasswordNo" value="create-password">
+	<label class="form-check-label" for="generatePasswordNo">
+		Enter Password
+	</label>
+</div>
+<div class="form-floating mb-3 d-none">
+	<input type="password" id="registerPasswordInput" class="form-control passwordInput" tabindex="3" placeholder="Password">
+	<label for="registerPasswordInput">Password</label>
+	<span class="form-error d-none">
+		This field is required.
+	</span>
+</div>

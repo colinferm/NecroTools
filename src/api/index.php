@@ -21,46 +21,48 @@ $app->post('/verify', [\UserController::class, 'verify']);
 $app->get('/password', [\UserController::class, 'passwordGen']);
 $app->get('/pepper', [\UserController::class, 'pepperGen']);
 
-$app->get('/gangs', [\GangController::class, 'fetchGangs'])->add($authCheck);
+$app->get('/site-users', [\UserController::class, 'getSiteUsers'])->add(new NecroUserValidation(['ADM-USER']));
 
-$app->post('/gang', [\GangController::class, 'addGang'])->add($authCheck);
-$app->get('/gang/{id}', [\GangController::class, 'fetchGang'])->add($authCheck);
-$app->put('/gang/{id}', [\GangController::class, 'updateGang'])->add($authCheck);
-$app->get('/gang/{id}/fighters', [\FighterController::class, 'fetchGangFighters'])->add($authCheck);
+$app->get('/gangs', [\GangController::class, 'fetchGangs'])->add(new NecroUserValidation([]));
 
-$app->post('/gang-type', [\GangController::class, 'addUpdateGangType'])->add($authCheck);
-$app->get('/gang-types', [\GangController::class, 'fetchGangTypes'])->add($authCheck);
-$app->get('/gang-type/{id}', [\GangController::class, 'fetchGangType'])->add($authCheck);
-$app->put('/gang-type/{id}', [\GangController::class, 'addUpdateGangType'])->add($authCheck);
-$app->delete('/gang-type/{id}', [\GangController::class, 'deleteGangType'])->add($authCheck);
-$app->get('/gang-type/{id}/fighters', [\FighterController::class, 'fetchGangTypeFighters'])->add($authCheck);
+$app->post('/gang', [\GangController::class, 'addGang'])->add(new NecroUserValidation([]));
+$app->get('/gang/{id}', [\GangController::class, 'fetchGang'])->add(new NecroUserValidation([]));
+$app->put('/gang/{id}', [\GangController::class, 'updateGang'])->add(new NecroUserValidation([]));
+$app->get('/gang/{id}/fighters', [\FighterController::class, 'fetchGangFighters'])->add(new NecroUserValidation([]));
 
-$app->get('/gang-types/{id}/roles', [\FighterController::class, 'fetchGangTemplates'])->add($authCheck);
+$app->post('/gang-type', [\GangController::class, 'addUpdateGangType'])->add(new NecroUserValidation(['ADM-DATA']));
+$app->get('/gang-types', [\GangController::class, 'fetchGangTypes'])->add(new NecroUserValidation(['ADM-DATA']));
+$app->get('/gang-type/{id}', [\GangController::class, 'fetchGangType'])->add(new NecroUserValidation(['ADM-DATA']));
+$app->put('/gang-type/{id}', [\GangController::class, 'addUpdateGangType'])->add(new NecroUserValidation(['ADM-DATA']));
+$app->delete('/gang-type/{id}', [\GangController::class, 'deleteGangType'])->add(new NecroUserValidation(['ADM-DATA']));
+$app->get('/gang-type/{id}/fighters', [\FighterController::class, 'fetchGangTypeFighters'])->add(new NecroUserValidation([]));
 
-$app->post('/fighter', [\FighterController::class, 'addFighter'])->add($authCheck);
+$app->get('/gang-types/{id}/roles', [\FighterController::class, 'fetchGangTemplates'])->add(new NecroUserValidation([]));
 
-$app->get('/fighter/roles', [\FighterController::class, 'fetchFighterRoles'])->add($authCheck);
-$app->post('/fighter/role', [\FighterController::class, 'addUpdateFighterRole'])->add($authCheck);
-$app->put('/fighter/role/{id}', [\FighterController::class, 'addUpdateFighterRole'])->add($authCheck);
-$app->get('/fighter/role/{id}', [\FighterController::class, 'fetchFighterRole'])->add($authCheck);
-$app->delete('/fighter/role/{id}', [\FighterController::class, 'deleteFighterRole'])->add($authCheck);
-$app->post('/fighter/role/{id}/stats', [\FighterController::class, 'addUpdateTemplateStats'])->add($authCheck);
-$app->put('/fighter/role/{id}/stats', [\FighterController::class, 'addUpdateTemplateStats'])->add($authCheck);
-$app->put('/fighter/role/{id}/skills/{primary}', [\FighterController::class, 'updateTemplateSkills'])->add($authCheck);
+$app->post('/fighter', [\FighterController::class, 'addFighter'])->add(new NecroUserValidation([]));
 
-$app->get('/fighter/template/{id}', [\FighterController::class, 'fetchFighterTemplate'])->add($authCheck);
+$app->get('/fighter/roles', [\FighterController::class, 'fetchFighterRoles'])->add(new NecroUserValidation([]));
+$app->post('/fighter/role', [\FighterController::class, 'addUpdateFighterRole'])->add(new NecroUserValidation(['ADM-DATA']));
+$app->put('/fighter/role/{id}', [\FighterController::class, 'addUpdateFighterRole'])->add(new NecroUserValidation(['ADM-DATA']));
+$app->get('/fighter/role/{id}', [\FighterController::class, 'fetchFighterRole'])->add(new NecroUserValidation([]));
+$app->delete('/fighter/role/{id}', [\FighterController::class, 'deleteFighterRole'])->add(new NecroUserValidation(['ADM-DATA']));
+$app->post('/fighter/role/{id}/stats', [\FighterController::class, 'addUpdateTemplateStats'])->add(new NecroUserValidation(['ADM-DATA']));
+$app->put('/fighter/role/{id}/stats', [\FighterController::class, 'addUpdateTemplateStats'])->add(new NecroUserValidation(['ADM-DATA']));
+$app->put('/fighter/role/{id}/skills/{primary}', [\FighterController::class, 'updateTemplateSkills'])->add(new NecroUserValidation(['ADM-DATA']));
 
-$app->get('/fighter/{id}', [\FighterController::class, 'fetchFighter'])->add($authCheck);
-$app->put('/fighter/{id}', [\FighterController::class, 'updateFighter'])->add($authCheck);
+$app->get('/fighter/template/{id}', [\FighterController::class, 'fetchFighterTemplate'])->add(new NecroUserValidation(['ADM-DATA']));
+
+$app->get('/fighter/{id}', [\FighterController::class, 'fetchFighter'])->add(new NecroUserValidation([]));
+$app->put('/fighter/{id}', [\FighterController::class, 'updateFighter'])->add(new NecroUserValidation([]));
 
 
-$app->post('/injury/{id}', [\FighterController::class, 'addInjury'])->add($authCheck);
+$app->post('/injury/{id}', [\FighterController::class, 'addInjury'])->add(new NecroUserValidation([]));
 
-$app->get('/traits', [\WeaponController::class, 'fetchTraits'])->add($authCheck);
-$app->post('/trait', [\WeaponController::class, 'addTrait'])->add($authCheck);
-$app->get('/trait/{id}', [\WeaponController::class, 'fetchTrait'])->add($authCheck);
-$app->put('/trait/{id}', [\WeaponController::class, 'updateTrait'])->add($authCheck);
-$app->delete('/trait/{id}', [\WeaponController::class, 'deleteTrait'])->add($authCheck);
+$app->get('/traits', [\WeaponController::class, 'fetchTraits'])->add(new NecroUserValidation([]));
+$app->post('/trait', [\WeaponController::class, 'addTrait'])->add(new NecroUserValidation(['ADM-DATA']));
+$app->get('/trait/{id}', [\WeaponController::class, 'fetchTrait'])->add(new NecroUserValidation([]));
+$app->put('/trait/{id}', [\WeaponController::class, 'updateTrait'])->add(new NecroUserValidation(['ADM-DATA']));
+$app->delete('/trait/{id}', [\WeaponController::class, 'deleteTrait'])->add(new NecroUserValidation(['ADM-DATA']));
 
 $app->get('/skills', [\FighterController::class, 'skills']);
 
@@ -74,9 +76,9 @@ $app->post('/skill', [\FighterController::class, 'addUpdateSkill']);
 $app->put('/skill/{id}', [\FighterController::class, 'addUpdateSkill']);
 $app->delete('/skill/{id}', [\FighterController::class, 'deleteSkill']);
 
-$app->get('/weapons', [\WeaponController::class, 'fetchWeapons'])->add($authCheck);
-$app->get('/weapons/category/{id}', [\WeaponController::class, 'fetchWeaponsByCategory'])->add($authCheck);
-$app->get('/weapon/{id}', [\WeaponController::class, 'fetchWeaponById'])->add($authCheck);
+$app->get('/weapons', [\WeaponController::class, 'fetchWeapons'])->add(new NecroUserValidation([]));
+$app->get('/weapons/category/{id}', [\WeaponController::class, 'fetchWeaponsByCategory'])->add(new NecroUserValidation([]));
+$app->get('/weapon/{id}', [\WeaponController::class, 'fetchWeaponById'])->add(new NecroUserValidation([]));
 
 $app->run();
 

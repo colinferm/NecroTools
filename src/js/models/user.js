@@ -21,3 +21,17 @@ Necro.Models.User = Backbone.Model.extend({
 		this.is_admin = false;
 	}
 });
+
+Necro.Collections.Users = Backbone.Collection.extend({
+	model: Necro.Models.User,
+	url:   '/api/site-users',
+	
+	initialize: function() {
+		this.comparator = "username";
+	},
+
+	parse: function(resp) {
+		this.add(resp);
+		return resp;
+	}
+});

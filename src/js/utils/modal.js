@@ -12,6 +12,8 @@ Necro.Views.Modal = Backbone.View.extend({
 	initialize : function(options) {
 		this.opts = options;
 		this.modalSize = options.modalSize;
+		this.buttonText = (options.buttonText) ? options.buttonText : 'Save changes';
+
 		var html = Necro.Utils.UI.TPL.get(this.templateName);
 		this.template = Handlebars.compile(html);
 		this.render();
@@ -25,6 +27,7 @@ Necro.Views.Modal = Backbone.View.extend({
 		this.content.options = this.opts;
 		
 		$('.modal-body', this.$el).html(this.content.render().$el);
+		$('.action_save', this.$el).html(this.buttonText);
 		$('body').append(this.$el);
 
 

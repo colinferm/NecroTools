@@ -22,7 +22,8 @@ Necro.Routers.NecroRouter = Backbone.Router.extend({
 		"adminWeaponTraits": "adminWeaponTraitList",
 		"adminWeaponTraits/:id": "adminEditTrait",
 		"adminWeapons": "adminWeapons",
-		"adminWargear": "adminWargearlist"
+		"adminWargear": "adminWargearlist",
+		"adminUserList": "adminUserList"
 	},
 
 	initialize: function () {
@@ -176,6 +177,11 @@ Necro.Routers.NecroRouter = Backbone.Router.extend({
 	/**
 	 * Admin
 	 */
+	adminUserList: function() {
+		var userList = new Necro.Views.Admin.SiteUserList();
+		this.updateRight(userList.render().$el, userList.pageTitle);
+	},
+
 	adminGangList: function() {
 		var gangList = new Necro.Views.Admin.GangList();
 		//var title = "Gang Lists";

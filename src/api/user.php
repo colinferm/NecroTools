@@ -4,47 +4,70 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
 
-$authCheck = function(ServerRequestInterface $request, RequestHandler $handler) {
+class NecroUserValidation {
+	private $requiredPermissions = array();
 
-	$oauth = $request->getHeaderLine("Authorization");
-	$token = null;
-
-	if (isset($oauth) && !empty($oauth)) {
-		$token = $pairs[1];
-	}
-	$sessionToken = isset($_COOKIE['auth']) ? $_COOKIE['auth'] : null;
-
-	if (empty($token) && !empty($sessionToken)) {
-		$token = $sessionToken;
+	public function __construct(array $permissionGroups) {
+		$this->requiredPermissions = $permissionGroups;
 	}
 
-	if (!is_null($token)) {
-		if (isset($_SESSION['user'])) $user = $_SESSION['user'];
+	public function __invoke(ServerRequestInterface $request, RequestHandler $handler) {
 
-		if (isset($user) && !is_null($user)) {
-			if (!isset($user['oauth_key']) || $user['oauth_key'] != $token) {
-				$oauth = UserController::findOauth($token);
-
-				if (!isset($oauth) || empty($oauth) || $oauth->id != $user->id) {
-					unset($user);
+		$oauth = $request->getHeaderLine("Authorization");
+		$token = null;
+	
+		if (isset($oauth) && !empty($oauth)) {
+			$token = $pairs[1];
+		}
+		$sessionToken = isset($_COOKIE['auth']) ? $_COOKIE['auth'] : null;
+	
+		if (empty($token) && !empty($sessionToken)) {
+			$token = $sessionToken;
+		}
+	
+		if (!is_null($token)) {
+			if (isset($_SESSION['user'])) $user = $_SESSION['user'];
+	
+			if (isset($user) && !is_null($user)) {
+				if (!isset($user['oauth_key']) || $user['oauth_key'] != $token) {
+					$oauth = UserController::findOauth($token);
+	
+					if (!isset($oauth) || empty($oauth) || $oauth->id != $user->id) {
+						unset($user);
+					}
 				}
+			} 
+	
+			if (!isset($user) || is_null($user)) {
+				$user = UserController::findOauth($token);
+				if (!empty($user)) $_SESSION['user'] = $user;
 			}
+		}
+
+		if (!isset($_SESSION['user'])) {
+			error_log('  Not authorized', 0);
+			throw new AuthenticationException();
 		} 
 
-		if (!isset($user) || is_null($user)) {
-			$user = UserController::findOauth($token);
-			if (!empty($user)) $_SESSION['user'] = $user;
+		if (count($this->requiredPermissions) > 0) {
+			$hasGroup = false;
+			foreach ($this->requiredPermissions as $reqired) {
+				foreach($user['permissions'] as $perm) {
+					if ($perm['code'] == 'ADM-SITE' || $reqired == $perm['code']) {
+						$hasGroup = true;
+						break;
+					}
+				}
+				if ($hasGroup) break;
+			}
+			if (!$hasGroup) {
+				throw new AuthenticationException();
+			}
 		}
-	}
 
-	if (!isset($_SESSION['user'])) {
-		error_log('  Not authorized', 0);
-		throw new AuthenticationException();
-	} 
-	//$response = $next($request, $response);
-	//return $response;
-	return $handler->handle($request);
-};
+		return $handler->handle($request);
+	}
+}
 
 class UserController extends SlimController {
 
@@ -55,6 +78,8 @@ class UserController extends SlimController {
 
 		$user = $ndb->queryFirst("SELECT id, username, email_address, confirmed, registered, last_login, is_admin, oauth_key FROM {$ndb->user} WHERE oauth_key = :token", ['token' => $token]);
 		if ($user) {
+			$permissions = UserCOntroller::getPermissionsForUserId($user['id']);
+			$user['permissions'] = $permissions;
 			$cache->setEx("user-{$token}", 300, json_encode($user));
 			return $user;
 		}
@@ -71,6 +96,9 @@ class UserController extends SlimController {
 		}
 		unset($user['userpassword']);
 		$token = md5(microtime());
+
+		$permissions = UserCOntroller::getPermissionsForUserId($user['id']);
+		$user['permissions'] = $permissions;
 
 		setcookie('auth', $token, time() + 86400, "/");
 		$user['oauth_key'] = $token;
@@ -124,7 +152,6 @@ class UserController extends SlimController {
 		} else {
 			$validationQuery = "SELECT * FROM {$ndb->user} WHERE username = :value";
 		}
-		//$validationQuery = "SELECT * FROM {$ndb->user} WHERE :field = :value";
 		$exists = $ndb->queryFirst($validationQuery, ['value' => $value]);
 
 		if ($exists) {
@@ -149,11 +176,29 @@ class UserController extends SlimController {
 
 		if ($result) {
 			list($user, $token) = UserController::doLogin($params);
+			$this->assignPermissions($user);
+
 			$response->getBody()->write(json_encode($user));
 			return $response->withHeader('Content-Type', 'application/json')->withHeader("Authorization", "OAuth oauth_token=".$token);
 		} else {
 			throw new AuthenticationException();
 		}
+	}
+
+	private function assignPermissions(&$user, $permissions = array('USR-SITE')) {
+		global $ndb;
+		$perms = implode(",", $permissions);
+		$results = $ndb->query("SELECT id, code FROM {$ndb->permission} WHERE code IN (:codes)", ['codes' => $perms]);
+		foreach($results as $r) {
+			$ndb->insert("INSERT INTO {$ndb->permission_map} (user_id, permission_id) VALUES (:user_id, :permission_id)", ['user_id' => $user['id'], 'permission_id' => $r['id']]);
+		}
+		$user['permissions'] = $results;
+		return $user;
+	}
+
+	public static function getPermissionsForUserId($userId) {
+		global $ndb;
+		return $ndb->query("SELECT p.id, p.code FROM {$ndb->permission} p, {$ndb->permission_map} pm WHERE p.id = pm.permission_id AND pm.user_id = :user_id", ['user_id' => $userId]);
 	}
 
 	public function passwordGen(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
@@ -167,6 +212,13 @@ class UserController extends SlimController {
 		$pepper = password_hash(time(), PASSWORD_DEFAULT);
 		$response->getBody()->write('Pepper: '.$pepper);
 		return $response;
+	}
+
+	public function getSiteUsers(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+		global $ndb;
+		$results = $ndb->query("SELECT id, username, email_address, first_name, last_name, country, confirmed, registered, last_login FROM {$ndb->user} ORDER BY last_login DESC");
+		$response->getBody()->write(json_encode($results));
+		return $response->withHeader('Content-Type', 'application/json');
 	}
 }
 ?>
