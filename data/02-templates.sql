@@ -19,7 +19,7 @@ CREATE TABLE necro_fighter_template (
 	cool  VARCHAR(4),
 	willpower  VARCHAR(4),
 	intelligence  VARCHAR(4),
-	num_start_skills TINYINT NOT NULL DEFAULT '0',
+	num_start_skills INT NOT NULL DEFAULT '0',
 	is_vehicle TINYINT NOT NULL DEFAULT '0',
 	is_dramatis TINYINT NOT NULL DEFAULT '0',
 	base_value INT NOT NULL DEFAULT '0',
