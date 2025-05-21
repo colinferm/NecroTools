@@ -109,12 +109,16 @@ Necro.Utils.UI.Helpers = {
 	},
 
 	TemplateCheckbox: function(options, context) {
-		var model = options.data.root.model;
+		//var model = options.data.root.model;
 
 		var className = options.hash['class-name'];
 		var nameParam = options.hash['name-param'];
 		var idParam = (options.hash['id-param']) ? options.hash['id-param'] : '';
 		var text = (options.hash['text']) ? options.hash['text'] : '';
+		var objName = (options.hash['obj-name']) ? options.hash['obj-name'] : 'model';
+
+		var model = options.data.root[objName];
+
 		var checked = "";
 		var formId = "";
 		if (idParam) formId = 'id="'+idParam+'"';

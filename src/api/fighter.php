@@ -167,16 +167,16 @@ class FighterController extends SlimController {
 		$gangId = 0;
 		$gang = array();
 		foreach ($results as $r) {
-			if ($gangId != $r['gang_id']) {
+			if ($gangId != $r['gang_type_id']) {
 				if ($gangId > 0) $gangRoles[] = $gang;
-				$gangId = $r['gang_id'];
+				$gangId = $r['gang_type_id'];
 				$gang = array(
 					'gang_id' => $gangId,
 					'gang_name' => $r['gang'],
 					'roles' => array()
 				);
 			}
-			unset($r['gang_id']);
+			unset($r['gang_type_id']);
 			unset($r['gang']);
 			$gang['roles'][] = $r;
 		}
@@ -219,15 +219,15 @@ class FighterController extends SlimController {
 				SELECT 
 					r.id AS role_id, r.role_name, r.hierarchy_role, r.gang_id,
 					ft.id AS template_id, ft.movement, ft.weapon_skill, ft.balistic_skill, ft.strength, ft.toughness, ft.toughness_side, ft.toughness_rear,
-					ft.wounds, ft.initiative, ft.attacks, ft.handling, ft.save_roll, ft.leadership, ft.cool, ft.willpower, ft.intelligence, 
+					ft.wounds, ft.initiative, ft.attacks, ft.handling, ft.save_roll, ft.leadership, ft.cool, ft.willpower, ft.intelligence, ft.num_start_skills,
 					ft.is_vehicle, ft.is_dramatis, ft.base_value, ft.view_order, created
 				FROM {$ndb->fighter_role} r
 				LEFT JOIN {$ndb->fighter_template} ft ON (ft.fighter_role = r.id)
 				WHERE r.id = :id 
-				AND (ft.is_dramatis = 0 OR ft.is_dramatis IS NULL)
 				ORDER BY r.hierarchy_role ASC, role_id ASC
 				LIMIT 1
 			";
+			//AND (ft.is_dramatis = 0 OR ft.is_dramatis IS NULL)
 			$results = $ndb->queryFirst($query, ['id' => $roleId]);
 			$templates = json_encode($results);
 			$cache->set("gang-role-{$roleId}", $role);
@@ -237,7 +237,7 @@ class FighterController extends SlimController {
 	}
 
 	public function addUpdateFighterRole(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
-		global $ndb;
+		global $ndb, $cache;
 
 		$id = (array_key_exists('id', $args)) ? $args['id'] : 0;
 
@@ -303,12 +303,12 @@ class FighterController extends SlimController {
 		$query = "
 			SELECT 
 				ft.id AS template_id, ft.movement, ft.weapon_skill, ft.balistic_skill, ft.strength, ft.toughness, ft.toughness_side, ft.toughness_rear,
-				ft.wounds, ft.initiative, ft.attacks, ft.handling, ft.save_roll, ft.leadership, ft.cool, ft.willpower, ft.intelligence, 
+				ft.wounds, ft.initiative, ft.attacks, ft.handling, ft.save_roll, ft.leadership, ft.cool, ft.willpower, ft.intelligence, ft.num_start_skills,
 				ft.is_vehicle, ft.is_dramatis, ft.base_value, ft.view_order, created
 			FROM {$ndb->fighter_template} ft
 			WHERE ft.fighter_role = :role_id 
-			AND (ft.is_dramatis = 0 OR ft.is_dramatis IS NULL)
 		";
+		//AND (ft.is_dramatis = 0 OR ft.is_dramatis IS NULL)
 		return $ndb->queryFirst($query, ['role_id' => $roleId]);
 	}
 
@@ -322,12 +322,12 @@ class FighterController extends SlimController {
 			$query = "
 				SELECT 
 					ft.id AS template_id, ft.movement, ft.weapon_skill, ft.balistic_skill, ft.strength, ft.toughness, ft.toughness_side, ft.toughness_rear,
-					ft.wounds, ft.initiative, ft.attacks, ft.handling, ft.save_roll, ft.leadership, ft.cool, ft.willpower, ft.intelligence, 
+					ft.wounds, ft.initiative, ft.attacks, ft.handling, ft.save_roll, ft.leadership, ft.cool, ft.willpower, ft.intelligence, ft.num_start_skills
 					ft.is_vehicle, ft.is_dramatis, ft.base_value, ft.view_order, created
 				FROM {$ndb->fighter_template} ft
 				WHERE ft.id = :id 
-				AND (ft.is_dramatis = 0 OR ft.is_dramatis IS NULL)
 			";
+			//AND (ft.is_dramatis = 0 OR ft.is_dramatis IS NULL)
 			$result = $ndb->queryFirst($query, ['id' => $templateId]);
 			$template = json_encode($result);
 			$cache->set("gang-fighter-template-{$templateId}", $template);

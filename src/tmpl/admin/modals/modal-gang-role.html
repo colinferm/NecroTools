@@ -1,7 +1,23 @@
 <div class="form-floating mb-3">
-    <input class="role_name form-control" value="{{model.role_name}}" id="roleName" type="text" placeholder="Role Name" tabindex="1">
-    <label for="roleName">Role Name</label>
+	<input class="role_name form-control" value="{{model.role_name}}" id="roleName" type="text" placeholder="Role Name" tabindex="1">
+	<label for="roleName">Role Name</label>
 </div>
-<div class="">
-    {{{select-box field-name="hierarchy_role" collection-property="roles" item-id="type" item-name="name" model-property="hierarchy_role"}}}
+<div class="mb-3">
+	{{{select-box field-name="hierarchy_role" collection-property="roles" item-id="type" item-name="name" model-property="hierarchy_role"}}}
+</div>
+<div class="form-floating mb-3">
+	<input class="base_value form-control" value="{{template.base_value}}" id="baseValue" type="text" placeholder="Base Value" tabindex="1">
+	<label for="baseValue">Base Value</label>
+</div>
+<div class="form-floating mb-3">
+	<input class="num_start_skills form-control" value="{{template.num_start_skills}}" id="numStartSkills" type="text" placeholder="Starting Skills" tabindex="1">
+	<label for="numStartSkills">Starting Skills</label>
+</div>
+<div class="form-check mb-3">
+	{{{checkbox obj-name="template" class-name="isVehicle" name-param="is_vehicle" id-param="isVehicle"}}}
+	<label class="form-check-label" for="isVehicle">Vehicle or Crew?</label>
+</div>
+<div class="form-check mb-3">
+	{{{checkbox obj-name="template" class-name="isDramatis" name-param="is_dramatis" id-param="isDramatis"}}}
+	<label class="form-check-label" for="isDramatis">Dramatis Persona?</label>
 </div>

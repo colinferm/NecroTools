@@ -67,6 +67,7 @@ Necro.Models.FighterTemplate = Backbone.Model.extend({
 		return "/api/fighter/role/" + roleId + "/stats";
 	},
 	defaults:    {
+		"fighter_role": null,
 		"template_id": null,
 		"movement": null,
 		"weapon_skill": null,
@@ -100,6 +101,11 @@ Necro.Models.FighterTemplate = Backbone.Model.extend({
 	parse: function(resp) {
 		return resp;
 	},
+
+	hasStatLine: function() {
+		if (this.attributes.strength && this.attributes.strength && this.attacks.cool) return true;
+		return false;
+	}
 });
 
 Necro.Collections.GangRoles = Backbone.Collection.extend({

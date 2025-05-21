@@ -42,6 +42,7 @@ Necro.Views.Admin.GangRoleList = Backbone.View.extend({
 		var modal = new Necro.Views.Modal({
 			class: "Necro.Views.Admin.GangRoleEditModal",
 			title: "Add Gang Role",
+			buttonText: "Save Role",
 			model: m,
 			callback: function(model) {
 				roles.add(model);
@@ -102,7 +103,8 @@ Necro.Views.Admin.GangRoleListItem = Backbone.View.extend({
 	popRoleModal: function(primary) {
 		var modal = new Necro.Views.Modal({
 			class: "Necro.Views.Admin.GangRoleEditModal",
-			title: "Add Gang Role",
+			title: "Edit Gang Role",
+			buttonText: "Save Role",
 			model: this.model,
 		});
 	},
