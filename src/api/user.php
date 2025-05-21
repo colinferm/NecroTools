@@ -186,43 +186,97 @@ class UserController extends SlimController {
 	}
 
 	public function addSiteUser(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
-		global $ndb;
-		$params = json_decode($request->getBody());
+		global $ndb, $cache;
+
+		$params = json_decode($request->getBody(), true);
 		$username = $params['username'];
-		$email = $params['email_address'];
+		$emailAddress = $params['email_address'];
+		$firstName = $params['first_name'];
+		$lastName = $params['last_name'];
+		$confirmed = $params['confirmed'];
 		$permissions = $params['permissions'];
 
-		if ($params['generate_password']) {
+		if (array_key_exists('generate_password', $params) && $parma['generate_password'] == 'generate-password') {
 			$params['password'] = static::buildPassword();
+			error_log("Generated Password: " . $params['password']);
 		}
 		$password = password_hash(PEPPER.$params['password'], PASSWORD_DEFAULT);
 
+		$isAdmin = (count($permissions) > 1) ? 1 : 0;
+
 		$result = $ndb->insert("
 			INSERT INTO {$ndb->user}
-				(user_name, userpassword, email_address, confirmed, last_login, is_admin, oauth_key) 
+				(username, userpassword, email_address, first_name, last_name, confirmed, registered, last_login, is_admin, oauth_key) 
 			VALUES 
-				(:username, :userpassword, :email, 0, NOW(), 0, '')
-		", ['username' => $username, 'userpassword' => $password, 'email' => $email]);
+				(:username, :userpassword, :email_address, :first_name, :last_name, :confirmed, NOW(), NOW(), :is_admin, '')
+		", [
+			'username' => $username, 
+			'userpassword' => $password, 
+			'email_address' => $emailAddress, 
+			'first_name' => $firstName,
+			'last_name' => $lastName,
+			'confirmed' => $confirmed, 
+			'is_admin' => $isAdmin
+		]);
 
 		if ($result) {
-			list($user, $token) = UserController::doLogin($params);
+			$user = static::getUserById($ndb->lastInsertId);
+
 			$this->assignPermissions($user, $permissions);
 
+			$cache->del("site-users");
+
 			$response->getBody()->write(json_encode($user));
-			return $response->withHeader('Content-Type', 'application/json')->withHeader("Authorization", "OAuth oauth_token=".$token);
+			return $response->withHeader('Content-Type', 'application/json');
 		} else {
-			throw new AuthenticationException();
+			return $response->withStatus(500);
 		}
 	}
 
-	private function assignPermissions(&$user, $permissions = array('USR-SITE')) {
-		global $ndb;
-		$perms = implode(",", $permissions);
-		$results = $ndb->query("SELECT id, code FROM {$ndb->permission} WHERE code IN (:codes)", ['codes' => $perms]);
-		foreach($results as $r) {
-			$ndb->insert("INSERT INTO {$ndb->permission_map} (user_id, permission_id) VALUES (:user_id, :permission_id)", ['user_id' => $user['id'], 'permission_id' => $r['id']]);
+	public function updateSiteUser(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+		global $ndb, $cache;
+
+		$userId = $args['id'];
+
+		$params = json_decode($request->getBody(), true);
+		$permissions = $params['permissions'];
+		$genPassword = $params['generate_password'];
+
+		$params['id'] = $userId;
+		$params['is_admin'] = (count($permissions) > 1) ? 1 : 0;
+
+		unset($params['permissions']);
+		unset($params['generate_password']);
+		if ($genPassword != 'leave-password') {
+			$tempPassword = $params['userpassword'];
+
+			if ($genPassword == 'generate-password') {
+				$tempPassword = static::buildPassword();
+			}
+			$params['userpassword'] = password_hash(PEPPER.$tempPassword, PASSWORD_DEFAULT);
 		}
-		$user['permissions'] = $results;
+		unset($params['password']);
+
+		$ndb->updateTable($ndb->user, $params);
+
+		$user = static::getUserById($userId);
+		$this->assignPermissions($user, $permissions);
+
+		$cache->del("site-users");
+
+		$response->getBody()->write(json_encode($user));
+		return $response->withHeader('Content-Type', 'application/json');
+	}
+
+	private function assignPermissions(&$user, $permissions = array(array('id' => 4, 'code' => 'USR-SITE'))) {
+		global $ndb;
+
+		$ndb->deleteWithParams("DELETE FROM {$ndb->permission_map} WHERE user_id = :user_id", ['user_id' => $user['id']]);
+
+		foreach ($permissions as $perm) {
+			$ndb->insert("INSERT INTO {$ndb->permission_map} (user_id, permission_id) VALUES (:user_id, :permission_id)", ['user_id' => $user['id'], 'permission_id' => $perm['id']]);
+		}
+		$user['permissions'] = $permissions;
 		return $user;
 	}
 
@@ -259,11 +313,42 @@ class UserController extends SlimController {
 		return $response;
 	}
 
+
 	public function getSiteUsers(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
-		global $ndb;
-		$results = $ndb->query("SELECT id, username, email_address, first_name, last_name, country, confirmed, registered, last_login FROM {$ndb->user} ORDER BY last_login DESC");
-		$response->getBody()->write(json_encode($results));
+		global $ndb, $cache;
+
+		$users = $cache->get("site-users");
+		if (!$users) {
+			$userResults = $ndb->query("SELECT id, username, email_address, first_name, last_name, country, confirmed, registered, last_login FROM {$ndb->user} ORDER BY last_login DESC");
+			foreach($userResults as &$user) {
+				$perms = static::getPermissionsForUserId($user['id']);
+				$user['permissions'] = $perms;
+			}
+			$users = json_encode($userResults);
+			$cache->set("site-users", $users);
+		}
+		$response->getBody()->write($users);
 		return $response->withHeader('Content-Type', 'application/json');
+	}
+
+	public function fetchUserById(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+		global $ndb;
+		$id = $args['id'];
+		$user = static::getUserById($id);
+		if ($user) {
+			$response->getBody()->write(json_encode($user));
+			return $response->withHeader('Content-Type', 'application/json');
+		}
+		return $response->withStatus(404);
+	}
+
+	public static function getUserById($id) {
+		global $ndb;
+		$user = $ndb->queryFirst("SELECT id, username, email_address, first_name, last_name, country, confirmed, registered, last_login FROM {$ndb->user} WHERE id = :id ORDER BY last_login DESC", ['id' => $id]);
+		$perms = static::getPermissionsForUserId($user['id']);
+		$user['permissions'] = $perms;
+
+		return $user;
 	}
 }
 ?>

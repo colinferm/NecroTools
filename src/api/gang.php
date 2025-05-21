@@ -8,16 +8,17 @@ class GangController extends SlimController {
 	public function fetchGangs(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
 		global $ndb;
 		$userId = UserController::getCurrentUserId();
-		error_log("User id: {$userId}");
+		//error_log("User id: {$userId}");
 		$query = "
 			SELECT g.id, g.gang_name, g.gang_type_id, gt.type_name, gt.house_gang, g.outlaw, COUNT(f.id) AS num_fighters, unix_timestamp(g.created) * 1000 AS created, unix_timestamp(g.last_mod) * 1000 AS last_mod 
 			FROM {$ndb->user_gang} g
 			JOIN {$ndb->gang_type} gt ON (g.gang_type_id = gt.id)
 			LEFT JOIN {$ndb->user_fighter} f ON (g.id = f.user_gang_id)
+			WHERE g.user_id = :user_id
 			GROUP BY g.id, g.gang_name, g.gang_type_id, gt.type_name, gt.house_gang, g.outlaw, g.last_mod
 			ORDER BY g.last_mod
 		";
-		$data = $ndb->query($query);
+		$data = $ndb->query($query, ['user_id' => $userId]);
 		$response->getBody()->write(json_encode($data));
 		return $response->withHeader('Content-Type', 'application/json');
 	}

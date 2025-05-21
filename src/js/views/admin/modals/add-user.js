@@ -2,39 +2,49 @@ Necro.Views.Admin.AddSiteUserModal = Necro.Views.BaseModal.extend({
 	templateName: 'modal-add-user',
 
 	events: {
-		'click .registerButton': 'save',
 		'click [name="generatePassword"]': 'showHidePasswords',
 		'focusout .emailInput': 'checkFieldValid',
 		'focusout .usernameInput': 'checkFieldValid',
-		'click [type="checkbox"]': 'addPermissions'
+		'click [type="checkbox"].permission_box': 'handlePermissions'
 	},
 
 	render: function() {
-		this.$el.html(this.template({model: this.model, permissions: Necro.Apps.Data.UserPermissions}));
+		this.$el.html(this.template({model: this.model.toJSON(), isNew: this.model.isNew(), permissions: Necro.Apps.Data.UserPermissions.toJSON()}));
 		return this;
 	},
 
 	save: function(callback) {
 		let roleNameField = $('.role_name', this.$el);
-		let hierarchy = $('[name="hierarchy_role"]', this.$el).val();
-		let roleName = roleNameField.val();
 
-		if (!roleName || roleName.length < 3) {
-			roleNameField.addClass('error');
-			return;
-		} else {
-			roleNameField.removeClass('error');
-		}
-		var m = this.model;
-        m.set("role_name", roleName);
-        m.set("hierarchy_role", hierarchy);
+		var userName = $('.usernameInput', this.$el).val();
+		var emailAddr = $('.emailInput', this.$el).val();
+		var password = $('.passwordInput', this.$el).val();
+		var firstName = $('.firstNameInput', this.$el).val();
+		var lastName = $('.lastNameInput', this.$el).val();
+		var isConfirmed = ($('.confirmed', this.$el).is(':checked')) ? 1 : 0;
+		var generatePassword = $('[name="generatePassword"]:checked').val();
 
-		console.log(m.toJSON());
+		//console.log("Generate Password: " + generatePassword);
 
-        m.save({
-            success: callback(true, m),
-            error: callback(false)
-        });
+		let user = {
+			username: userName,
+			userpassword: password,
+			generate_password: generatePassword,
+			email_address: emailAddr,
+			confirmed: isConfirmed,
+			first_name: firstName,
+			last_name: lastName
+		};
+
+		let m = this.model;
+		m.urlRoot = "/api/site-users";
+		//m.set(user);
+		m.save(user, {
+			success: callback(true, m),
+			error: callback(false)
+		});
+
+		console.log(this.m);
 	},
 
 	showHidePasswords: function(e) {
@@ -49,24 +59,26 @@ Necro.Views.Admin.AddSiteUserModal = Necro.Views.BaseModal.extend({
 
 	checkFieldValid: function(e) {
 		var target = $(e.currentTarget);
-		if (target.val().length > 5) {
-			var fieldName = "";
 
-			if (target.hasClass('emailInput')) {
-				fieldName = "email_address";
-			} else if (target.hasClass('usernameInput')) {
-				fieldName = "username";
-			}
+		var fieldName = "";
 
+		if (target.hasClass('emailInput')) {
+			fieldName = "email_address";
+		} else if (target.hasClass('usernameInput')) {
+			fieldName = "username";
+		}
+
+		let origVal = this.model.get(fieldName);
+
+		if (target.val().length > 5 && target.val() != origVal) {
 			this.validateInfo({field: fieldName, value: target.val()}, function(success){
 				if (success) {
 					target.removeClass('invalidField').addClass('validField');
 				} else {
 					target.removeClass('validField').addClass('invalidField');
 				}
-				this.validateForm();
 			});
-		} else {
+		} else if (target.val() != origVal) {
 			target.removeClass('validField').addClass('invalidField');
 		}
 	},
@@ -88,23 +100,18 @@ Necro.Views.Admin.AddSiteUserModal = Necro.Views.BaseModal.extend({
 		});
 	},
 
-	addPermissions: function(e) {
-		console.log(e);
-
-	},
-
-	registerUser: function() {
-		var userName = $('.usernameInput', this.$el).val();
-		var emailAddr = $('.emailInput', this.$el).val();
-		var password = $('.passwordInput', this.$el).val();
-		var generatePassword = $('[name="generatePassword"]:checked').val();
-
-		/* this.model.set({
-			username: userName,
-			userpassword: password,
-			email: emailAddr,
-			permissions: []
-		}) */
+	handlePermissions: function(e) {
+		//console.log(e);
+		var permVal = $(e.currentTarget).val();
+		var perms = this.model.get("permissions");
+		if ($(e.currentTarget).is(':checked')) {
+			var perm = Necro.Apps.Data.UserPermissions.get(permVal);
+			console.log("Add: " + permVal);
+			perms.push(perm);
+		} else {
+			console.log("Remove: " + permVal);
+			//perms.remove(permVal);
+		}
 	}
 
 });

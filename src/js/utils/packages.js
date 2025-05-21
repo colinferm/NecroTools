@@ -174,8 +174,8 @@ Necro.Utils.UI.Helpers = {
 		var nameParam = options.hash['name-param'];
 
 		var checked = "";
-		if (model.attributes.permissions) {
-			var perms = model.attributes.permissions;
+		if (model.permissions) {
+			var perms = model.permissions;
 			
 			for (var i = 0; i < perms.length; i++) {
 				let p = perms[i];
@@ -183,10 +183,6 @@ Necro.Utils.UI.Helpers = {
 					checked = "checked";
 					break
 				}
-			}
-			if (perms.length == 0 && checkId == 4) {
-				checked = "checked";
-				model.attributes.permissions.push(this);	
 			}
 		}
 		return '<input type="checkbox" class="' + className + ' form-check-input" value="' + checkId + '" ' + checked + '>&nbsp;' + this[nameParam];

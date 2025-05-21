@@ -13,8 +13,8 @@ Necro.Views.Admin.SiteUserList = Backbone.View.extend({
 		this.template = Handlebars.compile(html);
 
 		this.collection = new Necro.Collections.Users();
-		this.collection.fetch({ success: _.bind(this.addItems, this) });
-		//this.collection.on('add', this.addItem, this);
+		this.collection.on('add', this.addItem, this);
+		this.collection.fetch();
 	},
 
 	render: function() {
@@ -28,6 +28,7 @@ Necro.Views.Admin.SiteUserList = Backbone.View.extend({
 
 	addItems: function() {
 		_.each(this.collection.models, function(user) {
+			user.urlRoot = '/api/site-users';
 			this.addItem(user);
 		}, this);
 	},
@@ -38,14 +39,17 @@ Necro.Views.Admin.SiteUserList = Backbone.View.extend({
 	},
 
 	addUser: function() {
-		var user = new Necro.Models.User({permissions: []});
+		var perm = Necro.Apps.Data.UserPermissions.get(4);
+		var user = new Necro.Models.User({permissions: [perm]});
+		user.urlRoot = '/api/site-users';
+
 		var modal = new Necro.Views.Modal({
 			class: "Necro.Views.Admin.AddSiteUserModal",
 			title: "Add User",
 			buttonText: "Save User",
 			model: user,
 			callback: _.bind(function() {
-				if (m) this.collection.add(m);
+				if (user) this.collection.add(user);
 			}, this)
 		});
 	}
@@ -56,6 +60,9 @@ Necro.Views.Admin.SiteUserListItem = Backbone.View.extend({
 	templateName: 'user-list-item',
 
 	events: {
+		'click .user_name': 'editUser',
+		'click .email_address': 'editUser',
+		'click .action_edit': 'editUser'
 	},
 
 	initialize : function(options) {
@@ -71,6 +78,16 @@ Necro.Views.Admin.SiteUserListItem = Backbone.View.extend({
 	},
 
 	editUser: function() {
+		var user = this.model;
+		var modal = new Necro.Views.Modal({
+			class: "Necro.Views.Admin.AddSiteUserModal",
+			title: "Edit User",
+			buttonText: "Save User",
+			model: user,
+			callback: _.bind(function() {
+				this.render();
+			}, this)
+		});
 	},
 
 	deleteUser: function() {

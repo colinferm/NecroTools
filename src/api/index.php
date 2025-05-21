@@ -22,6 +22,9 @@ $app->get('/password', [\UserController::class, 'passwordGen']);
 $app->get('/pepper', [\UserController::class, 'pepperGen']);
 
 $app->get('/site-users', [\UserController::class, 'getSiteUsers'])->add(new NecroUserValidation(['ADM-USER']));
+$app->post('/site-users', [\UserController::class, 'addSiteUser'])->add(new NecroUserValidation(['ADM-USER']));
+$app->get('/site-users/{id}', [\UserController::class, 'fetchUserById'])->add(new NecroUserValidation(['ADM-USER']));
+$app->put('/site-users/{id}', [\UserController::class, 'updateSiteUser'])->add(new NecroUserValidation(['ADM-USER']));
 
 $app->get('/gangs', [\GangController::class, 'fetchGangs'])->add(new NecroUserValidation([]));
 

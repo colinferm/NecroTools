@@ -35,3 +35,17 @@ Necro.Collections.Users = Backbone.Collection.extend({
 		return resp;
 	}
 });
+
+Necro.Collections.UserPermissions = Backbone.Collection.extend({
+	model: Necro.Models.User,
+	url:   '/api/site-users',
+	
+	initialize: function() {
+		this.comparator = "id";
+	},
+
+	parse: function(resp) {
+		this.add(resp);
+		return resp;
+	}
+});
