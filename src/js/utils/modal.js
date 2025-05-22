@@ -46,7 +46,7 @@ Necro.Views.Modal = Backbone.View.extend({
 	},
 
 	saveData: function(e) {
-		console.log(e);
+		//console.log(e);
 		this.content.save(_.bind(function(success, model) {
 			if (success) {
 				this.close();
@@ -56,7 +56,7 @@ Necro.Views.Modal = Backbone.View.extend({
 	},
 
 	close: function(e) {
-		console.log("Closing...");
+		//console.log("Closing...");
 		if (document.activeElement) {
 			document.activeElement.blur();
 		}

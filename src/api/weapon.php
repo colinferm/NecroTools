@@ -24,38 +24,44 @@ class WeaponController extends SlimController {
 	}
 
 	public static function getWeaponsForFighter($id) {
+		return static::getWeaponsOrGearForFighter($id, 0);
+	}
+
+	public static function getWeaponsOrGearForFighter($fighterId, $isGear = 0) {
 		global $ndb;
 		$query = "
-			SELECT w.id, w.weapon_category_id, wc.category_name, w.weapon_name, w.weapon_value, w.rarity
+			SELECT w.id, w.weapon_category_id, wc.category_name, w.weapon_name, w.weapon_value, w.rarity, w.is_wargear
 			FROM {$ndb->weapon} w, {$ndb->weapon_category} wc, {$ndb->user_fighter_weapon_map} wfm
 			WHERE 1 = 1
-			AND w.is_wargear = 0
+			AND w.is_wargear = :is_wargear
 			AND w.weapon_category_id = wc.id
 			AND wfm.weapon_id = w.id
 			AND wfm.user_fighter_id = :id
 		";
-		$weapons = $ndb->query($query, ['id' => $id]);
+		$weapons = $ndb->query($query, ['id' => $fighterId, 'is_wargear' => $isGear]);
 
-		foreach ($weapons as &$weapon) {
-			$charSQL = "
-				SELECT id, ammo_type, range_short, range_long, accuracy_short, accuracy_long, strength, armor_penetration, damage, ammo_check 
-				FROM {$ndb->weapon_characteristic}
-				WHERE weapon_id = :weapon_id
-			";
-			$chars = $ndb->query($charSQL, ['weapon_id' => $weapon['id']]);
-
-			foreach($chars as &$char) {
-				$traitSQL = "
-					SELECT t.id, t.trait_name, t.trait_value 
-					FROM {$ndb->weapon_trait} t, {$ndb->weapon_trait_characteristic_map} wtcm
-					WHERE t.id = wtcm.trait_id
-					AND wtcm.characteristic_id = :char_id
-					ORDER BY t.trait_name ASC
+		if (!$isGear) {
+			foreach ($weapons as &$weapon) {
+				$charSQL = "
+					SELECT id, ammo_type, range_short, range_long, accuracy_short, accuracy_long, strength, armor_penetration, damage, ammo_check 
+					FROM {$ndb->weapon_characteristic}
+					WHERE weapon_id = :weapon_id
 				";
-				$traits = $ndb->query($traitSQL, ['char_id' => $char['id']]);
-				$char['traits'] = $traits;
+				$chars = $ndb->query($charSQL, ['weapon_id' => $weapon['id']]);
+
+				foreach($chars as &$char) {
+					$traitSQL = "
+						SELECT t.id, t.trait_name, t.trait_value 
+						FROM {$ndb->weapon_trait} t, {$ndb->weapon_trait_characteristic_map} wtcm
+						WHERE t.id = wtcm.trait_id
+						AND wtcm.characteristic_id = :char_id
+						ORDER BY t.trait_name ASC
+					";
+					$traits = $ndb->query($traitSQL, ['char_id' => $char['id']]);
+					$char['traits'] = $traits;
+				}
+				$weapon['characteristics'] = $chars;
 			}
-			$weapon['characteristics'] = $chars;
 		}
 		return $weapons;
 	}
@@ -232,7 +238,13 @@ class WeaponController extends SlimController {
 
 	public static function getWeaponCategories() {
 		global $ndb;
-		$query = "SELECT c.id, c.category_name FROM {$ndb->weapon_category} c ORDER BY c.id ASC";
+		$query = "SELECT c.id, c.category_name FROM {$ndb->weapon_category} c WHERE c.is_wargear = 0 ORDER BY c.category_name ASC";
+		return $ndb->query($query);
+	}
+
+	public static function getWargearCategories() {
+		global $ndb;
+		$query = "SELECT c.id, c.category_name FROM {$ndb->weapon_category} c WHERE c.is_wargear = 1 ORDER BY c.category_name ASC";
 		return $ndb->query($query);
 	}
 
@@ -244,6 +256,22 @@ class WeaponController extends SlimController {
 			$cache->set("weapon-categories", $cats);
 		}
 		return $cats;
+	}
+
+	public static function getWargearCategoryJSON() {
+		global $cache;
+		$cats = $cache->get("wargear-categories");
+		if (!$cats) {
+			$cats = json_encode(WeaponController::getWargearCategories());
+			$cache->set("wargear-categories", $cats);
+		}
+		return $cats;
+	}
+
+	public static function getCategoryById($id) {
+		global $ndb;
+		$query = "SELECT c.id, c.category_name FROM {$ndb->weapon_category} c WHERE c.id = :id ORDER BY c.category_name ASC";
+		return $ndb->queryFirst($query, ['id' => $id]);
 	}
 
 	public function fetchWeaponsByCategory(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
@@ -288,7 +316,8 @@ class WeaponController extends SlimController {
 	}
 
 	public function addCharacteristic(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface {
-
+		$response->getBody()->write(json_encode([]));
+		return $response->withHeader('Content-Type', 'application/json');
 	}
 
 	public function updateCharacteristic(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
@@ -302,6 +331,101 @@ class WeaponController extends SlimController {
 
 		$id = $args['id'];
 		$rows = $ndb->deleteFromTable($ndb->weapon_characteristic, $id);
+
+		return $response->withStatus(200);
+	}
+
+	public static function getGear($params = array()) {
+		global $ndb;
+		$sqlParams = [];
+		$gearSQL = "
+			SELECT w.id, w.weapon_category_id, wc.category_name, w.weapon_name, w.weapon_value, w.rarity, w.notes, w.is_wargear
+			FROM {$ndb->weapon} w
+			LEFT JOIN {$ndb->weapon_category} wc ON (w.weapon_category_id = wc.id)
+			WHERE 1 = 1
+			AND w.is_wargear = 1
+		";
+		if (count($params) > 0) {
+			$gearSQL .= "AND w.{$params['field']} = :{$params['field']}";
+			$sqlParams = [$params['field'] => $params['value']];
+		}
+
+		$gearSQL .= " ORDER BY wc.category_name ASC, w.weapon_name ASC, w.weapon_value DESC";
+		$gear = $ndb->query($gearSQL, $sqlParams);
+		return $gear;
+	}
+
+
+	public function fetchGear(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface {
+		global $cache;
+
+		$gear = $cache->get("all-wargear");
+		if (!$gear) {
+			$gearResults = static::getGear();
+			if (count($gearResults) == 0) return $response->withStatus(404);
+			$gear = json_encode($gearResults);
+			$cache->set("all-wargear", $gear);
+		}
+		$response->getBody()->write($gear);
+		return $response->withHeader('Content-Type', 'application/json');
+	}
+
+	public function fetchGearByCategory(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+		$id = $args['id'];
+		$gear = static::getGear(['field' => 'weapon_category_id', 'value' => $id]);
+
+		if (count($gear) == 0) return $response->withStatus(404);
+		$response->getBody()->write(json_encode($gear));
+		return $response->withHeader('Content-Type', 'application/json');
+	}
+
+	public function fetchGearById(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+		$id = $args['id'];
+		$gear = static::getGear(['field' => 'id', 'value' => $id]);
+
+		if (count($gear) == 0) return $response->withStatus(404);
+		if (count($gear) == 1) $gear = $gear[0];
+		$response->getBody()->write(json_encode($gear));
+		return $response->withHeader('Content-Type', 'application/json');
+	}
+
+	public function addUpdateGear(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+		global $ndb, $cache;
+		$gear = json_decode($request->getBody(), true);
+		unset($gear['category_name']);
+
+		if ($request->getMethod() == 'POST') {
+			unset($gear['id']);
+
+			$insertQuery = "
+				INSERT INTO {$ndb->weapon} 
+					(weapon_name, weapon_category_id, weapon_value, rarity, notes, is_wargear)
+				VALUES
+					(:weapon_name, :weapon_category_id, :weapon_value, :rarity, :notes, :is_wargear)
+			";
+			$ndb->insert($insertQuery, $gear);
+			$gear['id'] = $ndb->lastInsertId;
+
+		} else {
+			$id = $args['id'];
+			$gear['id'] = $id;
+			$ndb->updateTable($ndb->weapon, $gear);
+		}
+		$cat = static::getCategoryById($gear['weapon_category_id']);
+		$gear['category_name'] = $cat['category_name'];
+		$cache->del("all-wargear");
+
+		$response->getBody()->write(json_encode($gear));
+		return $response->withHeader('Content-Type', 'application/json');
+	}
+
+	public function deleteGear(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+		global $ndb, $cache;
+
+		$id = $args['id'];
+		$rows = $ndb->deleteFromTable($ndb->weapon_characteristic, $id);
+
+		$cache->del("all-wargear");
 
 		return $response->withStatus(200);
 	}

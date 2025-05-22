@@ -19,6 +19,16 @@ INSERT INTO necro_weapon_category VALUES (7, 'Booby Traps', 0);
 INSERT INTO necro_weapon_category VALUES (8, 'Others', 0);
 
 INSERT INTO necro_weapon_category VALUES (9, 'Armor', 1);
+INSERT INTO necro_weapon_category VALUES (10, 'Field Armor', 1);
+INSERT INTO necro_weapon_category VALUES (11, 'Bionics', 1);
+INSERT INTO necro_weapon_category VALUES (12, 'Gang Equipment', 1);
+INSERT INTO necro_weapon_category VALUES (13, 'Personal Equipment', 1);
+INSERT INTO necro_weapon_category VALUES (14, 'Chems', 1);
+INSERT INTO necro_weapon_category VALUES (15, 'Weapon Accessories', 1);
+INSERT INTO necro_weapon_category VALUES (16, 'Status Items', 1);
+INSERT INTO necro_weapon_category VALUES (17, 'Servo-skulls', 1);
+INSERT INTO necro_weapon_category VALUES (18, 'Status Items', 1);
+INSERT INTO necro_weapon_category VALUES (19, 'Pets', 1);
 
 DROP TABLE IF EXISTS necro_weapon;
 CREATE TABLE necro_weapon (
@@ -27,19 +37,20 @@ CREATE TABLE necro_weapon (
 	weapon_name VARCHAR(255) NOT NULL,
 	weapon_value INT NOT NULL,
 	rarity VARCHAR(10),
+	notes TEXT,
 	is_wargear TINYINT NOT NULL DEFAULT 0,
 	INDEX idx_weapon_category (weapon_category_id),
 	PRIMARY KEY (id)
 );
-INSERT INTO necro_weapon VALUES (1, 2, 'Boltgun', 55, 'R8', 0);
-INSERT INTO necro_weapon VALUES (2, 1, 'Autopistol', 10, 'C', 0);
-INSERT INTO necro_weapon VALUES (3, 5, 'Knife', 15, 'C', 0);
-INSERT INTO necro_weapon VALUES (4, 5, 'Stilleto Knife', 20, 'R9', 0);
-INSERT INTO necro_weapon VALUES (5, 5, 'Stilleto Sword', 35, 'R9', 0);
-INSERT INTO necro_weapon VALUES (6, 5, 'Chain Sword', 25, 'R8', 0);
-INSERT INTO necro_weapon VALUES (7, 3, 'Escher Pattern Combi-', 180, 'R8', 0);
+INSERT INTO necro_weapon VALUES (1, 2, 'Boltgun', 55, 'R8', NULL, 0);
+INSERT INTO necro_weapon VALUES (2, 1, 'Autopistol', 10, 'C', NULL, 0);
+INSERT INTO necro_weapon VALUES (3, 5, 'Knife', 15, 'C', NULL, 0);
+INSERT INTO necro_weapon VALUES (4, 5, 'Stilleto Knife', 20, 'R9', NULL, 0);
+INSERT INTO necro_weapon VALUES (5, 5, 'Stilleto Sword', 35, 'R9', NULL, 0);
+INSERT INTO necro_weapon VALUES (6, 5, 'Chain Sword', 25, 'R8', NULL, 0);
+INSERT INTO necro_weapon VALUES (7, 3, 'Escher Pattern Combi-', 180, 'R8', NULL, 0);
 
-INSERT INTO necro_weapon VALUES (8, 9, 'Flak Armor', 10, 'C', 1);
+INSERT INTO necro_weapon VALUES (8, 9, 'Flak Armor', 10, 'C', NULL, 1);
 
 DROP TABLE IF EXISTS necro_weapon_characteristic;
 CREATE TABLE necro_weapon_characteristic (
@@ -82,6 +93,55 @@ INSERT INTO necro_weapon_trait (id, trait_name) VALUES (6, 'Combi');
 INSERT INTO necro_weapon_trait (id, trait_name) VALUES (7, 'Blaze');
 INSERT INTO necro_weapon_trait (id, trait_name) VALUES (8, 'Template');
 INSERT INTO necro_weapon_trait (id, trait_name) VALUES (9, 'Unstable');
+INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Assault Shield');
+INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Blast 3"');
+INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Blast 5"');
+INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Burrowing');
+INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Chem Delivery');
+INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Concussion');
+INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Cursed');
+INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Demolitions');
+INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Disarm');
+INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Drag');
+INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Digi');
+INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Energy Shield');
+INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Entangle');
+INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Esoteric');
+INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Exclusive');
+INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Fear');
+INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Flare');
+INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Fixed');
+INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Flash');
+INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Force');
+INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Gas');
+INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Graviton Pulse');
+INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Grenade');
+INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Hexagrammatic');
+INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Impale');
+INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Knockback');
+INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Limited');
+INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Master-Crafted');
+INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Melee');
+INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Melta');
+INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Plentiful');
+INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Power');
+INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Pulverise');
+INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Rad-phage');
+INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Reckless');
+INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Rending');
+INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Scarce');
+INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Scattershot');
+INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Seismic');
+INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Sever');
+INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Shield Breaker');
+INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Shock');
+INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Sidearm');
+INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Silent');
+INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Single Shot');
+INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Smoke');
+INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Unwieldy');
+INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Versatile');
+INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Web');
 
 DROP TABLE IF EXISTS necro_weapon_trait_characteristic_map;
 CREATE TABLE necro_weapon_trait_characteristic_map (

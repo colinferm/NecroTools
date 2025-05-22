@@ -42,6 +42,7 @@ require_once 'api/user.php';
 				Necro.Apps.Data.UserPermissions = new Necro.Collections.UserPermissions(<?php echo UserController::getUserPermissionsJSON(); ?>);
 				Necro.Apps.Data.WeaponTraits = <?php echo WeaponController::getTraitsJSON(); ?>;
 				Necro.Apps.Data.WeaponCategories = <?php echo WeaponController::getWeaponCategoryJSON(); ?>;
+				Necro.Apps.Data.WargearCategories = <?php echo WeaponController::getWargearCategoryJSON(); ?>;
 				Necro.Apps.Data.SkillSets = new Necro.Collections.SkillSets(<?php echo FighterController::getSkillsJSON(); ?>);
 				Necro.Apps.Data.Injuries = <?php echo FighterController::getInjuriesJSON(); ?>;
 				Necro.Apps.Data.FighterRoles = <?php echo FighterController::getFighterRolesJSON(); ?>;

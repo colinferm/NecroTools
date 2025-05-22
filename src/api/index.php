@@ -91,6 +91,13 @@ $app->get('/weapons/category/{id}', [\WeaponController::class, 'fetchWeaponsByCa
 $app->get('/weapon/{id}', [\WeaponController::class, 'fetchWeaponById'])->add(new NecroUserValidation([]));
 $app->get('/weapon/{id}/characteristics', [\WeaponController::class, 'fetchCharacteristicsForWeaponId'])->add(new NecroUserValidation([]));
 
+$app->get('/gear', [\WeaponController::class, 'fetchGear'])->add(new NecroUserValidation([]));
+$app->post('/gear', [\WeaponController::class, 'addUpdateGear'])->add(new NecroUserValidation([]));
+$app->get('/gear/category/{id}', [\WeaponController::class, 'fetchGearByCategory'])->add(new NecroUserValidation([]));
+$app->get('/gear/{id}', [\WeaponController::class, 'fetchGearById'])->add(new NecroUserValidation([]));
+$app->put('/gear/{id}', [\WeaponController::class, 'addUpdateGear'])->add(new NecroUserValidation([]));
+$app->delete('/gear/{id}', [\WeaponController::class, 'deleteGear'])->add(new NecroUserValidation([]));
+
 $app->run();
 
 if ($isCache) $cache->close();
