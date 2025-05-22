@@ -201,6 +201,9 @@ class UserController extends SlimController {
 		$lastName = $params['last_name'];
 		$confirmed = $params['confirmed'];
 		$permissions = $params['permissions'];
+		$nonce = '';
+
+		if (!$confirmed) $nonce = static::generateNonceForUser($emailAddress, $username);
 
 		if (array_key_exists('generate_password', $params) && $params['generate_password'] == 'generate-password') {
 			$params['userpassword'] = static::buildPassword();
@@ -212,9 +215,9 @@ class UserController extends SlimController {
 
 		$result = $ndb->insert("
 			INSERT INTO {$ndb->user}
-				(username, userpassword, email_address, first_name, last_name, confirmed, registered, last_login, is_admin, oauth_key) 
+				(username, userpassword, email_address, first_name, last_name, confirmed, registered, last_login, is_admin, oauth_key, nonce_key) 
 			VALUES 
-				(:username, :userpassword, :email_address, :first_name, :last_name, :confirmed, NOW(), NOW(), :is_admin, '')
+				(:username, :userpassword, :email_address, :first_name, :last_name, :confirmed, NOW(), NOW(), :is_admin, '', :nonce_key)
 		", [
 			'username' => $username, 
 			'userpassword' => $password, 
@@ -222,7 +225,8 @@ class UserController extends SlimController {
 			'first_name' => $firstName,
 			'last_name' => $lastName,
 			'confirmed' => $confirmed, 
-			'is_admin' => $isAdmin
+			'is_admin' => $isAdmin,
+			'nonce_key' => $nonce
 		]);
 
 		if ($result) {
@@ -262,6 +266,12 @@ class UserController extends SlimController {
 			$params['userpassword'] = password_hash(PEPPER.$tempPassword, PASSWORD_DEFAULT);
 		}
 		unset($params['password']);
+
+		if ($params['confirmed']) {
+			$params['nonce_key'] = '';
+		} else {
+			$params['nonce_key'] = static::generateNonceForUser($params['email_address'], $params['username']);
+		}
 
 		$ndb->updateTable($ndb->user, $params);
 

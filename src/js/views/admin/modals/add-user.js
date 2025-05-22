@@ -43,8 +43,6 @@ Necro.Views.Admin.AddSiteUserModal = Necro.Views.BaseModal.extend({
 			success: callback(true, m),
 			error: callback(false)
 		});
-
-		console.log(this.m);
 	},
 
 	showHidePasswords: function(e) {
@@ -101,16 +99,18 @@ Necro.Views.Admin.AddSiteUserModal = Necro.Views.BaseModal.extend({
 	},
 
 	handlePermissions: function(e) {
-		//console.log(e);
 		var permVal = $(e.currentTarget).val();
 		var perms = this.model.get("permissions");
 		if ($(e.currentTarget).is(':checked')) {
 			var perm = Necro.Apps.Data.UserPermissions.get(permVal);
-			console.log("Add: " + permVal);
 			perms.push(perm);
+
 		} else {
-			console.log("Remove: " + permVal);
-			//perms.remove(permVal);
+			var temp = [];
+			_.each(perms, function(item) {
+				if (item.id != permVal) temp.push(item);
+			});
+			this.model.set("permissions", temp);
 		}
 	}
 
