@@ -371,11 +371,17 @@ class WeaponController extends SlimController {
 	}
 
 	public function fetchGearByCategory(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
-		$id = $args['id'];
-		$gear = static::getGear(['field' => 'weapon_category_id', 'value' => $id]);
+		global $cache;
 
-		if (count($gear) == 0) return $response->withStatus(404);
-		$response->getBody()->write(json_encode($gear));
+		$id = $args['id'];
+		$gear = $cache->get("wargear-cat-{$id}");
+		if (!$gear) {
+			$gearResults = static::getGear(['field' => 'weapon_category_id', 'value' => $id]);
+			if (count($gearResults) == 0) return $response->withStatus(404);
+			$gear = json_encode($gearResults);
+			$cache->set("wargear-cat-{$id}", $gear);
+		}
+		$response->getBody()->write($gear);
 		return $response->withHeader('Content-Type', 'application/json');
 	}
 
@@ -411,9 +417,10 @@ class WeaponController extends SlimController {
 			$gear['id'] = $id;
 			$ndb->updateTable($ndb->weapon, $gear);
 		}
-		$cat = static::getCategoryById($gear['weapon_category_id']);
+		$catId = $gear['weapon_category_id'];
+		$cat = static::getCategoryById($catId);
 		$gear['category_name'] = $cat['category_name'];
-		$cache->del("all-wargear");
+		$cache->del(["all-wargear", "wargear-cat-{$catId}"]);
 
 		$response->getBody()->write(json_encode($gear));
 		return $response->withHeader('Content-Type', 'application/json');

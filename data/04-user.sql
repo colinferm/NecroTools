@@ -12,10 +12,11 @@ CREATE TABLE necro_user (
 	last_login DATETIME NOT NULL,
 	is_admin TINYINT NOT NULL DEFAULT '0',
 	oauth_key VARCHAR(255),
+	nonce_key VARCHAR(255),
 	PRIMARY KEY (id),
 	INDEX idx_user_username (username)
 );
-INSERT INTO necro_user (id, username, userpassword, email_address, confirmed, registered, last_login, is_admin, oauth_key) VALUES (1, 'admin', '$2y$10$Q/H/OASzzpCTCBLNpjKiHeXyrJYQMiegm16MBMD98sc4W0CIgxo/u', 'admin@admin.com', 1, NOW(), NOW(), 1, NULL);
+INSERT INTO necro_user (id, username, userpassword, email_address, confirmed, registered, last_login, is_admin, oauth_key) VALUES (1, 'admin', '$2y$10$Q/H/OASzzpCTCBLNpjKiHeXyrJYQMiegm16MBMD98sc4W0CIgxo/u', 'admin@admin.com', 1, NOW(), NOW(), 1, NULL, NULL);
 
 DROP TABLE IF EXISTS necro_user_permission;
 CREATE TABLE necro_user_permission (

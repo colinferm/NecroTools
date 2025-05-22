@@ -19,8 +19,10 @@ $app->post('/login', [\UserController::class, 'login']);
 $app->post('/register', [\UserController::class, 'register']);
 $app->post('/registerValidation', [\UserController::class, 'registerValidation']);
 $app->post('/verify', [\UserController::class, 'verify']);
+$app->get('/verify-nonce/{nonce}', [\UserController::class, 'validateNonce']);
 $app->get('/password', [\UserController::class, 'passwordGen']);
 $app->get('/pepper', [\UserController::class, 'pepperGen']);
+$app->get('/nonce/{id}', [\UserController::class, 'nonceGen']);
 
 $app->get('/site-users', [\UserController::class, 'getSiteUsers'])->add(new NecroUserValidation(['ADM-USER']));
 $app->post('/site-users', [\UserController::class, 'addSiteUser'])->add(new NecroUserValidation(['ADM-USER']));

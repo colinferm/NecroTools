@@ -160,6 +160,10 @@ class UserController extends SlimController {
 		return $response->withStatus(200);
 	}
 
+	public static function generateNonceForUser($email, $username) {
+		return substr(md5($email . microtime() . $username), 0, 20);	
+	}
+
 	public function register(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
 		global $ndb;
 		$params = json_decode($request->getBody());
@@ -167,12 +171,14 @@ class UserController extends SlimController {
 		$password = password_hash(PEPPER.$params['password'], PASSWORD_DEFAULT);
 		$email = $params['email_address'];
 
+		$nonce = static::generateNonceForUser($email, $username);
+
 		$result = $ndb->insert("
 			INSERT INTO {$ndb->user}
-				(user_name, userpassword, email_address, confirmed, last_login, is_admin, oauth_key) 
+				(user_name, userpassword, email_address, confirmed, last_login, is_admin, nonce_key) 
 			VALUES 
-				(:username, :userpassword, :email, 0, NOW(), 0, '')
-		", ['username' => $username, 'userpassword' => $password, 'email' => $email]);
+				(:username, :userpassword, :email, 0, NOW(), 0, :nonce_key)
+		", ['username' => $username, 'userpassword' => $password, 'email' => $email, 'nonce_key' => $nonce]);
 
 		if ($result) {
 			list($user, $token) = UserController::doLogin($params);
@@ -327,6 +333,24 @@ class UserController extends SlimController {
 		return $response;
 	}
 
+	public function nonceGen(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+		$userId = $args['id'];
+		$user = static::getUserById($userId);
+		$nonce = static::generateNonceForUser($user['email_address'], $user['username']);
+
+		$response->getBody()->write('Nonce: '.$nonce);
+		return $response;
+	}
+
+	public function validateNonce(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+		global $ndb;
+		$nonce = $args['nonce'];
+		if (strlen($nonce) > 20 && strlen($nonce) < 15) return $response->withStatus(403);
+		$user = $ndb->queryFirst("SELECT id FROM {$ndb->user} WHERE nonce_key = :nonce", ['nonce' => $nonce]);
+		if (!$user) return $response->withStatus(403);
+		$ndb->update("UPDATE {$ndb->user} SET confirmed = 1, nonce_key = NULL WHERE id = :id", ['id' => $user['id']]);
+		return $response->withStatus(200);
+	}
 
 	public function getSiteUsers(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
 		global $ndb, $cache;
