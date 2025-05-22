@@ -4,6 +4,7 @@ Necro.Views.Admin.WeaponList = Backbone.View.extend({
 	pageTitle: 'Weapons',
 
 	events: {
+		'click .addWeapon': 'addWeapon'
 	},
 
 	initialize : function(options) {
@@ -29,13 +30,23 @@ Necro.Views.Admin.WeaponList = Backbone.View.extend({
 	},
 
 	addItem: function(item) {
-		var row = new Necro.Views.Admin.WargearItem({model: item});
+		var row = new Necro.Views.Admin.WeaponItem({model: item});
 		$('tbody', this.$el).append(row.render().$el);
 	},
 
+	addWeapon: function() {
+		var weaponModel = new Necro.Models.Weapon({});
+		var modal = new Necro.Views.Modal({
+			class: "Necro.Views.Admin.WeaponModal",
+			title: "Add Weapon",
+			modalSize: 'modal-xl',
+			model: weaponModel
+		});
+	}
+
 });
 
-Necro.Views.Admin.WargearItem = Backbone.View.extend({
+Necro.Views.Admin.WeaponItem = Backbone.View.extend({
 	tagName: 'tr',
 	templateName: 'weapon-list-item',
 

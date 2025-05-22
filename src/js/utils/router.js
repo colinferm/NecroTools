@@ -231,7 +231,8 @@ Necro.Routers.NecroRouter = Backbone.Router.extend({
 	},
 
 	adminWargearlist: function() {
-
+		var wargearList = new Necro.Views.Admin.WargearList({});
+		this.updateRight(wargearList.render().$el, wargearList.pageTitle);
 	},
 
 	adminWeapons: function() {

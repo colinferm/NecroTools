@@ -2,21 +2,15 @@ Necro.Views.Admin.WargearList = Backbone.View.extend({
 	tagName: 'div',
 	className: 'large-12',
 	templateName: 'wargear-list',
-	pageTitle: 'Traits',
+	pageTitle: 'Wargear',
 
 	events: {
-		'click .addTrait': 'addWargear'
+		'click .addWargear': 'addWargear'
 	},
 
 	initialize : function(options) {
 		var html = Necro.Utils.UI.TPL.get(this.templateName);
 		this.template = Handlebars.compile(html);
-
-		this.collection = new Necro.Collections.Traits({});
-		this.collection.fetch({
-			success: _.bind(this.addItems, this)
-		});
-		this.collection.on("add", this.addItems, this);
 	},
 
 	render: function() {
@@ -36,17 +30,8 @@ Necro.Views.Admin.WargearList = Backbone.View.extend({
 		$('tbody', this.$el).append(row.render().$el);
 	},
 
-	addWargear
-    : function() {
-		var m = new Necro.Models.Trait();
-		var modal = new Necro.Views.Modal({
-			class: "Necro.Views.TraitModal",
-			title: "Add Trait",
-			model: m,
-			callback: _.bind(function() {
-				if (m) this.collection.add(m);
-			}, this)
-		});
+	addWargear: function() {
+		
 	}
 
 });
@@ -74,11 +59,7 @@ Necro.Views.Admin.WargearItem = Backbone.View.extend({
 	},
 
 	editTrait: function() {
-		var modal = new Necro.Views.Modal({
-			class: "Necro.Views.TraitModal",
-			title: "Edit Trait",
-			model: this.model
-		});
+
 	},
 
 	deleteTrait: function() {

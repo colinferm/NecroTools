@@ -196,11 +196,11 @@ class UserController extends SlimController {
 		$confirmed = $params['confirmed'];
 		$permissions = $params['permissions'];
 
-		if (array_key_exists('generate_password', $params) && $parma['generate_password'] == 'generate-password') {
-			$params['password'] = static::buildPassword();
-			error_log("Generated Password: " . $params['password']);
+		if (array_key_exists('generate_password', $params) && $params['generate_password'] == 'generate-password') {
+			$params['userpassword'] = static::buildPassword();
+			error_log("Generated Password: " . $params['userpassword']);
 		}
-		$password = password_hash(PEPPER.$params['password'], PASSWORD_DEFAULT);
+		$password = password_hash(PEPPER.$params['userpassword'], PASSWORD_DEFAULT);
 
 		$isAdmin = (count($permissions) > 1) ? 1 : 0;
 
@@ -266,6 +266,20 @@ class UserController extends SlimController {
 
 		$response->getBody()->write(json_encode($user));
 		return $response->withHeader('Content-Type', 'application/json');
+	}
+
+	public function deleteSiteUser(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+		global $ndb, $cache;
+		$userId = $args['id'];
+
+		//TODO: Delete gangs and everything else!
+		$ndb->deleteWithParams("DELETE FROM {$ndb->preference_map} WHERE user_id = :user_id", ['user_id' => $userId]);
+		$ndb->deleteWithParams("DELETE FROM {$ndb->permission_map} WHERE user_id = :user_id", ['user_id' => $userId]);
+		$ndb->deleteFromTable($ndb->user, $userId);
+
+		$cache->del("site-users");
+
+		return $response->withStatus(200);
 	}
 
 	private function assignPermissions(&$user, $permissions = array(array('id' => 4, 'code' => 'USR-SITE'))) {

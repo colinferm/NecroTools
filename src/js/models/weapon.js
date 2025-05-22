@@ -9,6 +9,12 @@ Necro.Models.Weapon = Backbone.Model.extend({
 		"characteristics":  Necro.Collections.WeaponCharacteristics
 	},
 
+	initialize: function(options) {
+		if (!this.attributes.characteristics) {
+			this.attributes.characteristics = new Necro.Collections.WeaponCharacteristics({});
+		}
+	},
+
 	getValue: function() {
 		var baseVal = this.get("weapon_value");
 		var characteristics = this.get("characteristic");
@@ -32,6 +38,7 @@ Necro.Models.Weapon = Backbone.Model.extend({
 		return response;
 	}
 });
+
 Necro.Collections.Weapons = Backbone.Collection.extend({
 	model: Necro.Models.Weapon,
 	url:   '/api/weapons'
@@ -81,6 +88,7 @@ Necro.Models.WeaponTrait = Backbone.Model.extend({
 		"notes": null
 	}
 });
+
 Necro.Collections.WeaponTraits = Backbone.Collection.extend({
 	model: Necro.Models.WeaponCharacteristic,
 	url:   '/api/traits',

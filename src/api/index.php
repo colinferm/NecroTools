@@ -11,6 +11,7 @@ require_once('./user.php');
 require_once('./weapon.php');
 
 use Slim\Factory\AppFactory;
+use Slim\Routing\RouteCollectorProxy;
 
 $app = AppFactory::create();
 $app->setBasePath("/api");
@@ -25,6 +26,7 @@ $app->get('/site-users', [\UserController::class, 'getSiteUsers'])->add(new Necr
 $app->post('/site-users', [\UserController::class, 'addSiteUser'])->add(new NecroUserValidation(['ADM-USER']));
 $app->get('/site-users/{id}', [\UserController::class, 'fetchUserById'])->add(new NecroUserValidation(['ADM-USER']));
 $app->put('/site-users/{id}', [\UserController::class, 'updateSiteUser'])->add(new NecroUserValidation(['ADM-USER']));
+$app->delete('/site-users/{id}', [\UserController::class, 'deleteSiteUser'])->add(new NecroUserValidation(['ADM-USER']));
 
 $app->get('/gangs', [\GangController::class, 'fetchGangs'])->add(new NecroUserValidation([]));
 

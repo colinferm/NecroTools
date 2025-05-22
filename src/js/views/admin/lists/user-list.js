@@ -62,13 +62,15 @@ Necro.Views.Admin.SiteUserListItem = Backbone.View.extend({
 	events: {
 		'click .user_name': 'editUser',
 		'click .email_address': 'editUser',
-		'click .action_edit': 'editUser'
+		'click .action_edit': 'editUser',
+		'click .action_remove': 'deleteUser'
 	},
 
 	initialize : function(options) {
 		var html = Necro.Utils.UI.TPL.get(this.templateName);
 		this.template = Handlebars.compile(html);
 		this.model.on("sync", this.render, this);
+		this.model.on("destroy", this.remove, this);
 		//this.model.on("destroy", this.remove, this);
 	},
 
@@ -91,6 +93,7 @@ Necro.Views.Admin.SiteUserListItem = Backbone.View.extend({
 	},
 
 	deleteUser: function() {
+		this.model.urlRoot = '/api/site-users';
 		this.model.destroy();
 	}
 

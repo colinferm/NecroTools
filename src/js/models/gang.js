@@ -6,6 +6,7 @@ Necro.Models.Gang = Backbone.Model.extend({
 		"gang_name": "",
 		"outlaw": false,
 		"num_fighters": 0,
+		"credits": 1000,
 		"fighters": Necro.Models.FighterCollection,
 		"stash": Necro.Models.WeaponCollection
 	},
@@ -40,6 +41,7 @@ Necro.Models.Gang = Backbone.Model.extend({
 		return response;
 	}
 });
+
 Necro.Collections.Gangs = Backbone.Collection.extend({
 	model: Necro.Models.Gang,
 	url:   '/api/gangs',
@@ -91,6 +93,7 @@ Necro.Models.GangTemplate = Backbone.Model.extend({
 		return response;
 	}
 });
+
 Necro.Collections.GangTemplates = Backbone.Collection.extend({
 	model: Necro.Models.GangTemplate,
 	url:   '/api/gangs',

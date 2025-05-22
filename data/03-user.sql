@@ -71,14 +71,15 @@ CREATE TABLE necro_user_gang (
 	gang_name VARCHAR(255) NOT NULL,
 	gang_type_id INT NOT NULL,
 	outlaw TINYINT NOT NULL DEFAULT '0',
+	credits INT NOT NULL DEFAULT '0',
 	created DATETIME NOT NULL,
 	last_mod DATETIME NOT NULL,
 	PRIMARY KEY (id),
 	INDEX idx_gang_user (user_id)
 );
 
-INSERT INTO necro_user_gang VALUES (1, 1, 'The Bad Asses', 1, 0, NOW(), NOW());
-INSERT INTO necro_user_gang VALUES (2, 1, 'Not Your Mamas', 2, 0, NOW(), NOW());
+INSERT INTO necro_user_gang VALUES (1, 1, 'The Bad Asses', 1, 0, 1000, NOW(), NOW());
+INSERT INTO necro_user_gang VALUES (2, 1, 'Not Your Mamas', 2, 0, 1000, NOW(), NOW());
 
 DROP TABLE IF EXISTS necro_user_gang_audit;
 CREATE TABLE necro_user_gang_audit (
