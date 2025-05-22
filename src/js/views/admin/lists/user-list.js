@@ -1,12 +1,13 @@
-Necro.Views.Admin.SiteUserList = Backbone.View.extend({
+Necro.Views.Admin.SiteUserList = Necro.Views.BaseListView.extend({
 	tagName: 'div',
 	className: '',
 	templateName: 'user-list',
 	pageTitle: 'Site Users',
+	searchKey: 'username',
 
-	events: {
-		'click .addUser': 'addUser'
-	},
+	events: _.extend({
+		'click .addUser': 'addUser',
+	}, Necro.Views.BaseListView.prototype.events),
 
 	initialize: function(options) {
 		var html = Necro.Utils.UI.TPL.get(this.templateName);
@@ -17,17 +18,10 @@ Necro.Views.Admin.SiteUserList = Backbone.View.extend({
 		this.collection.fetch();
 	},
 
-	render: function() {
-		var table = null;
-
-		this.$el.html(this.template());
-		this.addItems();
-
-		return this;
-	},
-
-	addItems: function() {
-		_.each(this.collection.models, function(user) {
+	addItems: function(items) {
+		if (!items) items = this.collection.models;
+		$('tbody', this.$el).empty()
+		_.each(items, function(user) {
 			user.urlRoot = '/api/site-users';
 			this.addItem(user);
 		}, this);

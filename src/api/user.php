@@ -333,7 +333,7 @@ class UserController extends SlimController {
 
 		$users = $cache->get("site-users");
 		if (!$users) {
-			$userResults = $ndb->query("SELECT id, username, email_address, first_name, last_name, country, confirmed, registered, last_login FROM {$ndb->user} ORDER BY last_login DESC");
+			$userResults = $ndb->query("SELECT id, username, email_address, first_name, last_name, country, confirmed, registered, last_login FROM {$ndb->user} ORDER BY username ASC");
 			foreach($userResults as &$user) {
 				$perms = static::getPermissionsForUserId($user['id']);
 				$user['permissions'] = $perms;

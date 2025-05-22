@@ -1,32 +1,27 @@
-Necro.Views.TraitList = Backbone.View.extend({
+Necro.Views.TraitList = Necro.Views.BaseListView.extend({
 	tagName: 'div',
 	className: 'large-12',
 	templateName: 'trait-list',
 	pageTitle: 'Weapon Traits',
+	searchKey: 'trait_name',
 
-	events: {
-		'click .addTrait': 'addTrait'
-	},
+	events: _.extend({
+		'click .addTrait': 'addTrait',
+	}, Necro.Views.BaseListView.prototype.events),
 
 	initialize : function(options) {
 		var html = Necro.Utils.UI.TPL.get(this.templateName);
 		this.template = Handlebars.compile(html);
 
 		this.collection = new Necro.Collections.Traits({});
-		this.collection.fetch({
-			success: _.bind(this.addItems, this)
-		});
-		this.collection.on("add", this.addItems, this);
+		this.collection.on("add", this.addItem, this);
+		this.collection.fetch();
 	},
 
-	render: function() {
-		this.$el.html(this.template);
-		return this;
-	},
-
-	addItems: function() {
+	addItems: function(items) {
+		if (!items) items = this.collection.models;
 		$('tbody', this.$el).empty()
-		_.each(this.collection.models, function(model) {
+		_.each(items, function(model) {
 			this.addItem(model);
 		}, this);
 	},
@@ -57,7 +52,7 @@ Necro.Views.TraitItem = Backbone.View.extend({
 	events: {
 		'click .trait_name': 'editTrait',
 		'click .action_edit': 'editTrait',
-		'click .action_remove': 'deleteTrait',
+		'click .action_remove': 'deleteTrait'
 	},
 
 	initialize : function(options) {

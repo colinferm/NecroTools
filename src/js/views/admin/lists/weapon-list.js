@@ -1,30 +1,25 @@
-Necro.Views.Admin.WeaponList = Backbone.View.extend({
+Necro.Views.Admin.WeaponList = Necro.Views.BaseListView.extend({
 	tagName: 'div',
 	templateName: 'weapon-list',
 	pageTitle: 'Weapons',
+	searchKey: 'weapon_name',
 
-	events: {
-		'click .addWeapon': 'addWeapon'
-	},
+	events: _.extend({
+		'click .addWeapon': 'addWeapon',
+	}, Necro.Views.BaseListView.prototype.events),
 
 	initialize : function(options) {
 		var html = Necro.Utils.UI.TPL.get(this.templateName);
 		this.template = Handlebars.compile(html);
 		this.collection = new Necro.Collections.Weapons();
-		this.collection.fetch({
-			success: _.bind(this.addItems, this)
-		});
-		this.collection.on("add", this.addItems, this);
+		this.collection.on("add", this.addItem, this);
+		this.collection.fetch();
 	},
 
-	render: function() {
-		this.$el.html(this.template);
-		return this;
-	},
-
-	addItems: function() {
+	addItems: function(items) {
+		if (!items) items = this.collection.models;
 		$('tbody', this.$el).empty()
-		_.each(this.collection.models, function(model) {
+		_.each(items, function(model) {
 			this.addItem(model);
 		}, this);
 	},

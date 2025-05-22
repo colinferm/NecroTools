@@ -3,9 +3,9 @@ Necro.Views.Admin.AddSiteUserModal = Necro.Views.BaseModal.extend({
 
 	events: {
 		'click [name="generatePassword"]': 'showHidePasswords',
+		'click [type="checkbox"].permission_box': 'handlePermissions',
 		'focusout .emailInput': 'checkFieldValid',
-		'focusout .usernameInput': 'checkFieldValid',
-		'click [type="checkbox"].permission_box': 'handlePermissions'
+		'focusout .usernameInput': 'checkFieldValid'
 	},
 
 	render: function() {
