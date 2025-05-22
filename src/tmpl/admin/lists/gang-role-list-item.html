@@ -1,11 +1,11 @@
-<td><b>{{role_name}}</b></td>
+<td class="role_name"><b>{{role_name}}</b></td>
 <td>{{hierarchy_role}}</td>
-<td>
+<td class="primary_skills">
 	{{#each primary_skills.models}}
 		<span class="badge bg-secondary">{{attributes.skill_set_name}}</span>
 	{{/each}}
 </td>
-<td>
+<td class="secondary_skills">
 	{{#each secondary_skills.models}}
 		<span class="badge bg-dark">{{attributes.skill_set_name}}</span>
 	{{/each}}

@@ -58,8 +58,11 @@ Necro.Views.Admin.GangRoleListItem = Backbone.View.extend({
 
 	events: {
 		'click .action_edit': 'popRoleModal',
+		'click .role_name': 'popRoleModal',
 		'click .action_primary': 'addPrimarySkills',
+		'click .primary_skills': 'addPrimarySkills',
 		'click .action_secondary': 'addSecondarySkills',
+		'click .secondary_skills': 'addSecondarySkills',
 		'click .action_remove': 'deleteRole',
 		'click .stat-line': 'editStatline',
 		'click .action_stats': 'editStatline'

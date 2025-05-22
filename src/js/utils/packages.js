@@ -10,7 +10,10 @@ var Necro = {
 	Collections: {},
 	Models: {},
 	Views: {
-		Admin: {}
+		Admin: {
+			Modal: {}
+		},
+		Modal: {}
 	},
 	Events: {}
 };

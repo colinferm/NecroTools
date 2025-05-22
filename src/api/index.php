@@ -67,6 +67,11 @@ $app->get('/trait/{id}', [\WeaponController::class, 'fetchTrait'])->add(new Necr
 $app->put('/trait/{id}', [\WeaponController::class, 'updateTrait'])->add(new NecroUserValidation(['ADM-DATA']));
 $app->delete('/trait/{id}', [\WeaponController::class, 'deleteTrait'])->add(new NecroUserValidation(['ADM-DATA']));
 
+$app->post('/weapon-characteristic', [\WeaponController::class, 'addCharacteristic'])->add(new NecroUserValidation(['ADM-DATA']));
+$app->get('/weapon-characteristic/{id}', [\WeaponController::class, 'fetchCharacteristic'])->add(new NecroUserValidation([]));
+$app->put('/weapon-characteristic/{id}', [\WeaponController::class, 'updateCharacteristic'])->add(new NecroUserValidation(['ADM-DATA']));
+$app->delete('/weapon-characteristic/{id}', [\WeaponController::class, 'deleteCharacteristic'])->add(new NecroUserValidation(['ADM-DATA']));
+
 $app->get('/skills', [\FighterController::class, 'skills']);
 
 $app->get('/skill-set/{id}', [\FighterController::class, 'getSkillSet']);
@@ -82,6 +87,7 @@ $app->delete('/skill/{id}', [\FighterController::class, 'deleteSkill']);
 $app->get('/weapons', [\WeaponController::class, 'fetchWeapons'])->add(new NecroUserValidation([]));
 $app->get('/weapons/category/{id}', [\WeaponController::class, 'fetchWeaponsByCategory'])->add(new NecroUserValidation([]));
 $app->get('/weapon/{id}', [\WeaponController::class, 'fetchWeaponById'])->add(new NecroUserValidation([]));
+$app->get('/weapon/{id}/characteristics', [\WeaponController::class, 'fetchCharacteristicsForWeaponId'])->add(new NecroUserValidation([]));
 
 $app->run();
 

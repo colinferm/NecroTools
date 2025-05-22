@@ -59,27 +59,34 @@ class WeaponController extends SlimController {
 		return $weapons;
 	}
 
-	public static function getCharacteristicsForWeaponId($weaponId) {
+	public static function getCharacteristicsForId($params) {
 		global $ndb;
 		$charSQL = "
 			SELECT id, ammo_type, range_short, range_long, accuracy_short, accuracy_long, strength, armor_penetration, damage, ammo_check 
 			FROM {$ndb->weapon_characteristic}
-			WHERE weapon_id = :weapon_id
+			WHERE 1 =1
+			AND {$params['field']} = :{$params['field']}
 		";
-		$chars = $ndb->query($charSQL, ['weapon_id' => $weaponId]);
+		$chars = $ndb->query($charSQL, [$params['field'] => $params['value']]);
 
 		foreach($chars as &$char) {
-			$traitSQL = "
-				SELECT t.id, t.trait_name, t.trait_value 
-				FROM {$ndb->weapon_trait} t, {$ndb->weapon_trait_characteristic_map} wtcm
-				WHERE t.id = wtcm.trait_id
-				AND wtcm.characteristic_id = :char_id
-				ORDER BY t.trait_name ASC
-			";
-			$traits = $ndb->query($traitSQL, ['char_id' => $char['id']]);
-			$char['traits'] = $traits;
+			static::buildCharacteristicTraits($char);
 		}
 		return $chars;
+	}
+
+	public static function buildCharacteristicTraits(&$char) {
+		global $ndb;
+		$traitSQL = "
+			SELECT t.id, t.trait_name, t.trait_value 
+			FROM {$ndb->weapon_trait} t, {$ndb->weapon_trait_characteristic_map} wtcm
+			WHERE t.id = wtcm.trait_id
+			AND wtcm.characteristic_id = :char_id
+			ORDER BY t.trait_name ASC
+		";
+		$traits = $ndb->query($traitSQL, ['char_id' => $char['id']]);
+		$char['traits'] = $traits;
+		return $char;
 	}
 	
 	public function fetchTraits(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
@@ -175,7 +182,7 @@ class WeaponController extends SlimController {
 		global $ndb;
 		$dbparams = [];
 		$query = "
-			SELECT w.id AS id, CASE WHEN COUNT(ca.ammo_type) > 1 THEN CONCAT(w.weapon_name, GROUP_CONCAT(ca.ammo_type SEPARATOR '/')) ELSE w.weapon_name END as weapon_name, w.weapon_value, COUNT(ca.ammo_type) AS ammo_types, c.category_name, c.id AS category_id
+			SELECT w.id AS id, CASE WHEN COUNT(ca.ammo_type) > 1 THEN CONCAT(w.weapon_name, GROUP_CONCAT(ca.ammo_type SEPARATOR '/')) ELSE w.weapon_name END as weapon_name, w.weapon_name AS base_weapon_name, w.weapon_value, COUNT(ca.ammo_type) AS ammo_types, c.category_name, c.id AS category_id
 			FROM {$ndb->weapon_category} c, {$ndb->weapon} w, {$ndb->weapon_characteristic} ca
 			WHERE c.id = w.weapon_category_id
 			AND w.id = ca.weapon_id
@@ -197,7 +204,7 @@ class WeaponController extends SlimController {
 
 		$query .= "
 			GROUP BY w.id, weapon_name, w.weapon_value, c.category_name, c.id
-			ORDER BY c.id ASC
+			ORDER BY c.category_name ASC, weapon_name ASC, w.weapon_value DESC, w.id ASC
 		";
 
 		$data = $ndb->query($query, $dbparams);
@@ -213,7 +220,7 @@ class WeaponController extends SlimController {
 		if (!count($weapons)) return $response->withStatus(404);
 		$weapon = $weapons[0];
 
-		$characteristics = WeaponController::getCharacteristicsForWeaponId($weaponId);
+		$characteristics = static::getCharacteristicsForId(['field' => 'weapon_id', 'value' => $weaponId]);
 		$weapon['characteristics'] = $characteristics;
 
 		$response->getBody()->write(json_encode($weapon));
@@ -247,5 +254,54 @@ class WeaponController extends SlimController {
 		$response->getBody()->write($weapons);
 		return $response->withHeader('Content-Type', 'application/json');
 	}
+
+	public static function getCharacteristicById($id) {
+		global $ndb;
+		$chars = static::getCharacteristicsForId(['field' => 'id', 'value' => $id]);
+		if (is_array($chars) && count($chars) == 1) return $chars[0];
+		return null;
+	}
+
+	public function fetchCharacteristicsForWeaponId(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+		$weaponId = $args['id'];
+		$characteristics = static::getCharacteristicsForId(['field' => 'weapon_id', 'value' => $weaponId]);
+
+		if ($characteristics) {
+			$response->getBody()->write(json_encode($characteristics));
+			return $response->withHeader('Content-Type', 'application/json');
+		}
+		return $response->withStatus(404);
+	}
+
+	public function fetchCharacteristic(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+		$id = $args['id'];
+		$characteristic = static::getCharacteristicById($id);
+		if ($characteristic) {
+			$response->getBody()->write(json_encode($characteristic));
+			return $response->withHeader('Content-Type', 'application/json');
+		}
+
+		return $response->withStatus(404);
+	}
+
+	public function addCharacteristic(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface {
+
+	}
+
+	public function updateCharacteristic(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+		$id = $args['id'];
+
+		return $response->withStatus(404);
+	}
+
+	public function deleteCharacteristic(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+		global $ndb;
+
+		$id = $args['id'];
+		$rows = $ndb->deleteFromTable($ndb->weapon_characteristic, $id);
+
+		return $response->withStatus(200);
+	}
+
 }
 ?>

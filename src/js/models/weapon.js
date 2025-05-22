@@ -38,7 +38,7 @@ Necro.Collections.Weapons = Backbone.Collection.extend({
 });
 
 Necro.Models.WeaponCharacteristic = Backbone.Model.extend({
-	urlRoot:     "/api/weapon_characteristic",
+	urlRoot:     "/api/weapon-characteristic",
 	idAttribute: "id",
 	defaults:    {
 		"id": null,
@@ -68,11 +68,11 @@ Necro.Models.WeaponCharacteristic = Backbone.Model.extend({
 
 Necro.Collections.WeaponCharacteristics = Backbone.Collection.extend({
 	model: Necro.Models.WeaponCharacteristic,
-	url:   '/api/weapon_characteristics'
+	url:   '/api/weapon-characteristics'
 });
 
 Necro.Models.WeaponTrait = Backbone.Model.extend({
-	urlRoot:     "/api/weapon_trait",
+	urlRoot:     "/api/trait",
 	idAttribute: "id",
 	defaults:    {
 		"id": null,
@@ -83,5 +83,5 @@ Necro.Models.WeaponTrait = Backbone.Model.extend({
 });
 Necro.Collections.WeaponTraits = Backbone.Collection.extend({
 	model: Necro.Models.WeaponCharacteristic,
-	url:   '/api/weapon_traits'
+	url:   '/api/traits',
 });
