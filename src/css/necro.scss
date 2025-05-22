@@ -129,6 +129,16 @@ $font-default: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
 	}
 }
 
+@mixin necro-background($angle) {
+	background: repeating-linear-gradient(
+		#{$angle}deg,  
+		$color-black,  
+		$color-black 30px,  
+		$color-necro-yellow 25px,  
+		$color-necro-yellow 50px
+	);
+}
+
 .no {
 	color: red;
 	font-weight: bold;
@@ -158,18 +168,6 @@ input {
 		color: green;
 	}
 }
-
-/*
-.button {
-	background: repeating-linear-gradient(
-		-45deg,  
-		#000,  
-		#000 30px,  
-		#FFC900 25px,  
-		#FFC900 50px
-	);
-}
-*/
 
 html {
 	ul.tagit-autocomplete {
@@ -227,13 +225,7 @@ html {
 		background-size: cover;
 
 		nav {
-			background: repeating-linear-gradient(
-				-45deg,  
-				$color-black,  
-				$color-black 30px,  
-				$color-necro-yellow 25px,  
-				$color-necro-yellow 50px
-			);
+			@include necro-background(-45);
 
 			.title-bar-left {
 				font-size: 20px;
@@ -313,6 +305,38 @@ html {
 
 					form {
 						width: 100%;
+					}
+
+					.admin-home {
+						.section-title {
+							@include necro-background(45);
+							h1 {
+								font-family: $font-dirt;
+								background-color: $color-black;
+								color: $color-necro-yellow;
+							}
+						}
+
+						.card {
+							@include necro-background(-45);
+							border: inherit;
+
+							.card-body {
+								background-color: $color-black;
+								color: $color-white;
+
+								padding: 20px;
+								margin: 10px;
+
+								.card-title {
+									font-family: $font-glitch;
+									a {
+										color: $color-white;
+										text-decoration: none;
+									}
+								}
+							}
+						}
 					}
 				}
 			}

@@ -9,7 +9,7 @@ Necro.Views.Admin.GangEdit = Backbone.View.extend({
 	},
 
 	initialize : function(options) {
-		this.pageTitle = "Edit " + this.model.get("type_name");
+		this.pageTitle = "Edit " + this.model.get("type_name") + " Fighter List";
 		var html = Necro.Utils.UI.TPL.get(this.templateName);
 		this.template = Handlebars.compile(html);
 		

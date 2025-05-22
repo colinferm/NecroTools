@@ -2,7 +2,7 @@ Necro.Views.Admin.SkillList = Backbone.View.extend({
 	tagName: 'div',
 	className: 'large-12',
 	templateName: 'skill-list',
-	pageTitle: 'Skills',
+	pageTitle: 'Fighter Skills',
 
 	events: {
 		'click .addSkillSet': 'addSkillSet'

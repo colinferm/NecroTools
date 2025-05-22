@@ -10,14 +10,13 @@ Necro.Views.LeftContent = Backbone.View.extend({
 
 		this.gangCollection = new Necro.Collections.Gangs({});
 		//this.listenTo(this.collecton, 'update', this.addItems)
-		this.gangCollection.fetch({
-			success: _.bind(this.userGangs, this)
-		});
 
 		Necro.Events.on("user:verified", function(){
 			this.loggedIn = true;
 			this.render();
-			this.userGangs();
+			this.gangCollection.fetch({
+				success: _.bind(this.gangsUpdated, this)
+			});
 		}, this);
 		Necro.Events.on('user:loggedout', function() {
 			this.loggedIn = false;
@@ -28,7 +27,7 @@ Necro.Views.LeftContent = Backbone.View.extend({
 	},
 
 	render: function() {
-		this.$el.html(this.template({loggedIn: this.loggedIn}));
+		this.$el.html(this.template({loggedIn: this.loggedIn, isAdmin: necro.session.isAdmin()}));
 		$('.gang_fighter_title', this.$el).css('display', 'none');
 		$('.gang_fighters', this.$el).css('display', 'none');
 		return this;

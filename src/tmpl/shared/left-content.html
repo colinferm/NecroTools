@@ -1,15 +1,17 @@
 <ul class="top_section">
 	{{#if loggedIn}}
-		<li class="section_title">Admin</li>
-		<ul class="subsection">
-			<li><a href="#adminGangs">Gang Setup</a></li>
-			<!-- <li><a href="#adminFighters">Fighter Templates</a></li> -->
-			<li><a href="#adminSkills">Fighter Skills</a></li>
-			<li><a href="#adminWargear">Wargear</a></li>
-			<li><a href="#adminWeapons">Weapons</a></li>
-			<li><a href="#adminWeaponTraits">Weapon Traits</a></li>
-			<li><a href="#adminUserList">Site Users</a></li>
-		</ul>
+		{{#if isAdmin}}
+			<li class="section_title"><a href="#admin">Admin</a></li>
+			<ul class="subsection">
+				<li><a href="#adminGangs">Gangs</a></li>
+				<!-- <li><a href="#adminFighters">Fighter Templates</a></li> -->
+				<li><a href="#adminSkills">Skills</a></li>
+				<li><a href="#adminWargear">Wargear</a></li>
+				<li><a href="#adminWeapons">Weapons</a></li>
+				<li><a href="#adminWeaponTraits">Traits</a></li>
+				<li><a href="#adminUserList">Users</a></li>
+			</ul>
+		{{/if}}
 		<li class="section_title"><a href="#gangs">Gangs</a></li>
 		<ul class="subsection gang_list">
 		</ul>
@@ -21,6 +23,7 @@
 	<li class="section_title">User</li>
 		<ul class="subsection">
 			{{#if loggedIn}}
+				<li><a href="#profile">Profile</a></li>
 				<li><a href="#logout">Logout</a></li>
 			{{else}}
 				<li><a href="#login">Log In</a></li>

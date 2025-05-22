@@ -1,12 +1,12 @@
-Necro.Views.Admin.WargearList = Backbone.View.extend({
+Necro.Views.Admin.WargearList = Necro.Views.BaseListView.extend({
 	tagName: 'div',
 	className: 'large-12',
 	templateName: 'wargear-list',
 	pageTitle: 'Wargear',
 
-	events: {
+	events: _.extend({
 		'click .addWargear': 'addWargear'
-	},
+	}, Necro.Views.BaseListView.prototype.events),
 
 	initialize : function(options) {
 		var html = Necro.Utils.UI.TPL.get(this.templateName);

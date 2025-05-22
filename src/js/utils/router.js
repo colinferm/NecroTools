@@ -13,6 +13,7 @@ Necro.Routers.NecroRouter = Backbone.Router.extend({
 		"roster": "rosterForm",
 		"roster/:id": "rosterForm",
 
+		"admin": "adminView",
 		"adminGangs": "adminGangList",
 		"adminGangs/:id": "adminGangForm",
 		"adminSkills": "adminSkillsList",
@@ -29,14 +30,14 @@ Necro.Routers.NecroRouter = Backbone.Router.extend({
 	initialize: function () {
 		_.bindAll(this, 
 			'home', 'login', 'logout', 'register', 'listGangs', 'rosterForm',
-			'updateRight', 'updateLeft', 'updateFoundation', 'showRoster',
+			'updateRight', 'updateLeft', 'showRoster',
 			/** Admin */
 			'adminGangList', 'adminGangForm', 'adminSkillsList', 'adminSkillForm',
 			'adminFighterList', 'adminFighterForm', 'adminWeaponTraitList', 'adminEditTrait',
-			'adminWeapons'
+			'adminWeapons', 'adminView'
 		);
 
-		Necro.Events.on('stylize', this.updateFoundation);
+		//Necro.Events.on('stylize', this.updateFoundation);
 
 		//user session
 		this.session = new Necro.Models.User();
@@ -56,7 +57,11 @@ Necro.Routers.NecroRouter = Backbone.Router.extend({
 		});
 
 		Necro.Events.on("user:loggedin", function() {
-			this.navigate("gangs", {trigger: true});
+			if (this.session.isAdmin()) {
+				this.navigate("admin", {trigger: true});
+			} else {
+				this.navigate("gangs", {trigger: true});
+			}
 		}, this);
 
 		Necro.Events.on("user:loggedout", function() {
@@ -94,7 +99,6 @@ Necro.Routers.NecroRouter = Backbone.Router.extend({
 			if (location == "#register") return;
 			this.navigate("login", {trigger: true});
 		}
-		this.updateFoundation();
 	},
 
 	whereAmI: function() {
@@ -118,11 +122,6 @@ Necro.Routers.NecroRouter = Backbone.Router.extend({
 	updateLeft: function(elem, title) {
 	
 	},
-
-	updateFoundation: function() {
-		//$(document).foundation();
-	},
-
 	home: function() {
 
 	},
@@ -177,6 +176,11 @@ Necro.Routers.NecroRouter = Backbone.Router.extend({
 	/**
 	 * Admin
 	 */
+	adminView: function() {
+		let adminView = new Necro.Views.Admin.AdminView();
+		this.updateRight(adminView.render().$el, adminView.pageTitle);
+	},
+
 	adminUserList: function() {
 		var userList = new Necro.Views.Admin.SiteUserList();
 		this.updateRight(userList.render().$el, userList.pageTitle);
@@ -203,9 +207,8 @@ Necro.Routers.NecroRouter = Backbone.Router.extend({
 	},
 
 	adminSkillsList: function() {
-		var title = "Fighter Skills";
 		var skillList = new Necro.Views.Admin.SkillList({});
-		this.updateRight(skillList.render().$el, title);
+		this.updateRight(skillList.render().$el, skillList.pageTitle);
 	},
 
 	adminSkillForm: function(id) {
@@ -221,9 +224,8 @@ Necro.Routers.NecroRouter = Backbone.Router.extend({
 	},
 
 	adminWeaponTraitList: function() {
-		var title = "Weapon Traits";
 		var traitList = new Necro.Views.TraitList({});
-		this.updateRight(traitList.render().$el, title);
+		this.updateRight(traitList.render().$el, traitList.pageTitle);
 	},
 
 	adminEditTrait: function(traitId) {

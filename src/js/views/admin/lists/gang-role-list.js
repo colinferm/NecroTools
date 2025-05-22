@@ -13,13 +13,11 @@ Necro.Views.Admin.GangRoleList = Backbone.View.extend({
 		this.template = Handlebars.compile(html);
         this.gangRoles = new Necro.Collections.GangRoles();
 		this.gangRoles.gangId = this.model.get('id');
-		//this.collection.empty();
 		this.gangRoles.fetch({ success: _.bind(this.addItems, this) });
 	},
 
 	render: function() {
 		this.$el.html(this.template);
-		//if (this.collection && this.collection.length > 0) this.addItems();
 		return this;
 	},
 

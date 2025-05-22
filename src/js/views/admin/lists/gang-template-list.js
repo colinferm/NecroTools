@@ -1,7 +1,7 @@
 Necro.Views.Admin.GangList = Backbone.View.extend({
 	tagName: 'div',
 	templateName: 'gang-template-list',
-	pageTitle: 'Admin Gang Lists',
+	pageTitle: 'Generic Gang Lists',
 	model: null,
 
 	events: {
