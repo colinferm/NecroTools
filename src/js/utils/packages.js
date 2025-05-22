@@ -103,10 +103,11 @@ Necro.Utils.UI.Helpers = {
 		var selectedId = options.hash['selected-id'];
 		var fieldName = options.hash['field-name'];
 		let gangs = Necro.Apps.Data.GangTypes;
-		var html = '<select name="' + fieldName + '">';
+		var html = '<select name="' + fieldName + '" id="' + fieldName + '"  class="form-control">';
+		html += '<option value="0">--</option>';
 		_.each(gangs, function(gang, i) {
 			var selected = "";
-			if (gang.id == selectedId) selected = "selected";
+			if (gang.id == model[selectedId]) selected = "selected";
 			html += '<option value="' + gang.id + '" ' + selected + '>' + gang.type_name + '</option>';
 		});
 		html += "</select>";

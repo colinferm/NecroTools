@@ -36,7 +36,18 @@ Necro.Views.GangList = Backbone.View.extend({
 	},
 
 	addGang: function() {
-		necro.navigate("roster", {trigger: true});
+		var m = new Necro.Models.GangType({user_id: necro.session.id});
+		var modal = new Necro.Views.Modal({
+			class: "Necro.Views.User.Modal.AddGang",
+			title: "Add Gang",
+			buttonText: "Save Gang",
+			model: m,
+			callback: _.bind(function() {
+				if (m) {
+					this.collection.add(m);
+				}
+			}, this)
+		});
 	}
 
 });
@@ -47,7 +58,8 @@ Necro.Views.GangListItem = Backbone.View.extend({
 	templateName: 'gang-list-item',
 
 	events: {
-		'click .action_edit': 'editGang'
+		'click .action_edit': 'editGang',
+		'click .gang_name': 'editGang'
 	},
 
 	initialize : function(options) {
