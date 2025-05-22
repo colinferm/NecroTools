@@ -22,14 +22,14 @@ class NecroDB {
 	public $skill = DB_PREFIX.'fighter_skill';
 	
 	public $user_gang = DB_PREFIX.'user_gang';
-	public $user_fighter = DB_PREFIX.'user_fighter';
+	public $user_gang_audit = DB_PREFIX.'user_gang_audit';
 	public $user_gang_stash_map = DB_PREFIX.'user_gang_stash_map';
+
+	public $user_fighter = DB_PREFIX.'user_fighter';
+	public $user_fighter_audit = DB_PREFIX."user_fighter_audit";
 	public $user_fighter_weapon_map = DB_PREFIX.'user_fighter_weapon_map';
 	public $user_fighter_skill_map = DB_PREFIX.'user_fighter_skill_map';
 	public $user_fighter_injury_map = DB_PREFIX.'user_fighter_injury_map';
-
-	public $user_gang_audit = DB_PREFIX.'user_gang_audit';
-	public $user_fighter_audit = DB_PREFIX.'user_fighter_audit';
 	
 	private $db = null;
 

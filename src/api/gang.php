@@ -98,6 +98,28 @@ class GangController extends SlimController {
 		throw new DatabaseException();
 	}
 
+	public function removeGang(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+		global $ndb, $cache;
+		$userId = UserController::getCurrentUserId();
+		$gangId = $args['id'];
+
+		$gang = $ndb->queryFirst("SELECT id FROM {$ndb->user_gang} WHERE user_id = :user_id AND id = :gang_id", ['user_id' => $userId, 'gang_id' => $gangId]);
+		if (!$gang) $response->withStatus(403);
+
+		$fighters = $ndb->query("SELECT id FROM {$ndb->user_fighter} WHERE user_gang_id = :gang_id", ['gang_id' => $gangId]);
+		foreach($fighters as $fighter) {
+			$ndb->deleteWithParams("DELETE FROM {$ndb->user_fighter_audit} WHERE user_fighter_id = :id", ['id' => $fighter['id']]);
+			$ndb->deleteWithParams("DELETE FROM {$ndb->user_fighter_injury_map} WHERE user_fighter_id = :id", ['id' => $fighter['id']]);
+			$ndb->deleteWithParams("DELETE FROM {$ndb->user_fighter_skill_map} WHERE user_fighter_id = :id", ['id' => $fighter['id']]);
+			$ndb->deleteWithParams("DELETE FROM {$ndb->user_fighter_injury_map} WHERE user_fighter_id = :id", ['id' => $fighter['id']]);
+		}
+
+		$ndb->deleteWithParams("DELETE FROM {$ndb->user_gang_audit} WHERE user_gang_id = :id", ['id' => $gangId]);
+		$ndb->deleteWithParams("DELETE FROM {$ndb->user_gang_stash_map} WHERE user_gang_id = :id", ['id' => $gangId]);
+		$ndb->deleteFromTable($ndb->user_gang, $gangId);
+		return $response->withStatus(200);
+	}
+
 	public static function getGangTypes() {
 		global $ndb;
 		$query = "

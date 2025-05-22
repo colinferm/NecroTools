@@ -59,25 +59,29 @@ Necro.Views.GangListItem = Backbone.View.extend({
 
 	events: {
 		'click .action_edit': 'editGang',
-		'click .gang_name': 'editGang'
+		'click .gang_name': 'editGang',
+		'click .action_remove': 'removeGang'
 	},
 
 	initialize : function(options) {
 		var html = Necro.Utils.UI.TPL.get(this.templateName);
 		this.template = Handlebars.compile(html);
-		this.model.fetch({
-			success: _.bind(this.render, this)
-		});
+		this.model.on("destroy", this.remove, this);
+		this.model.on("change", this.render, this);
+		this.model.fetch();
 	},
 
 	render: function() {
 		this.$el.html(this.template(this.model.toJSON()));
-		//var menu = new Foundation.DropdownMenu($('ul.dropdown.menu', this.$el));
 		return this;
 	},
 
 	editGang: function() {
-		necro.navigate("roster/"+this.model.get("id"), {trigger: true});
+		necro.navigate("roster/" + this.model.get("id"), {trigger: true});
+	},
+
+	removeGang: function() {
+		this.model.destroy();
 	}
 
 });

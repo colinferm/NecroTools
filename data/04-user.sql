@@ -16,7 +16,7 @@ CREATE TABLE necro_user (
 	PRIMARY KEY (id),
 	INDEX idx_user_username (username)
 );
-INSERT INTO necro_user (id, username, userpassword, email_address, confirmed, registered, last_login, is_admin, oauth_key) VALUES (1, 'admin', '$2y$10$Q/H/OASzzpCTCBLNpjKiHeXyrJYQMiegm16MBMD98sc4W0CIgxo/u', 'admin@admin.com', 1, NOW(), NOW(), 1, NULL, NULL);
+INSERT INTO necro_user (id, username, userpassword, email_address, confirmed, registered, last_login, is_admin) VALUES (1, 'admin', '$2y$10$Q/H/OASzzpCTCBLNpjKiHeXyrJYQMiegm16MBMD98sc4W0CIgxo/u', 'admin@admin.com', 1, NOW(), NOW(), 1);
 
 DROP TABLE IF EXISTS necro_user_permission;
 CREATE TABLE necro_user_permission (
