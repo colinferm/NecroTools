@@ -34,7 +34,7 @@ Necro.Views.TraitList = Necro.Views.BaseListView.extend({
 	addTrait: function() {
 		var m = new Necro.Models.Trait();
 		var modal = new Necro.Views.Modal({
-			class: "Necro.Views.TraitModal",
+			class: "Necro.Views.Admin.Modal.EditTrait",
 			title: "Add Trait",
 			model: m,
 			callback: _.bind(function() {
@@ -70,7 +70,7 @@ Necro.Views.TraitItem = Backbone.View.extend({
 
 	editTrait: function() {
 		var modal = new Necro.Views.Modal({
-			class: "Necro.Views.TraitModal",
+			class: "Necro.Views.Admin.Modal.EditTrait",
 			title: "Edit Trait",
 			model: this.model
 		});

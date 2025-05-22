@@ -1,4 +1,4 @@
-Necro.Views.XPModal = Necro.Views.BaseModal.extend({
+Necro.Views.User.Modal.AddXP = Necro.Views.BaseModal.extend({
     templateName: 'modal-xp',
 
     events: {

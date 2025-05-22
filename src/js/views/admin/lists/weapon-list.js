@@ -32,7 +32,7 @@ Necro.Views.Admin.WeaponList = Necro.Views.BaseListView.extend({
 	addWeapon: function() {
 		var weaponModel = new Necro.Models.Weapon({});
 		var modal = new Necro.Views.Modal({
-			class: "Necro.Views.Admin.WeaponModal",
+			class: "Necro.Views.Admin.Modal.EditWeapon",
 			title: "Add Weapon",
 			modalSize: 'modal-xl',
 			model: weaponModel
@@ -66,7 +66,7 @@ Necro.Views.Admin.WeaponItem = Backbone.View.extend({
 		this.model.fetch({
 			success: _.bind(function() {
 				var modal = new Necro.Views.Modal({
-					class: "Necro.Views.Admin.WeaponModal",
+					class: "Necro.Views.Admin.Modal.EditWeapon",
 					title: "Edit Weapon",
 					modalSize: 'modal-xl',
 					model: this.model

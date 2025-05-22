@@ -1,5 +1,5 @@
-Necro.Views.InjuryModal = Necro.Views.BaseModal.extend({
-	templateName: 'modal-injury',
+Necro.Views.User.Modal.AddInjury = Necro.Views.BaseModal.extend({
+	templateName: 'modal-add-injury',
 
 	events: {
 		'change .injury_selector': 'populateDescription'

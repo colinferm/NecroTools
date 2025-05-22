@@ -1,4 +1,4 @@
-Necro.Views.Admin.StatLineModal = Necro.Views.BaseModal.extend({
+Necro.Views.Admin.Modal.StatLine = Necro.Views.BaseModal.extend({
 	templateName: 'modal-stat-line',
 
 	events: {

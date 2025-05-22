@@ -13,7 +13,9 @@ var Necro = {
 		Admin: {
 			Modal: {}
 		},
-		Modal: {}
+		User: {
+			Modal: {}
+		}
 	},
 	Events: {}
 };

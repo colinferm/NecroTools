@@ -39,7 +39,7 @@ Necro.Views.Admin.SkillList = Backbone.View.extend({
 	addSkillSet: function() {
 		var m = new Necro.Models.SkillSet();
 		var modal = new Necro.Views.Modal({
-			class: "Necro.Views.Admin.EditSkillSetModal",
+			class: "Necro.Views.Admin.Modal.EditSkillSet",
 			title: "Add Skill Set",
 			model: m,
 			callback: _.bind(function() {
@@ -95,7 +95,7 @@ Necro.Views.Admin.SkillSet = Backbone.View.extend({
 
 	editSkillSet: function() {
 		var modal = new Necro.Views.Modal({
-			class: "Necro.Views.Admin.EditSkillSetModal",
+			class: "Necro.Views.Admin.Modal.EditSkillSet",
 			title: "Edit Skill Set",
 			model: this.model
 		});
@@ -105,7 +105,7 @@ Necro.Views.Admin.SkillSet = Backbone.View.extend({
 		var skillSet = this.model.get('skill_set_name');
 		var m = new Necro.Models.Skill({skill_set_id: this.model.get('id'), skill_set_name: skillSet});
 		var modal = new Necro.Views.Modal({
-			class: "Necro.Views.Admin.SkillEditModal",
+			class: "Necro.Views.Admin.Modal.SkillEdit",
 			title: "Add " + skillSet + " Skill",
 			model: m,
 			callback: _.bind(function() {
@@ -148,7 +148,7 @@ Necro.Views.Admin.SkillItem = Backbone.View.extend({
 
 	editSkill: function() {
 		var modal = new Necro.Views.Modal({
-			class: "Necro.Views.Admin.SkillEditModal",
+			class: "Necro.Views.Admin.Modal.SkillEdit",
 			title: "Edit Skill",
 			model: this.model
 		});

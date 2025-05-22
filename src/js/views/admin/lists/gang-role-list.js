@@ -38,7 +38,7 @@ Necro.Views.Admin.GangRoleList = Backbone.View.extend({
 		//roles.on('add', _.bind(this.addItem, this));
 		var m = new Necro.Models.GangRole({gang_type_id: this.model.get('id')});
 		var modal = new Necro.Views.Modal({
-			class: "Necro.Views.Admin.GangRoleEditModal",
+			class: "Necro.Views.Admin.Modal.GangRoleEdit",
 			title: "Add Gang Role",
 			buttonText: "Save Role",
 			model: m,
@@ -94,7 +94,7 @@ Necro.Views.Admin.GangRoleListItem = Backbone.View.extend({
 			title = "Assign Secondary Skills";
 		}
 		var modal = new Necro.Views.Modal({
-			class: "Necro.Views.Admin.AssignSkillSet",
+			class: "Necro.Views.Admin.Modal.AssignSkillSet",
 			title: title,
 			model: this.model,
 			primarySkill: primary
@@ -103,7 +103,7 @@ Necro.Views.Admin.GangRoleListItem = Backbone.View.extend({
 
 	popRoleModal: function(primary) {
 		var modal = new Necro.Views.Modal({
-			class: "Necro.Views.Admin.GangRoleEditModal",
+			class: "Necro.Views.Admin.Modal.GangRoleEdit",
 			title: "Edit Gang Role",
 			buttonText: "Save Role",
 			model: this.model,
@@ -116,7 +116,7 @@ Necro.Views.Admin.GangRoleListItem = Backbone.View.extend({
 		var title = "Edit " + m.get("role_name") + " Statline";
 		if (!template) template = new Necro.Models.FighterTemplate({gang_type_id: this.model.attributes.gang_type_id, fighter_role: this.model.id});
 		var modal = new Necro.Views.Modal({
-			class: "Necro.Views.Admin.StatLineModal",
+			class: "Necro.Views.Admin.Modal.StatLine",
 			title: title,
 			model: template,
 			modalSize: 'modal-lg',

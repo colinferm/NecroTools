@@ -1,5 +1,5 @@
-Necro.Views.FighterModal = Necro.Views.BaseModal.extend({
-	templateName: 'modal-fighter',
+Necro.Views.User.Modal.AddFighter = Necro.Views.BaseModal.extend({
+	templateName: 'modal-add-fighter',
 
 	events: {
 	},

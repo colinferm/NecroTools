@@ -1,4 +1,4 @@
-Necro.Views.Admin.WeaponModal = Necro.Views.BaseModal.extend({
+Necro.Views.Admin.Modal.EditWeapon = Necro.Views.BaseModal.extend({
 	templateName: 'modal-weapon',
 
 	events: {

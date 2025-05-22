@@ -1,8 +1,7 @@
-Necro.Views.TraitModal = Necro.Views.BaseModal.extend({
+Necro.Views.Admin.Modal.EditTrait = Necro.Views.BaseModal.extend({
 	templateName: 'modal-trait',
 
 	events: {
-		'click .save_button': 'save'
 	},
 
 	render: function() {

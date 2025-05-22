@@ -1,4 +1,4 @@
-Necro.Views.Admin.GangTemplateModal = Necro.Views.BaseModal.extend({
+Necro.Views.Admin.Modal.GangTemplate = Necro.Views.BaseModal.extend({
 	templateName: 'modal-gang-template',
 
 	render: function() {

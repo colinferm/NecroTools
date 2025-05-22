@@ -1,4 +1,4 @@
-Necro.Views.SkillsModal = Necro.Views.BaseModal.extend({
+Necro.Views.User.Modal.AddSkills = Necro.Views.BaseModal.extend({
 	templateName: 'modal-skills',
 
 	events: {

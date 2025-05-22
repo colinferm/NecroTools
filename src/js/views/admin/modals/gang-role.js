@@ -1,4 +1,4 @@
-Necro.Views.Admin.GangRoleEditModal = Necro.Views.BaseModal.extend({
+Necro.Views.Admin.Modal.GangRoleEdit = Necro.Views.BaseModal.extend({
 	templateName: 'modal-gang-role',
 
 	events: {

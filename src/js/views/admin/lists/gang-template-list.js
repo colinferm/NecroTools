@@ -39,7 +39,7 @@ Necro.Views.Admin.GangList = Backbone.View.extend({
 	addGang: function() {
 		var m = new Necro.Models.GangType();
 		var modal = new Necro.Views.Modal({
-			class: "Necro.Views.Admin.GangTemplateModal",
+			class: "Necro.Views.Admin.Modal.GangTemplate",
 			title: "Add Gang Type",
 			model: m,
 			callback: _.bind(function() {

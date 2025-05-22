@@ -38,7 +38,7 @@ Necro.Views.Admin.SiteUserList = Necro.Views.BaseListView.extend({
 		user.urlRoot = '/api/site-users';
 
 		var modal = new Necro.Views.Modal({
-			class: "Necro.Views.Admin.AddSiteUserModal",
+			class: "Necro.Views.Admin.Modal.AddSiteUser",
 			title: "Add User",
 			buttonText: "Save User",
 			model: user,
@@ -76,7 +76,7 @@ Necro.Views.Admin.SiteUserListItem = Backbone.View.extend({
 	editUser: function() {
 		var user = this.model;
 		var modal = new Necro.Views.Modal({
-			class: "Necro.Views.Admin.AddSiteUserModal",
+			class: "Necro.Views.Admin.Modal.AddSiteUser",
 			title: "Edit User",
 			buttonText: "Save User",
 			model: user,

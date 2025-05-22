@@ -1,4 +1,4 @@
-Necro.Views.Admin.AddSiteUserModal = Necro.Views.BaseModal.extend({
+Necro.Views.Admin.Modal.AddSiteUser = Necro.Views.BaseModal.extend({
 	templateName: 'modal-add-user',
 
 	events: {
