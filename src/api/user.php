@@ -166,7 +166,7 @@ class UserController extends SlimController {
 
 	public function register(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
 		global $ndb;
-		$params = json_decode($request->getBody());
+		$params = json_decode($request->getBody(), true);
 		$username = $params['username'];
 		$password = password_hash(PEPPER.$params['password'], PASSWORD_DEFAULT);
 		$email = $params['email_address'];

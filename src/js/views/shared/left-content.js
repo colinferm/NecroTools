@@ -45,7 +45,7 @@ Necro.Views.LeftContent = Backbone.View.extend({
 		list.empty();
 
 		_.each(this.gangCollection.models, function(item) {
-			list.append('<li><a href="#roster/'+item.get("id")+'">'+item.get("gang_name")+'</a></li>');
+			list.append('<li><a href="#roster/'+item.get("id")+'"><div class="d-flex justify-content-between"><div>'+item.get("gang_name")+'</div><div>('+item.get('type_name')+')</div></div></a></li>');
 		}, this);
 	},
 

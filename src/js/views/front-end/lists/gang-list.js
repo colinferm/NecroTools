@@ -15,10 +15,9 @@ Necro.Views.GangList = Backbone.View.extend({
 		this.template = Handlebars.compile(html);
 
 		this.collection = new Necro.Collections.Gangs({});
-		//this.listenTo(this.collecton, 'update', this.addItems)
-		this.collection.fetch({
-			success: _.bind(this.addItems, this)
-		});
+		this.collection.on('remove', this.notifyGangs, this);
+		this.collection.on('add', this.addItem, this);
+		this.collection.fetch();
 	},
 
 	render: function() {
@@ -26,17 +25,25 @@ Necro.Views.GangList = Backbone.View.extend({
 		return this;
 	},
 
+	notifyGangs: function() {
+		Necro.Events.trigger("gangs_updated", this.collection);
+	},
+
 	addItems: function() {
 		$('tbody', this.el).empty()
 		_.each(this.collection.models, function(model) {
-			var item = new Necro.Views.GangListItem({model: model});
-			$('tbody', this.el).append(item.render().$el);
+			this.addItem(model);
 		});
 		Necro.Events.trigger("gangs_updated", this.collection);
 	},
 
+	addItem: function(item) {
+		var item = new Necro.Views.GangListItem({model: item});
+		$('tbody', this.el).append(item.render().$el);
+	},
+
 	addGang: function() {
-		var m = new Necro.Models.GangType({user_id: necro.session.id});
+		var m = new Necro.Models.Gang({user_id: necro.session.id});
 		var modal = new Necro.Views.Modal({
 			class: "Necro.Views.User.Modal.AddGang",
 			title: "Add Gang",
@@ -45,6 +52,7 @@ Necro.Views.GangList = Backbone.View.extend({
 			callback: _.bind(function() {
 				if (m) {
 					this.collection.add(m);
+					Necro.Events.trigger("gangs_updated", this.collection);
 				}
 			}, this)
 		});
@@ -68,7 +76,7 @@ Necro.Views.GangListItem = Backbone.View.extend({
 		this.template = Handlebars.compile(html);
 		this.model.on("destroy", this.remove, this);
 		this.model.on("change", this.render, this);
-		this.model.fetch();
+		//this.model.fetch();
 	},
 
 	render: function() {

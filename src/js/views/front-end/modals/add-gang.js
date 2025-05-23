@@ -30,6 +30,8 @@ Necro.Views.User.Modal.AddGang = Necro.Views.BaseModal.extend({
 	},
 
 	save: function(callback) {
+		let m = this.model;
+
 		let gangTypeId = $('[name="gang_type"]', this.$el).val();
 		let gangName = $('.gang_name', this.$el).val();
 		let credits = $('.credits', this.$el).val();
@@ -41,5 +43,19 @@ Necro.Views.User.Modal.AddGang = Necro.Views.BaseModal.extend({
 			outlaw: outlaw,
 			credits: credits
 		};
+
+		for (var i = 0; i < Necro.Apps.Data.GangTypes.length; i++) {
+			var g = Necro.Apps.Data.GangTypes[i];
+			if (g.id == gangTypeId) {
+				gang.type_name = g.type_name;
+				break;
+			}
+		}
+
+		m.set(gang);
+		m.save(null, {
+			success: callback(true, m),
+			error: callback(false)
+		});
 	}
 });
