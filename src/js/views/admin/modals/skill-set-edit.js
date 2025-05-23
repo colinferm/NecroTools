@@ -1,13 +1,21 @@
 Necro.Views.Admin.Modal.EditSkillSet = Necro.Views.BaseModal.extend({
 	templateName: 'modal-edit-skill-set',
 
-	events: {
-		'click .save_button': 'save'
-	},
-
 	render: function() {
 		this.$el.html(this.template({gangTypes: Necro.Apps.Data.GangTypes, model: this.model.toJSON()}));
 		return this;
+	},
+
+	checkValidation: function(field) {
+		if (field.hasClass('skill_set_name') && field.val().length <= 5) {
+			field.addClass('is-invalid');
+			return;
+		}
+		if (field.is('[name="gang_type"]') && field.val() == 0 && $('.limited_to_gang', this.$el).is(":checked")) {
+			field.addClass('is-invalid');
+			return;
+		}
+		field.removeClass('is-invalid').addClass('is-valid');
 	},
 
 	save: function(callback) {

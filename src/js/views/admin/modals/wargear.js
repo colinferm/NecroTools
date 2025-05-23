@@ -1,12 +1,28 @@
 Necro.Views.Admin.Modal.Wargear = Necro.Views.BaseModal.extend({
 	templateName: 'modal-edit-wargear',
 
-	events: {
-	},
-
 	render: function() {
 		this.$el.html(this.template({model: this.model.toJSON(), categories: Necro.Apps.Data.WargearCategories}));
 		return this;
+	},
+
+	checkValidation: function(field) {
+		if (field.hasClass('wargear_name') && field.val() < 3) {
+			field.addClass('is-invalid');
+			return;
+		}
+
+		let numbers = /^[0-9]+$/;
+		if (field.hasClass('weapon_value') && (field.val().length == 0 || !field.val().match(numbers))) {
+			field.addClass('is-invalid');
+			return;
+		}
+
+		if (field.hasClass('rarity') && field.val() == 0) {
+			field.addClass('is-invalid');
+			return;
+		}
+		field.removeClass('is-invalid').addClass('is-valid');
 	},
 
 	save: function(callback) {

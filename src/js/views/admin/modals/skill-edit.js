@@ -1,13 +1,17 @@
 Necro.Views.Admin.Modal.SkillEdit = Necro.Views.BaseModal.extend({
 	templateName: 'modal-edit-skill',
 
-	events: {
-		'click .save_button': 'save'
-	},
-
 	render: function() {
 		this.$el.html(this.template(this.model.toJSON()));
 		return this;
+	},
+
+	checkValidation: function(field) {
+		if (field.hasClass('skill_name') && field.val().length < 5) {
+			field.addClass('is-invalid');
+			return;
+		}
+		field.removeClass('is-invalid').addClass('is-valid');
 	},
 
 	save: function(callback) {

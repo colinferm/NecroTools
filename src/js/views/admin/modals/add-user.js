@@ -1,12 +1,10 @@
 Necro.Views.Admin.Modal.AddSiteUser = Necro.Views.BaseModal.extend({
 	templateName: 'modal-add-user',
 
-	events: {
+	events: _.extend({
 		'click [name="generatePassword"]': 'showHidePasswords',
 		'click [type="checkbox"].permission_box': 'handlePermissions',
-		'focusout .emailInput': 'checkFieldValid',
-		'focusout .usernameInput': 'checkFieldValid'
-	},
+	}, Necro.Views.BaseModal.prototype.events),
 
 	render: function() {
 		this.$el.html(this.template({model: this.model.toJSON(), isNew: this.model.isNew(), permissions: Necro.Apps.Data.UserPermissions.toJSON()}));
@@ -55,29 +53,25 @@ Necro.Views.Admin.Modal.AddSiteUser = Necro.Views.BaseModal.extend({
 		}
 	},
 
-	checkFieldValid: function(e) {
-		var target = $(e.currentTarget);
+	checkValidation: function(field) {
+		if (field.hasClass('emailInput') || field.hasClass('usernameInput')) {
+			var fieldName = "username";
+			if (field.hasClass('emailInput')) {
+				fieldName = "email_address";
+			}
+			let origVal = this.model.get(fieldName);
 
-		var fieldName = "";
-
-		if (target.hasClass('emailInput')) {
-			fieldName = "email_address";
-		} else if (target.hasClass('usernameInput')) {
-			fieldName = "username";
-		}
-
-		let origVal = this.model.get(fieldName);
-
-		if (target.val().length > 5 && target.val() != origVal) {
-			this.validateInfo({field: fieldName, value: target.val()}, function(success){
-				if (success) {
-					target.removeClass('invalidField').addClass('validField');
-				} else {
-					target.removeClass('validField').addClass('invalidField');
-				}
-			});
-		} else if (target.val() != origVal) {
-			target.removeClass('validField').addClass('invalidField');
+			if (field.val().length > 5 && field.val() != origVal) {
+				this.validateInfo({field: fieldName, value: field.val()}, function(success){
+					if (success) {
+						field.removeClass('is-invalid').addClass('is-valid');
+					} else {
+						field.removeClass('is-valid').addClass('is-invalid');
+					}
+				});
+			} else if (field.val() != origVal) {
+				field.removeClass('is-valid').addClass('is-invalid');
+			}
 		}
 	},
 

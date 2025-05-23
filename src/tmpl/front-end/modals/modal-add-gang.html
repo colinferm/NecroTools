@@ -1,16 +1,19 @@
+<div class="validation-alert alert alert-danger mb-3 d-none" role="alert">
+  <i class="fi-alert"></i> There are invalid values in some fields.
+</div>
 <div class="form-floating mb-3">
-	{{{gang-select selected-id="gang_type_id" field-name="gang_type"}}}
+	{{{gang-select selected-id="gang_type_id" field-name="gang_type" tab-index="1"}}}
 	<label for="gangName">Gang Type</label>
 </div>
 <div class="form-floating mb-3">
-	<input class="form-control gang_name" value="{{model.gang_name}}" id="gangName" type="text" placeholder="Gang Name" tabindex="1">
+	<input class="form-control gang_name" value="{{model.gang_name}}" id="gangName" type="text" placeholder="Gang Name" tabindex="2">
 	<label for="gangName">Gang Name</label>
 </div>
 <div class="form-floating mb-3">
-	<input class="form-control credits" value="{{model.credits}}" id="credits" type="text" placeholder="Credits" tabindex="1">
+	<input class="form-control credits" value="{{model.credits}}" id="credits" type="text" placeholder="Credits" tabindex="3">
 	<label for="credits">Credits</label>
 </div>
 <div class="form-check mb-3">
-	{{{checkbox obj-name="model" class-name="isOutlaw" name-param="outlaw" id-param="outlaw"}}}
+	{{{checkbox obj-name="model" class-name="form-check-input isOutlaw" name-param="outlaw" id-param="outlaw" tab-index="4"}}}
 	<label class="form-check-label" for="outlaw">Outlaw?</label>
 </div>

@@ -1,13 +1,25 @@
 Necro.Views.Admin.Modal.EditTrait = Necro.Views.BaseModal.extend({
 	templateName: 'modal-trait',
 
-	events: {
-	},
-
 	render: function() {
 		//this.$el.html(this.template(this.model.toJSON()));
 		this.$el.html(this.template(this.model.toJSON()));
 		return this;
+	},
+
+	checkValidation: function(field) {
+		if (field.hasClass('trait_name') && field.val().length < 5) {
+			field.addClass('is-invalid');
+			return;
+		}
+
+		let numbers = /^[0-9]+$/;
+		if (field.hasClass('trait_value') && (field.val().length == 0 || !field.val().match(numbers))) {
+			field.addClass('is-invalid');
+			return;
+		}
+		
+		field.removeClass('is-invalid').addClass('is-valid');
 	},
 
 	save: function(callback) {

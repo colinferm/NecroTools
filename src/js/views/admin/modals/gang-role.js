@@ -1,10 +1,6 @@
 Necro.Views.Admin.Modal.GangRoleEdit = Necro.Views.BaseModal.extend({
 	templateName: 'modal-gang-role',
 
-	events: {
-		
-	},
-
 	render: function() {
 		var template = this.model.get("template");
 		if (!template) {
@@ -15,9 +11,29 @@ Necro.Views.Admin.Modal.GangRoleEdit = Necro.Views.BaseModal.extend({
 		return this;
 	},
 
+	checkValidation: function(field) {
+		if (field.hasClass('role_name') && field.val() < 3) {
+			field.addClass('is-invalid');
+			return;
+		}
+
+		let numbers = /^[0-9]+$/;
+		if (field.hasClass('base_value') && (field.val().length == 0 || !field.val().match(numbers))) {
+			field.addClass('is-invalid');
+			return;
+		}
+
+		if (field.hasClass('num_start_skills') && (field.val().length == 0 || !field.val().match(numbers))) {
+			field.addClass('is-invalid');
+			return;
+		}
+
+		field.removeClass('is-invalid').addClass('is-valid');
+	},
+
 	save: function(callback) {
-		let roleNameField = $('.role_name', this.$el);
-		let baseValueField = $('.base_value', this.$el)
+		let roleName = $('.role_name', this.$el).val();
+		let baseValue = $('.base_value', this.$el).val();
 		let hierarchy = $('[name="hierarchy_role"]', this.$el).val();
 
 		let numStartSkills = $('.num_start_skills', this.$el).val();
@@ -25,22 +41,6 @@ Necro.Views.Admin.Modal.GangRoleEdit = Necro.Views.BaseModal.extend({
 
 		var isVehicle = ($('.isVehicle', this.$el).is(':checked')) ? 1 : 0;
 		var isDramatis = ($('.isDramatis', this.$el).is(':checked')) ? 1 : 0;
-		
-		let roleName = roleNameField.val();
-		if (!roleName || roleName.length < 3) {
-			roleNameField.addClass('error');
-			return;
-		} else {
-			roleNameField.removeClass('error');
-		}
-
-		let baseValue = baseValueField.val();
-		if (!baseValue || baseValue.length < 1) {
-			baseValueField.addClass('error');
-			return;
-		} else {
-			baseValueField.removeClass('error');
-		}
 
 		var m = this.model;
 		m.set("role_name", roleName);
@@ -51,15 +51,6 @@ Necro.Views.Admin.Modal.GangRoleEdit = Necro.Views.BaseModal.extend({
 		t.set("num_start_skills", numStartSkills);
 		t.set("is_vehicle", isVehicle);
 		t.set("is_dramatis", isDramatis);
-
-		//console.log(m.toJSON());
-
-		/* m.save(null, {
-			success: function() {
-				callback(true, m);
-			},
-			error: callback(false)
-		}); */
 
 		m.save(null, {
 			success: function(mo, r, o) {

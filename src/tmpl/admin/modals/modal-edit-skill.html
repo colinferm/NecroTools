@@ -1,9 +1,11 @@
-<div class="container-fluid trait-editor">
-    <div class="form-floating mb-3">
-        <input class="skill_name form-control" value="{{skill_name}}" id="skillName" type="text" placeholder="Skill Name">
-        <label for="skillName">Skill Name</label>
-    </div>
-    <div>
-        <textarea class="skill_description form-control" rows="6" placeholder="Skill description"></textarea>
-    </div>
+<div class="validation-alert alert alert-danger mb-3 d-none" role="alert">
+  <i class="fi-alert"></i> There are invalid values in some fields.
+</div>
+<div class="form-floating mb-3">
+	<input class="skill_name form-control" value="{{skill_name}}" id="skillName" type="text" placeholder="Skill Name" tabindex="1">
+	<label for="skillName">Skill Name</label>
+</div>
+<div class="form-floating mb-3">
+	<textarea class="skill_description form-control" rows="6" id="skillDescription" placeholder="Skill Description" tabindex="2"></textarea>
+	<label for="skillDescription">Skill Description</label>
 </div>

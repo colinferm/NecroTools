@@ -6,6 +6,14 @@ Necro.Views.Admin.Modal.GangTemplate = Necro.Views.BaseModal.extend({
 		return this;
 	},
 
+	checkValidation: function(field) {
+		if (field.hasClass('gangName') && field.val().length <= 5) {
+			field.addClass('is-invalid');
+			return;
+		}
+		field.removeClass('is-invalid').addClass('is-valid');
+	},
+
 	save: function(callback) {
 		var gangName = $('.gangName', this.$el).val();
 		var description = $('.gangDescription', this.$el).html();

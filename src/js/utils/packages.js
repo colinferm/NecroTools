@@ -71,8 +71,9 @@ Necro.Utils.UI.Helpers = {
 		var collectionName = options.hash['collection-property']; 
 		var modelProperty = options.hash['model-property'];
 		var withBlank = (options.hash['with-blank']) ? true : false;
+		var tabIndex = (options.hash['tab-index']) ? options.hash['tab-index'] : 1;
 
-		var html = '<select name="' + fieldName + '" class="form-control">';
+		var html = '<select name="' + fieldName + '" tabindex="' + tabIndex + '" class="form-control">';
 		if (withBlank) {
 			html += '<option value="0">--</option>';
 		}
@@ -102,8 +103,9 @@ Necro.Utils.UI.Helpers = {
 		var model = options.data.root.model;
 		var selectedId = options.hash['selected-id'];
 		var fieldName = options.hash['field-name'];
+		var tabIndex = (options.hash['tab-index']) ? options.hash['tab-index'] : 1;
 		let gangs = Necro.Apps.Data.GangTypes;
-		var html = '<select name="' + fieldName + '" id="' + fieldName + '"  class="form-control">';
+		var html = '<select name="' + fieldName + '" id="' + fieldName + '"  class="form-control" tabindex="' + tabIndex + '">';
 		html += '<option value="0">--</option>';
 		_.each(gangs, function(gang, i) {
 			var selected = "";
@@ -122,6 +124,7 @@ Necro.Utils.UI.Helpers = {
 		var idParam = (options.hash['id-param']) ? options.hash['id-param'] : '';
 		var text = (options.hash['text']) ? options.hash['text'] : '';
 		var objName = (options.hash['obj-name']) ? options.hash['obj-name'] : 'model';
+		var tabIndex = (options.hash['tab-index']) ? options.hash['tab-index'] : 1;
 
 		var model = options.data.root[objName];
 
@@ -129,7 +132,7 @@ Necro.Utils.UI.Helpers = {
 		var formId = "";
 		if (idParam) formId = 'id="'+idParam+'"';
 		if (model[nameParam] == 1) checked = "checked";
-		return '<input type="checkbox" class="' + className + ' form-check-input" value="' + this.model.id + '" ' + formId + ' ' + checked + '>' + text;
+		return '<input type="checkbox" class="' + className + ' form-check-input" tabindex="' + tabIndex + '" value="' + this.model.id + '" ' + formId + ' ' + checked + '>' + text;
 	},
 
 	TemplateCheckboxSkill: function(options) {
@@ -137,6 +140,7 @@ Necro.Utils.UI.Helpers = {
 
 		var className = options.hash['class-name'];
 		var nameParam = options.hash['name-param'];
+		var tabIndex = (options.hash['tab-index']) ? options.hash['tab-index'] : 1;
 
 		var checked = "";
 		model.skills.models.forEach(function(item) {
@@ -145,7 +149,7 @@ Necro.Utils.UI.Helpers = {
 				return;
 			}
 		});
-		return '<input type="checkbox" class="' + className + ' form-check-input" value="' + this.id + '" ' + checked + '>&nbsp;' + this[nameParam];
+		return '<input type="checkbox" class="' + className + ' form-check-input" tabindex="' + tabIndex + '" value="' + this.id + '" ' + checked + '>&nbsp;' + this[nameParam];
 	},
 
 	TemplateCheckboxSkillSet: function(options) {

@@ -47,7 +47,7 @@ Necro.Views.Modal = Backbone.View.extend({
 
 	saveData: function(e) {
 		//console.log(e);
-		this.content.save(_.bind(function(success, model) {
+		this.content.doSave(_.bind(function(success, model) {
 			if (success) {
 				this.close();
 				if (this.opts.callback) this.opts.callback(model);

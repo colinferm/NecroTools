@@ -1,6 +1,11 @@
 Necro.Views.BaseModal = Backbone.View.extend({
 	class: "row",
 
+	events: {
+		'change .form-control': 'validate',
+		'focusout .form-control': 'validate'
+	},
+
 	initialize : function(options) {
 		this.opts = options;
 		this.model = options.model;
@@ -8,8 +13,20 @@ Necro.Views.BaseModal = Backbone.View.extend({
 		this.template = Handlebars.compile(html);
 	},
 
-	save: function(callback) {
-		callback(true);
+	validate: function(e) {
+		let field = $(e.currentTarget);
+		if (this.checkValidation) this.checkValidation(field);
+		if ($('.is-invalid', this.$el).length == 0) {
+			$('.validation-alert', this.el).removeClass('d-block').addClass('d-none');
+		}
+	},
+
+	doSave: function(callback) {
+		if ($('.is-invalid', this.$el).length) {
+			$('.validation-alert', this.el).addClass('d-block').removeClass('d-none');
+			return;
+		}
+		if (this.save) this.save(callback);
 	}
 });
 

@@ -1,19 +1,22 @@
+<div class="validation-alert alert alert-danger mb-3 d-none" role="alert">
+	<i class="fi-alert"></i> There are invalid values in some fields.
+</div>
 <div class="form-floating mb-3">
 	<input class="wargear_name form-control" value="{{model.weapon_name}}" id="wargearName" type="text" placeholder="Wargear Name" tabindex="1">
 	<label for="wargearName">Wargear Name</label>
 </div>
 <div class="mb-3">
-	{{{select-box field-name="category_name" collection-property="categories" item-id="id" item-name="category_name" model-property="weapon_category_id"}}}
+	{{{select-box field-name="category_name" collection-property="categories" item-id="id" item-name="category_name" model-property="weapon_category_id" tab-index="2"}}}
 </div>
 <div class="form-floating mb-3">
-	<input class="weapon_value form-control" value="{{model.weapon_value}}" id="weaponValue" type="text" placeholder="Value" tabindex="1">
+	<input class="weapon_value form-control" value="{{model.weapon_value}}" id="weaponValue" type="text" placeholder="Value" tabindex="3">
 	<label for="baseValue">Value</label>
 </div>
 <div class="form-floating mb-3">
-	<input class="rarity form-control" value="{{model.rarity}}" id="rarity" type="text" placeholder="Rarity" tabindex="1">
+	<input class="rarity form-control" value="{{model.rarity}}" id="rarity" type="text" placeholder="Rarity" tabindex="4">
 	<label for="rarity">Rarity</label>
 </div>
 <div class="form-floating mb-3">
-	<textarea class="form-control notes" placeholder="Notes" id="notes">{{model.notes}}</textarea>
+	<textarea class="form-control notes" placeholder="Notes" id="notes" tabindex="5">{{model.notes}}</textarea>
 	<label for="notes">Notes</label>
 </div>

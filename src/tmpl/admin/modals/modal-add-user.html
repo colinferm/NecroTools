@@ -1,5 +1,5 @@
-<div class="mb-3 d-none">
-	<p><i class="fi-alert"></i> There are some errors in your form.</p>
+<div class="validation-alert alert alert-danger mb-3 d-none" role="alert">
+	<i class="fi-alert"></i> There are some errors in your form.
 </div>
 <div class="form-floating mb-3">
 	<input type="email" id="registerEmailInput" class="form-control emailInput" placeholder="name@example.com" tabindex="1" value="{{model.email_address}}">
@@ -17,15 +17,15 @@
 	</span>
 </div>
 <div class="form-floating mb-3">
-	<input type="text" id="registerFirstNameInput" class="form-control firstNameInput" tabindex="2" placeholder="First Name" value="{{model.first_name}}">
+	<input type="text" id="registerFirstNameInput" class="form-control firstNameInput" tabindex="3" placeholder="First Name" value="{{model.first_name}}">
 	<label for="registerFirstNameInput">First Name</label>
 </div>
 <div class="form-floating mb-3">
-	<input type="text" id="registerLastNameInput" class="form-control lastNameInput" tabindex="2" placeholder="Last Name" value="{{model.last_name}}">
+	<input type="text" id="registerLastNameInput" class="form-control lastNameInput" tabindex="4" placeholder="Last Name" value="{{model.last_name}}">
 	<label for="registerLastNameInput">Last Name</label>
 </div>
 <div class="form-check mb-3">
-	{{{checkbox obj-name="model" class-name="form-check-input confirmed" name-param="confirmed" id-param="isConfirmed"}}}
+	{{{checkbox obj-name="model" class-name="form-check-input confirmed" name-param="confirmed" id-param="isConfirmed" tab-index="5"}}}
 	<label class="form-check-label" for="isConfirmed">Confirmed?</label>
 </div>
 {{#unless isNew}}
@@ -54,11 +54,8 @@
 	</label>
 </div>
 <div class="form-floating mb-3 d-none">
-	<input type="password" id="registerPasswordInput" class="form-control passwordInput" tabindex="3" placeholder="Password">
+	<input type="password" id="registerPasswordInput" class="form-control passwordInput" placeholder="Password">
 	<label for="registerPasswordInput">Password</label>
-	<span class="form-error d-none">
-		This field is required.
-	</span>
 </div>
 <div class="mb3">
 	<h5>Permissions</h5>
