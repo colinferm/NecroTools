@@ -25,6 +25,7 @@ $app->get('/verify-nonce/{nonce}', [\UserController::class, 'validateNonce']);
 $app->get('/password', [\UserController::class, 'passwordGen']);
 $app->get('/pepper', [\UserController::class, 'pepperGen']);
 $app->get('/nonce/{id}', [\UserController::class, 'nonceGen']);
+$app->put('/user-profile/{id}', [\UserController::class, 'updateProfile'])->add(new NecroUserValidation([]));
 
 /* Admin */
 $app->get('/site-users', [\UserController::class, 'getSiteUsers'])->add(new NecroUserValidation(['ADM-USER']));

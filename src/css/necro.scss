@@ -307,7 +307,6 @@ html {
 						width: 100%;
 					}
 
-					.admin-home {
 						.section-title {
 							@include necro-background(45);
 							h1 {
@@ -328,6 +327,10 @@ html {
 								padding: 20px;
 								margin: 10px;
 
+								label {
+									color: $color-black;
+								}
+
 								.card-title {
 									font-family: $font-glitch;
 									a {
@@ -337,7 +340,6 @@ html {
 								}
 							}
 						}
-					}
 				}
 			}
 		}
@@ -591,6 +593,17 @@ html {
 				ul {
 					li {
 						list-style: none;
+					}
+				}
+			}
+		}
+
+		.country-select {
+			width: 100%;
+			.flag-dropdown {
+				.country-list {
+					.country-name {
+						color: $color-black;
 					}
 				}
 			}

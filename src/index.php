@@ -20,6 +20,7 @@ require_once 'api/user.php';
 		<link href="/css/foundation-icons.css" rel="stylesheet" type="text/css" />
 		<link href="/css/jquery-ui.theme.min.css" rel="stylesheet" type="text/css" />
 		<link href="/css/tagify.css" rel="stylesheet" type="text/css" />
+		<link href="/css/countrySelect.min.css" rel="stylesheet" type="text/css" />
 		<link href="/css/necro.css" rel="stylesheet" type="text/css" />
 		<script src="/js/libs/jquery-3.7.1.min.js"></script>
 		<title>Necro Tools</title>
@@ -73,6 +74,7 @@ require_once 'api/user.php';
 		<script src="/js/libs/jquery.cookie-1.3.js"></script>
 		<script src="/js/libs/jquery-ui.min.js"></script>
 		<script src="/js/libs/tagify.js"></script>
+		<script src="/js/libs/countrySelect.min.js"></script>
 		<script src="/js/necro.js"></script>
 	</body>
 </html>

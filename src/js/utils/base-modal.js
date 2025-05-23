@@ -1,24 +1,32 @@
-Necro.Views.BaseModal = Backbone.View.extend({
-	class: "row",
-
+Necro.Views.ValidationView = Backbone.View.extend({
 	events: {
 		'change .form-control': 'validate',
 		'focusout .form-control': 'validate'
 	},
-
-	initialize : function(options) {
-		this.opts = options;
-		this.model = options.model;
-		var html = Necro.Utils.UI.TPL.get(this.templateName);
-		this.template = Handlebars.compile(html);
-	},
-
+	
 	validate: function(e) {
 		let field = $(e.currentTarget);
 		if (this.checkValidation) this.checkValidation(field);
 		if ($('.is-invalid', this.$el).length == 0) {
 			$('.validation-alert', this.el).removeClass('d-block').addClass('d-none');
 		}
+	},
+
+	validateInfo: function(item, cb) {
+		console.log(item);
+
+		$.ajax({
+			url: '/api/registerValidation',
+			data: item,
+			dataType: 'json',
+			method: 'POST',
+			success: _.bind(function(data) {
+				cb(true);
+			}, this),
+			error: _.bind(function(data) {
+				cb((data.status == 200));
+			}, this),
+		});
 	},
 
 	doSave: function(callback) {
@@ -28,6 +36,17 @@ Necro.Views.BaseModal = Backbone.View.extend({
 		}
 		if (this.save) this.save(callback);
 	}
+});
+
+Necro.Views.BaseModal = Necro.Views.ValidationView.extend({
+	class: "row",
+
+	initialize : function(options) {
+		this.opts = options;
+		this.model = options.model;
+		var html = Necro.Utils.UI.TPL.get(this.templateName);
+		this.template = Handlebars.compile(html);
+	},
 });
 
 Necro.Views.BaseListView = Backbone.View.extend({

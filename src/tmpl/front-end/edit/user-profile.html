@@ -1,0 +1,57 @@
+<div class="large-8">
+	<div class="row">
+		<div class="col-12 p-4 text-center section-title">
+			<h1 class="mb-0">Update Profile</h1>
+		</div>
+	</div>
+	<div class="row g-4 mt-5">
+		<div class="col">
+			<div class="card">
+				<div class="card-body">
+					 <h5 class="card-title">Manage Account Details</h5>
+					 <div class="w-75">
+						<p class="card-text">
+							NecroTools works on the front-end by providing templates from which to create gang members.
+							These tools allow admins to create new gangs, new gang roles, and template stats for those roles.
+						</p>
+						<div class="validation-alert alert alert-danger mb-3 d-none" role="alert">
+							<i class="fi-alert"></i> There are some errors in your form.
+						</div>
+						<div class="form-floating mb-3">
+							<input type="email" id="emailInput" class="form-control email_address" placeholder="name@example.com" tabindex="1" value="{{profile.email_address}}">
+							<label for="emailInput">Email address</label>
+							<p class="help-text" id="emailHelpText">Your email address <i>and</i> user name must be unique.</p>
+						</div>
+						<div class="form-floating mb-3">
+							<input type="text" id="usernameInput" class="form-control username" tabindex="2" placeholder="Username" value="{{profile.username}}">
+							<label for="usernameInput">Username</label>
+						</div>
+						<div class="form-floating mb-3">
+							<input type="password" id="passwordInput" class="form-control password" tabindex="3" placeholder="Password">
+							<label for="passwordInput">Password</label>
+						</div>
+						<div class="form-floating mb-3">
+							<input type="password" id="confirmPasswordInput" class="form-control confirm_password" tabindex="4" placeholder="Confirm Password">
+							<label for="confirmPasswordInput">Confirm Password</label>
+							<p class="help-text" id="passwordHelpText">Only enter a password if you want to change it. Consider a passsword of ten characters or more.</p>
+						</div>
+						<div class="form-floating mb-3">
+							<input type="text" id="firstNameInput" class="form-control first_name" tabindex="5" placeholder="First Name" value="{{profile.first_name}}">
+							<label for="firstNameInput">First Name</label>
+						</div>
+						<div class="form-floating mb-3">
+							<input type="text" id="lastNameInput" class="form-control last_name" tabindex="6" placeholder="Last Name" value="{{profile.last_name}}">
+							<label for="lastNameInput">Last Name</label>
+						</div>
+						<div class="mb-3">
+							<input class="country_selector form-select" type="text" tabindex="8">
+						</div>
+						<div class="mb-3">
+							<button type="submit" class="btn saveButton" tabindex="9">Update Account</button>
+						</div>
+					 </div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

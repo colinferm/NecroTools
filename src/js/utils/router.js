@@ -12,6 +12,7 @@ Necro.Routers.NecroRouter = Backbone.Router.extend({
 		"gangs":"listGangs",
 		"roster": "rosterForm",
 		"roster/:id": "rosterForm",
+		"profile": "userProfile",
 
 		"admin": "adminView",
 		"adminGangs": "adminGangList",
@@ -30,7 +31,7 @@ Necro.Routers.NecroRouter = Backbone.Router.extend({
 	initialize: function () {
 		_.bindAll(this, 
 			'home', 'login', 'logout', 'register', 'listGangs', 'rosterForm',
-			'updateRight', 'updateLeft', 'showRoster',
+			'updateRight', 'updateLeft', 'showRoster', 'userProfile',
 			/** Admin */
 			'adminGangList', 'adminGangForm', 'adminSkillsList', 'adminSkillForm',
 			'adminFighterList', 'adminFighterForm', 'adminWeaponTraitList', 'adminEditTrait',
@@ -170,6 +171,11 @@ Necro.Routers.NecroRouter = Backbone.Router.extend({
 		if (gang.get("id")) title = gang.get("gang_name");
 		var rosterListView = new Necro.Views.Roster({model: gang});
 		this.updateRight(rosterListView.render().$el, title);
+	},
+
+	userProfile: function() {
+		let userProfile = new Necro.Views.UserProfile();
+		this.updateRight(userProfile.render().$el, userProfile.pageTitle);
 	},
 
 

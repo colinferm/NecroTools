@@ -284,6 +284,42 @@ class UserController extends SlimController {
 		return $response->withHeader('Content-Type', 'application/json');
 	}
 
+	public function updateProfile(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+		global $ndb, $cache;
+
+		$userId = UserController::getCurrentUserId();
+		$id = $args['id'];
+
+		if ($userId != $id) return $response->withStatus(403);
+
+		$params = json_decode($request->getBody(), true);
+
+		$sqlParams = array(
+			'id' => $userId,
+			'username' => $params['username'],
+			'email_address' => $params['email_address'],
+			'first_name' => $params['first_name'],
+			'last_name' => $params['last_name'],
+			'country' => $params['country']
+		);
+
+		if (array_key_exists('userpassword', $params)) {
+			$tempPassword = $params['userpassword'];
+			$sqlParams['userpassword'] = password_hash(PEPPER.$tempPassword, PASSWORD_DEFAULT);
+		}
+
+		$ndb->updateTable($ndb->user, $sqlParams);
+
+		unset($params['userpassword']);
+		$user = static::getUserById($userId);
+		$user['permissions'] = static::getPermissionsForUserId($userId);
+
+		$cache->del("site-users");
+
+		$response->getBody()->write(json_encode($user));
+		return $response->withHeader('Content-Type', 'application/json');
+	}
+
 	public function deleteSiteUser(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
 		global $ndb, $cache;
 		$userId = $args['id'];
