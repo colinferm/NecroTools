@@ -71,6 +71,8 @@ Necro.Utils.UI.Helpers = {
 			item-id="type" 
 			item-name="name" 
 			value-property="model.hierarchy_role"
+			tab-index="1"
+			id-name="roleBox"
 		}}
 		*/
 		var model = options.data.root.model;
@@ -82,8 +84,14 @@ Necro.Utils.UI.Helpers = {
 		var modelProperty = options.hash['model-property'];
 		var withBlank = (options.hash['with-blank']) ? true : false;
 		var tabIndex = (options.hash['tab-index']) ? options.hash['tab-index'] : 1;
-
-		var html = '<select name="' + fieldName + '" tabindex="' + tabIndex + '" class="form-control">';
+		var formId = options.hash['id-name'];
+		
+		var html = "";
+		if (formId) {
+			html = '<select name="' + fieldName + '" id="' + formId + '" tabindex="' + tabIndex + '" class="form-control">';
+		} else {
+			html = '<select name="' + fieldName + '" tabindex="' + tabIndex + '" class="form-control">';
+		}
 		if (withBlank) {
 			html += '<option value="0">--</option>';
 		}

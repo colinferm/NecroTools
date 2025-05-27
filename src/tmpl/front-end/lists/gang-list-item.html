@@ -1,23 +1,20 @@
-<td class="gang_name"><b>{{gang_name}}</b></td>
-<td>{{type_name}}</td>
-<td>{{num_fighters}}</td>
-<td>
-	{{#if outlaw}}
-		<span class="yes inverse">&#x2714;</span>
-	{{else}} 
-		<span class="no inverse">&cross;</span>
-	{{/if}}
-</td>
-<td>{{last_mod}}</td>
-<td class="d-flex justify-content-center">
-	<div class="btn-group" role="group">
-		<button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-		  Action
-		</button>
-		<ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-			<li class="d-flex flex-row align-items-start p-1 action_edit"><i class="fi-info ms-1 me-2"></i> <span>Edit</span></a></a></li>
-			<li class="d-flex flex-row align-items-start p-1 action_clone"><i class="fi-torsos ms-1 me-2"></i> <span>Clone</span></a></a></li>
-			<li class="d-flex flex-row align-items-start p-1 action_remove"><i class="fi-trash ms-1 me-2"></i> <span>Delete</span></a></li>
-		</ul>
+<div class="gang-info-card p-4">
+	<div class="gang-img"></div>
+	<div class="gang-info">
+		<h2>{{gang_name}}</h2>
+		<h3>{{type_name}}</h3>
+		<div class="info-extra">
+			<div class="info-outlaw">
+				Outlaw: 
+				{{#if outlaw}}
+					<span class="yes inverse">&#x2714;</span>
+				{{else}} 
+					<span class="no inverse">&cross;</span>
+				{{/if}}
+			</div>
+			<div class="info-lastmod">
+				{{last_mod}}
+			</div>
+		</div>
 	</div>
-</td>
+</div>

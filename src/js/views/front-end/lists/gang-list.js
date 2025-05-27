@@ -30,7 +30,7 @@ Necro.Views.GangList = Backbone.View.extend({
 	},
 
 	addItems: function() {
-		$('tbody', this.el).empty()
+		$('.gang-list', this.el).empty()
 		_.each(this.collection.models, function(model) {
 			this.addItem(model);
 		});
@@ -39,7 +39,7 @@ Necro.Views.GangList = Backbone.View.extend({
 
 	addItem: function(item) {
 		var item = new Necro.Views.GangListItem({model: item});
-		$('tbody', this.el).append(item.render().$el);
+		$('.gang-list', this.el).append(item.render().$el);
 	},
 
 	addGang: function() {
@@ -62,12 +62,13 @@ Necro.Views.GangList = Backbone.View.extend({
 
 
 Necro.Views.GangListItem = Backbone.View.extend({
-	tagName: 'tr',
+	tagName: 'div',
+	className: 'gang-info-card-container mb-4 p-2',
 	templateName: 'gang-list-item',
 
 	events: {
-		'click .action_edit': 'editGang',
-		'click .gang_name': 'editGang',
+		'click h2': 'editGang',
+		'click h3': 'editGang',
 		'click .action_remove': 'removeGang'
 	},
 

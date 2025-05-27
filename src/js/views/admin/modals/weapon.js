@@ -87,9 +87,9 @@ Necro.Views.Admin.Modal.WeaponCharacteristicList = Backbone.View.extend({
 Necro.Views.Admin.Modal.WeaponCharacteristicListItem = Backbone.View.extend({
 	tagName: 'tr',
 	templateName: 'modal-weapon-characteristic-list-item',
+	className: 'ammo_type_row',
 	tagsOptions: {
-		id: 0,
-		editTags: false,
+		//editTags: false,
 		createInvalidTags: false,
 		backspace: true,
 		dropdown: {
@@ -118,12 +118,12 @@ Necro.Views.Admin.Modal.WeaponCharacteristicListItem = Backbone.View.extend({
 		this.$el.data('id', this.model.id);
 
 		var options = this.tagsOptions;
-		options.id = 'char-' + this.model.id;
+		//options.id = 'char-' + this.model.id;
 		options.whitelist = Necro.Apps.Data.WeaponTraits;
 
 		var input = this.$el.get(0).querySelector('[name="traits"]');
 		var tagify = new Tagify(input, options);
-		tagify.on('add', this.addedTag);
+		//tagify.on('add', this.addedTag);
 
 		return this;
 	},
