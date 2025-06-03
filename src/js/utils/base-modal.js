@@ -1,43 +1,3 @@
-Necro.Views.ValidationView = Backbone.View.extend({
-	events: {
-		'change .form-control': 'validate',
-		'focusout .form-control': 'validate'
-	},
-	
-	validate: function(e) {
-		let field = $(e.currentTarget);
-		if (this.checkValidation) this.checkValidation(field);
-		if ($('.is-invalid', this.$el).length == 0) {
-			$('.validation-alert', this.el).removeClass('d-block').addClass('d-none');
-		}
-	},
-
-	validateInfo: function(item, cb) {
-		console.log(item);
-
-		$.ajax({
-			url: '/api/registerValidation',
-			data: item,
-			dataType: 'json',
-			method: 'POST',
-			success: _.bind(function(data) {
-				cb(true);
-			}, this),
-			error: _.bind(function(data) {
-				cb((data.status == 200));
-			}, this),
-		});
-	},
-
-	doSave: function(callback) {
-		if ($('.is-invalid', this.$el).length) {
-			$('.validation-alert', this.el).addClass('d-block').removeClass('d-none');
-			return;
-		}
-		if (this.save) this.save(callback);
-	}
-});
-
 Necro.Views.BaseModal = Necro.Views.ValidationView.extend({
 	class: "row",
 
@@ -49,37 +9,73 @@ Necro.Views.BaseModal = Necro.Views.ValidationView.extend({
 	},
 });
 
-Necro.Views.BaseListView = Backbone.View.extend({
+Necro.Views.Modal = Backbone.View.extend({
 	tagName: 'div',
-	className: 'large-12',
-	searchKey: 'id',
+	className: 'modal',
+	templateName: 'modal-wrapper',
+	modalSize: null,
 
 	events: {
-		'keyup': 'search'
+		'click .action_save': 'saveData',
+		'keypress': 'keyAction'
 	},
 
-	search: function(e) {
-		if (e.keyCode !== 16) {
-			if ($('.search_input', this.$el).is(":focus")) {
-				let search = $('.search_input', this.$el).val();
-				let key = this.searchKey;
-				let items = this.collection.filter(function(item) {
-					var searchCol = item.attributes[key].toLowerCase();
-					if (searchCol.includes(search.toLowerCase())) return 1;
-					return 0;
-				})
-				this.addItems(items);
-			}
+	initialize : function(options) {
+		this.opts = options;
+		this.modalSize = options.modalSize;
+		this.buttonText = (options.buttonText) ? options.buttonText : 'Save changes';
+
+		var html = Necro.Utils.UI.TPL.get(this.templateName);
+		this.template = Handlebars.compile(html);
+		this.render();
+	},
+
+	render: function() {
+		this.$el.html(this.template({modal_title: this.opts.title}));
+		if (this.modalSize) $('.modal-dialog', this.$el).addClass(this.modalSize);
+
+		this.content = Necro.Utils.Resolver.getNewInstance(this.opts.class, {model: this.model});
+		this.content.options = this.opts;
+		
+		$('.modal-body', this.$el).html(this.content.render().$el);
+		$('.action_save', this.$el).html(this.buttonText);
+		$('body').append(this.$el);
+
+
+		this.modal = new bootstrap.Modal(this.el);
+		this.$el.on('hidden.bs.modal', _.bind(this.removeSelf, this))
+		this.modal.show();
+
+		return this.$el;
+	},
+
+	keyAction: function(e) {
+		//console.log(e.keyCode);
+		if (e.keyCode === 27) {
+			this.removeSelf();
 		}
 	},
 
-	addItems: function(item) {},
+	saveData: function(e) {
+		//console.log(e);
+		this.content.doSave(_.bind(function(success, model) {
+			if (success) {
+				this.close();
+				if (this.opts.callback) this.opts.callback(model);
+			}
+		}, this));
+	},
 
-	render: function() {
-		this.$el.html(this.template);
-		
-		if (this.onRender) this.onRender();
-		return this;
+	close: function(e) {
+		//console.log("Closing...");
+		if (document.activeElement) {
+			document.activeElement.blur();
+		}
+		this.removeSelf();
+	},
+
+	removeSelf: function() {
+		this.modal.hide();
+		this.$el.remove();
 	}
-
 });

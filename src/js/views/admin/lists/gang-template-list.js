@@ -12,7 +12,7 @@ Necro.Views.Admin.GangList = Backbone.View.extend({
 		var html = Necro.Utils.UI.TPL.get(this.templateName);
 		this.template = Handlebars.compile(html);
 
-        this.collection = new Necro.Collections.GangTypes({});
+		this.collection = new Necro.Collections.GangTypes({});
 		this.collection.fetch({
 			success: _.bind(this.addItems, this)
 		});
@@ -72,7 +72,6 @@ Necro.Views.Admin.GangItem = Backbone.View.extend({
 
 	render: function() {
 		this.$el.html(this.template(this.model.toJSON()));
-		//var menu = new Foundation.DropdownMenu($('ul.dropdown.menu', this.$el));
 		return this;
 	},
 

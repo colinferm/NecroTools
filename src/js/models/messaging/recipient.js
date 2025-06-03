@@ -1,0 +1,1 @@
+Necro.Models.Messaging.Recipient = Necro.Models.User.extend({	urlroot: "/api/messaging/recipients",	idAttribute: "id",	defaults: _.extend({		is_admin: false	}, Necro.Models.User.prototype.defaults)});Necro.Collections.Messaging.Recipients = Backbone.Collection.extend({	model: Necro.Models.Messaging.Recipient,	url: "/api/messaging/recipients"});

@@ -7,8 +7,18 @@ var Necro = {
 		Functions: {}
 	},
 	Routers: {},
-	Collections: {},
-	Models: {},
+	Collections: {
+		Campaign: {},
+		Gang: {},
+		Messaging: {},
+		User: {}
+	},
+	Models: {
+		Campaign: {},
+		Gang: {},
+		Messaging: {},
+		User: {}
+	},
 	Views: {
 		Admin: {
 			Modal: {}
