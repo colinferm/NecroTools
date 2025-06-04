@@ -65,3 +65,19 @@ CREATE TABLE necro_user_preference_map (
 	INDEX idx_user_prefs (user_id, preference_id)
 );
 
+DROP TABLE IF EXISTS necro_user_follow_map;
+CREATE TABLE necro_user_follow_map (
+	user_id INT NOT NULL,
+	followed_user_id INT NOT NULL,
+	created DATETIME NOT NULL,
+	INDEX idx_user_follows (user_id, followed_user_id)
+);
+
+DROP TABLE IF EXISTS necro_user_friends_map;
+CREATE TABLE necro_user_friends_map (
+	requesting_friend_user_id INT NOT NULL,
+	recieving_friend_user_id INT NOT NULL,
+	created DATETIME NOT NULL,
+	receiving_approved TINYINT NOT NULL DEFAULT `0`,
+	INDEX idx_user_friends (requesting_friend_user_id, recieving_friend_user_id)
+);
