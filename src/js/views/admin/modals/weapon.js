@@ -91,14 +91,13 @@ Necro.Views.Admin.Modal.WeaponCharacteristicListItem = Backbone.View.extend({
 		id: 0,
 		editTags: false,
 		createInvalidTags: false,
-		backspace: false,
-		tagTextProp: 'trait_name',
+		backspace: true,
 		dropdown: {
-			mapValueTo: 'trait_name',
-			searchKeys: ['trait_name']
+			enable: 1
 		},
 		autoComplete: {
-			tabKey: true
+			tabKey: true,
+			rightKey: true
 		}
 	},
 

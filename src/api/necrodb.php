@@ -5,6 +5,8 @@ class NecroDB {
 	public $permission_map = DB_PREFIX.'user_permission_map';
 	public $preferences = DB_PREFIX.'user_preference';
 	public $preference_map = DB_PREFIX.'user_preference_map';
+	
+	public $lookup = DB_PREFIX.'lookups';
 
 	public $gang_type = DB_PREFIX.'gang_type';
 	public $fighter_template = DB_PREFIX.'fighter_template';
@@ -15,7 +17,6 @@ class NecroDB {
 	public $weapon = DB_PREFIX.'weapon';
 	public $weapon_category = DB_PREFIX.'weapon_category';
 	public $weapon_characteristic = DB_PREFIX.'weapon_characteristic';
-	public $weapon_trait = DB_PREFIX.'weapon_trait';
 	public $weapon_trait_characteristic_map = DB_PREFIX.'weapon_trait_characteristic_map';
 
 	public $skill_set = DB_PREFIX.'fighter_skill_set';

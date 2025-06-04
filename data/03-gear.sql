@@ -76,78 +76,79 @@ INSERT INTO necro_weapon_characteristic VALUES (6, 6, 'Standard', 'E', '-', '+1'
 INSERT INTO necro_weapon_characteristic VALUES (7, 7, 'Bolter', '12', '24', '+1', '-', '4', '-1', '2', '6+');
 INSERT INTO necro_weapon_characteristic VALUES (8, 7, 'Flamer', '-', 'T', '-', '-', '4', '-1', '1', '5+');
 
-DROP TABLE IF EXISTS necro_weapon_trait;
-CREATE TABLE necro_weapon_trait (
+DROP TABLE IF EXISTS necro_lookups;
+CREATE TABLE necro_lookups (
 	id INT NOT NULL AUTO_INCREMENT,
-	trait_name VARCHAR(255) NOT NULL,
-	trait_value INT NOT NULL DEFAULT '0',
+	value VARCHAR(255) NOT NULL,
+	cr_value INT NOT NULL DEFAULT '0',
+	key VARCHAR(20) NOT NULL,
 	notes TEXT NULL,
 	PRIMARY KEY (id)
 );
-INSERT INTO necro_weapon_trait (id, trait_name, notes) VALUES (1, 'Rapid Fire (1)', 'All ranged weapons roll an ammo check die but weapons with this trait count the number of hits that are rolled.');
-INSERT INTO necro_weapon_trait (id, trait_name) VALUES (2, 'Backstab');
-INSERT INTO necro_weapon_trait (id, trait_name) VALUES (3, 'Toxin');
-INSERT INTO necro_weapon_trait (id, trait_name) VALUES (4, 'Parry');
-INSERT INTO necro_weapon_trait (id, trait_name) VALUES (5, 'Rending');
-INSERT INTO necro_weapon_trait (id, trait_name) VALUES (6, 'Combi');
-INSERT INTO necro_weapon_trait (id, trait_name) VALUES (7, 'Blaze');
-INSERT INTO necro_weapon_trait (id, trait_name) VALUES (8, 'Template');
-INSERT INTO necro_weapon_trait (id, trait_name) VALUES (9, 'Unstable');
-INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Assault Shield');
-INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Blast 3"');
-INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Blast 5"');
-INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Burrowing');
-INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Chem Delivery');
-INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Concussion');
-INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Cursed');
-INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Demolitions');
-INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Disarm');
-INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Drag');
-INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Digi');
-INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Energy Shield');
-INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Entangle');
-INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Esoteric');
-INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Exclusive');
-INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Fear');
-INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Flare');
-INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Fixed');
-INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Flash');
-INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Force');
-INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Gas');
-INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Graviton Pulse');
-INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Grenade');
-INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Hexagrammatic');
-INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Impale');
-INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Knockback');
-INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Limited');
-INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Master-Crafted');
-INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Melee');
-INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Melta');
-INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Plentiful');
-INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Power');
-INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Pulverise');
-INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Rad-phage');
-INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Reckless');
-INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Rending');
-INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Scarce');
-INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Scattershot');
-INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Seismic');
-INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Sever');
-INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Shield Breaker');
-INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Shock');
-INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Sidearm');
-INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Silent');
-INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Single Shot');
-INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Smoke');
-INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Unwieldy');
-INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Versatile');
-INSERT INTO necro_weapon_trait (id, trait_name) VALUES (0, 'Web');
+INSERT INTO necro_lookups (id, value, key, notes) VALUES (1, 'Rapid Fire (1)', 'WEAPON_TRAIT', 'All ranged weapons roll an ammo check die but weapons with this trait count the number of hits that are rolled.');
+INSERT INTO necro_lookups (id, value, key) VALUES (2, 'Backstab', 'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, value, key) VALUES (3, 'Toxin', 'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, value, key) VALUES (4, 'Parry', 'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, value, key) VALUES (5, 'Rending', 'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, value, key) VALUES (6, 'Combi', 'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, value, key) VALUES (7, 'Blaze', 'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, value, key) VALUES (8, 'Template', 'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, value, key) VALUES (9, 'Unstable', 'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, value, key) VALUES (0, 'Assault Shield', 'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, value, key) VALUES (0, 'Blast 3"', 'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, value, key) VALUES (0, 'Blast 5"', 'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, value, key) VALUES (0, 'Burrowing', 'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, value, key) VALUES (0, 'Chem Delivery', 'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, value, key) VALUES (0, 'Concussion', 'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, value, key) VALUES (0, 'Cursed', 'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, value, key) VALUES (0, 'Demolitions', 'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, value, key) VALUES (0, 'Disarm', 'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, value, key) VALUES (0, 'Drag', 'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, value, key) VALUES (0, 'Digi', 'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, value, key) VALUES (0, 'Energy Shield', 'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, value, key) VALUES (0, 'Entangle', 'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, value, key) VALUES (0, 'Esoteric', 'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, value, key) VALUES (0, 'Exclusive', 'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, value, key) VALUES (0, 'Fear', 'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, value, key) VALUES (0, 'Flare', 'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, value, key) VALUES (0, 'Fixed', 'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, value, key) VALUES (0, 'Flash', 'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, value, key) VALUES (0, 'Force', 'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, value, key) VALUES (0, 'Gas', 'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, value, key) VALUES (0, 'Graviton Pulse', 'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, value, key) VALUES (0, 'Grenade', 'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, value, key) VALUES (0, 'Hexagrammatic', 'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, value, key) VALUES (0, 'Impale', 'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, value, key) VALUES (0, 'Knockback', 'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, value, key) VALUES (0, 'Limited', 'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, value, key) VALUES (0, 'Master-Crafted', 'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, value, key) VALUES (0, 'Melee', 'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, value, key) VALUES (0, 'Melta', 'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, value, key) VALUES (0, 'Plentiful', 'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, value, key) VALUES (0, 'Power', 'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, value, key) VALUES (0, 'Pulverise', 'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, value, key) VALUES (0, 'Rad-phage', 'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, value, key) VALUES (0, 'Reckless', 'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, value, key) VALUES (0, 'Rending', 'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, value, key) VALUES (0, 'Scarce', 'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, value, key) VALUES (0, 'Scattershot', 'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, value, key) VALUES (0, 'Seismic', 'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, value, key) VALUES (0, 'Sever', 'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, value, key) VALUES (0, 'Shield Breaker', 'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, value, key) VALUES (0, 'Shock', 'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, value, key) VALUES (0, 'Sidearm', 'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, value, key) VALUES (0, 'Silent', 'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, value, key) VALUES (0, 'Single Shot', 'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, value, key) VALUES (0, 'Smoke', 'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, value, key) VALUES (0, 'Unwieldy', 'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, value, key) VALUES (0, 'Versatile', 'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, value, key) VALUES (0, 'Web', 'WEAPON_TRAIT');
 
 DROP TABLE IF EXISTS necro_weapon_trait_characteristic_map;
 CREATE TABLE necro_weapon_trait_characteristic_map (
 	characteristic_id INT NOT NULL,
-	trait_id INT NOT NULL,
-	INDEX idx_weapon_trait_characteristic (characteristic_id, trait_id)
+	trait_lookup_id INT NOT NULL,
+	INDEX idx_weapon_trait_characteristic (characteristic_id, trait_lookup_id)
 );
 INSERT INTO necro_weapon_trait_characteristic_map VALUES (1, 1);
 INSERT INTO necro_weapon_trait_characteristic_map VALUES (2, 1);
