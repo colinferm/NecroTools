@@ -80,7 +80,7 @@ DROP TABLE IF EXISTS necro_lookups;
 CREATE TABLE necro_lookups (
 	id INT NOT NULL AUTO_INCREMENT,
 	value VARCHAR(255) NOT NULL,
-	cr_value INT NOT NULL DEFAULT '0',
+	misc_value INT NOT NULL DEFAULT '0',
 	key VARCHAR(20) NOT NULL,
 	notes TEXT NULL,
 	PRIMARY KEY (id)

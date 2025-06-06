@@ -8,7 +8,7 @@ class WeaponController extends SlimController {
 	public static function getTraits() {
 		global $ndb;
 		$query = "
-			SELECT t.id, t.value, t.cr_value, t.notes FROM {$ndb->lookup} t WHERE t.key = 'WEAPON_TRAIT' ORDER BY t.value ASC
+			SELECT t.id, t.value, t.misc_value, t.notes FROM {$ndb->lookup} t WHERE t.key = 'WEAPON_TRAIT' ORDER BY t.value ASC
 		";
 		return $ndb->query($query);
 	}
@@ -51,7 +51,7 @@ class WeaponController extends SlimController {
 
 				foreach($chars as &$char) {
 					$traitSQL = "
-						SELECT t.id, t.value, t.cr_value 
+						SELECT t.id, t.value, t.misc_value 
 						FROM {$ndb->lookup} t, {$ndb->weapon_trait_characteristic_map} wtcm
 						WHERE t.id = wtcm.trait_lookup_id
 						AND t.key = 'WEAPON_TRAIT'
@@ -86,7 +86,7 @@ class WeaponController extends SlimController {
 	public static function buildCharacteristicTraits(&$char) {
 		global $ndb;
 		$traitSQL = "
-			SELECT t.id, t.value, t.cr_value 
+			SELECT t.id, t.value, t.misc_value 
 			FROM {$ndb->lookup} t, {$ndb->weapon_trait_characteristic_map} wtcm
 			WHERE t.id = wtcm.trait_lookup_id
 			AND t.key = 'WEAPON_TRAIT'
@@ -108,7 +108,7 @@ class WeaponController extends SlimController {
 		global $ndb;
 		$id = $args['id'];
 		$query = "
-			SELECT t.id, t.value, t.cr_value, t.notes FROM {$ndb->lookup} t WHERE t.id = :id ORDER BY t.value_name ASC
+			SELECT t.id, t.value, t.misc_value, t.notes FROM {$ndb->lookup} t WHERE t.id = :id ORDER BY t.value_name ASC
 		";
 		$data = $ndb->query($query, ['id' => $id]);
 		$response->getBody()->write(json_encode($data));
@@ -130,9 +130,9 @@ class WeaponController extends SlimController {
 		unset($trait['id']);
 		$query = "
 			INSERT INTO {$ndb->lookup}
-				(value, cr_value, notes, key)
+				(value, misc_value, notes, key)
 			VALUES
-				(:value, :cr_value, :notes, 'WEAPON_TRAIT')
+				(:value, :misc_value, :notes, 'WEAPON_TRAIT')
 		";
 		$result = $ndb->insert($query, $trait);
 		if ($result) {
@@ -148,7 +148,7 @@ class WeaponController extends SlimController {
 		$trait = json_decode($request->getBody(), true);
 		$query = "
 			UPDATE {$ndb->lookup}
-			SET value = :value, cr_value = :cr_value, notes = :notes
+			SET value = :value, misc_value = :misc_value, notes = :notes
 			WHERE id = :id
 		";
 		$result = $ndb->update($query, $trait);
