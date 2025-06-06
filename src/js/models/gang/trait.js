@@ -4,7 +4,7 @@ Necro.Models.Trait = Backbone.Model.extend({
 	defaults: {
 		"id": null,
 		"value": "",
-		"cr_value": "0",
+		"misc_value": "0",
 		"notes": "",
 	}
 });
