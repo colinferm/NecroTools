@@ -25,12 +25,16 @@ Necro.Views.Roster = Backbone.View.extend({
 	},
 
 	addItems: function() {
-		$('tbody', this.el).empty()
+		$('.roster-list', this.$el).empty()
 		_.each(this.model.get("fighters").models, function(model) {
-			var item = new Necro.Views.RosterItem({model: model});
-			$('tbody', this.el).append(item.render().$el);
-		});
+			this.addItem(model);
+		}, this);
 		Necro.Events.trigger("roster_updated", this.collection);
+	},
+
+	addItem: function(item) {
+		var v = new Necro.Views.RosterItem({model: item});
+		$('.roster-list', this.$el).append(v.render().$el);
 	},
 
 	addFighter: function() {
@@ -45,7 +49,8 @@ Necro.Views.Roster = Backbone.View.extend({
 
 
 Necro.Views.RosterItem = Backbone.View.extend({
-	tagName: 'tr',
+	tagName: 'div',
+	className: 'roster-info-card-container mb-3',
 	templateName: 'roster-list-item',
 
 	events: {

@@ -3,6 +3,7 @@ $color-transparent-white: rgba(255, 255, 255, 0.5);
 $color-transparent: transparent;
 $color-black: #000;
 $color-necro-yellow: #FFC900;
+$color-necro-brown: #A46C31;
 
 $font-hairline: "BungeeHairline-Regular";
 $font-outline: "BungeeOutline-Regular";
@@ -402,6 +403,102 @@ html {
 								}
 								h3 {
 									font-family: $font-dirt;
+								}
+							}
+						}
+					}
+				}
+
+				.roster-list {
+					.roster-info-card-container {
+						border-radius: 20px;
+						overflow: hidden;
+						background-color: $color-white;
+						background-image: url('/img/paper-texture.webp');
+
+						.gang-roster-card {
+							border-radius: 20px;
+							overflow: hidden;
+
+							.fighter-basic-info {
+								background-color: $color-necro-brown;
+								position: relative;
+
+								h4 {
+									color: $color-white;
+									font-family: $font-glitch;
+
+								}
+								h6 {
+									color: $color-white;
+									font-weight: bold;
+									text-transform: uppercase;
+									letter-spacing: 0.5px;
+									font-size: 0.8rem;
+								}
+							}
+
+							.fighter-value-container {
+								position: absolute;
+								top: -9px;
+								right: -15px;
+								color: $color-white;
+								background-color: $color-necro-brown;
+								border: 8px solid $color-black;
+								padding: 20px;
+								border-radius: 60px;
+								width: 80px;
+								height: 80px;
+
+								.fighter-value {
+									letter-spacing: 1px;
+								}
+
+								.credits {
+									font-size: 10px;
+									font-weight: bold;
+									text-transform: uppercase;
+									letter-spacing: 0.5px;
+								}
+							}
+
+							.everything-else-container {
+								background-color: rgba(255,255,255,0.4);
+								border-radius: 10px;
+
+								table {
+									width: 100%;
+									background-color: $color-transparent;
+								}
+
+								.stats-container {
+									table {
+										thead {
+											border-bottom: 1.5px solid $color-black;
+
+											th {
+												width: 8.3%;
+												text-align: center;	
+
+												&.head-stat {
+													background-color: $color-necro-brown;
+													
+													&:first-of-type {
+														border-left: 5px solid $color-black;
+													}
+												}
+											}
+										}
+
+										td {
+											width: 8.3%;
+											text-align: center;	
+
+											&.head-stat {
+												background-color: $color-necro-brown;
+											}
+										}
+									}
 								}
 							}
 						}
