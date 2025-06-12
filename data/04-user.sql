@@ -78,6 +78,6 @@ CREATE TABLE necro_user_friends_map (
 	requesting_friend_user_id INT NOT NULL,
 	recieving_friend_user_id INT NOT NULL,
 	created DATETIME NOT NULL,
-	receiving_approved TINYINT NOT NULL DEFAULT `0`,
+	receiving_approved TINYINT NOT NULL DEFAULT '0',
 	INDEX idx_user_friends (requesting_friend_user_id, recieving_friend_user_id)
 );

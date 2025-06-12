@@ -1,1 +1,57 @@
-Necro.Models.Campaign.Campaign = Backbone.Model.extend({	urlRoot: "/api/campaign",	idAttribute: "id",	defaults: {		id: null,		creator: null,		creator_id: 0,		campaign_type: null,		campaign_type_id: 0,		phase: 'phase 1',		round_num: "0",		members: null,		territories: null,	}		parse: function(response) {		if (response.creator_id) {			response.creator = new Necro.Models.User({id: response.creator_id});		}				if (response.campaign_type_id) {					}		if (response.members) {			response.members = new Necro.Collections.Campaign.Members(response.members);		}		if(response.territories) {			response.territories = new Necro.Collections.Campaign.Territories(response.territories);		}		return response;	}	});Necro.Collections.Campaign.Campaigns = Backbone.Collection.extend({	model: Necro.Models.Campaign.Campaign,	url: "/api/campaign"});Necro.Models.Campaign.Member = Necro.Models.Gang.extend({	urlRoot: function() {		return "/api/campaign/" + this.campaign_id + "/member";	}	campaign_id: 0,	idAttribute: "id",	defaults: _.extend({		role: 'gang'	}, Necro.Models.Gang.prototype.defaults)});Necro.Collections.Campaign.Members = Backbone.Collection.extend({	model: Necro.Models.Campaign.Member,	url: function() {		return "/api/campaign/" + this.campaign_id + "/members";	}	campaign_id: 0});
+Necro.Models.Campaign.Campaign = Backbone.Model.extend({
+	urlRoot: "/api/campaign",
+	idAttribute: "id",
+	defaults: {
+		id: null,
+		creator: null,
+		creator_id: 0,
+		campaign_type: null,
+		campaign_type_id: 0,
+		phase: 'phase 1',
+		round_num: "0",
+		members: null,
+		territories: null,
+	},
+	
+	parse: function(response) {
+		if (response.creator_id) {
+			response.creator = new Necro.Models.User({id: response.creator_id});
+		}
+		
+		if (response.campaign_type_id) {
+			
+		}
+		if (response.members) {
+			response.members = new Necro.Collections.Campaign.Members(response.members);
+		}
+		if(response.territories) {
+			response.territories = new Necro.Collections.Campaign.Territories(response.territories);
+		}
+		return response;
+	}
+	
+});
+
+Necro.Collections.Campaign.Campaigns = Backbone.Collection.extend({
+	model: Necro.Models.Campaign.Campaign,
+	url: "/api/campaign"
+});
+
+Necro.Models.Campaign.Member = Necro.Models.Gang.extend({
+	urlRoot: function() {
+		return "/api/campaign/" + this.campaign_id + "/member";
+	},
+	campaign_id: 0,
+	idAttribute: "id",
+	defaults: _.extend({
+		role: 'gang'
+	}, Necro.Models.Gang.prototype.defaults)
+});
+
+Necro.Collections.Campaign.Members = Backbone.Collection.extend({
+	model: Necro.Models.Campaign.Member,
+	url: function() {
+		return "/api/campaign/" + this.campaign_id + "/members";
+	},
+	campaign_id: 0
+});

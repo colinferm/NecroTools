@@ -1,1 +1,41 @@
-Necro.Models.Campaign.TerritoryTemplate = Backbone.Model.extend({	urlroot: "/api/territory-template",	idAttribute: "id",	defaults: {		id: 0,		campaign_type_id: 0,		name: '',		territory_description: null,		generic_boon: '',		gang_specific_boon: null,		gang_specific_id: null,	}});Necro.Models.Campaign.Territory = Necro.Models.Campaign.TerritoryTemplate.extend({	urlRoot: function() {		return "/api/campaign/" + this.campaign_id + "/territory";	},	idAttribute: "id",	defaults: _.extend({		campaign_id: 0,		owning_gang_id: null,		is_despoiled: false,		last_mod: null	}, Necro.Models.Campaign.TerritoryTemplate.prototype.defaults)		parse: function(response) {		if (response.is_despoiled) response.is_despoiled = true;		if (response.created) response.created = new Date(response.created);		if (response.last_mod) response.last_mod = new Date(response.last_mod);		return response;	}});Necro.Collections.Campaign.Territories = Backbone.Collection.extend({	model: Necro.Models.Campaign.Territory,	campaign_id: 0,	url: function() {		return "/api/campaign/" + this.campaign_id + "/territories";	}});
+Necro.Models.Campaign.TerritoryTemplate = Backbone.Model.extend({
+	urlroot: "/api/territory-template",
+	idAttribute: "id",
+	defaults: {
+		id: 0,
+		campaign_type_id: 0,
+		name: '',
+		territory_description: null,
+		generic_boon: '',
+		gang_specific_boon: null,
+		gang_specific_id: null,
+	}
+});
+
+Necro.Models.Campaign.Territory = Necro.Models.Campaign.TerritoryTemplate.extend({
+	urlRoot: function() {
+		return "/api/campaign/" + this.campaign_id + "/territory";
+	},
+	idAttribute: "id",
+	defaults: _.extend({
+		campaign_id: 0,
+		owning_gang_id: null,
+		is_despoiled: false,
+		last_mod: null
+	}, Necro.Models.Campaign.TerritoryTemplate.prototype.defaults),
+	
+	parse: function(response) {
+		if (response.is_despoiled) response.is_despoiled = true;
+		if (response.created) response.created = new Date(response.created);
+		if (response.last_mod) response.last_mod = new Date(response.last_mod);
+		return response;
+	}
+});
+
+Necro.Collections.Campaign.Territories = Backbone.Collection.extend({
+	model: Necro.Models.Campaign.Territory,
+	campaign_id: 0,
+	url: function() {
+		return "/api/campaign/" + this.campaign_id + "/territories";
+	}
+});

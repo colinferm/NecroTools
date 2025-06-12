@@ -123,12 +123,13 @@ CREATE TABLE necro_user_fighter_xp_record (
 	user_fighter_id INT NOT NULL,
 	created DATETIME NOT NULL,
 	xp_lookup_id INT NOT NULL,
-	INDEX idx_fighter_injury_map (user_fighter_id, injury_id)
+	PRIMARY KEY(id),
+	INDEX idx_fighter_xp_record (user_fighter_id, xp_lookup_id)
 );
 
-INSERT INTO necro_lookups (name, key, misc_value) VALUES ('Inflicted Serious Injury', 'XP_EVENT', 1);
-INSERT INTO necro_lookups (name, key, misc_value) VALUES ('Provided Aide', 'XP_EVENT', 1);
-INSERT INTO necro_lookups (name, key, misc_value) VALUES ('Fighter Rallied', 'XP_EVENT', 1);
-INSERT INTO necro_lookups (name, key, misc_value) VALUES ('Out of Action', 'XP_EVENT', 2);
-INSERT INTO necro_lookups (name, key, misc_value) VALUES ('Out of Action (Champion/Vehicle)', 'XP_EVENT', 3);
-INSERT INTO necro_lookups (name, key, misc_value) VALUES ('Killed Fighter', 'XP_EVENT', 1);
+INSERT INTO necro_lookups (lookup_value, lookup_key, misc_value) VALUES ('Inflicted Serious Injury', 'XP_EVENT', 1);
+INSERT INTO necro_lookups (lookup_value, lookup_key, misc_value) VALUES ('Provided Aide', 'XP_EVENT', 1);
+INSERT INTO necro_lookups (lookup_value, lookup_key, misc_value) VALUES ('Fighter Rallied', 'XP_EVENT', 1);
+INSERT INTO necro_lookups (lookup_value, lookup_key, misc_value) VALUES ('Out of Action', 'XP_EVENT', 2);
+INSERT INTO necro_lookups (lookup_value, lookup_key, misc_value) VALUES ('Out of Action (Champion/Vehicle)', 'XP_EVENT', 3);
+INSERT INTO necro_lookups (lookup_value, lookup_key, misc_value) VALUES ('Killed Fighter', 'XP_EVENT', 1);

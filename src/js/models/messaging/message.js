@@ -1,1 +1,35 @@
-Necro.Models.Messaging.Message = Backbone.Model.extend({	urlRoot:     "/api/messaging/message",	idAttribute: "id",	defaults: {		id: null,		thread_id: 0,		thread: null,		sending_user_id: 0,		sending_user: null,		message: null,		created: null,		last_mod: null	}		parse: function(response) {		if (response.created) response.created = new Date(response.created);		if (response.last_mod) response.last_mod = new Date(response.last_mod);				if (response.sending_user_id) {			response.sending_user = new Necro.Models.User({id: response.sending_user_id});		}				if (response.thread_id) {			response.thread = new Necro.Models.Messaging.Thread({id: response.thread_id});		}		return response;	}	});Necro.Collections.Messaging.Messages = Backbone.Collection.extend({	model: Necro.Models.Messaging.Message,	url:   '/api/messaging/message'});
+Necro.Models.Messaging.Message = Backbone.Model.extend({
+	urlRoot:     "/api/messaging/message",
+	idAttribute: "id",
+	defaults: {
+		id: null,
+		thread_id: 0,
+		thread: null,
+		sending_user_id: 0,
+		sending_user: null,
+		message: null,
+		created: null,
+		last_mod: null
+	},
+	
+	parse: function(response) {
+		if (response.created) response.created = new Date(response.created);
+		if (response.last_mod) response.last_mod = new Date(response.last_mod);
+		
+		if (response.sending_user_id) {
+			response.sending_user = new Necro.Models.User({id: response.sending_user_id});
+		}
+		
+		if (response.thread_id) {
+			response.thread = new Necro.Models.Messaging.Thread({id: response.thread_id});
+		}
+
+		return response;
+	}
+	
+});
+
+Necro.Collections.Messaging.Messages = Backbone.Collection.extend({
+	model: Necro.Models.Messaging.Message,
+	url:   '/api/messaging/message'
+});

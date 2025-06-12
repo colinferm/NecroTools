@@ -8,7 +8,7 @@ class WeaponController extends SlimController {
 	public static function getTraits() {
 		global $ndb;
 		$query = "
-			SELECT t.id, t.value, t.misc_value, t.notes FROM {$ndb->lookup} t WHERE t.key = 'WEAPON_TRAIT' ORDER BY t.value ASC
+			SELECT t.id, t.lookup_value AS value, t.misc_value, t.notes FROM {$ndb->lookup} t WHERE t.lookup_key = 'WEAPON_TRAIT' ORDER BY t.lookup_value ASC
 		";
 		return $ndb->query($query);
 	}
@@ -51,12 +51,12 @@ class WeaponController extends SlimController {
 
 				foreach($chars as &$char) {
 					$traitSQL = "
-						SELECT t.id, t.value, t.misc_value 
+						SELECT t.id, t.lookup_value AS value, t.misc_value 
 						FROM {$ndb->lookup} t, {$ndb->weapon_trait_characteristic_map} wtcm
 						WHERE t.id = wtcm.trait_lookup_id
-						AND t.key = 'WEAPON_TRAIT'
+						AND t.lookup_key = 'WEAPON_TRAIT'
 						AND wtcm.characteristic_id = :char_id
-						ORDER BY t.value ASC
+						ORDER BY t.lookup_value ASC
 					";
 					$traits = $ndb->query($traitSQL, ['char_id' => $char['id']]);
 					$char['traits'] = $traits;
@@ -86,12 +86,12 @@ class WeaponController extends SlimController {
 	public static function buildCharacteristicTraits(&$char) {
 		global $ndb;
 		$traitSQL = "
-			SELECT t.id, t.value, t.misc_value 
+			SELECT t.id, t.lookup_value AS value, t.misc_value 
 			FROM {$ndb->lookup} t, {$ndb->weapon_trait_characteristic_map} wtcm
 			WHERE t.id = wtcm.trait_lookup_id
-			AND t.key = 'WEAPON_TRAIT'
+			AND t.lookup_key = 'WEAPON_TRAIT'
 			AND wtcm.characteristic_id = :char_id
-			ORDER BY t.value ASC
+			ORDER BY t.lookup_value ASC
 		";
 		$traits = $ndb->query($traitSQL, ['char_id' => $char['id']]);
 		$char['traits'] = $traits;
@@ -108,7 +108,7 @@ class WeaponController extends SlimController {
 		global $ndb;
 		$id = $args['id'];
 		$query = "
-			SELECT t.id, t.value, t.misc_value, t.notes FROM {$ndb->lookup} t WHERE t.id = :id ORDER BY t.value_name ASC
+			SELECT t.id, t.lookup_value AS value, t.misc_value, t.notes FROM {$ndb->lookup} t WHERE t.id = :id ORDER BY t.lookup_value ASC
 		";
 		$data = $ndb->query($query, ['id' => $id]);
 		$response->getBody()->write(json_encode($data));
@@ -130,7 +130,7 @@ class WeaponController extends SlimController {
 		unset($trait['id']);
 		$query = "
 			INSERT INTO {$ndb->lookup}
-				(value, misc_value, notes, key)
+				(lookup_value, misc_value, notes, lookup_key)
 			VALUES
 				(:value, :misc_value, :notes, 'WEAPON_TRAIT')
 		";
