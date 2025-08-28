@@ -52,3 +52,20 @@ CREATE TABLE necro_gang_fighter_role_skill_set_map (
 	is_primary TINYINT NOT NULL DEFAULT '1',
 	INDEX idx_fighter_role_skill_set (fighter_role_id, skill_set_id)
 );
+
+DROP TABLE IF EXISTS necro_archetype;
+CREATE TABLE necro_archetype (
+	id INT NOT NULL AUTO_INCREMENT,
+	archetype_name VARCHAR(200) NOT NULL,
+	archetype_description TEXT,
+	is_wyrd TINYINT NOT NULL DEFAULT '0',
+	PRIMARY KEY (id)
+);
+
+DROP TABLE IF EXISTS necro_fighter_archetype_skill_set_map;
+CREATE TABLE necro_archetype_skill_set_map (
+	archetype_id INT NOT NULL,
+	skill_set_id INT NOT NULL,
+	is_primary TINYINT NOT NULL DEFAULT '1',
+	INDEX idx_archetype_skill_set (archetype_id, skill_set_id)
+);

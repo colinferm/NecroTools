@@ -21,6 +21,7 @@ Necro.Models.Fighter = Backbone.Model.extend({
 		"intelligence": "",
 		"is_vehicle": false,
 		"is_convalescence": false,
+		"is_wyrd": false,
 		"experience": 0,
 		"base_value": 0,
 		"weapons": Necro.Collections.Weapon,

@@ -76,14 +76,15 @@ class GangController extends SlimController {
 			'user_id' => $gang['user_id'],
 			'gang_name' => $gang['gang_name'],
 			'gang_type_id' => $gang['gang_type_id'],
-			'outlaw' => $gang['outlaw']
+			'outlaw' => $gang['outlaw'],
+			'outcast' => $gang['outcast']
 		);
 
 		$query = "
 			INSERT INTO {$ndb->user_gang}
-			(user_id, gang_name, gang_type_id, outlaw, created, last_mod)
+			(user_id, gang_name, gang_type_id, outlaw, outcast, created, last_mod)
 			VALUES
-			(:user_id, :gang_name, :gang_type_id, :outlaw, NOW(), NOW())
+			(:user_id, :gang_name, :gang_type_id, :outlaw, :outcast, NOW(), NOW())
 		";
 		$result = $ndb->insert($query, $params);
 		if ($result) {
@@ -147,7 +148,7 @@ class GangController extends SlimController {
 		global $ndb;
 		$query = "
 			SELECT 
-				gt.id, gt.type_name, gt.house_gang, gt.outlaw, gt.created, gt.last_mod
+				gt.id, gt.type_name, gt.house_gang, gt.outlaw, gt.outcast, gt.created, gt.last_mod
 			FROM {$ndb->gang_type} gt
 			ORDER BY gt.house_gang DESC, gt.outlaw ASC, gt.type_name ASC
 		";
@@ -169,7 +170,7 @@ class GangController extends SlimController {
 		global $ndb;
 		$query = "
 			SELECT 
-				gt.id, gt.type_name, gt.house_gang, gt.outlaw, gt.created, gt.last_mod
+				gt.id, gt.type_name, gt.house_gang, gt.outlaw, gt.outcast, gt.created, gt.last_mod
 			FROM {$ndb->gang_type} gt
 			WHERE gt.id = :gang_type_id
 			ORDER BY gt.house_gang DESC, gt.outlaw ASC, gt.type_name ASC
@@ -197,14 +198,14 @@ class GangController extends SlimController {
 		];
 
 		if ($request->getMethod() == 'POST') {
-			$insertQuery = "INSERT INTO {$ndb->gang_type} (type_name, gang_description, house_gang, outlaw, created, last_mod) VALUES (:type_name, :description, :house_gang, :outlaw, NOW(), NOW())";
+			$insertQuery = "INSERT INTO {$ndb->gang_type} (type_name, gang_description, house_gang, outlaw, outcast, created, last_mod) VALUES (:type_name, :description, :house_gang, :outlaw, :outcast, NOW(), NOW())";
 			if ($ndb->insert($insertQuery, $params)) {
 				$gang->id = $ndb->lastInsertId;
 				$gang->created = date("m/d/Y");
 				$gang->last_mod = date("m/d/Y");
 			}
 		} else {
-			$updateQuery = "UPDATE {$ndb->gang_type} SET type_name = :type_name, gang_description = :description, house_gang = :house_gang, outlaw = :outlaw, last_mod = NOW() WHERE id = :id";
+			$updateQuery = "UPDATE {$ndb->gang_type} SET type_name = :type_name, gang_description = :description, house_gang = :house_gang, outlaw = :outlaw, outcast = :outcast, last_mod = NOW() WHERE id = :id";
 			$params['id'] = $id;
 			$ndb->update($updateQuery, $params);
 			$gang->last_mod = date("m/d/Y");

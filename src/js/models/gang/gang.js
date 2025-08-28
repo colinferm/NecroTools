@@ -5,6 +5,7 @@ Necro.Models.Gang = Backbone.Model.extend({
 		"id": null,
 		"gang_name": "",
 		"outlaw": false,
+		"outcast": false,
 		"num_fighters": 0,
 		"credits": 1000,
 		"fighters": Necro.Models.FighterCollection,
@@ -58,6 +59,7 @@ Necro.Models.GangTemplate = Backbone.Model.extend({
 		"id": null,
 		"gang_name": "",
 		"outlaw": false,
+		"outcast": false,
 		"num_fighters": 0,
 		"fighters": Necro.Collections.Fighters,
 		"stash": Necro.Collections.Weapons

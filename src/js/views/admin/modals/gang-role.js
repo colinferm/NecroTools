@@ -41,6 +41,7 @@ Necro.Views.Admin.Modal.GangRoleEdit = Necro.Views.BaseModal.extend({
 
 		var isVehicle = ($('.isVehicle', this.$el).is(':checked')) ? 1 : 0;
 		var isDramatis = ($('.isDramatis', this.$el).is(':checked')) ? 1 : 0;
+		var isWyrd = ($('.isWyrd', this.$el).is(':checked')) ? 1 : 0;
 
 		var m = this.model;
 		m.set("role_name", roleName);
@@ -51,6 +52,7 @@ Necro.Views.Admin.Modal.GangRoleEdit = Necro.Views.BaseModal.extend({
 		t.set("num_start_skills", numStartSkills);
 		t.set("is_vehicle", isVehicle);
 		t.set("is_dramatis", isDramatis);
+		t.set("is_wyrd", isWyrd);
 
 		m.save(null, {
 			success: function(mo, r, o) {

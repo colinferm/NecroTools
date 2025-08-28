@@ -5,6 +5,7 @@ CREATE TABLE necro_user_gang (
 	gang_name VARCHAR(255) NOT NULL,
 	gang_type_id INT NOT NULL,
 	outlaw TINYINT NOT NULL DEFAULT '0',
+	outcast TINYINT NOT NULL DEFAULT '0',
 	credits INT NOT NULL DEFAULT '0',
 	created DATETIME NOT NULL,
 	last_mod DATETIME NOT NULL,
@@ -12,8 +13,8 @@ CREATE TABLE necro_user_gang (
 	INDEX idx_gang_user (user_id)
 );
 
-INSERT INTO necro_user_gang VALUES (1, 1, 'The Bad Asses', 1, 0, 1000, NOW(), NOW());
-INSERT INTO necro_user_gang VALUES (2, 1, 'Not Your Mamas', 2, 0, 1000, NOW(), NOW());
+INSERT INTO necro_user_gang VALUES (1, 1, 'The Bad Asses', 1, 0, 0, 1000, NOW(), NOW());
+INSERT INTO necro_user_gang VALUES (2, 1, 'Not Your Mamas', 2, 0, 0, 1000, NOW(), NOW());
 
 DROP TABLE IF EXISTS necro_user_gang_audit;
 CREATE TABLE necro_user_gang_audit (
@@ -48,10 +49,11 @@ CREATE TABLE necro_user_fighter (
 	cool VARCHAR(4),
 	willpower VARCHAR(4),
 	intelligence VARCHAR(4),
-	is_vehicle TINYINT NOT NULL,
-	is_convalescence TINYINT NOT NULL,
-	is_captured TINYINT NOT NULL,
-	is_dramatis TINYINT NOT NULL,
+	is_vehicle TINYINT NOT NULL DEFAULT '0',
+	is_convalescence TINYINT NOT NULL DEFAULT '0',
+	is_captured TINYINT NOT NULL DEFAULT '0',
+	is_dramatis TINYINT NOT NULL DEFAULT '0',
+	is_wyrd TINYINT NOT NULL DEFAULT '0',
 	experience TINYINT NOT NULL,
 	advancements TINYINT NOT NULL,
 	base_value INT NOT NULL,
@@ -60,8 +62,8 @@ CREATE TABLE necro_user_fighter (
 	PRIMARY KEY (id),
 	INDEX idx_user_fighter_gang (user_gang_id)
 );
-INSERT INTO necro_user_fighter VALUES(1, 1, 'Joe Blow', 11, NULL, '5', '3', '3', '3', '3', '0', '0', '2', '4', '2', 0, 0, '7', '8', '8', '8', 0, 0, 0, 0, 6, 2, 125, 1, NOW());
-INSERT INTO necro_user_fighter VALUES(2, 1, 'Jill Jones', 13, NULL, '5', '4', '3', '3', '3', '0', '0', '2', '4', '2', 0, 0, '8', '8', '8', '8', 0, 0, 0, 0, 4, 1, 115, 1, NOW());
+INSERT INTO necro_user_fighter VALUES(1, 1, 'Joe Blow', 11, NULL, '5', '3', '3', '3', '3', '0', '0', '2', '4', '2', 0, 0, '7', '8', '8', '8', 0, 0, 0, 0, 0, 6, 2, 125, 1, NOW());
+INSERT INTO necro_user_fighter VALUES(2, 1, 'Jill Jones', 13, NULL, '5', '4', '3', '3', '3', '0', '0', '2', '4', '2', 0, 0, '8', '8', '8', '8', 0, 0, 0, 0, 0, 4, 1, 115, 1, NOW());
 
 DROP TABLE IF EXISTS necro_user_fighter_audit;
 CREATE TABLE necro_user_fighter_audit (

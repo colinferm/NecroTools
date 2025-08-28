@@ -6,6 +6,7 @@ Necro.Models.GangType = Backbone.Model.extend({
 		"type_name": "",
 		"house_gang": true,
 		"outlaw": false,
+		"outcast": false,
 		"credits": 1000,
 		"gang_description": "",
 		"created": "",

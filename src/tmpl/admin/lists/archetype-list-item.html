@@ -1,0 +1,25 @@
+<td class="archetype_name"><b>{{archetype_name}}</b></td>
+<td class="primary_skills">
+	{{#each primary_skills.models}}
+		<span class="badge bg-secondary">{{attributes.skill_set_name}}</span>
+	{{/each}}
+</td>
+<td class="secondary_skills">
+	{{#each secondary_skills.models}}
+		<span class="badge bg-dark">{{attributes.skill_set_name}}</span>
+	{{/each}}
+</td>
+<td class="archetype_description">{{archetype_description}}</td>
+<td class="d-flex justify-content-center">
+	<div class="btn-group" role="group">
+		<button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+		  Action
+		</button>
+		<ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+			<li class="d-flex flex-row align-items-start p-1 action_edit"><i class="fi-info ms-1 me-2"></i> <span>Edit</span></li>
+			<li class="d-flex flex-row align-items-start p-1 action_primary"><i class="fi-checkbox ms-1 me-2"></i> <span>Primary Skills</span></li>
+			<li class="d-flex flex-row align-items-start p-1 action_secondary"><i class="fi-checkbox ms-1 me-2"></i> <span>Secondary Skills</span></li>
+			<li class="d-flex flex-row align-items-start p-1 action_remove"><i class="fi-trash ms-1 me-2"></i> <span>Delete</span></li>
+		</ul>
+	</div>
+</td>

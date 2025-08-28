@@ -31,6 +31,9 @@ class NecroDB {
 	public $user_fighter_weapon_map = DB_PREFIX.'user_fighter_weapon_map';
 	public $user_fighter_skill_map = DB_PREFIX.'user_fighter_skill_map';
 	public $user_fighter_injury_map = DB_PREFIX.'user_fighter_injury_map';
+
+	public $fighter_archetype = DB_PREFIX.'archetype';
+	public $fighter_archetype_skill_set_map = DB_PREFIX."archetype_skill_set_map";
 	
 	private $db = null;
 

@@ -56,6 +56,13 @@ $app->post('/fighter/role/{id}/stats', [\FighterController::class, 'addUpdateTem
 $app->put('/fighter/role/{id}/stats', [\FighterController::class, 'addUpdateTemplateStats'])->add($requireDataAdmin);
 $app->put('/fighter/role/{id}/skills/{primary}', [\FighterController::class, 'updateTemplateSkills'])->add($requireDataAdmin);
 
+$app->get('/archetypes', [\FighterController::class, 'fetchArchetypes']);
+$app->put('/api/archetypes/{id}/sets/{primary}', [\FighterController::class, 'updateArchetypeSkills']);
+$app->post('/archetype', [\FighterController::class, 'addUpdateArchetype'])->add($requireLoggedIn);
+$app->get('/archetype/{id}', [\FighterController::class, 'fetchArchetype']);
+$app->put('/archetype/{id}', [\FighterController::class, 'addUpdateArchetype'])->add($requireLoggedIn);
+$app->delete('/archetype/{id}', [\FighterController::class, 'removeArchetype'])->add($requireLoggedIn);
+
 $app->get('/fighter/template/{id}', [\FighterController::class, 'fetchFighterTemplate'])->add($requireDataAdmin);
 
 $app->get('/traits', [\WeaponController::class, 'fetchTraits'])->add($requireLoggedIn);

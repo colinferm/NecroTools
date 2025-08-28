@@ -9,7 +9,7 @@ class FighterController extends SlimController {
 		global $ndb;
 		$params = array();
 		$query = "
-			SELECT ss.id, ss.skill_set_name, ss.limited_to_gang, ss.gang_type_id, gt.type_name AS gang_name
+			SELECT ss.id, ss.skill_set_name, ss.limited_to_gang, ss.is_wyrd, ss.gang_type_id, gt.type_name AS gang_name
 			FROM {$ndb->skill_set} ss
 			LEFT JOIN {$ndb->gang_type} gt ON ss.gang_type_id = gt.id
 			WHERE 1 = 1
@@ -77,7 +77,7 @@ class FighterController extends SlimController {
 		if ($request->getMethod() == 'POST') {
 			unset($skillSet['id']);
 
-			$insertQuery = "INSERT INTO {$ndb->skill_set} (skill_set_name, limited_to_gang, gang_type_id) VALUES (:skill_set_name, :limited_to_gang, :gang_type_id)";
+			$insertQuery = "INSERT INTO {$ndb->skill_set} (skill_set_name, limited_to_gang, is_wyrd, gang_type_id) VALUES (:skill_set_name, :limited_to_gang, :is_wyrd, :gang_type_id)";
 			if ($ndb->insert($insertQuery, $skillSet)) {
 				$skillSet['id'] = $ndb->lastInsertId;
 			}
@@ -105,7 +105,7 @@ class FighterController extends SlimController {
 		global $ndb;
 
 		$skillQuery = "
-			SELECT s.id, s.skill_set_id, s.skill_name, s.skill_description, ss.skill_set_name
+			SELECT s.id, s.skill_set_id, s.skill_name, s.skill_description, ss.skill_set_name, ss.is_wyrd
 			FROM {$ndb->skill} s, {$ndb->skill_set} ss 
 			WHERE s.skill_set_id = ss.id
 			AND s.id = :id
@@ -377,7 +377,7 @@ class FighterController extends SlimController {
 		$isPrimary = 0;
 		if ($primarySkill) $isPrimary = 1;
 		$query = "
-			SELECT s.id, s.skill_set_name, s.limited_to_gang
+			SELECT s.id, s.skill_set_name, s.limited_to_gang, s.is_wyrd
 			FROM {$ndb->skill_set} s, {$ndb->fighter_role_skill_set_map} m
 			WHERE s.id = m.skill_set_id
 			AND m.fighter_role_id = :role_id
@@ -386,6 +386,26 @@ class FighterController extends SlimController {
 
 		$results = $ndb->query($query, [
 			'role_id' => $roleId, 
+			'primary_skill' => $isPrimary
+		]);
+		if ($results) return $results;
+		return [];
+	}
+
+	public static function getArchetypeSkills($archetypeId, $primarySkill) {
+		global $ndb;
+		$isPrimary = 0;
+		if ($primarySkill) $isPrimary = 1;
+		$query = "
+			SELECT s.id, s.skill_set_name, s.limited_to_gang, s.is_wyrd
+			FROM {$ndb->skill_set} s, {$ndb->fighter_archetype_skill_set_map} m
+			WHERE s.id = m.skill_set_id
+			AND m.archetype_id = :archetype_id
+			AND m.is_primary = :primary_skill
+		";
+
+		$results = $ndb->query($query, [
+			'archetype_id' => $archetypeId, 
 			'primary_skill' => $isPrimary
 		]);
 		if ($results) return $results;
@@ -493,7 +513,8 @@ class FighterController extends SlimController {
 			SELECT f.id, f.fighter_name, fr.role_name, f.backstory, 
 			f.movement, f.weapon_skill, f.ballistic_skill, f.strength, f.toughness, f.wounds, f.initiative, f.attacks,
 			f.leadership, f.cool, f.willpower, f.intelligence, 
-			f.is_vehicle, f.is_convalescence, f.is_captured, f.experience, f.advancements, f.base_value, f.view_order
+			f.is_vehicle, f.is_convalescence, f.is_captured, f.is_wyrd,
+			f.experience, f.advancements, f.base_value, f.view_order
 			FROM {$ndb->user_fighter} f
 			LEFT JOIN {$ndb->fighter_role} fr ON (fr.id = f.fighter_role_id)
 			WHERE f.user_gang_id = :user_gang_id
@@ -523,7 +544,7 @@ class FighterController extends SlimController {
 			SELECT f.id, f.fighter_name, f.fighter_role_id, f.backstory, f.advancements, 
 			f.movement, f.weapon_skill, f.ballistic_skill, f.strength, f.toughness, f.toughness_side, f.toughness_rear,  
 			f.handling, f.save_roll, f.wounds, f.initiative, f.attacks, f.leadership, f.cool, f.willpower, f.intelligence, 
-			f.is_vehicle, f.is_convalescence, f.is_captured, f.experience, f.base_value, f.view_order
+			f.is_vehicle, f.is_convalescence, f.is_captured, f.is_wyrd, f.experience, f.base_value, f.view_order
 			FROM {$ndb->user_fighter} f
 			WHERE f.id = :id
 			ORDER BY f.view_order
@@ -544,11 +565,11 @@ class FighterController extends SlimController {
 				(
 					user_gang_id, fighter_name, fighter_role_id, backstory, movement, weapon_skill, ballistic_skill, strength,
 					toughness, toughness_side, toughness_rear, wounds, initiative, attacks, handling, leadership, cool, willpower, intelligence,
-					save_roll, is_vehicle, is_convalescence, is_captured, experience, advancements, base_value, view_order, created
+					save_roll, is_vehicle, is_convalescence, is_captured, is_wyrd, experience, advancements, base_value, view_order, created
 				) VALUES (
 					:user_gang_id, :fighter_name, :fighter_role_id, :backstory, :movement, :weapon_skill, :ballistic_skill, :strength,
 					:toughness, :toughness_side, :toughness_rear, :wounds, :initiative, :attacks, :handling, :leadership, :cool, :willpower, :intelligence,
-					:save_roll, :is_vehicle, :is_convalescence, :is_captured, :experience, 0, :base_value, :view_order, NOW()
+					:save_roll, :is_vehicle, :is_convalescence, :is_captured, :is_wyrd, :experience, 0, :base_value, :view_order, NOW()
 				)
 			";
 		} else {
@@ -557,11 +578,11 @@ class FighterController extends SlimController {
 				(
 					user_gang_id, fighter_name, fighter_role_id, backstory, movement, weapon_skill, ballistic_skill, strength,
 					toughness, wounds, initiative, attacks, leadership, cool, willpower, intelligence,
-					is_vehicle, is_convalescence, is_captured, experience, advancements, base_value, view_order, created
+					is_vehicle, is_convalescence, is_captured, is_wyrd, experience, advancements, base_value, view_order, created
 				) VALUES (
 					:user_gang_id, :fighter_name, :fighter_role_id, :backstory, :movement, :weapon_skill, :ballistic_skill, :strength,
 					:toughness, :wounds, :initiative, :attacks, :leadership, :cool, :willpower, :intelligence,
-					:is_vehicle, :is_convalescence, :is_captured, :experience, 0, :base_value, :view_order, NOW()
+					:is_vehicle, :is_convalescence, :is_captured, :is_wyrd, :experience, 0, :base_value, :view_order, NOW()
 				)
 			";
 		}
@@ -683,5 +704,95 @@ class FighterController extends SlimController {
 			return $response->withHeader('Content-Type', 'application/json');
 		}
 	}
+
+	/** Archetypes */
+
+	private static function getArchetypeById($id) {
+		global $ndb;
+		$query = "
+			SELECT a.id, a.archetype_name, a.archetype_description, a.is_wyrd FROM {$ndb->fighter_archetype} a WHERE id = :id
+		";
+		$archetype = $ndb->queryFirst($query, ['id' => $id]);
+		$archetype['primary_skills'] = FighterController::getArchetypeSkills($id, true);
+		$archetype['secondary_skills'] = FighterController::getArchetypeSkills($id, false);
+		return $archetype;
+	}
+
+	private static function getArchetypes() {
+		global $ndb;
+		$query = "SELECT a.id, a.archetype_name, a.archetype_description, a.is_wyrd FROM {$ndb->fighter_archetype} a ORDER BY a.archetype_name ASC";
+		$archetypes = $ndb->query($query);
+		foreach ($archetypes as $archetype) {
+			$archetype['primary_skills'] = FighterController::getArchetypeSkills($archetype['id'], true);
+			$archetype['secondary_skills'] = FighterController::getArchetypeSkills($archetype['id'], false);
+		}
+		return $archetypes;
+	}
+
+	public function fetchArchetypes(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface {
+		global $cache;
+		$archetypes = $cache->get("fighter-archetypes");
+		if (!$archetypes) {
+			$archetypes = json_encode(FighterController::getArchetypes());
+			$cache->set("fighter-archetypes", $archetypes);
+		}
+		$response->getBody()->write($archetypes);
+		return $response->withHeader('Content-Type', 'application/json');
+	}
+
+	public function fetchArchetype(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+		$result = FighterController::getArchetypeById($args['id']);
+		if ($result) {
+			$response->getBody()->write(json_encode($result));
+			return $response->withHeader('Content-Type', 'application/json');
+		}
+		return $response->withStatus(404);
+	}
+
+	public function addUpdateArchetype(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+		global $ndb, $cache;
+
+		$id = (array_key_exists('id', $args)) ? $args['id'] : 0;
+
+		$archetype = json_decode($request->getBody(), true);
+		$pskills = $archetype['primary_skills'];
+		$sskills = $archetype['secondary_skills'];
+
+		unset($archetype['primary_skills']);
+		unset($archetype['secondary_skills']);
+		if ($request->getMethod() == 'POST') {
+			unset($archetype['id']);
+
+			$insertQuery = "INSERT INTO {$ndb->fighter_archetype} (archetype_name, archetype_description, is_wyrd) VALUES (:archetype_name, :archetype_description, :is_wyrd)";
+			if ($ndb->insert($insertQuery, $archetype)) {
+				$archetype['id'] = $ndb->lastInsertId;
+			}
+
+		} else {
+			$ndb->updateTable($ndb->fighter_archetype, $archetype);
+			$archetype = FighterController::getArchetypeById($id);
+		}
+		$cache->del(["fighter-archetypes"]);
+
+		$response->getBody()->write(json_encode($archetype));
+		return $response->withHeader('Content-Type', 'application/json');
+	}
+
+	public function removeArchetype(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+		global $cache, $ndb;
+		$id = $args['id'];
+		$result = $ndb->delete("DELETE FROM {$ndb->fighter_archetype_skill_set_map} WHERE archetype_id = :id", $id);
+		$result = $ndb->delete("DELETE FROM {$ndb->fighter_archetype} WHERE id = :id", $id);
+
+		$cache->del(["fighter-archetypes"]);
+		return $response->withStatus(200);
+	}
+
+	public function updateArchetypeSkills(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+		$id = $args['id'];
+		$skills = json_decode($request->getBody(), true);
+
+	}
+
 }
 ?>

@@ -1,0 +1,14 @@
+<div class="validation-alert alert alert-danger mb-3 d-none" role="alert">
+  <i class="fi-alert"></i> There are invalid values in some fields.
+</div>
+<div class="form-floating mb-3">
+	<input class="archetype_name form-control" value="{{archetype_name}}" id="archetypeName" type="text" placeholder="Archetype Name" tabindex="1">
+	<label for="archetypeName">Archetype Name</label>
+</div>
+<div class="form-floating mb-3">
+	<textarea class="archetype_description form-control" rows="6" id="archetypeDescription" placeholder="Archetype Description" tabindex="2">{{archetype_description}}</textarea>
+	<label for="archetypeDescription">Archetype Description</label>
+</div>
+<div class="mb-3">
+	{{{checkbox obj-name="0" name-param="is_wyrd" class-name="is_wyrd" text=" Is Wyrd:" tab-index="3"}}}<br/>
+</div>
