@@ -7,6 +7,7 @@ require_once 'api/utils.php';
 require_once 'api/weapon.php';
 require_once 'api/fighter.php';
 require_once 'api/gang.php';
+require_once 'api/skills.php';
 require_once 'api/user.php';
 ?>
 <!doctype html>
@@ -44,7 +45,7 @@ require_once 'api/user.php';
 				Necro.Apps.Data.WeaponTraits = <?php echo WeaponController::getTraitsJSON(); ?>;
 				Necro.Apps.Data.WeaponCategories = <?php echo WeaponController::getWeaponCategoryJSON(); ?>;
 				Necro.Apps.Data.WargearCategories = <?php echo WeaponController::getWargearCategoryJSON(); ?>;
-				Necro.Apps.Data.SkillSets = new Necro.Collections.SkillSets(<?php echo FighterController::getSkillsJSON(); ?>);
+				Necro.Apps.Data.SkillSets = new Necro.Collections.SkillSets(<?php echo SkillsController::getSkillsJSON(); ?>);
 				Necro.Apps.Data.Injuries = <?php echo FighterController::getInjuriesJSON(); ?>;
 				Necro.Apps.Data.FighterRoles = <?php echo FighterController::getFighterRolesJSON(); ?>;
 				Necro.Apps.Data.GangTypes = <?php echo GangController::getGangTypesJSON(); ?>;

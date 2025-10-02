@@ -135,7 +135,9 @@ Necro.Models.Archetype = Backbone.Model.extend({
 		sskills.primary = 0;
 
 		resp.primary_skills = new Necro.Collections.SkillSets(resp.primary_skills, {parse: true});
+		resp.primary_skills.archetypeId = this.id;
 		resp.secondary_skills = new Necro.Collections.SkillSets(resp.secondary_skills, {parse: true});
+		resp.secondary_skills.archetypeId = this.id;
 
 		/* _.each(resp.primary_skills, function(s) {
 			var skillSet = new Necro.Models.SkillSet(s, {parse: true});

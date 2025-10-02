@@ -5,158 +5,6 @@ use Psr\Http\Message\ServerRequestInterface;
 
 class FighterController extends SlimController {
 
-	public static function getSkills($id = 0) {
-		global $ndb;
-		$params = array();
-		$query = "
-			SELECT ss.id, ss.skill_set_name, ss.limited_to_gang, ss.is_wyrd, ss.gang_type_id, gt.type_name AS gang_name
-			FROM {$ndb->skill_set} ss
-			LEFT JOIN {$ndb->gang_type} gt ON ss.gang_type_id = gt.id
-			WHERE 1 = 1
-		";
-
-		if ($id > 0) {
-			$query .= "
-				AND ss.id = :ss_id
-			"; 	
-			$params['ss_id'] = $id;
-		}
-
-		$query .= "
-			ORDER BY ss.skill_set_name ASC
-		";
-		$results = $ndb->query($query, $params);
-
-		$skillSets = array();
-		foreach ($results as $s) {
-			$query = "
-				SELECT s.id, s.skill_name, s.skill_set_id, s.skill_description  
-				FROM {$ndb->skill} s 
-				WHERE s.skill_set_id = :skillset_id
-				ORDER BY s.skill_name ASC
-			";
-			$skills = $ndb->query($query, array("skillset_id" => $s['id']));
-			$s['skills'] = $skills;
-			$skillSets[] = $s;
-		}
-		if ($id > 0) return $skillSets[0];
-		return $skillSets;
-	}
-
-	public static function getSkillsJSON() {
-		global $cache;
-		$skills = null;
-		$skills = $cache->get("fighter-skills");
-		if (!$skills) {
-			$skills = json_encode(FighterController::getSkills());
-			$cache->set("fighter-skills", $skills);
-		}
-		return $skills;
-	}
-
-	public function skills(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
-		$skills = FighterController::getSkills();
-		$response->getBody()->write(json_encode($skills));
-		return $response->withHeader('Content-Type', 'application/json');
-	}
-
-	public function getSkillSet(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
-		$skills = FighterController::getSkills($args['id']);
-		$response->getBody()->write(json_encode($skills));
-		return $response->withHeader('Content-Type', 'application/json');
-	}
-
-	public function addUpdateSkillSet(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
-		global $ndb;
-
-		$id = (array_key_exists('id', $args)) ? $args['id'] : 0;
-
-		$skillSet = json_decode($request->getBody(), true);
-		unset($skillSet['skills']);
-		unset($skillSet['gang_name']);
-		if ($request->getMethod() == 'POST') {
-			unset($skillSet['id']);
-
-			$insertQuery = "INSERT INTO {$ndb->skill_set} (skill_set_name, limited_to_gang, is_wyrd, gang_type_id) VALUES (:skill_set_name, :limited_to_gang, :is_wyrd, :gang_type_id)";
-			if ($ndb->insert($insertQuery, $skillSet)) {
-				$skillSet['id'] = $ndb->lastInsertId;
-			}
-
-		} else {
-			$ndb->updateTable($ndb->skill_set, $skillSet);
-			/* $updateQuery = "UPDATE {$ndb->skill_set} SET ";
-			$i = 0;
-			foreach ($skillSet as $key => $val) {
-				if ($key == 'id') continue;
-				if ($i > 0) $updateQuery .= ", ";
-				$updateQuery .= "{$key} = :{$key}";
-				$i++;
-			}
-			$updateQuery .= " WHERE id = :id";
-			$result = $ndb->update($updateQuery, $skillSet); */
-			$skillSet = FighterController::getSkills($id);
-		}
-
-		$response->getBody()->write(json_encode($skillSet));
-		return $response->withHeader('Content-Type', 'application/json');
-	}
-
-	public function fetchSkill($id) {
-		global $ndb;
-
-		$skillQuery = "
-			SELECT s.id, s.skill_set_id, s.skill_name, s.skill_description, ss.skill_set_name, ss.is_wyrd
-			FROM {$ndb->skill} s, {$ndb->skill_set} ss 
-			WHERE s.skill_set_id = ss.id
-			AND s.id = :id
-		";
-		return $ndb->query($skillQuery, array("id" => $id));
-	}
-
-	public function getSkill(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
-		global $ndb;
-		$id = $args['id'];
-
-		$skill = $this->fetchSkill($id);
-
-		$response->getBody()->write(json_encode($skill));
-		return $response->withHeader('Content-Type', 'application/json');
-	}
-
-	public function addUpdateSkill(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
-		global $ndb;
-
-		$id = (array_key_exists('id', $args)) ? $args['id'] : 0;
-		$skill = json_decode($request->getBody(), true);
-		unset($skill['skill_set_name']);
-
-		if ($request->getMethod() == 'POST') {
-			unset($skill['id']);
-			$insertQuery = "INSERT INTO {$ndb->skill} (skill_set_id, skill_name, skill_description) VALUES (:skill_set_id, :skill_name, :skill_description)";
-			if ($result = $ndb->insert($insertQuery, $skill)) {
-				$id = $ndb->lastInsertId;
-			}
-		} else {
-			$ndb->updateTable($ndb->skill, $skill);
-		}
-		$skills = $this->fetchSkill($id);
-		if (is_array($skills)) $skill = $skills[0];
-		$response->getBody()->write(json_encode($skill));
-		return $response->withHeader('Content-Type', 'application/json');
-	}
-
-	public function deleteSkill(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
-		global $ndb;
-		$id = $args['id'];
-		$result = $ndb->deleteFromTable($ndb->skill, $id);
-		if ($result) {
-			$response->withStatus(200);
-		} else {
-			$response->withStatus(500);
-		}
-		return $response;
-	}
-
 	public static function getFighterRoles() {
 		global $ndb;
 		$query = "
@@ -240,9 +88,9 @@ class FighterController extends SlimController {
 		global $ndb, $cache;
 
 		$id = (array_key_exists('id', $args)) ? $args['id'] : 0;
-		$gangId = $role['gang_type_id'];
-
 		$role = json_decode($request->getBody(), true);
+
+		$gangId = $role['gang_type_id'];
 		$params = [
 			'gang_type_id' => $gangId,
 			'hierarchy_role' => $role['hierarchy_role'],
@@ -604,7 +452,7 @@ class FighterController extends SlimController {
 			$weapons = $fighter['weapons'];
 			unset($fighter['weapons']);
 		}
-		$auditMessage;
+		$auditMessage = '';
 		$updateQuery = "UPDATE {$ndb->user_fighter} SET ";
 		$i = 0;
 		foreach(array_keys($fighter) as $key) {
@@ -639,12 +487,12 @@ class FighterController extends SlimController {
 	public function addInjury(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
 		global $ndb;
 
-		$auditMessage;
+		$auditMessage = '';
 		$fighterId = $args['id'];
 		$injury = json_decode($request->getBody(), true);
 
 		$insertInjurySQL = "INSERT INTO {$ndb->user_fighter_injury_map} (user_fighter_id, injury_id) VALUES (:user_fighter_id, :injury_id)";
-		$result = $ndb->update($query, array('user_fighter_id' => $fighterId, 'injury_id' => $injury->id));
+		$result = $ndb->update($insertInjurySQL, array('user_fighter_id' => $fighterId, 'injury_id' => $injury->id));
 
 		$fighter = $this->getFighterByID($fighterId);
 		if ($injury['id'] == 1) {
@@ -698,101 +546,9 @@ class FighterController extends SlimController {
 			
 		}
 
-		if ($result) {
-			if (strlen($auditMessage)) $this->addFighterAudit($fighterId, $auditMessage);
-			$response->getBody()->write(json_encode($fighter));
-			return $response->withHeader('Content-Type', 'application/json');
-		}
-	}
-
-	/** Archetypes */
-
-	private static function getArchetypeById($id) {
-		global $ndb;
-		$query = "
-			SELECT a.id, a.archetype_name, a.archetype_description, a.is_wyrd FROM {$ndb->fighter_archetype} a WHERE id = :id
-		";
-		$archetype = $ndb->queryFirst($query, ['id' => $id]);
-		$archetype['primary_skills'] = FighterController::getArchetypeSkills($id, true);
-		$archetype['secondary_skills'] = FighterController::getArchetypeSkills($id, false);
-		return $archetype;
-	}
-
-	private static function getArchetypes() {
-		global $ndb;
-		$query = "SELECT a.id, a.archetype_name, a.archetype_description, a.is_wyrd FROM {$ndb->fighter_archetype} a ORDER BY a.archetype_name ASC";
-		$archetypes = $ndb->query($query);
-		foreach ($archetypes as $archetype) {
-			$archetype['primary_skills'] = FighterController::getArchetypeSkills($archetype['id'], true);
-			$archetype['secondary_skills'] = FighterController::getArchetypeSkills($archetype['id'], false);
-		}
-		return $archetypes;
-	}
-
-	public function fetchArchetypes(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface {
-		global $cache;
-		$archetypes = $cache->get("fighter-archetypes");
-		if (!$archetypes) {
-			$archetypes = json_encode(FighterController::getArchetypes());
-			$cache->set("fighter-archetypes", $archetypes);
-		}
-		$response->getBody()->write($archetypes);
+		if (strlen($auditMessage)) $this->addFighterAudit($fighterId, $auditMessage);
+		$response->getBody()->write(json_encode($fighter));
 		return $response->withHeader('Content-Type', 'application/json');
 	}
-
-	public function fetchArchetype(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
-		$result = FighterController::getArchetypeById($args['id']);
-		if ($result) {
-			$response->getBody()->write(json_encode($result));
-			return $response->withHeader('Content-Type', 'application/json');
-		}
-		return $response->withStatus(404);
-	}
-
-	public function addUpdateArchetype(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
-		global $ndb, $cache;
-
-		$id = (array_key_exists('id', $args)) ? $args['id'] : 0;
-
-		$archetype = json_decode($request->getBody(), true);
-		$pskills = $archetype['primary_skills'];
-		$sskills = $archetype['secondary_skills'];
-
-		unset($archetype['primary_skills']);
-		unset($archetype['secondary_skills']);
-		if ($request->getMethod() == 'POST') {
-			unset($archetype['id']);
-
-			$insertQuery = "INSERT INTO {$ndb->fighter_archetype} (archetype_name, archetype_description, is_wyrd) VALUES (:archetype_name, :archetype_description, :is_wyrd)";
-			if ($ndb->insert($insertQuery, $archetype)) {
-				$archetype['id'] = $ndb->lastInsertId;
-			}
-
-		} else {
-			$ndb->updateTable($ndb->fighter_archetype, $archetype);
-			$archetype = FighterController::getArchetypeById($id);
-		}
-		$cache->del(["fighter-archetypes"]);
-
-		$response->getBody()->write(json_encode($archetype));
-		return $response->withHeader('Content-Type', 'application/json');
-	}
-
-	public function removeArchetype(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
-		global $cache, $ndb;
-		$id = $args['id'];
-		$result = $ndb->delete("DELETE FROM {$ndb->fighter_archetype_skill_set_map} WHERE archetype_id = :id", $id);
-		$result = $ndb->delete("DELETE FROM {$ndb->fighter_archetype} WHERE id = :id", $id);
-
-		$cache->del(["fighter-archetypes"]);
-		return $response->withStatus(200);
-	}
-
-	public function updateArchetypeSkills(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
-		$id = $args['id'];
-		$skills = json_decode($request->getBody(), true);
-
-	}
-
 }
 ?>

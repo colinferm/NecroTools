@@ -5,8 +5,10 @@ require_once('./necrodb.php');
 require_once('./utils.php');
 require_once('./lib/vendor/autoload.php');
 require_once('./slim_controller.php');
-require_once('./gang.php');
+require_once('./archetype.php');
 require_once('./fighter.php');
+require_once('./gang.php');
+require_once('./skills.php');
 require_once('./user.php');
 require_once('./weapon.php');
 
@@ -56,12 +58,12 @@ $app->post('/fighter/role/{id}/stats', [\FighterController::class, 'addUpdateTem
 $app->put('/fighter/role/{id}/stats', [\FighterController::class, 'addUpdateTemplateStats'])->add($requireDataAdmin);
 $app->put('/fighter/role/{id}/skills/{primary}', [\FighterController::class, 'updateTemplateSkills'])->add($requireDataAdmin);
 
-$app->get('/archetypes', [\FighterController::class, 'fetchArchetypes']);
-$app->put('/api/archetypes/{id}/sets/{primary}', [\FighterController::class, 'updateArchetypeSkills']);
-$app->post('/archetype', [\FighterController::class, 'addUpdateArchetype'])->add($requireLoggedIn);
-$app->get('/archetype/{id}', [\FighterController::class, 'fetchArchetype']);
-$app->put('/archetype/{id}', [\FighterController::class, 'addUpdateArchetype'])->add($requireLoggedIn);
-$app->delete('/archetype/{id}', [\FighterController::class, 'removeArchetype'])->add($requireLoggedIn);
+$app->get('/archetypes', [\ArchetypeController::class, 'fetchArchetypes']);
+$app->put('/archetypes/{id}/sets/{primary}', [\ArchetypeController::class, 'updateArchetypeSkills']);
+$app->post('/archetype', [\ArchetypeController::class, 'addUpdateArchetype'])->add($requireLoggedIn);
+$app->get('/archetype/{id}', [\ArchetypeController::class, 'fetchArchetype']);
+$app->put('/archetype/{id}', [\ArchetypeController::class, 'addUpdateArchetype'])->add($requireLoggedIn);
+$app->delete('/archetype/{id}', [\ArchetypeController::class, 'removeArchetype'])->add($requireLoggedIn);
 
 $app->get('/fighter/template/{id}', [\FighterController::class, 'fetchFighterTemplate'])->add($requireDataAdmin);
 
@@ -76,16 +78,16 @@ $app->get('/weapon-characteristic/{id}', [\WeaponController::class, 'fetchCharac
 $app->put('/weapon-characteristic/{id}', [\WeaponController::class, 'updateCharacteristic'])->add($requireDataAdmin);
 $app->delete('/weapon-characteristic/{id}', [\WeaponController::class, 'deleteCharacteristic'])->add($requireDataAdmin);
 
-$app->get('/skills', [\FighterController::class, 'skills']);
+$app->get('/skills', [\SkillsController::class, 'skills']);
 
-$app->get('/skill-set/{id}', [\FighterController::class, 'getSkillSet']);
-$app->post('/skill-set', [\FighterController::class, 'addUpdateSkillSet'])->add($requireDataAdmin);
-$app->put('/skill-set/{id}', [\FighterController::class, 'addUpdateSkillSet'])->add($requireDataAdmin);
+$app->get('/skill-set/{id}', [\SkillsController::class, 'getSkillSet']);
+$app->post('/skill-set', [\SkillsController::class, 'addUpdateSkillSet'])->add($requireDataAdmin);
+$app->put('/skill-set/{id}', [\SkillsController::class, 'addUpdateSkillSet'])->add($requireDataAdmin);
 
-$app->get('/skill/{id}', [\FighterController::class, 'getSkill']);
-$app->post('/skill', [\FighterController::class, 'addUpdateSkill'])->add($requireDataAdmin);
-$app->put('/skill/{id}', [\FighterController::class, 'addUpdateSkill'])->add($requireDataAdmin);
-$app->delete('/skill/{id}', [\FighterController::class, 'deleteSkill'])->add($requireDataAdmin);
+$app->get('/skill/{id}', [\SkillsController::class, 'getSkill']);
+$app->post('/skill', [\SkillsController::class, 'addUpdateSkill'])->add($requireDataAdmin);
+$app->put('/skill/{id}', [\SkillsController::class, 'addUpdateSkill'])->add($requireDataAdmin);
+$app->delete('/skill/{id}', [\SkillsController::class, 'deleteSkill'])->add($requireDataAdmin);
 
 $app->get('/weapons', [\WeaponController::class, 'fetchWeapons'])->add($requireLoggedIn);
 $app->get('/weapons/category/{id}', [\WeaponController::class, 'fetchWeaponsByCategory'])->add($requireLoggedIn);

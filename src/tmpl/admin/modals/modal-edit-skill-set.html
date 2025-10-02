@@ -5,7 +5,10 @@
 	<input class="form-control skill_set_name" value="{{model.skill_set_name}}" id="skillName" type="text" placeholder="Skill Set Name" tabindex="1">
 	<label for="skillName">Skill Set Name</label>
 </div>
+<div class="form-floating mb-3">
+	{{{checkbox name-param="is_wyrd" class-name="is_wyrd" text=" Wyrd Power" tab-index="2"}}}<br/>
+</div>
 <div>
-	{{{checkbox name-param="limited_to_gang" class-name="limited_to_gang" text=" Limited to Gang:" tab-index="2"}}}<br/>
-	{{{select-box field-name="gang_type" collection-property="gangTypes" item-id="id" item-name="type_name" model-property="gang_type_id" with-blank="true" tab-index="3"}}}
+	{{{checkbox name-param="limited_to_gang" class-name="limited_to_gang" text=" Limited to Gang:" tab-index="3"}}}<br/>
+	{{{select-box field-name="gang_type" collection-property="gangTypes" item-id="id" item-name="type_name" model-property="gang_type_id" with-blank="true" tab-index="4"}}}
 </div>

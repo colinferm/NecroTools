@@ -50,7 +50,7 @@ Necro.Views.Admin.ArchetypeItem = Backbone.View.extend({
 	templateName: 'archetype-list-item',
 
 	events: {
-		'click .trait_name': 'editTrait',
+		'click .archetype_name': 'editArchetype',
 		'click .action_edit': 'editArchetype',
 		'click .action_remove': 'deleteArchetype',
 		'click .action_primary': 'addPrimarySkills',

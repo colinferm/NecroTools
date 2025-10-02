@@ -34,8 +34,8 @@ Necro.Views.Modal = Backbone.View.extend({
 		this.$el.html(this.template({modal_title: this.opts.title}));
 		if (this.modalSize) $('.modal-dialog', this.$el).addClass(this.modalSize);
 
-		this.content = Necro.Utils.Resolver.getNewInstance(this.opts.class, {model: this.model});
-		this.content.options = this.opts;
+		this.content = Necro.Utils.Resolver.getNewInstance(this.opts.class, this.opts);
+		//this.content.options = this.opts;
 		
 		$('.modal-body', this.$el).html(this.content.render().$el);
 		$('.action_save', this.$el).html(this.buttonText);

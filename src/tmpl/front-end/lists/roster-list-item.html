@@ -1,85 +1,87 @@
-<div class="gang-roster-card p-3">
-	<div class="fighter-basic-info d-flex justify-content-between ps-2 pe-4 pt-2 pb-2">
-		<div class="figher-name">
-			<h4 class="fighter-name mb-0">{{fighter_name}}</h4>
-			<h6 class="fighter-type mb-0">Fighter type</h6>
+<div class="roster-info-card-container">
+	<div class="gang-roster-card p-3">
+		<div class="fighter-basic-info d-flex justify-content-between ps-2 pe-4 pt-2 pb-2">
+			<div class="figher-name">
+				<h4 class="fighter-name mb-0">{{fighter_name}}</h4>
+				<h6 class="fighter-type mb-0">Fighter type</h6>
+			</div>
+			<div class="fighter-value-container d-flex flex-column justify-content-center align-items-center">
+				<div class="fighter-value">100</div>
+				<div class="credits">Credits</div>
+			</div>
 		</div>
-		<div class="fighter-value-container d-flex flex-column justify-content-center align-items-center">
-			<div class="fighter-value">100</div>
-			<div class="credits">Credits</div>
-		</div>
-	</div>
-	<div class="everything-else-container mt-3">
-		<div class="stats-container p-1">
-			<table>
-				<thead>
-					<tr>
-						<th>M</th>
-						<th>WS</th>
-						<th>BS</th>
-						<th>S</th>
-						<th>T</th>
-						<th>W</th>
-						<th>I</th>
-						<th>A</th>
-						<th class="head-stat">LD</th>
-						<th class="head-stat">CL</th>
-						<th class="head-stat">WIL</th>
-						<th class="head-stat">INT</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td class="stat-move">{{movement}}"</td>
-						<td class="stat-weapon">{{weapon_skill}}+</td>
-						<td class="stat-balistic">{{ballistic_skill}}+</td>
-						<td class="stat-strength">{{strength}}</td>
-						<td class="stat-toughness">{{toughness}}</td>
-						<td class="stat-wounds">{{wounds}}</td>
-						<td class="stat-initiative">{{initiative}}+</td>
-						<td class="stat-attacks">{{attacks}}</td>
-						<td class="head-stat stat-leadership">{{leadership}}+</td>
-						<td class="head-stat stat-cool">{{cool}}+</td>
-						<td class="head-stat stat-willpower">{{willpower}}+</td>
-						<td class="head-stat stat-intelligence">{{intelligence}}+</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
+		<div class="everything-else-container mt-3">
+			<div class="stats-container p-1">
+				<table>
+					<thead>
+						<tr>
+							<th>M</th>
+							<th>WS</th>
+							<th>BS</th>
+							<th>S</th>
+							<th>T</th>
+							<th>W</th>
+							<th>I</th>
+							<th>A</th>
+							<th class="head-stat">LD</th>
+							<th class="head-stat">CL</th>
+							<th class="head-stat">WIL</th>
+							<th class="head-stat">INT</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td class="stat-move">{{movement}}"</td>
+							<td class="stat-weapon">{{weapon_skill}}+</td>
+							<td class="stat-balistic">{{ballistic_skill}}+</td>
+							<td class="stat-strength">{{strength}}</td>
+							<td class="stat-toughness">{{toughness}}</td>
+							<td class="stat-wounds">{{wounds}}</td>
+							<td class="stat-initiative">{{initiative}}+</td>
+							<td class="stat-attacks">{{attacks}}</td>
+							<td class="head-stat stat-leadership">{{leadership}}+</td>
+							<td class="head-stat stat-cool">{{cool}}+</td>
+							<td class="head-stat stat-willpower">{{willpower}}+</td>
+							<td class="head-stat stat-intelligence">{{intelligence}}+</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 
-		<div class="weapons-container">
-			<table>
-				<thead>
+			<div class="weapons-container">
+				<table>
+					<thead>
+						<tr>
+							<th>Weapon</th>
+							<th>S</th>
+							<th>L</th>
+							<th>S</th>
+							<th>L</th>
+							<th>Str</th>
+							<th>AP</th>
+							<th>D</th>
+							<th>Am</th>
+							<th>Traits</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="weapons">
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="weapons-container">
+				<table>
 					<tr>
-						<th>Weapon</th>
-						<th>S</th>
-						<th>L</th>
-						<th>S</th>
-						<th>L</th>
-						<th>Str</th>
-						<th>AP</th>
-						<th>D</th>
-						<th>Am</th>
-						<th>Traits</th>
+						<td>Wargear:</td>
+						<td class="list-wargear"></td>
 					</tr>
-				</thead>
-				<tbody>
-					<tr class="weapons">
+					<tr>
+						<td>Skills:</td>
+						<td class="list-skill"></td>
 					</tr>
-				</tbody>
-			</table>
-		</div>
-		<div class="weapons-container">
-			<table>
-				<tr>
-					<td>Wargear:</td>
-					<td class="list-wargear"></td>
-				</tr>
-				<tr>
-					<td>Skills:</td>
-					<td class="list-skill"></td>
-				</tr>
-			</table>
+				</table>
+			</div>
 		</div>
 	</div>
 </div>

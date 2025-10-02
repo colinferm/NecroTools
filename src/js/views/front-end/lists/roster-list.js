@@ -1,6 +1,6 @@
 Necro.Views.Roster = Backbone.View.extend({
 	tagName: 'div',
-	className: 'large-12',
+	className: 'col-12',
 	templateName: 'roster-list',
 	pageTitle: 'Gang',
 
@@ -50,7 +50,7 @@ Necro.Views.Roster = Backbone.View.extend({
 
 Necro.Views.RosterItem = Backbone.View.extend({
 	tagName: 'div',
-	className: 'roster-info-card-container mb-3',
+	className: 'col-6 ps-3 pe-3 pb-3',
 	templateName: 'roster-list-item',
 
 	events: {
