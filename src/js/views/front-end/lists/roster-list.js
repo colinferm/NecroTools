@@ -1,16 +1,14 @@
-Necro.Views.Roster = Backbone.View.extend({
+Necro.Views.Roster = Necro.Views.BaseListView.extend({
 	tagName: 'div',
 	className: 'col-12',
 	templateName: 'roster-list',
 	pageTitle: 'Gang',
 
-	events: {
+	events: _.extend({
 		'click .add_fighter': 'addFighter'
-	},
+	}, Necro.Views.BaseListView.prototype.events),
 
-	initialize : function(options) {
-		var html = Necro.Utils.UI.TPL.get(this.templateName);
-		this.template = Handlebars.compile(html);
+	onInitialize : function(options) {
 
 		if (this.model.get("id")) {
 			this.model.fetch({
@@ -48,7 +46,7 @@ Necro.Views.Roster = Backbone.View.extend({
 });
 
 
-Necro.Views.RosterItem = Backbone.View.extend({
+Necro.Views.RosterItem = Necro.Views.BaseListItemView.extend({
 	tagName: 'div',
 	className: 'col-6 ps-3 pe-3 pb-3',
 	templateName: 'roster-list-item',
@@ -62,19 +60,11 @@ Necro.Views.RosterItem = Backbone.View.extend({
 		'click .action_remove': 'removeFighter'
 	},
 
-	initialize : function(options) {
-		var html = Necro.Utils.UI.TPL.get(this.templateName);
-		this.template = Handlebars.compile(html);
+	onInitialize : function(options) {
 		this.model.fetch({
 			success: _.bind(this.render, this)
 		});
 		this.model.on("change", _.bind(this.render, this));
-	},
-
-	render: function() {
-		this.$el.html(this.template(this.model.toJSON()));
-		//var menu = new Foundation.DropdownMenu($('ul.dropdown.menu', this.$el));
-		return this;
 	},
 
 	editFighter: function() {

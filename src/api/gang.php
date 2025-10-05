@@ -6,20 +6,29 @@ use Psr\Http\Message\ServerRequestInterface;
 class GangController extends SlimController {
 	
 	public function fetchGangs(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
-		global $ndb;
+		global $ndb, $cache;
 		$userId = UserController::getCurrentUserId();
 		//error_log("User id: {$userId}");
-		$query = "
-			SELECT g.id, g.gang_name, g.gang_type_id, gt.type_name, gt.house_gang, g.outlaw, COUNT(f.id) AS num_fighters, unix_timestamp(g.created) * 1000 AS created, unix_timestamp(g.last_mod) * 1000 AS last_mod 
-			FROM {$ndb->user_gang} g
-			JOIN {$ndb->gang_type} gt ON (g.gang_type_id = gt.id)
-			LEFT JOIN {$ndb->user_fighter} f ON (g.id = f.user_gang_id)
-			WHERE g.user_id = :user_id
-			GROUP BY g.id, g.gang_name, g.gang_type_id, gt.type_name, gt.house_gang, g.outlaw, g.last_mod
-			ORDER BY g.last_mod
-		";
-		$data = $ndb->query($query, ['user_id' => $userId]);
-		$response->getBody()->write(json_encode($data));
+		$gangs = $cache->get("user-gangs-{$userId}");
+		if (!$gangs) {
+			$query = "
+				SELECT g.id, g.gang_name, g.gang_type_id, gt.type_name, gt.house_gang, g.outlaw, COUNT(f.id) AS num_fighters, unix_timestamp(g.created) * 1000 AS created, unix_timestamp(g.last_mod) * 1000 AS last_mod 
+				FROM {$ndb->user_gang} g
+				JOIN {$ndb->gang_type} gt ON (g.gang_type_id = gt.id)
+				LEFT JOIN {$ndb->user_fighter} f ON (g.id = f.user_gang_id)
+				WHERE g.user_id = :user_id
+				GROUP BY g.id, g.gang_name, g.gang_type_id, gt.type_name, gt.house_gang, g.outlaw, g.last_mod
+				ORDER BY g.last_mod
+			";
+			$data = $ndb->query($query, ['user_id' => $userId]);
+			foreach ($data as &$gang) {
+				$fighters = FighterController::getFightersForGang($gang['id']);
+				$gang['fighters'] = $fighters;
+			}
+			$gangs = json_encode($data);
+			$cache->setEx("user-gang-{$userId}", DEFAULT_CACHE_TIME, $gangs);
+		}
+		$response->getBody()->write($gangs);
 		return $response->withHeader('Content-Type', 'application/json');
 	}
 
@@ -58,7 +67,7 @@ class GangController extends SlimController {
 			$fighters = FighterController::getFightersForGang($id);
 			$data['fighters'] = $fighters;
 			$gang = json_encode($data);
-			$cache->setEx("gang-{$id}", 300, $gang);
+			$cache->setEx("gang-{$id}", DEFAULT_CACHE_TIME, $gang);
 		}
 
 		$response->getBody()->write($gang);
@@ -66,7 +75,7 @@ class GangController extends SlimController {
 	}
 
 	public function addGang(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
-		global $ndb;
+		global $ndb, $cache;
 		$userId = UserController::getCurrentUserId();
 		$gang = json_decode($request->getBody(), true);
 
@@ -88,6 +97,8 @@ class GangController extends SlimController {
 		";
 		$result = $ndb->insert($query, $params);
 		if ($result) {
+			$cache->del("user-gangs-{$userId}");
+
 			$gang['id'] = $ndb->lastInsertId;
 			$gangType = static::getGangTypeById($gang['gang_type_id']);
 			$gang['num_fighters'] = 0;
@@ -115,7 +126,7 @@ class GangController extends SlimController {
 		$result = $ndb->update($query, $gang);
 		if ($result) {
 			$gang['last_mod'] = date("m/d/Y");
-			$cache->del("gang-{$gang['id']}");
+			$cache->del(["gang-{$gang['id']}", "user-gangs-{$userId}"]);
 			$response->getBody()->write(json_encode($gang));
 			return $response->withHeader('Content-Type', 'application/json');
 		}
@@ -141,6 +152,8 @@ class GangController extends SlimController {
 		$ndb->deleteWithParams("DELETE FROM {$ndb->user_gang_audit} WHERE user_gang_id = :id", ['id' => $gangId]);
 		$ndb->deleteWithParams("DELETE FROM {$ndb->user_gang_stash_map} WHERE user_gang_id = :id", ['id' => $gangId]);
 		$ndb->deleteFromTable($ndb->user_gang, $gangId);
+		$cache->del("user-gangs-{$userId}");
+
 		return $response->withStatus(200);
 	}
 

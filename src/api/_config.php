@@ -11,6 +11,7 @@ define('REDIS_HOST', getenv('REDIS_HOST'));
 $cache = new Redis();
 $isCache = $cache->pconnect(REDIS_HOST);
 define('IS_REDIS_ACTIVE', $isCache);
+define('DEFAULT_CACHE_TIME', 60 * 1000 * 30); //30 minutes
 
 // See UserController:peperGen to generate a unique pepper
 define('PEPPER', '$2y$10$0RPcLXUOzQu1EZO8PQXikuULwwnkFGi7ycn3G.IBl580Vv7ibw4Wu');

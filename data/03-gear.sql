@@ -76,15 +76,6 @@ INSERT INTO necro_weapon_characteristic VALUES (6, 6, 'Standard', 'E', '-', '+1'
 INSERT INTO necro_weapon_characteristic VALUES (7, 7, 'Bolter', '12', '24', '+1', '-', '4', '-1', '2', '6+');
 INSERT INTO necro_weapon_characteristic VALUES (8, 7, 'Flamer', '-', 'T', '-', '-', '4', '-1', '1', '5+');
 
-DROP TABLE IF EXISTS necro_lookups;
-CREATE TABLE necro_lookups (
-	id INT NOT NULL AUTO_INCREMENT,
-	lookup_value VARCHAR(255) NOT NULL,
-	misc_value INT NOT NULL DEFAULT '0',
-	lookup_key VARCHAR(20) NOT NULL,
-	notes TEXT NULL,
-	PRIMARY KEY (id)
-);
 INSERT INTO necro_lookups (id, lookup_value, lookup_key, notes) VALUES (1, 'Rapid Fire (1)', 'WEAPON_TRAIT', 'All ranged weapons roll an ammo check die but weapons with this trait count the number of hits that are rolled.');
 INSERT INTO necro_lookups (id, lookup_value, lookup_key) VALUES (2, 'Backstab', 'WEAPON_TRAIT');
 INSERT INTO necro_lookups (id, lookup_value, lookup_key) VALUES (3, 'Toxin', 'WEAPON_TRAIT');

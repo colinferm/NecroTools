@@ -26,7 +26,8 @@ Necro.Routers.NecroRouter = Backbone.Router.extend({
 		"adminWeapons": "adminWeapons",
 		"adminWargear": "adminWargearlist",
 		"adminUserList": "adminUserList",
-		"adminArchetypes": "adminArchetypes"
+		"adminArchetypes": "adminArchetypes",
+		"adminLookups": "adminLookupList"
 	},
 
 	initialize: function () {
@@ -36,7 +37,7 @@ Necro.Routers.NecroRouter = Backbone.Router.extend({
 			/** Admin */
 			'adminGangList', 'adminGangForm', 'adminSkillsList', 'adminSkillForm',
 			'adminFighterList', 'adminFighterForm', 'adminWeaponTraitList', 'adminEditTrait',
-			'adminWeapons', 'adminView'
+			'adminWeapons', 'adminView', 'adminLookupList'
 		);
 
 		//Necro.Events.on('stylize', this.updateFoundation);
@@ -151,7 +152,7 @@ Necro.Routers.NecroRouter = Backbone.Router.extend({
 
 	listGangs: function() {
 		var gangListView = new Necro.Views.GangList({});
-		this.updateRight(gangListView.render().$el, "Gangs");
+		this.updateRight(gangListView.render().$el, gangListView.pageTitle);
 	},
 
 	rosterForm: function(id) {
@@ -253,5 +254,10 @@ Necro.Routers.NecroRouter = Backbone.Router.extend({
 	adminArchetypes: function() {
 		var archetypesList = new Necro.Views.Admin.ArchetypeList({});
 		this.updateRight(archetypesList.render().$el, archetypesList.pageTitle);
+	},
+
+	adminLookupList: function() {
+		var lookupList = new Necro.Views.Admin.LookupList({});
+		this.updateRight(lookupList.render().$el, lookupList.pageTitle);
 	}
 });

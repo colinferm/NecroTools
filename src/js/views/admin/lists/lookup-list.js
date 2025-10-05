@@ -1,19 +1,17 @@
-Necro.Views.TraitList = Necro.Views.BaseListView.extend({
+Necro.Views.Admin.LookupList = Necro.Views.BaseListView.extend({
 	tagName: 'div',
-	className: 'large-12',
-	templateName: 'trait-list',
-	pageTitle: 'Weapon Traits',
-	searchKey: 'value',
+	templateName: 'lookup-list',
+	pageTitle: 'Lookups',
+	searchKey: 'lookup_value',
 
 	events: _.extend({
-		'click .addTrait': 'addTrait',
+		'click .addLookup': 'addLookup',
 	}, Necro.Views.BaseListView.prototype.events),
 
 	initialize : function(options) {
 		var html = Necro.Utils.UI.TPL.get(this.templateName);
 		this.template = Handlebars.compile(html);
-
-		this.collection = new Necro.Collections.Traits({});
+		this.collection = new Necro.Collections.Lookups();
 		this.collection.on("add", this.addItem, this);
 		this.collection.fetch();
 	},
@@ -27,15 +25,15 @@ Necro.Views.TraitList = Necro.Views.BaseListView.extend({
 	},
 
 	addItem: function(item) {
-		var row = new Necro.Views.TraitItem({model: item});
+		var row = new Necro.Views.Admin.LookupItem({model: item});
 		$('tbody', this.$el).append(row.render().$el);
 	},
 
-	addTrait: function() {
-		var m = new Necro.Models.Trait();
+	addLookup: function() {
+		var m = new Necro.Models.Lookup();
 		var modal = new Necro.Views.Modal({
-			class: "Necro.Views.Admin.Modal.EditTrait",
-			title: "Add Trait",
+			class: "Necro.Views.Admin.Modal.EditLookup",
+			title: "Add Lookup",
 			model: m,
 			callback: _.bind(function() {
 				if (m) this.collection.add(m);
@@ -45,14 +43,13 @@ Necro.Views.TraitList = Necro.Views.BaseListView.extend({
 
 });
 
-Necro.Views.TraitItem = Backbone.View.extend({
+Necro.Views.Admin.LookupItem = Backbone.View.extend({
 	tagName: 'tr',
-	templateName: 'trait-list-item',
+	templateName: 'lookup-list-item',
 
 	events: {
-		'click .trait_name': 'editTrait',
-		'click .action_edit': 'editTrait',
-		'click .action_remove': 'deleteTrait'
+		'click .action_edit': 'editLookup',
+		'click .lookup_value': 'editLookup'
 	},
 
 	initialize : function(options) {
@@ -64,19 +61,19 @@ Necro.Views.TraitItem = Backbone.View.extend({
 
 	render: function() {
 		this.$el.html(this.template(this.model.toJSON()));
-		//var menu = new Foundation.DropdownMenu($('ul.dropdown.menu', this.$el));
 		return this;
 	},
 
-	editTrait: function() {
+	editLookup: function() {
+		let m = this.model;
 		var modal = new Necro.Views.Modal({
-			class: "Necro.Views.Admin.Modal.EditTrait",
-			title: "Edit Trait",
-			model: this.model
+			class: "Necro.Views.Admin.Modal.EditLookup",
+			title: "Add Lookup",
+			model: m,
 		});
 	},
 
-	deleteTrait: function() {
+	deleteLookup: function() {
 		this.model.destroy();
 	}
 

@@ -2,7 +2,7 @@ Necro.Views.GangList = Backbone.View.extend({
 	tagName: 'div',
 	className: 'large-12',
 	templateName: 'gang-list',
-	pageTitle: 'Gangs',
+	pageTitle: 'Your Gangs',
 
 	events: {
 		'click .addGang': 'addGang'
@@ -63,7 +63,7 @@ Necro.Views.GangList = Backbone.View.extend({
 
 Necro.Views.GangListItem = Backbone.View.extend({
 	tagName: 'div',
-	className: 'gang-info-card-container mb-4 p-2',
+	className: 'gang-info-card-container w-50 m-2 p-2',
 	templateName: 'gang-list-item',
 
 	events: {

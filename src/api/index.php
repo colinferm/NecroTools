@@ -8,6 +8,7 @@ require_once('./slim_controller.php');
 require_once('./archetype.php');
 require_once('./fighter.php');
 require_once('./gang.php');
+require_once('./misc.php');
 require_once('./skills.php');
 require_once('./user.php');
 require_once('./weapon.php');
@@ -114,6 +115,14 @@ $app->get('/fighter/{id}', [\FighterController::class, 'fetchFighter'])->add($re
 $app->put('/fighter/{id}', [\FighterController::class, 'updateFighter'])->add($requireLoggedIn);
 
 $app->post('/injury/{id}', [\FighterController::class, 'addInjury'])->add($requireLoggedIn);
+
+/* Front end */
+$app->get('/lookups', [\OtherDataController::class, 'fetchLookups'])->add($requireLoggedIn);
+$app->post('/lookup', [\OtherDataController::class, 'addUpdateLookup'])->add($requireDataAdmin);
+$app->get('/lookup/{id}', [\OtherDataController::class, 'fetchLookup'])->add($requireLoggedIn);
+$app->put('/lookup/{id}', [\OtherDataController::class, 'addUpdateLookup'])->add($requireDataAdmin);
+$app->delete('/lookup/{id}', [\OtherDataController::class, 'removeLookup'])->add($requireDataAdmin);
+$app->get('/lookup-code/{code}', [\OtherDataController::class, 'fetchLookupByCode'])->add($requireLoggedIn);
 
 $app->run();
 

@@ -7,6 +7,7 @@ require_once 'api/utils.php';
 require_once 'api/weapon.php';
 require_once 'api/fighter.php';
 require_once 'api/gang.php';
+require_once 'api/misc.php';
 require_once 'api/skills.php';
 require_once 'api/user.php';
 ?>

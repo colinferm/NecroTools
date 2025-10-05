@@ -1,3 +1,17 @@
+INSERT INTO necro_lookups (gang_type_id, lookup_value, lookup_key, is_special_attribute, is_gang_related) VALUES (7, "Scragfrid Mining Clan", "SQUAT_ANCESTRY", 1, 1);
+INSERT INTO necro_lookups (gang_type_id, lookup_value, lookup_key, is_special_attribute, is_gang_related) VALUES (7, "Svadrhol Mining Clan", "SQUAT_ANCESTRY", 1, 1);
+INSERT INTO necro_lookups (gang_type_id, lookup_value, lookup_key, is_special_attribute, is_gang_related) VALUES (7, "Tapferkeit Mining Clan", "SQUAT_ANCESTRY", 1, 1);
+INSERT INTO necro_lookups (gang_type_id, lookup_value, lookup_key, is_special_attribute, is_gang_related) VALUES (7, "Helmaeth Mining Clan", "SQUAT_ANCESTRY", 1, 1);
+INSERT INTO necro_lookups (gang_type_id, lookup_value, lookup_key, is_special_attribute, is_gang_related) VALUES (7, "Snorrag Mining Clan", "SQUAT_ANCESTRY", 1, 1);
+INSERT INTO necro_lookups (gang_type_id, lookup_value, lookup_key, is_special_attribute, is_gang_related) VALUES (7, "Trocken Mining Clan", "SQUAT_ANCESTRY", 1, 1);
+INSERT INTO necro_lookups (gang_type_id, lookup_value, lookup_key, is_special_attribute, is_gang_related) VALUES (7, "Vossinki Mining Clan", "SQUAT_ANCESTRY", 1, 1);
+INSERT INTO necro_lookups (gang_type_id, lookup_value, lookup_key, is_special_attribute, is_gang_related) VALUES (7, "Splinter Mining Clan", "SQUAT_ANCESTRY", 1, 1);
+INSERT INTO necro_lookups (gang_type_id, lookup_value, lookup_key, is_special_attribute, is_gang_related) VALUES (9, "Palanite Prefecture", "ENFORCER_PREFECTURE", 1, 1);
+INSERT INTO necro_lookups (gang_type_id, lookup_value, lookup_key, is_special_attribute, is_gang_related) VALUES (9, "Mynerva Prefecture", "ENFORCER_PREFECTURE", 1, 1);
+INSERT INTO necro_lookups (gang_type_id, lookup_value, lookup_key, is_special_attribute, is_gang_related) VALUES (9, "Secundan Prefecture", "ENFORCER_PREFECTURE", 1, 1);
+INSERT INTO necro_lookups (gang_type_id, lookup_value, lookup_key, is_special_attribute, is_gang_related) VALUES (9, "Badlands Prefecture", "ENFORCER_PREFECTURE", 1, 1);
+INSERT INTO necro_lookups (gang_type_id, lookup_value, lookup_key, is_special_attribute, is_gang_related) VALUES (9, "Poison Sea Prefecture", "ENFORCER_PREFECTURE", 1, 1);
+
 DROP TABLE IF EXISTS necro_user_gang;
 CREATE TABLE necro_user_gang (
 	id INT NOT NULL AUTO_INCREMENT,
@@ -135,3 +149,17 @@ INSERT INTO necro_lookups (lookup_value, lookup_key, misc_value) VALUES ('Fighte
 INSERT INTO necro_lookups (lookup_value, lookup_key, misc_value) VALUES ('Out of Action', 'XP_EVENT', 2);
 INSERT INTO necro_lookups (lookup_value, lookup_key, misc_value) VALUES ('Out of Action (Champion/Vehicle)', 'XP_EVENT', 3);
 INSERT INTO necro_lookups (lookup_value, lookup_key, misc_value) VALUES ('Killed Fighter', 'XP_EVENT', 1);
+
+DROP TABLE IF EXISTS necro_user_gang_special_trait_map;
+CREATE TABLE necro_user_gang_special_trait_map (
+	user_gang_id INT NOT NULL,
+	special_trait_lookup_id INT NOT NULL,
+	INDEX idx_user_gang_special_trait (user_gang_id, special_trait_lookup_id)
+);
+
+DROP TABLE IF EXISTS necro_user_fighter_special_trait_map;
+CREATE TABLE necro_user_fighter_special_trait_map (
+	user_fighter_id INT NOT NULL,
+	special_trait_lookup_id INT NOT NULL,
+	INDEX idx_user_fighter_special_trait (user_fighter_id, special_trait_lookup_id)
+);

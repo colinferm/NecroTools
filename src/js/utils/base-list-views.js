@@ -13,12 +13,18 @@ Necro.Views.BaseListView = Backbone.View.extend({
 	},
 	
 	initialize : function(options) {
-		var templateOpts = {
+		this.templateOpts = {
 			actionButtonText: this.actionButtonText
 		};
-		if (this.onInitalize) this.onInitalize(templateOpts);
 		var html = Necro.Utils.UI.TPL.get(this.templateName);
-		this.template = Handlebars.compile(html(templateOpts));
+		this.template = Handlebars.compile(html);
+		if (this.onInitialize) this.onInitialize(options);
+	},
+
+	render: function() {
+		this.$el.html(this.template(this.templateOpts));
+		if (this.onRender) this.onRender();
+		return this;
 	},
 
 	search: function(e) {
@@ -49,13 +55,6 @@ Necro.Views.BaseListView = Backbone.View.extend({
 		var view = Necro.Utils.Resolver.getNewInstance(this.itemClassName, {model: item});
 		$(this.appendSelector, this.$el).append(view.render().$el);
 	},
-
-	render: function() {
-		this.$el.html(this.template);
-		
-		if (this.onRender) this.onRender();
-		return this;
-	},
 	
 	handleActionButton: function(e) {
 		if (this.handleAction) this.handleAction();
@@ -76,10 +75,12 @@ Necro.Views.BaseListItemView = Backbone.View.extend({
 			this.model.on("change", this.render, this);
 			this.model.on("destroy", this.remove, this);
 		}
+		if (this.onInitalize) this.onInitalize(options);
 	},
 	
 	render: function() {
 		this.$el.html(this.template(this.model.toJSON()));
+		if (this.onRender) this.onRender();
 		return this;
 	}
 });

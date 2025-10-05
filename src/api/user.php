@@ -80,7 +80,7 @@ class UserController extends SlimController {
 		if ($user) {
 			$permissions = UserCOntroller::getPermissionsForUserId($user['id']);
 			$user['permissions'] = $permissions;
-			$cache->setEx("user-{$token}", 300, json_encode($user));
+			$cache->setEx("user-{$token}", DEFAULT_CACHE_TIME, json_encode($user));
 			return $user;
 		}
 	}
@@ -105,7 +105,7 @@ class UserController extends SlimController {
 		$_SESSION['user'] = $user;
 
 		$ndb->update("UPDATE {$ndb->user} SET oauth_key = :token, last_login = NOW() WHERE id = :id", ['token' => $token, 'id' => $user['id']]);
-		$cache->setEx("user-{$token}", 300, json_encode($user));
+		$cache->setEx("user-{$token}", DEFAULT_CACHE_TIME, json_encode($user));
 
 		return [$user, $token];
 	}

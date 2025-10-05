@@ -1,3 +1,18 @@
+DROP TABLE IF EXISTS necro_lookups;
+CREATE TABLE necro_lookups (
+	id INT NOT NULL AUTO_INCREMENT,
+	gang_type_id INT,
+	lookup_value VARCHAR(255) NOT NULL,
+	misc_value INT NOT NULL DEFAULT '0',
+	lookup_key VARCHAR(20) NOT NULL,
+	is_special_attribute TINYINT DEFAULT '0',
+	is_gang_related TINYINT DEFAULT '0',
+	is_fighter_related TINYINT DEFAULT '0',
+	notes TEXT NULL,
+	INDEX idx_lookup_by_key (lookup_key),
+	PRIMARY KEY (id)
+);
+
 DROP TABLE IF EXISTS necro_gang_type;
 CREATE TABLE necro_gang_type (
 	id INT NOT NULL AUTO_INCREMENT,
@@ -78,6 +93,7 @@ CREATE TABLE necro_fighter_skill_set (
 	limited_to_gang TINYINT NOT NULL DEFAULT '0',
 	is_wyrd TINYINT NOT NULL DEFAULT '0',
 	gang_type_id INT,
+	special_trait_id INT,
 	PRIMARY KEY (id)
 );
 INSERT INTO necro_fighter_skill_set (id, skill_set_name) VALUES (1, 'Agility');
@@ -106,6 +122,7 @@ CREATE TABLE necro_fighter_skill (
 	skill_set_id INT NOT NULL,
 	skill_name VARCHAR(255),
 	skill_description TEXT NULL,
+	special_trait_id INT,
 	INDEX idx_skill_skillset (skill_set_id),
 	PRIMARY KEY (id)
 );

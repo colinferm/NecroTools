@@ -8,7 +8,7 @@ class WeaponController extends SlimController {
 	public static function getTraits() {
 		global $ndb;
 		$query = "
-			SELECT t.id, t.lookup_value AS value, t.misc_value, t.notes FROM {$ndb->lookup} t WHERE t.lookup_key = 'WEAPON_TRAIT' ORDER BY t.lookup_value ASC
+			SELECT t.id, t.lookup_value AS value, t.misc_value, t.notes FROM {$ndb->lookups} t WHERE t.lookup_key = 'WEAPON_TRAIT' ORDER BY t.lookup_value ASC
 		";
 		return $ndb->query($query);
 	}
@@ -52,7 +52,7 @@ class WeaponController extends SlimController {
 				foreach($chars as &$char) {
 					$traitSQL = "
 						SELECT t.id, t.lookup_value AS value, t.misc_value 
-						FROM {$ndb->lookup} t, {$ndb->weapon_trait_characteristic_map} wtcm
+						FROM {$ndb->lookups} t, {$ndb->weapon_trait_characteristic_map} wtcm
 						WHERE t.id = wtcm.trait_lookup_id
 						AND t.lookup_key = 'WEAPON_TRAIT'
 						AND wtcm.characteristic_id = :char_id
@@ -87,7 +87,7 @@ class WeaponController extends SlimController {
 		global $ndb;
 		$traitSQL = "
 			SELECT t.id, t.lookup_value AS value, t.misc_value 
-			FROM {$ndb->lookup} t, {$ndb->weapon_trait_characteristic_map} wtcm
+			FROM {$ndb->lookups} t, {$ndb->weapon_trait_characteristic_map} wtcm
 			WHERE t.id = wtcm.trait_lookup_id
 			AND t.lookup_key = 'WEAPON_TRAIT'
 			AND wtcm.characteristic_id = :char_id
@@ -108,7 +108,7 @@ class WeaponController extends SlimController {
 		global $ndb;
 		$id = $args['id'];
 		$query = "
-			SELECT t.id, t.lookup_value AS value, t.misc_value, t.notes FROM {$ndb->lookup} t WHERE t.id = :id ORDER BY t.lookup_value ASC
+			SELECT t.id, t.lookup_value AS value, t.misc_value, t.notes FROM {$ndb->lookups} t WHERE t.id = :id ORDER BY t.lookup_value ASC
 		";
 		$data = $ndb->query($query, ['id' => $id]);
 		$response->getBody()->write(json_encode($data));
@@ -119,7 +119,7 @@ class WeaponController extends SlimController {
 		global $ndb;
 		$id = $args['id'];
 		$result = $ndb->delete("DELETE FROM {$ndb->weapon_trait_characteristic_map} WHERE trait_lookup_id = :id", $id);
-		$result = $ndb->delete("DELETE FROM {$ndb->lookup} WHERE id = :id", $id);
+		$result = $ndb->delete("DELETE FROM {$ndb->lookups} WHERE id = :id", $id);
 		$response->withStatus(200);
 		return $response;
 	}
@@ -129,7 +129,7 @@ class WeaponController extends SlimController {
 		$trait = json_decode($request->getBody(), true);
 		unset($trait['id']);
 		$query = "
-			INSERT INTO {$ndb->lookup}
+			INSERT INTO {$ndb->lookups}
 				(lookup_value, misc_value, notes, lookup_key)
 			VALUES
 				(:value, :misc_value, :notes, 'WEAPON_TRAIT')
@@ -147,7 +147,7 @@ class WeaponController extends SlimController {
 		global $ndb;
 		$trait = json_decode($request->getBody(), true);
 		$query = "
-			UPDATE {$ndb->lookup}
+			UPDATE {$ndb->lookups}
 			SET value = :value, misc_value = :misc_value, notes = :notes
 			WHERE id = :id
 		";

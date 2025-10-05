@@ -1,0 +1,28 @@
+<div class="validation-alert alert alert-danger mb-3 d-none" role="alert">
+  <i class="fi-alert"></i> There are invalid values in some fields.
+</div>
+<div class="form-floating mb-3">
+	<input class="lookup_value form-control" value="{{lookup_value}}" id="lookupValue" type="text" placeholder="Lookup Value">
+	<label for="lookupValue">Lookup Value</label>
+</div>
+<div class="form-floating mb-3">
+	<input class="lookup_key form-control" value="{{lookup_key}}" id="lookupKey" type="text" placeholder="Lookup Key">
+	<label for="lookupKey">Lookup Key</label>
+</div>
+<div class="form-floating mb-3">
+	<input class="misc_value form-control" value="{{misc_value}}" id="traitValue" type="number" placeholder="Value" size="40">
+	<label for="traitValue">Value</label>
+</div>
+<div class="form-floating mb-3">
+	<textarea class="notes form-control" rows="6" id="notes" placeholder="Any special information about this trait.">{{notes}}</textarea>
+	<label for="notes">Trait Notes</label>
+</div>
+<div class="form-floating mb-3">
+	{{{checkbox name-param="is_special_attribute" class-name="is_special_attribute" text=" Special Attribute" tab-index="2"}}}<br/>
+</div>
+<div class="form-floating mb-3">
+	{{{checkbox name-param="is_gang_related" class-name="is_gang_related" text=" Gang Attribute" tab-index="2"}}}<br/>
+</div>
+<div class="form-floating mb-3">
+	{{{checkbox name-param="is_fighter_related" class-name="is_fighter_related" text=" Fighter Attribute" tab-index="2"}}}<br/>
+</div>
