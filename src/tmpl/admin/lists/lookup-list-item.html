@@ -1,11 +1,13 @@
 <td class="lookup_value"><b>{{lookup_value}}</b></td>
 <td>{{lookup_key}}</td>
 <td>{{misc_value}}</td>
-<td>{{#if is_special_attribute}}
-		<span class="yes inverse">&#x2714;</span>
+<td>
+	{{#if is_special_attribute}}
+		<span class="yes">&check;</span>
 	{{else}} 
 		<span class="no">&cross;</span>
-	{{/if}}</td>
+	{{/if}}
+</td>
 <td class="d-flex justify-content-center">
 	<div class="btn-group" role="group">
 		<button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">

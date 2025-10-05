@@ -49,7 +49,8 @@ Necro.Views.Admin.LookupItem = Backbone.View.extend({
 
 	events: {
 		'click .action_edit': 'editLookup',
-		'click .lookup_value': 'editLookup'
+		'click .lookup_value': 'editLookup',
+		'click .action_remove': 'deleteLookup'
 	},
 
 	initialize : function(options) {

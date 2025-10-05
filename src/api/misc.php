@@ -50,7 +50,7 @@ class OtherDataController extends SlimController {
 			WHERE id = :id
 			ORDER BY lookup_key ASC, lookup_value ASC, is_special_attribute ASC
 		";
-		return $ndb->query($lookupQuery, ['id' => $id]);
+		return $ndb->queryFirst($lookupQuery, ['id' => $id]);
 	}
 
 	public static function fetchLookup(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
@@ -107,7 +107,7 @@ class OtherDataController extends SlimController {
 		}
 		$cache->del(["lookups"]);
 
-		$response->getBody()->write(json_encode($archetype));
+		$response->getBody()->write(json_encode($lookup));
 		return $response->withHeader('Content-Type', 'application/json');
 	}
 
