@@ -69,6 +69,8 @@ Necro.Views.GangListItem = Backbone.View.extend({
 	events: {
 		'click h2': 'editGang',
 		'click h3': 'editGang',
+		'click .action_edit': 'editGang',
+		'click .action_clone': 'cloneGang',
 		'click .action_remove': 'removeGang'
 	},
 
@@ -87,6 +89,10 @@ Necro.Views.GangListItem = Backbone.View.extend({
 
 	editGang: function() {
 		necro.navigate("roster/" + this.model.get("id"), {trigger: true});
+	},
+
+	cloneGang: function() {
+		
 	},
 
 	removeGang: function() {

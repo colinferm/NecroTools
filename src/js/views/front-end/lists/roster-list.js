@@ -39,7 +39,8 @@ Necro.Views.Roster = Necro.Views.BaseListView.extend({
 		var modal = new Necro.Views.Modal({
 			class: "Necro.Views.User.Modal.AddFighter",
 			title: "Edit Fighter",
-			model: new Necro.Models.Fighter()
+			model: new Necro.Models.Fighter(),
+			modalSize: 'modal-lg'
 		});
 	}
 
@@ -72,6 +73,7 @@ Necro.Views.RosterItem = Necro.Views.BaseListItemView.extend({
 		var modal = new Necro.Views.Modal({
 			class: "Necro.Views.User.Modal.AddFighter",
 			title: "Edit Fighter",
+			modalSize: 'modal-lg',
 			model: this.model
 		});
 	},
