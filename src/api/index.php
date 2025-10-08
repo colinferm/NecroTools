@@ -114,7 +114,7 @@ $app->post('/fighter', [\FighterController::class, 'addFighter'])->add($requireL
 $app->get('/fighter/{id}', [\FighterController::class, 'fetchFighter'])->add($requireLoggedIn);
 $app->put('/fighter/{id}', [\FighterController::class, 'updateFighter'])->add($requireLoggedIn);
 
-$app->post('/injury/{id}', [\FighterController::class, 'addInjury'])->add($requireLoggedIn);
+$app->post('/injury/{id}', [\FighterController::class, 'addInjuryAdvancement'])->add($requireLoggedIn);
 
 /* Front end */
 $app->get('/lookups', [\OtherDataController::class, 'fetchLookups'])->add($requireLoggedIn);

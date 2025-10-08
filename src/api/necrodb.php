@@ -12,7 +12,7 @@ class NecroDB {
 	public $fighter_template = DB_PREFIX.'fighter_template';
 	public $fighter_role = DB_PREFIX.'gang_fighter_role';
 	public $fighter_role_skill_set_map = DB_PREFIX.'gang_fighter_role_skill_set_map';
-	public $injury = DB_PREFIX.'gang_fighter_injury';
+	public $injury_advancement = DB_PREFIX.'gang_fighter_injury_advancement';
 
 	public $weapon = DB_PREFIX.'weapon';
 	public $weapon_category = DB_PREFIX.'weapon_category';
@@ -31,7 +31,7 @@ class NecroDB {
 	public $user_fighter_audit = DB_PREFIX."user_fighter_audit";
 	public $user_fighter_weapon_map = DB_PREFIX.'user_fighter_weapon_map';
 	public $user_fighter_skill_map = DB_PREFIX.'user_fighter_skill_map';
-	public $user_fighter_injury_map = DB_PREFIX.'user_fighter_injury_map';
+	public $user_fighter_injury_advancement_map = DB_PREFIX.'user_fighter_injury_advancement_map';
 	public $user_fighter_trait_map = DB_PREFIX.'user_fighter_special_trait_map';
 
 	public $fighter_archetype = DB_PREFIX.'archetype';

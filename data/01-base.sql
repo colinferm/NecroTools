@@ -65,26 +65,64 @@ INSERT INTO necro_gang_fighter_role VALUES (17, 'crew', 1, 'Helion');
 INSERT INTO necro_gang_fighter_role VALUES (18, 'pet', 1, 'Cyber-Mastiff');
 
 
-DROP TABLE IF EXISTS necro_gang_fighter_injury;
-CREATE TABLE necro_gang_fighter_injury (
+DROP TABLE IF EXISTS necro_gang_fighter_injury_advancement;
+CREATE TABLE necro_gang_fighter_injury_advancement (
 	id INT NOT NULL AUTO_INCREMENT,
 	name VARCHAR(100) NOT NULL,
 	description VARCHAR(200) NOT NULL,
-	convalescence TINYINT NOT NULL,
+	convalescence TINYINT NOT NULL DEFAULT '0',
+	value_adj INT NOT NULL DEFAULT '0',
+	xp_cost INT NOT NULL DEFAULT '0',
+	is_injury TINYINT NOT NULL DEFAULT '0',
+	is_wyrd TINYINT NOT NULL DEFAULT '0',
+	is_ganger TINYINT NOT NULL DEFAULT '0',
 	PRIMARY KEY (id)
 );
-INSERT INTO necro_gang_fighter_injury VALUES (1, 'Impressive Scars', 'Cool +1', 0);
-INSERT INTO necro_gang_fighter_injury VALUES (2, 'Horrid Scars', 'New Skill: Fearsome', 0);
-INSERT INTO necro_gang_fighter_injury VALUES (3, 'Bitter Enmity', 'New Skill: Beserker (against this gang)', 0);
-INSERT INTO necro_gang_fighter_injury VALUES (4, 'Old Battle Wound', 'Stackable', 0);
-INSERT INTO necro_gang_fighter_injury VALUES (5, 'Partially Deafened', '-1 Leadership', 0);
-INSERT INTO necro_gang_fighter_injury VALUES (6, 'Humiliated', '-1 Cool', 1);
-INSERT INTO necro_gang_fighter_injury VALUES (7, 'Eye Injury', '-1 BS', 1);
-INSERT INTO necro_gang_fighter_injury VALUES (8, 'Hand Injury', '-1 WS', 1);
-INSERT INTO necro_gang_fighter_injury VALUES (9, 'Hobbled', '-1 Movement', 1);
-INSERT INTO necro_gang_fighter_injury VALUES (10, 'Spinal Injury', '-1 Strength', 1);
-INSERT INTO necro_gang_fighter_injury VALUES (11, 'Enfeebled', '-1 Toughness', 1);
-INSERT INTO necro_gang_fighter_injury VALUES (12, 'Head Injury', '-1 Intelligence, -1 Willpower', 1);
+INSERT INTO necro_gang_fighter_injury_advancement (id, name, description, convalescence, is_injury) VALUES (1, 'Impressive Scars', 'Cool +1', 0, 1);
+INSERT INTO necro_gang_fighter_injury_advancement (id, name, description, convalescence, is_injury) VALUES (2, 'Horrid Scars', 'New Skill: Fearsome', 0, 1);
+INSERT INTO necro_gang_fighter_injury_advancement (id, name, description, convalescence, is_injury) VALUES (3, 'Bitter Enmity', 'New Skill: Beserker (against this gang)', 0, 1);
+INSERT INTO necro_gang_fighter_injury_advancement (id, name, description, convalescence, is_injury) VALUES (4, 'Old Battle Wound', 'Stackable', 0, 1);
+INSERT INTO necro_gang_fighter_injury_advancement (id, name, description, convalescence, is_injury) VALUES (5, 'Partially Deafened', '-1 Leadership', 0, 1);
+INSERT INTO necro_gang_fighter_injury_advancement (id, name, description, convalescence, is_injury) VALUES (6, 'Humiliated', '-1 Cool', 1, 1);
+INSERT INTO necro_gang_fighter_injury_advancement (id, name, description, convalescence, is_injury) VALUES (7, 'Eye Injury', '-1 BS', 1, 1);
+INSERT INTO necro_gang_fighter_injury_advancement (id, name, description, convalescence, is_injury) VALUES (8, 'Hand Injury', '-1 WS', 1, 1);
+INSERT INTO necro_gang_fighter_injury_advancement (id, name, description, convalescence, is_injury) VALUES (9, 'Hobbled', '-1 Movement', 1, 1);
+INSERT INTO necro_gang_fighter_injury_advancement (id, name, description, convalescence, is_injury) VALUES (10, 'Spinal Injury', '-1 Strength', 1, 1);
+INSERT INTO necro_gang_fighter_injury_advancement (id, name, description, convalescence, is_injury) VALUES (11, 'Enfeebled', '-1 Toughness', 1, 1);
+INSERT INTO necro_gang_fighter_injury_advancement (id, name, description, convalescence, is_injury) VALUES (12, 'Head Injury', '-1 Intelligence, -1 Willpower', 1, 1);
+INSERT INTO necro_gang_fighter_injury_advancement (id, name, description, value_adj, xp_cost) VALUES (13, '', '+1 Willpower', 5, 3);
+INSERT INTO necro_gang_fighter_injury_advancement (id, name, description, value_adj, xp_cost) VALUES (14, '', '+1 Intelligence', 5, 3);
+INSERT INTO necro_gang_fighter_injury_advancement (id, name, description, value_adj, xp_cost) VALUES (15, '','+1 Cool', 10, 4);
+INSERT INTO necro_gang_fighter_injury_advancement (id, name, description, value_adj, xp_cost) VALUES (16, '','+1 Leadership', 10, 4);
+INSERT INTO necro_gang_fighter_injury_advancement (id, name, description, value_adj, xp_cost) VALUES (17, '','+1 Initiative', 10, 5);
+INSERT INTO necro_gang_fighter_injury_advancement (id, name, description, value_adj, xp_cost) VALUES (18, '','+1 Movement', 10, 5);
+INSERT INTO necro_gang_fighter_injury_advancement (id, name, description, value_adj, xp_cost) VALUES (19, '','+1 Weapon Skill', 20, 6);
+INSERT INTO necro_gang_fighter_injury_advancement (id, name, description, value_adj, xp_cost) VALUES (20, '','+1 Ballistic Skill', 20, 6);
+INSERT INTO necro_gang_fighter_injury_advancement (id, name, description, value_adj, xp_cost) VALUES (21, '','+1 Random Primary Skill', 20, 6);
+INSERT INTO necro_gang_fighter_injury_advancement (id, name, description, value_adj, xp_cost, is_wyrd) VALUES (22, '','+1 Random Wyrd Power (unique)', 20, 6, 1);
+INSERT INTO necro_gang_fighter_injury_advancement (id, name, description, value_adj, xp_cost) VALUES (23, '','+1 Strength', 30, 8);
+INSERT INTO necro_gang_fighter_injury_advancement (id, name, description, value_adj, xp_cost) VALUES (24, '','+1 Tougness', 30, 8);
+INSERT INTO necro_gang_fighter_injury_advancement (id, name, description, value_adj, xp_cost) VALUES (25, '','+1 Chosen Primary Skill', 20, 9);
+INSERT INTO necro_gang_fighter_injury_advancement (id, name, description, value_adj, xp_cost, is_wyrd) VALUES (26, '','+1 Chosen Wyrd Power (unique)', 20, 9, 1);
+INSERT INTO necro_gang_fighter_injury_advancement (id, name, description, value_adj, xp_cost, is_wyrd) VALUES (27, '','+1 Random Wyrd Power (universal)', 20, 9, 1);
+INSERT INTO necro_gang_fighter_injury_advancement (id, name, description, value_adj, xp_cost) VALUES (28, '','+1 Random Secondary Skill', 35, 9);
+INSERT INTO necro_gang_fighter_injury_advancement (id, name, description, value_adj, xp_cost) VALUES (29, '','+1 Wound', 45, 12);
+INSERT INTO necro_gang_fighter_injury_advancement (id, name, description, value_adj, xp_cost) VALUES (30, '','+1 Attack', 45, 12);
+INSERT INTO necro_gang_fighter_injury_advancement (id, name, description, value_adj, xp_cost) VALUES (31, '','(Specialist) Promote to Champion', 20, 12);
+INSERT INTO necro_gang_fighter_injury_advancement (id, name, description, value_adj, xp_cost, is_wyrd) VALUES (32, '','+1 Chosen Wyrd Power (universal)', 20, 12, 1);
+INSERT INTO necro_gang_fighter_injury_advancement (id, name, description, value_adj, xp_cost) VALUES (33, '','+1 Chosen Secondary Skill', 35, 12);
+INSERT INTO necro_gang_fighter_injury_advancement (id, name, description, value_adj, xp_cost) VALUES (34, '','+1 Random ANY Skill', 50, 15);
+INSERT INTO necro_gang_fighter_injury_advancement (id, name, description, value_adj, xp_cost, is_ganger) VALUES (35, '','Becomes a Specialist', 20, 6, 1);
+INSERT INTO necro_gang_fighter_injury_advancement (id, name, description, value_adj, xp_cost, is_ganger) VALUES (36, '','+1 Weapon Skill', 20, 6, 1);
+INSERT INTO necro_gang_fighter_injury_advancement (id, name, description, value_adj, xp_cost, is_ganger) VALUES (37, '','+1 Ballistic Skill', 20, 6, 1);
+INSERT INTO necro_gang_fighter_injury_advancement (id, name, description, value_adj, xp_cost, is_ganger) VALUES (38, '','+1 Strength', 30, 6, 1);
+INSERT INTO necro_gang_fighter_injury_advancement (id, name, description, value_adj, xp_cost, is_ganger) VALUES (39, '','+1 Toughness', 30, 6, 1);
+INSERT INTO necro_gang_fighter_injury_advancement (id, name, description, value_adj, xp_cost, is_ganger) VALUES (40, '','+1 Movement', 10, 6, 1);
+INSERT INTO necro_gang_fighter_injury_advancement (id, name, description, value_adj, xp_cost, is_ganger) VALUES (41, '','+1 Initiative', 10, 6, 1);
+INSERT INTO necro_gang_fighter_injury_advancement (id, name, description, value_adj, xp_cost, is_ganger) VALUES (42, '','+1 Willpower', 5, 6, 1);
+INSERT INTO necro_gang_fighter_injury_advancement (id, name, description, value_adj, xp_cost, is_ganger) VALUES (43, '','+1 Intelligence', 5, 6, 1);
+INSERT INTO necro_gang_fighter_injury_advancement (id, name, description, value_adj, xp_cost, is_ganger) VALUES (44, '','+1 Cool', 10, 6, 1);
+INSERT INTO necro_gang_fighter_injury_advancement (id, name, description, value_adj, xp_cost, is_ganger) VALUES (45, '','+1 Leadership', 10, 6, 1);
 
 DROP TABLE IF EXISTS necro_fighter_skill_set;
 CREATE TABLE necro_fighter_skill_set (

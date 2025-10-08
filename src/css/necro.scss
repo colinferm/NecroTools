@@ -409,6 +409,14 @@ html {
 					}
 				}
 
+				.gang-roster-info {
+					background-color: rgba(255, 255, 255, 0.5);
+					h1 {
+						font-family: $font-dirt;
+						font-style: italic;
+					}
+				}
+
 				.roster-list {
 					.roster-info-card-container {
 						border-radius: 20px;
@@ -498,6 +506,11 @@ html {
 												background-color: $color-necro-brown;
 											}
 										}
+									}
+								}
+								.weapons-container {
+									.wargear-skill-column {
+										max-width: 35px;
 									}
 								}
 							}

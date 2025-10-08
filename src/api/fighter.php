@@ -340,7 +340,7 @@ class FighterController extends SlimController {
 	public static function getInjuries() {
 		global $ndb;
 		$query = "
-			SELECT id, name, description, convalescence FROM {$ndb->injury} ORDER BY id ASC
+			SELECT id, name, description, convalescence FROM {$ndb->injury_advancement} WHERE is_injury = 1 ORDER BY id ASC
 		";
 		return $ndb->query($query);
 	}
@@ -453,6 +453,20 @@ class FighterController extends SlimController {
 			unset($fighter['weapons']);
 		}
 		$auditMessage = '';
+		
+
+		$result = FighterController::updateFighterRecord($fighter);
+		if ($result) {
+			if (strlen($auditMessage)) $this->addFighterAudit($fighter['id'], $auditMessage);
+			$response->getBody()->write(json_encode($fighter));
+			return $response->withHeader('Content-Type', 'application/json');
+		}
+		throw new DatabaseException();
+	}
+
+	private static function updateFighterRecord($fighter) {
+		global $ndb;
+
 		$updateQuery = "UPDATE {$ndb->user_fighter} SET ";
 		$i = 0;
 		foreach(array_keys($fighter) as $key) {
@@ -467,15 +481,8 @@ class FighterController extends SlimController {
 			$i++;
 		}
 		$updateQuery .= " WHERE id = :id";
-		//error_log($updateQuery);
 
-		$result = $ndb->update($updateQuery, $fighter);
-		if ($result) {
-			if (strlen($auditMessage)) $this->addFighterAudit($fighter['id'], $auditMessage);
-			$response->getBody()->write(json_encode($fighter));
-			return $response->withHeader('Content-Type', 'application/json');
-		}
-		throw new DatabaseException();
+		return $ndb->update($updateQuery, $fighter);
 	}
 
 	private function addFighterAudit($fighterId, $message) {
@@ -484,68 +491,69 @@ class FighterController extends SlimController {
 		$result = $ndb->insert($auditSQL, ['user_fighter_id' => $fighterId, 'description' => $message]);
 	}
 
-	public function addInjury(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+	public function addInjuryAdvancement(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
 		global $ndb;
 
 		$auditMessage = '';
 		$fighterId = $args['id'];
-		$injury = json_decode($request->getBody(), true);
+		$event = json_decode($request->getBody(), true);
 
-		$insertInjurySQL = "INSERT INTO {$ndb->user_fighter_injury_map} (user_fighter_id, injury_id) VALUES (:user_fighter_id, :injury_id)";
-		$result = $ndb->update($insertInjurySQL, array('user_fighter_id' => $fighterId, 'injury_id' => $injury->id));
+		$insertInjurySQL = "INSERT INTO {$ndb->user_fighter_injury_advancement_map} (user_fighter_id, injury_advancement_id) VALUES (:user_fighter_id, :injury_advancement_id)";
+		$result = $ndb->update($insertInjurySQL, array('user_fighter_id' => $fighterId, 'injury_advancement_id' => $event->id));
 
 		$fighter = $this->getFighterByID($fighterId);
-		if ($injury['id'] == 1) {
+		if ($event['id'] == 1) {
 			$fighter['cool'] += 1;
 			$auditMessage = 'Injury: Impressive Scars: Cool +1';
 
-		} else if ($injury['id'] == 2) {
+		} else if ($event['id'] == 2) {
 			// add skill fearsome
 			error_log('Add fearsome skill');
 
-		} else if ($injury['id'] == 3) {
+		} else if ($event['id'] == 3) {
 			// add skill beserker
 			error_log('Add beserker skill');
 
-		} else if ($injury['id'] == 4) {
+		} else if ($event['id'] == 4) {
 			// add old battle wound
 			error_log('Stack battle wound');
 
-		} else if ($injury['id'] == 5) {
+		} else if ($event['id'] == 5) {
 			$fighter['leadership'] -= 1;
 			$auditMessage = "Injury: Partially Deafened: -1 Leadership";
 
-		}  else if ($injury['id'] == 6) {
+		}  else if ($event['id'] == 6) {
 			$fighter['cool'] -= 1;
 			$auditMessage = "Injury: Humiliated: -1 Cool";
 			
-		} else if ($injury['id'] == 7) {
+		} else if ($event['id'] == 7) {
 			$fighter['ballistic_skill'] -= 1;
 			$auditMessage = "Injury: Eye Injury: -1 BS";
 			
-		} else if ($injury['id'] == 8) {
+		} else if ($event['id'] == 8) {
 			$fighter['weapon_skill'] -= 1;
 			$auditMessage = "Injury: Hand Injury: -1 WS";
 			
-		}  else if ($injury['id'] == 9) {
+		}  else if ($event['id'] == 9) {
 			$fighter['movement'] -= 1;
 			$auditMessage = "Injury: Hobbled: -1 M";
 			
-		}  else if ($injury['id'] == 10) {
+		}  else if ($event['id'] == 10) {
 			$fighter['strength'] -= 1;
 			$auditMessage = "Injury: Spinal Injury: -1 S";
 			
-		}  else if ($injury['id'] == 11) {
+		}  else if ($event['id'] == 11) {
 			$fighter['toughness'] -= 1;
 			$auditMessage = "Injury: Enfeebled: -1 T]";
 			
-		}  else if ($injury['id'] == 12) {
+		}  else if ($event['id'] == 12) {
 			$fighter['intelligence'] -= 1;
 			$fighter['willpower'] -= 1;
 			$auditMessage = "Injury: Head Injury: Int -1, Will -1";
 			
 		}
 
+		$result = FighterController::updateFighterRecord($fighter);
 		if (strlen($auditMessage)) $this->addFighterAudit($fighterId, $auditMessage);
 		$response->getBody()->write(json_encode($fighter));
 		return $response->withHeader('Content-Type', 'application/json');

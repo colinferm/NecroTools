@@ -21,6 +21,10 @@ CREATE TABLE necro_user_gang (
 	outlaw TINYINT NOT NULL DEFAULT '0',
 	outcast TINYINT NOT NULL DEFAULT '0',
 	credits INT NOT NULL DEFAULT '0',
+	current_value INT NOT NULL DEFAULT '0',
+	reputation INT NOT NULL DEFAULT '1',
+	meat INT NOT NULL DEFAULT '0',
+	current_status ENUM('Active', 'Retired') DEFAULT 'Active',
 	created DATETIME NOT NULL,
 	last_mod DATETIME NOT NULL,
 	PRIMARY KEY (id),
@@ -126,11 +130,11 @@ CREATE TABLE necro_user_fighter_gear_map (
 INSERT INTO necro_user_fighter_gear_map VALUES (1, 1);
 INSERT INTO necro_user_fighter_gear_map VALUES (2, 1);
 
-DROP TABLE IF EXISTS necro_user_fighter_injury_map;
-CREATE TABLE necro_user_fighter_injury_map (
+DROP TABLE IF EXISTS necro_user_fighter_injury_advancement_map;
+CREATE TABLE necro_user_fighter_injury_advancement_map (
 	user_fighter_id INT NOT NULL,
-	injury_id INT NOT NULL,
-	INDEX idx_fighter_injury_map (user_fighter_id, injury_id)
+	injury_advancement_id INT NOT NULL,
+	INDEX idx_fighter_injury_map (user_fighter_id, injury_advancement_id)
 );
 
 DROP TABLE IF EXISTS necro_user_fighter_xp_record;
