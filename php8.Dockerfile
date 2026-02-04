@@ -63,23 +63,19 @@ RUN /usr/local/bin/php -r "copy('https://getcomposer.org/installer', 'composer-s
   && /usr/local/bin/php -r "unlink('composer-setup.php');" \
   && mv composer.phar /usr/local/bin/composer
 
-# Set up Grunt.js to process JS/CSS/SASS
-# Instead of:
-RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
+# Set up Node.js and Gulp to process JS/CSS/SASS
+RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
   && apt-get install -y nodejs \
   && node --version \
   && npm --version
 
 RUN mkdir -p /usr/src/necro/package
 COPY package.json /usr/src/necro
-COPY Gruntfile.js /usr/src/necro
+COPY gulpfile.js /usr/src/necro
 WORKDIR /usr/src/necro
 
-RUN npm install grunt
-RUN npm install grunt-contrib-concat grunt-contrib-copy grunt-contrib-jshint grunt-contrib-qunit \
-  grunt-contrib-sass grunt-contrib-uglify  grunt-contrib-watch grunt-newer grunt-replace \
-  grunt-contrib-clean grunt-zip
-RUN npm install -g grunt-cli foundation-sites sass
+RUN npm install
+RUN npm install -g gulp-cli
 
 # Start the container with a few tasks
 COPY docker-entrypoint.sh /usr/local/bin/

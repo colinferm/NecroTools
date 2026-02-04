@@ -9,6 +9,26 @@
 	<textarea class="archetype_description form-control" rows="6" id="archetypeDescription" placeholder="Archetype Description" tabindex="2">{{archetype_description}}</textarea>
 	<label for="archetypeDescription">Archetype Description</label>
 </div>
-<div class="mb-3">
+<div class="mb-4">
 	{{{checkbox obj-name="0" name-param="is_wyrd" class-name="is_wyrd" text=" Is Wyrd" tab-index="3"}}}<br/>
+</div>
+<div class="mb-3">
+	<label><b>Primary Skills</b></label>
+	<div class="row primary-skillsets mt-2">
+		{{#each skillsets}}
+			<div class="col-6 skillset">
+				<input type="checkbox" class="primary_skill_set_box form-check-input" value="{{this.id}}">&nbsp;{{this.attributes.skill_set_name}}
+			</div>
+		{{/each}}
+	</div>
+</div>
+<div class="mb-3">
+	<label><b>Secondary Skills</b></label>
+	<div class="row secondary-skillsets mt-2">
+		{{#each skillsets}}
+			<div class="col-6 skillset">
+				<input type="checkbox" class="secondary_skill_set_box form-check-input" value="{{this.id}}">&nbsp;{{this.attributes.skill_set_name}}
+			</div>
+		{{/each}}
+	</div>
 </div>

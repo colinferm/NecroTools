@@ -60,7 +60,7 @@ $app->put('/fighter/role/{id}/stats', [\FighterController::class, 'addUpdateTemp
 $app->put('/fighter/role/{id}/skills/{primary}', [\FighterController::class, 'updateTemplateSkills'])->add($requireDataAdmin);
 
 $app->get('/archetypes', [\ArchetypeController::class, 'fetchArchetypes']);
-$app->put('/archetypes/{id}/sets/{primary}', [\ArchetypeController::class, 'updateArchetypeSkills']);
+$app->put('/archetypes/{id}/sets/{primary}', [\ArchetypeController::class, 'addUpdateArchetypeSkills']);
 $app->post('/archetype', [\ArchetypeController::class, 'addUpdateArchetype'])->add($requireLoggedIn);
 $app->get('/archetype/{id}', [\ArchetypeController::class, 'fetchArchetype']);
 $app->put('/archetype/{id}', [\ArchetypeController::class, 'addUpdateArchetype'])->add($requireLoggedIn);

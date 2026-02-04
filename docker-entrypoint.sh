@@ -3,7 +3,7 @@ set -e
 
 service redis-server start
 cd /var/www/html/api/lib && composer update
-cd /usr/src/necro && grunt refresh
-grunt watch &
+cd /usr/src/necro && gulp refresh
+gulp watch &
 
 exec apachectl -D FOREGROUND

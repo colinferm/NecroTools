@@ -19,7 +19,7 @@ class ArchetypeController extends SlimController {
 		global $ndb;
 		$query = "SELECT a.id, a.archetype_name, a.archetype_description, a.is_wyrd FROM {$ndb->fighter_archetype} a ORDER BY a.archetype_name ASC";
 		$archetypes = $ndb->query($query);
-		foreach ($archetypes as $archetype) {
+		foreach ($archetypes as &$archetype) {
 			$archetype['primary_skills'] = FighterController::getArchetypeSkills($archetype['id'], true);
 			$archetype['secondary_skills'] = FighterController::getArchetypeSkills($archetype['id'], false);
 		}
@@ -69,6 +69,10 @@ class ArchetypeController extends SlimController {
 			$ndb->updateTable($ndb->fighter_archetype, $archetype);
 			$archetype = ArchetypeController::getArchetypeById($id);
 		}
+
+		ArchetypeController::updateArchetypeSkill($archetype['id'], 1, $pskills);
+		ArchetypeController::updateArchetypeSkill($archetype['id'], 0, $sskills);
+
 		$cache->del(["fighter-archetypes"]);
 
 		$response->getBody()->write(json_encode($archetype));
@@ -85,14 +89,39 @@ class ArchetypeController extends SlimController {
 		return $response->withStatus(200);
 	}
 
-	public function updateArchetypeSkills(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
+	private static function updateArchetypeSkill($id, $primary, $skillSets) {
+		global $ndb;
+		$deleteSetMapping = "DELETE FROM {$ndb->fighter_archetype_skill_set_map} WHERE archetype_id = :archetype_id AND is_primary = :primary";
+		$ndb->deleteWithParams($deleteSetMapping, [ 'archetype_id' => $id, 'primary' => $primary ]);
+
+		foreach($skillSets as $ss) {
+			$setId = $ss['id'];
+			$insertQuery = "INSERT INTO {$ndb->fighter_archetype_skill_set_map} VALUES (:archetype_id, :set_id, :primary)";
+			$ndb->insert($insertQuery, [ 'archetype_id' => $id, 'set_id' => $setId, 'primary' => $primary ]);
+		}
+	}
+
+	public function addUpdateArchetypeSkills(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
 		global $cache, $ndb;
 		$id = $args['id'];
-		$skills = json_decode($request->getBody(), true);
+		$primary = $args['primary'];
+		$skillSets = json_decode($request->getBody(), true);
 
+		ArchetypeController::updateArchetypeSkill($id, $primary, $skillSets);
+
+		/* $deleteSetMapping = "DELETE FROM {$ndb->fighter_archetype_skill_set_map} WHERE archetype_id = :archetype_id AND is_primary = :primary";
+		$ndb->deleteWithParams($deleteSetMapping, [ 'archetype_id' => $id, 'primary' => $primary ]);
+
+		foreach($skillSets as $ss) {
+			$setId = $ss['id'];
+			$insertQuery = "INSERT INTO {$ndb->fighter_archetype_skill_set_map} VALUES (:archetype_id, :set_id, :primary)";
+			$ndb->insert($insertQuery, [ 'archetype_id' => $id, 'set_id' => $setId, 'primary' => $primary ]);
+		} */
 
 		$cache->del(["fighter-archetypes"]);
-		return $response->withStatus(200);
+
+		$response->getBody()->write(json_encode($skillSets));
+		return $response->withHeader('Content-Type', 'application/json');
 	}
 }
 ?>

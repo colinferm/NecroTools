@@ -36,6 +36,7 @@ Necro.Views.Admin.ArchetypeList = Necro.Views.BaseListView.extend({
 		var modal = new Necro.Views.Modal({
 			class: "Necro.Views.Admin.Modal.EditArchetype",
 			title: "Add Archetype",
+			modalSize: "modal-lg",
 			model: m,
 			callback: _.bind(function() {
 				if (m) this.collection.add(m);
@@ -76,6 +77,7 @@ Necro.Views.Admin.ArchetypeItem = Backbone.View.extend({
 		var modal = new Necro.Views.Modal({
 			class: "Necro.Views.Admin.Modal.EditArchetype",
 			title: "Edit Archetype",
+			modalSize: "modal-lg",
 			model: this.model
 		});
 	},
