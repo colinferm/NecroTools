@@ -75,13 +75,14 @@ CREATE TABLE necro_user_fighter (
 	experience TINYINT NOT NULL,
 	advancements TINYINT NOT NULL,
 	base_value INT NOT NULL,
+	current_value INT NOT NULL DEFAULT '0',
 	view_order TINYINT NOT NULL DEFAULT '0',
 	created DATETIME NOT NULL,
 	PRIMARY KEY (id),
 	INDEX idx_user_fighter_gang (user_gang_id)
 );
-INSERT INTO necro_user_fighter VALUES(1, 1, 'Joe Blow', 11, NULL, '5', '3', '3', '3', '3', '0', '0', '2', '4', '2', 0, 0, '7', '8', '8', '8', 0, 0, 0, 0, 0, 6, 2, 125, 1, NOW());
-INSERT INTO necro_user_fighter VALUES(2, 1, 'Jill Jones', 13, NULL, '5', '4', '3', '3', '3', '0', '0', '2', '4', '2', 0, 0, '8', '8', '8', '8', 0, 0, 0, 0, 0, 4, 1, 115, 1, NOW());
+INSERT INTO necro_user_fighter VALUES(1, 1, 'Joe Blow', 11, NULL, '5', '3', '3', '3', '3', '0', '0', '2', '4', '2', 0, 0, '7', '8', '8', '8', 0, 0, 0, 0, 0, 6, 2, 125, 0, 1, NOW());
+INSERT INTO necro_user_fighter VALUES(2, 1, 'Jill Jones', 13, NULL, '5', '4', '3', '3', '3', '0', '0', '2', '4', '2', 0, 0, '8', '8', '8', '8', 0, 0, 0, 0, 0, 4, 1, 115, 0, 2, NOW());
 
 DROP TABLE IF EXISTS necro_user_fighter_audit;
 CREATE TABLE necro_user_fighter_audit (

@@ -17,7 +17,7 @@ class NecroUserValidation {
 		$token = null;
 	
 		if (isset($oauth) && !empty($oauth)) {
-			$token = $pairs[1];
+			$token = $oauth[1];
 		}
 		$sessionToken = isset($_COOKIE['auth']) ? $_COOKIE['auth'] : null;
 	

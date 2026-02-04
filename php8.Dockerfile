@@ -1,4 +1,4 @@
-FROM php:8.2-apache
+FROM php:8.3-apache
 
 USER root
 RUN ln -sf /bin/bash /bin/sh
@@ -10,14 +10,11 @@ RUN apt-get update --allow-releaseinfo-change -qq \
   && apt-get install -y vim-tiny \
   && apt-get install -y sudo \
   && apt-get install -y libfreetype6-dev libjpeg62-turbo-dev libpng-dev libxml2-dev libzip-dev \
-  && apt-get install -y apt-transport-https ca-certificates wget software-properties-common
-
-# get ruby & SASS
-RUN apt-get install -y ruby-full \
-  && gem install sass
+  && apt-get install -y apt-transport-https ca-certificates wget
+#  && apt-get install -y apt-transport-https ca-certificates wget software-properties-common
 
 # Install most PHP dependencies
-RUN docker-php-ext-install mysqli pdo pdo_mysql soap zip intl \
+RUN docker-php-ext-install mysqli pdo pdo_mysql soap zip \
   && docker-php-ext-configure gd --with-freetype --with-jpeg \
   && docker-php-ext-install -j$(nproc) gd 
 
@@ -29,7 +26,7 @@ RUN pecl install igbinary \
   && docker-php-ext-enable redis
 
 # Install XDebug Support
-RUN pecl install xdebug-3.3.0 \
+RUN pecl install xdebug-3.5.0 \
   && docker-php-ext-enable xdebug
 
 RUN printf "[xdebug] \
@@ -67,7 +64,8 @@ RUN /usr/local/bin/php -r "copy('https://getcomposer.org/installer', 'composer-s
   && mv composer.phar /usr/local/bin/composer
 
 # Set up Grunt.js to process JS/CSS/SASS
-RUN curl -fsSL --insecure https://deb.nodesource.com/setup_18.x | bash - \
+# Instead of:
+RUN curl -fsSL https://deb.nodesource.com/setup_18.x | bash - \
   && apt-get install -y nodejs \
   && node --version \
   && npm --version
@@ -81,13 +79,9 @@ RUN npm install grunt
 RUN npm install grunt-contrib-concat grunt-contrib-copy grunt-contrib-jshint grunt-contrib-qunit \
   grunt-contrib-sass grunt-contrib-uglify  grunt-contrib-watch grunt-newer grunt-replace \
   grunt-contrib-clean grunt-zip
-RUN npm install -g grunt-cli foundation-sites
+RUN npm install -g grunt-cli foundation-sites sass
 
 # Start the container with a few tasks
-ENTRYPOINT ["/bin/bash", "-c", "bash && \
-  service redis-server start && \
-  cd /var/www/html/api/lib && \
-  composer update >> /dev/stdout && \
-  cd /usr/src/necro && \
-  grunt refresh >> /dev/stdout && \
-  eval 'grunt watch >> /dev/stdout &'; sleep 5; apachectl stop; apachectl -D FOREGROUND"]
+COPY docker-entrypoint.sh /usr/local/bin/
+RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+ENTRYPOINT ["docker-entrypoint.sh"]
