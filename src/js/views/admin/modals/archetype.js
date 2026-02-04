@@ -73,27 +73,6 @@ Necro.Views.Admin.Modal.EditArchetype = Necro.Views.BaseModal.extend({
 		field.removeClass('is-invalid').addClass('is-valid');
 	},
 
-	/* syncSkillSets: function(callback) {
-		var m = this.model;
-		var primarySkills = m.attributes.primary_skills;
-		var secondarySkills = m.attributes.secondary_skills;
-
-		primarySkills.archetypeId = m.id;
-		primarySkills.primary = 1;
-		secondarySkills.archetypeId = m.id;
-		secondarySkills.primary = 0;
-
-		primarySkills.sync("update", primarySkills, {
-			success: function() {
-				secondarySkills.sync("update", secondarySkills, {
-					success: function() {
-						callback(true, m);
-					}
-				});
-			}
-		});
-	}, */
-
 	save: function(callback) {
 		var m = this.model;
 		m.set("archetype_name", $('.archetype_name', this.$el).val());

@@ -12,6 +12,7 @@ Necro.Routers.NecroRouter = Backbone.Router.extend({
 		"gangs":"listGangs",
 		"roster": "rosterForm",
 		"roster/:id": "rosterForm",
+		"fighter/:id": "fighterForm",
 		"profile": "userProfile",
 
 		"admin": "adminView",
@@ -33,7 +34,7 @@ Necro.Routers.NecroRouter = Backbone.Router.extend({
 	initialize: function () {
 		_.bindAll(this, 
 			'home', 'login', 'logout', 'register', 'listGangs', 'rosterForm',
-			'updateRight', 'updateLeft', 'showRoster', 'userProfile',
+			'updateRight', 'updateLeft', 'showRoster', 'userProfile', "fighterForm",
 			/** Admin */
 			'adminGangList', 'adminGangForm', 'adminSkillsList', 'adminSkillForm',
 			'adminFighterList', 'adminFighterForm', 'adminWeaponTraitList', 'adminEditTrait',
@@ -165,7 +166,6 @@ Necro.Routers.NecroRouter = Backbone.Router.extend({
 			var gang = new Necro.Models.Gang();
 			this.showRoster(gang);
 		}
-
 	},
 
 	showRoster: function(gang) {
@@ -173,6 +173,22 @@ Necro.Routers.NecroRouter = Backbone.Router.extend({
 		if (gang.get("id")) title = gang.get("gang_name");
 		var rosterListView = new Necro.Views.Roster({model: gang});
 		this.updateRight(rosterListView.render().$el, title);
+	},
+
+	fighterForm: function(id) {
+		if (id) {
+			var fighter = new Necro.Models.Fighter({id: id});
+			fighter.fetch({
+				success: this.showFighter(fighter)
+			});
+		}
+	},
+
+	showFighter: function(fighter) {
+		var title = "Create Fighter";
+		if (fighter.get("id")) title = fighter.get("gang_name");
+		var fighterView = new Necro.Views.User.EditFighter({model: fighter});
+		this.updateRight(fighterView.render().$el, title);
 	},
 
 	userProfile: function() {

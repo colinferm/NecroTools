@@ -53,12 +53,13 @@ Necro.Views.RosterItem = Necro.Views.BaseListItemView.extend({
 	templateName: 'roster-list-item',
 
 	events: {
-		'click .action_edit': 'editFighter',
+		/* 'click .action_edit': 'editFighter',
 		'click .action_clone': 'cloneFighter',
 		'click .action_xp': 'addXP',
 		'click .action_injure': 'injureFighter',
 		'click .action_kill': 'killFighter',
-		'click .action_remove': 'removeFighter'
+		'click .action_remove': 'removeFighter' */
+		'click .gang-roster-card': 'editFighter'
 	},
 
 	onInitialize : function(options) {
@@ -70,12 +71,13 @@ Necro.Views.RosterItem = Necro.Views.BaseListItemView.extend({
 
 	editFighter: function() {
 		console.log("Edit Fighter: " + this.model.get('fighter_name'));
-		var modal = new Necro.Views.Modal({
+		/* var modal = new Necro.Views.Modal({
 			class: "Necro.Views.User.Modal.AddFighter",
 			title: "Edit Fighter",
 			modalSize: 'modal-lg',
 			model: this.model
-		});
+		}); */
+		necro.navigate("/fighter/" + this.model.id, {trigger: true});
 	},
 
 	cloneFighter: function() {
