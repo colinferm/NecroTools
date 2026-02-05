@@ -34,7 +34,7 @@ Necro.Routers.NecroRouter = Backbone.Router.extend({
 	initialize: function () {
 		_.bindAll(this, 
 			'home', 'login', 'logout', 'register', 'listGangs', 'rosterForm',
-			'updateRight', 'updateLeft', 'showRoster', 'userProfile', "fighterForm",
+			'updateRight', 'updateLeft', 'showRoster', 'userProfile', "fighterForm", "showFighter",
 			/** Admin */
 			'adminGangList', 'adminGangForm', 'adminSkillsList', 'adminSkillForm',
 			'adminFighterList', 'adminFighterForm', 'adminWeaponTraitList', 'adminEditTrait',
@@ -179,7 +179,7 @@ Necro.Routers.NecroRouter = Backbone.Router.extend({
 		if (id) {
 			var fighter = new Necro.Models.Fighter({id: id});
 			fighter.fetch({
-				success: this.showFighter(fighter)
+				success: this.showFighter
 			});
 		}
 	},

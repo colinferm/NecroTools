@@ -1,6 +1,6 @@
 Necro.Views.User.EditFighter = Backbone.View.extend({
 	tagName: 'div',
-	className: 'col-12',
+	className: 'ms-3 me-3 bg-light',
 	templateName: 'edit-user-fighter',
 	pageTitle: 'Edit Fighter',
 

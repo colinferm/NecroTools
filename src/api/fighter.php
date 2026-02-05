@@ -389,11 +389,12 @@ class FighterController extends SlimController {
 	public function getFighterByID($fighterId): array {
 		global $ndb;
 		$query = "
-			SELECT f.id, f.fighter_name, f.fighter_role_id, f.backstory, f.advancements, 
-			f.movement, f.weapon_skill, f.ballistic_skill, f.strength, f.toughness, f.toughness_side, f.toughness_rear,  
-			f.handling, f.save_roll, f.wounds, f.initiative, f.attacks, f.leadership, f.cool, f.willpower, f.intelligence, 
+			SELECT f.id, f.fighter_name, f.fighter_role_id, r.role_name, f.backstory, f.advancements,
+			f.movement, f.weapon_skill, f.ballistic_skill, f.strength, f.toughness, f.toughness_side, f.toughness_rear,
+			f.handling, f.save_roll, f.wounds, f.initiative, f.attacks, f.leadership, f.cool, f.willpower, f.intelligence,
 			f.is_vehicle, f.is_convalescence, f.is_captured, f.is_wyrd, f.experience, f.base_value, f.view_order
 			FROM {$ndb->user_fighter} f
+			JOIN {$ndb->fighter_role} r ON r.id = f.fighter_role_id
 			WHERE f.id = :id
 			ORDER BY f.view_order
 		";

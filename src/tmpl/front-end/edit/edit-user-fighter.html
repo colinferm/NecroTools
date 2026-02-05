@@ -1,66 +1,68 @@
-<div class="fighter-edit-header d-flex justify-content-between align-items-center mb-4">
-	<div>
-		<h3 class="fighter-name mb-0">{{fighter_name}}</h3>
-		<h6 class="fighter-role text-muted mb-0">{{role_name}}</h6>
+<div class="col-12 p-3">
+	<div class="fighter-edit-header d-flex justify-content-between align-items-center mb-4">
+		<div>
+			<h3 class="fighter-name mb-0">{{fighter_name}}</h3>
+			<h6 class="fighter-role text-muted mb-0">{{role_name}}</h6>
+		</div>
+		<div class="fighter-value-container d-flex flex-column align-items-center">
+			<div class="fighter-value">{{base_value}}</div>
+			<div class="credits">Credits</div>
+		</div>
 	</div>
-	<div class="fighter-value-container d-flex flex-column align-items-center">
-		<div class="fighter-value">{{base_value}}</div>
-		<div class="credits">Credits</div>
-	</div>
-</div>
 
-<div class="fighter-section mb-4">
-	<div class="d-flex justify-content-between align-items-center mb-2">
-		<h5 class="mb-0">Equipment</h5>
-		<a class="btn btn-sm btn-primary add_equipment">Add</a>
+	<div class="fighter-section mb-4">
+		<div class="d-flex justify-content-between align-items-center mb-2">
+			<h5 class="mb-0">Equipment</h5>
+			<a class="btn btn-sm btn-primary add_equipment">Add</a>
+		</div>
+		<div class="equipment-list">
+		</div>
 	</div>
-	<div class="equipment-list">
-	</div>
-</div>
 
-<div class="fighter-section mb-4">
-	<div class="d-flex justify-content-between align-items-center mb-2">
-		<h5 class="mb-0">Skills</h5>
-		<a class="btn btn-sm btn-primary add_skills">Add</a>
+	<div class="fighter-section mb-4">
+		<div class="d-flex justify-content-between align-items-center mb-2">
+			<h5 class="mb-0">Skills</h5>
+			<a class="btn btn-sm btn-primary add_skills">Add</a>
+		</div>
+		<div class="skills-list">
+		</div>
 	</div>
-	<div class="skills-list">
-	</div>
-</div>
 
-<div class="fighter-section mb-4">
-	<div class="d-flex justify-content-between align-items-center mb-2">
-		<h5 class="mb-0">Advancements</h5>
-		<a class="btn btn-sm btn-primary add_advancement">Add</a>
+	<div class="fighter-section mb-4">
+		<div class="d-flex justify-content-between align-items-center mb-2">
+			<h5 class="mb-0">Advancements</h5>
+			<a class="btn btn-sm btn-primary add_advancement">Add</a>
+		</div>
+		<div class="advancements-list">
+		</div>
 	</div>
-	<div class="advancements-list">
-	</div>
-</div>
 
-<div class="fighter-section mb-4">
-	<div class="d-flex justify-content-between align-items-center mb-2">
-		<h5 class="mb-0">Lasting Injuries</h5>
-		<a class="btn btn-sm btn-primary add_injury">Add</a>
+	<div class="fighter-section mb-4">
+		<div class="d-flex justify-content-between align-items-center mb-2">
+			<h5 class="mb-0">Lasting Injuries</h5>
+			<a class="btn btn-sm btn-primary add_injury">Add</a>
+		</div>
+		<div class="injuries-list">
+		</div>
 	</div>
-	<div class="injuries-list">
-	</div>
-</div>
 
-<div class="fighter-section mb-4">
-	<div class="d-flex justify-content-between align-items-center mb-2">
-		<h5 class="mb-0">Notes</h5>
-		<a class="btn btn-sm btn-primary add_note">Add</a>
+	<div class="fighter-section mb-4">
+		<div class="d-flex justify-content-between align-items-center mb-2">
+			<h5 class="mb-0">Notes</h5>
+			<a class="btn btn-sm btn-primary add_note">Add</a>
+		</div>
+		<div class="notes-list">
+		</div>
 	</div>
-	<div class="notes-list">
-	</div>
-</div>
 
-<div class="fighter-actions d-flex justify-content-between mt-4 pt-3 border-top">
-	<div class="d-flex gap-2">
-		<a class="btn btn-secondary action_kill">Kill Fighter</a>
-		<a class="btn btn-secondary action_retire">Retire Fighter</a>
-		<a class="btn btn-secondary action_recovery">Send to Recovery</a>
-	</div>
-	<div>
-		<a class="btn btn-danger action_delete">Delete Fighter</a>
+	<div class="fighter-actions d-flex justify-content-between mt-4 pt-3 border-top">
+		<div class="d-flex gap-2">
+			<a class="btn btn-secondary action_kill">Kill Fighter</a>
+			<a class="btn btn-secondary action_retire">Retire Fighter</a>
+			<a class="btn btn-secondary action_recovery">Send to Recovery</a>
+		</div>
+		<div>
+			<a class="btn btn-danger action_delete">Delete Fighter</a>
+		</div>
 	</div>
 </div>
