@@ -23,13 +23,15 @@ BEGIN
 	DECLARE fighter_cursor CURSOR FOR
 	(SELECT f.id,
 		 COALESCE(
-			f.base_value + SUM(w.weapon_value) + SUM(ia.value_adj), 
-			f.base_value + SUM(w.weapon_value), 
+			f.base_value + SUM(w.weapon_value) + COALESCE(SUM(wc.characteristic_value), 0) + SUM(ia.value_adj),
+			f.base_value + SUM(w.weapon_value) + COALESCE(SUM(wc.characteristic_value), 0),
 			f.base_value
 		) AS total_val
 	FROM necro_user_fighter f
 	LEFT JOIN necro_user_fighter_weapon_map fwm ON (f.id = fwm.user_fighter_id)
 	LEFT JOIN necro_weapon w ON (fwm.weapon_id = w.id)
+	LEFT JOIN necro_user_fighter_weapon_characteristic_map fwcm ON (f.id = fwcm.user_fighter_id AND fwm.weapon_id = fwcm.weapon_id)
+	LEFT JOIN necro_weapon_characteristic wc ON (fwcm.weapon_characteristic_id = wc.id)
 	LEFT JOIN necro_user_fighter_injury_advancement_map iam ON (f.id = iam.user_fighter_id)
 	LEFT JOIN necro_gang_fighter_injury_advancement ia ON (iam.injury_advancement_id = ia.id)
 	WHERE 1 = 1

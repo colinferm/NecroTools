@@ -31,8 +31,8 @@ CREATE TABLE necro_user_gang (
 	INDEX idx_gang_user (user_id)
 );
 
-INSERT INTO necro_user_gang VALUES (1, 1, 'The Bad Asses', 1, 0, 0, 1000, NOW(), NOW());
-INSERT INTO necro_user_gang VALUES (2, 1, 'Not Your Mamas', 2, 0, 0, 1000, NOW(), NOW());
+INSERT INTO necro_user_gang (id, user_id, gang_name, gang_type_id, outlaw, outcast, credits, created, last_mod) VALUES (1, 1, 'The Bad Asses', 1, 0, 0, 1000, NOW(), NOW());
+INSERT INTO necro_user_gang (id, user_id, gang_name, gang_type_id, outlaw, outcast, credits, created, last_mod) VALUES (2, 1, 'Not Your Mamas', 2, 0, 0, 1000, NOW(), NOW());
 
 DROP TABLE IF EXISTS necro_user_gang_audit;
 CREATE TABLE necro_user_gang_audit (
@@ -167,4 +167,12 @@ CREATE TABLE necro_user_fighter_special_trait_map (
 	user_fighter_id INT NOT NULL,
 	special_trait_lookup_id INT NOT NULL,
 	INDEX idx_user_fighter_special_trait (user_fighter_id, special_trait_lookup_id)
+);
+
+DROP TABLE IF EXISTS necro_user_fighter_weapon_characteristic_map;
+CREATE TABLE necro_user_fighter_weapon_characteristic_map (
+	user_fighter_id INT NOT NULL,
+	weapon_id INT NOT NULL,
+	weapon_characteristic_id INT NOT NULL,
+	INDEX idx_user_fighter_weapon_characteristic (user_fighter_id, weapon_id, weapon_characteristic_id)
 );

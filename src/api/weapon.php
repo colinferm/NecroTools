@@ -43,15 +43,29 @@ class WeaponController extends SlimController {
 		if (!$isGear) {
 			foreach ($weapons as &$weapon) {
 				$charSQL = "
-					SELECT id, ammo_type, range_short, range_long, accuracy_short, accuracy_long, strength, armor_penetration, damage, ammo_check 
-					FROM {$ndb->weapon_characteristic}
-					WHERE weapon_id = :weapon_id
+					SELECT wc.id, wc.ammo_type, wc.range_short, wc.range_long, wc.accuracy_short, wc.accuracy_long,
+					       wc.strength, wc.armor_penetration, wc.damage, wc.ammo_check, wc.characteristic_value, wc.default_loadout
+					FROM {$ndb->weapon_characteristic} wc
+					WHERE wc.weapon_id = :weapon_id
+					AND (
+						wc.default_loadout = 1
+						OR wc.id IN (
+							SELECT weapon_characteristic_id
+							FROM {$ndb->user_fighter_weapon_characteristic_map}
+							WHERE user_fighter_id = :fighter_id
+							AND weapon_id = :weapon_id2
+						)
+					)
 				";
-				$chars = $ndb->query($charSQL, ['weapon_id' => $weapon['id']]);
+				$chars = $ndb->query($charSQL, [
+					'weapon_id'  => $weapon['id'],
+					'fighter_id' => $fighterId,
+					'weapon_id2' => $weapon['id'],
+				]);
 
 				foreach($chars as &$char) {
 					$traitSQL = "
-						SELECT t.id, t.lookup_value AS value, t.misc_value 
+						SELECT t.id, t.lookup_value AS value, t.misc_value
 						FROM {$ndb->lookups} t, {$ndb->weapon_trait_characteristic_map} wtcm
 						WHERE t.id = wtcm.trait_lookup_id
 						AND t.lookup_key = 'WEAPON_TRAIT'
@@ -67,15 +81,35 @@ class WeaponController extends SlimController {
 		return $weapons;
 	}
 
-	public static function getCharacteristicsForId($params) {
+	public static function getCharacteristicsForId($params, $fighterId = null) {
 		global $ndb;
+
+		$p = [];
+		$fieldName = $params['field'];
+		$p[$fieldName] = $params['value'];
 		$charSQL = "
-			SELECT id, ammo_type, range_short, range_long, accuracy_short, accuracy_long, strength, armor_penetration, damage, ammo_check 
-			FROM {$ndb->weapon_characteristic}
-			WHERE 1 =1
-			AND {$params['field']} = :{$params['field']}
+			SELECT wc.id, wc.ammo_type, wc.range_short, wc.range_long, wc.accuracy_short, wc.accuracy_long,
+					wc.strength, wc.armor_penetration, wc.damage, wc.ammo_check, wc.characteristic_value, 
+					wc.default_loadout, wc.rarity, wc.gang_type_id
+			FROM {$ndb->weapon_characteristic} wc
+			WHERE wc.{$fieldName} = :{$fieldName}
 		";
-		$chars = $ndb->query($charSQL, [$params['field'] => $params['value']]);
+		if ($fighterId != null) {
+			$p['fighter_id'] = $fighterId;
+			$charSQL .= "
+				AND (
+					wc.default_loadout = 1
+					OR wc.id IN (
+						SELECT weapon_characteristic_id
+						FROM {$ndb->user_fighter_weapon_characteristic_map}
+						WHERE user_fighter_id = :fighter_id
+						AND weapon_id = wc.weapon_id
+					)
+				)
+			";
+		}
+		//$chars = $ndb->query($charSQL, [$params['field'] => $params['value'], 'fighter_id' => $fighterId]);
+		$chars = $ndb->query($charSQL, $p);
 
 		foreach($chars as &$char) {
 			static::buildCharacteristicTraits($char);
@@ -162,8 +196,9 @@ class WeaponController extends SlimController {
 	public static function getWeapons($id = 0, $wci = 0) {
 		global $ndb;
 		$dbparams = [];
+		//SELECT w.id AS id, CASE WHEN COUNT(ca.ammo_type) > 1 THEN CONCAT(w.weapon_name, GROUP_CONCAT(ca.ammo_type SEPARATOR '/')) ELSE w.weapon_name END as weapon_name, w.weapon_value, COUNT(ca.ammo_type) AS ammo_types, c.category_name, c.id AS category_id
 		$query = "
-			SELECT w.id AS id, CASE WHEN COUNT(ca.ammo_type) > 1 THEN CONCAT(w.weapon_name, GROUP_CONCAT(ca.ammo_type SEPARATOR '/')) ELSE w.weapon_name END as weapon_name, w.weapon_value, COUNT(ca.ammo_type) AS ammo_types, c.category_name, c.id AS category_id
+			SELECT w.id AS id, w.weapon_name, w.weapon_value, w.rarity, COUNT(ca.ammo_type) AS ammo_types, c.category_name, c.id AS category_id
 			FROM {$ndb->weapon_category} c, {$ndb->weapon} w, {$ndb->weapon_characteristic} ca
 			WHERE c.id = w.weapon_category_id
 			AND w.id = ca.weapon_id
@@ -181,7 +216,7 @@ class WeaponController extends SlimController {
 		}
 
 		$query .= "
-			GROUP BY w.id, weapon_name, w.weapon_value, c.category_name, c.id
+			GROUP BY w.id, weapon_name, w.weapon_value, c.category_name, c.id, w.rarity
 			ORDER BY c.id ASC
 		";
 
@@ -191,8 +226,9 @@ class WeaponController extends SlimController {
 	public function fetchWeapons(ServerRequestInterface $request, ResponseInterface $response, array $args): ResponseInterface {
 		global $ndb;
 		$dbparams = [];
+		//SELECT w.id AS id, CASE WHEN COUNT(ca.ammo_type) > 1 THEN CONCAT(w.weapon_name, GROUP_CONCAT(ca.ammo_type SEPARATOR '/')) ELSE w.weapon_name END as weapon_name, w.weapon_name AS base_weapon_name, w.weapon_value, COUNT(ca.ammo_type) AS ammo_types, c.category_name, c.id AS category_id
 		$query = "
-			SELECT w.id AS id, CASE WHEN COUNT(ca.ammo_type) > 1 THEN CONCAT(w.weapon_name, GROUP_CONCAT(ca.ammo_type SEPARATOR '/')) ELSE w.weapon_name END as weapon_name, w.weapon_name AS base_weapon_name, w.weapon_value, COUNT(ca.ammo_type) AS ammo_types, c.category_name, c.id AS category_id
+			SELECT w.id AS id, w.weapon_name, w.weapon_name AS base_weapon_name, w.weapon_value, w.rarity, COUNT(ca.ammo_type) AS ammo_types, c.category_name, c.id AS category_id
 			FROM {$ndb->weapon_category} c, {$ndb->weapon} w, {$ndb->weapon_characteristic} ca
 			WHERE c.id = w.weapon_category_id
 			AND w.id = ca.weapon_id
@@ -318,7 +354,23 @@ class WeaponController extends SlimController {
 	}
 
 	public function addCharacteristic(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface {
-		$response->getBody()->write(json_encode([]));
+		global $ndb;
+		$body = json_decode($request->getBody(), true);
+		$fighterId  = $body['user_fighter_id'];
+		$weaponId   = $body['weapon_id'];
+		$charId     = $body['weapon_characteristic_id'];
+
+		$char = static::getCharacteristicById($charId);
+		if (!$char || $char['default_loadout'] == 1) {
+			$response->getBody()->write(json_encode([]));
+			return $response->withHeader('Content-Type', 'application/json');
+		}
+
+		$ndb->insert(
+			"INSERT INTO {$ndb->user_fighter_weapon_characteristic_map} (user_fighter_id, weapon_id, weapon_characteristic_id) VALUES (:user_fighter_id, :weapon_id, :weapon_characteristic_id)",
+			['user_fighter_id' => $fighterId, 'weapon_id' => $weaponId, 'weapon_characteristic_id' => $charId]
+		);
+		$response->getBody()->write(json_encode($char));
 		return $response->withHeader('Content-Type', 'application/json');
 	}
 
@@ -332,7 +384,11 @@ class WeaponController extends SlimController {
 		global $ndb;
 
 		$id = $args['id'];
-		$rows = $ndb->deleteFromTable($ndb->weapon_characteristic, $id);
+		$ndb->deleteWithParams(
+			"DELETE FROM {$ndb->user_fighter_weapon_characteristic_map} WHERE weapon_characteristic_id = :id",
+			['id' => $id]
+		);
+		$ndb->deleteFromTable($ndb->weapon_characteristic, $id);
 
 		return $response->withStatus(200);
 	}

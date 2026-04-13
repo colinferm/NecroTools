@@ -1,15 +1,25 @@
 <div class="continer-fluid">
-	<div class="mb-3 form-floating">
-		<input type="text" name="weapon_name" class="form-control" id="weaponName" placeholder="Name" aria-label="Weapon Name" value="{{model.base_weapon_name}}">
-		<label for="weaponName" class="form-label">Name</label>
-	</div>
-	<div class="mb-3 form-floating">
-		{{{select-box field-name="weapon_category" collection-property="categories" item-id="id" item-name="category_name" model-property="category_id" id-name="categorySelect"}}}
-		<label for="categorySelect" class="form-label">Category</label>
-	</div>
-	<div class="mb-3 form-floating">
-		<input type="number" name="weapon_value" class="form-control form-control-sm" id="weaponValue" placeholder="Value" aria-label="Weapon Value" value="{{model.weapon_value}}">
-		<label for="weaponValue" class="form-label">Value</label>
+	<div class="row">
+		<div class="col-6">
+			<div class="mb-3 form-floating">
+				<input type="text" name="weapon_name" class="form-control" id="weaponName" placeholder="Name" aria-label="Weapon Name" value="{{model.base_weapon_name}}">
+				<label for="weaponName" class="form-label">Name</label>
+			</div>
+			<div class="mb-3 form-floating">
+				{{{select-box field-name="weapon_category" collection-property="categories" item-id="id" item-name="category_name" model-property="category_id" id-name="categorySelect"}}}
+				<label for="categorySelect" class="form-label">Category</label>
+			</div>
+		</div>
+		<div class="col-6">
+			<div class="mb-3 form-floating">
+				<input type="number" name="weapon_value" class="form-control form-control-sm" id="weaponValue" placeholder="Value" aria-label="Weapon Value" value="{{model.weapon_value}}">
+				<label for="weaponValue" class="form-label">Value</label>
+			</div>
+			<div class="mb-3 form-floating">
+				<input type="value" name="rarity" class="form-control form-control-sm" id="weaponRarity" placeholder="Rarity" aria-label="Rarity" value="{{model.rarity}}">
+				<label for="weaponRarity" class="form-label">Rarity</label>
+			</div>
+		</div>
 	</div>
 	<table class="table weapon-stats"></table>
 </div>

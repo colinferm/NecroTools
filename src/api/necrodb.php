@@ -30,6 +30,7 @@ class NecroDB {
 	public $user_fighter = DB_PREFIX.'user_fighter';
 	public $user_fighter_audit = DB_PREFIX."user_fighter_audit";
 	public $user_fighter_weapon_map = DB_PREFIX.'user_fighter_weapon_map';
+	public $user_fighter_weapon_characteristic_map = DB_PREFIX.'user_fighter_weapon_characteristic_map';
 	public $user_fighter_skill_map = DB_PREFIX.'user_fighter_skill_map';
 	public $user_fighter_injury_advancement_map = DB_PREFIX.'user_fighter_injury_advancement_map';
 	public $user_fighter_trait_map = DB_PREFIX.'user_fighter_special_trait_map';

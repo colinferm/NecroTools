@@ -25,16 +25,16 @@ CREATE TABLE necro_gang_type (
 	last_mod DATETIME NOT NULL,
 	PRIMARY KEY (id)
 );
-INSERT INTO necro_gang_type (id, type_name, house_gang, outlaw, created, last_mode) VALUES (1, 'Orlock', 1, 0, NOW(), NOW());
-INSERT INTO necro_gang_type (id, type_name, house_gang, outlaw, created, last_mode) VALUES (2, 'Escher', 1, 0, NOW(), NOW());
-INSERT INTO necro_gang_type (id, type_name, house_gang, outlaw, created, last_mode) VALUES (3, 'Goliath', 1, 0, NOW(), NOW());
-INSERT INTO necro_gang_type (id, type_name, house_gang, outlaw, created, last_mode) VALUES (4, 'Cawdor', 1, 0, NOW(), NOW());
-INSERT INTO necro_gang_type (id, type_name, house_gang, outlaw, created, last_mode) VALUES (5, 'Delaque', 1, 0, NOW(), NOW());
-INSERT INTO necro_gang_type (id, type_name, house_gang, outlaw, created, last_mode) VALUES (6, 'Van Saar', 1, 0, NOW(), NOW());
-INSERT INTO necro_gang_type (id, type_name, house_gang, outlaw, created, last_mode) VALUES (7, 'Ironhead Squat', 0, 0, NOW(), NOW());
-INSERT INTO necro_gang_type (id, type_name, house_gang, outlaw, created, last_mode) VALUES (8, 'Ash Waste Nomad', 0, 1, NOW(), NOW());
-INSERT INTO necro_gang_type (id, type_name, house_gang, outlaw, created, last_mode) VALUES (9, 'Enforcer', 0, 0, NOW(), NOW());
-INSERT INTO necro_gang_type (id, type_name, house_gang, outlaw, created, last_mode) VALUES (10, 'Corpse Grinder', 0, 1, NOW(), NOW());
+INSERT INTO necro_gang_type (id, type_name, house_gang, outlaw, created, last_mod) VALUES (1, 'Orlock', 1, 0, NOW(), NOW());
+INSERT INTO necro_gang_type (id, type_name, house_gang, outlaw, created, last_mod) VALUES (2, 'Escher', 1, 0, NOW(), NOW());
+INSERT INTO necro_gang_type (id, type_name, house_gang, outlaw, created, last_mod) VALUES (3, 'Goliath', 1, 0, NOW(), NOW());
+INSERT INTO necro_gang_type (id, type_name, house_gang, outlaw, created, last_mod) VALUES (4, 'Cawdor', 1, 0, NOW(), NOW());
+INSERT INTO necro_gang_type (id, type_name, house_gang, outlaw, created, last_mod) VALUES (5, 'Delaque', 1, 0, NOW(), NOW());
+INSERT INTO necro_gang_type (id, type_name, house_gang, outlaw, created, last_mod) VALUES (6, 'Van Saar', 1, 0, NOW(), NOW());
+INSERT INTO necro_gang_type (id, type_name, house_gang, outlaw, created, last_mod) VALUES (7, 'Ironhead Squat', 0, 0, NOW(), NOW());
+INSERT INTO necro_gang_type (id, type_name, house_gang, outlaw, created, last_mod) VALUES (8, 'Ash Waste Nomad', 0, 1, NOW(), NOW());
+INSERT INTO necro_gang_type (id, type_name, house_gang, outlaw, created, last_mod) VALUES (9, 'Enforcer', 0, 0, NOW(), NOW());
+INSERT INTO necro_gang_type (id, type_name, house_gang, outlaw, created, last_mod) VALUES (10, 'Corpse Grinder', 0, 1, NOW(), NOW());
 
 DROP TABLE IF EXISTS necro_gang_fighter_role;
 CREATE TABLE necro_gang_fighter_role (

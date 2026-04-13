@@ -62,7 +62,7 @@ CREATE TABLE necro_archetype (
 	PRIMARY KEY (id)
 );
 
-DROP TABLE IF EXISTS necro_fighter_archetype_skill_set_map;
+DROP TABLE IF EXISTS necro_archetype_skill_set_map;
 CREATE TABLE necro_archetype_skill_set_map (
 	archetype_id INT NOT NULL,
 	skill_set_id INT NOT NULL,

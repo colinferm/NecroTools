@@ -6,6 +6,7 @@ Necro.Models.Weapon = Backbone.Model.extend({
 		"weapon_name": "",
 		"weapon_value": 0,
 		"category_id": null,
+		"rarity": "C",
 		"characteristics":  Necro.Collections.WeaponCharacteristics
 	},
 
@@ -58,6 +59,8 @@ Necro.Models.WeaponCharacteristic = Backbone.Model.extend({
 		"armor_penetration": "",
 		"damage": 1,
 		"ammo_check": 4,
+		"characteristic_value": 0,
+		"default_loadout": 0,
 		"traits": Necro.Collections.WeaponTraits
 	},
 
