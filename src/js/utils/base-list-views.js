@@ -131,6 +131,9 @@ Necro.Views.BaseListView = Backbone.View.extend({
 		}
 		this.sortCol = sortCol;
 
+		$('.sort_col', this.$el).removeClass('sort-asc sort-desc');
+		target.addClass(this.sortDir === 'DESC' ? 'sort-desc' : 'sort-asc');
+
 		var col = this.sortCol;
 		var dir = this.sortDir;
 		this.collection.comparator = function(a, b) {

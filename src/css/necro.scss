@@ -1,4 +1,16 @@
 $color-white: #FFF;
+
+.sort_col {
+	cursor: pointer;
+	&.sort-asc::after  { 
+		content: ' \25B2'; 
+		color: $color-white;
+	}
+	&.sort-desc::after { 
+		content: ' \25BC'; 
+		color: $color-white;
+	}
+}
 $color-transparent-white: rgba(255, 255, 255, 0.5);
 $color-transparent: transparent;
 $color-black: #000;
