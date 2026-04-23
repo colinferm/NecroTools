@@ -6,25 +6,57 @@ Necro.Views.BaseListView = Backbone.View.extend({
 	appendSelector: 'tbody',
 	actionButtonText: 'Action Button',
 	itemClassName: 'Necro.Views.BaseListItemView',
+	filterCollection: null,
+	filterProp: 'id',
+	filterName: 'name',
+	filterSelector: '.form-filter',
+	sortCol: "id",
+	sortDir: "ASC",
 	
 	events: {
 		'keyup': 'search',
+		'click .sort_col': 'sortColumn',
 		'.action_button': 'handleActionButton'
 	},
 	
 	initialize : function(options) {
-		this.templateOpts = {
-			actionButtonText: this.actionButtonText
-		};
 		var html = Necro.Utils.UI.TPL.get(this.templateName);
 		this.template = Handlebars.compile(html);
+
+		_.bindAll(this, 
+			'render', 'onRendered', 'search', 'addItems', 'addItem', 
+			'handleActionButton', 'handleFilter'
+		);
+
 		if (this.onInitialize) this.onInitialize(options);
 	},
 
 	render: function() {
+		var filters = [];
+		_.each(this.filterCollection, function(item) {
+			filters.push({
+				id: item.id,
+				name: item[this.filterName]
+			});
+		}, this);
+
+		this.templateOpts = {
+			actionButtonText: this.actionButtonText,
+			filterOptions: filters
+		};
+
 		this.$el.html(this.template(this.templateOpts));
 		if (this.onRender) this.onRender();
 		return this;
+	},
+
+	onRendered: function() {
+		var filter = this.$el.find(this.filterSelector);
+		if (!this.filterCollection) {
+			filter.parent().remove();
+			return;
+		}
+		filter.on('change', this.handleFilter);
 	},
 
 	search: function(e) {
@@ -58,6 +90,58 @@ Necro.Views.BaseListView = Backbone.View.extend({
 	
 	handleActionButton: function(e) {
 		if (this.handleAction) this.handleAction();
+	},
+
+	handleFilter: function(e) {
+		//console.log(e);
+		let selectedVal = $(e.currentTarget).find(':selected').val();
+		//console.log(selectedVal);
+		if (selectedVal.length == 0) {
+			this.addItems();
+			return;
+		}
+
+		let items = this.collection.filter(function(item) {
+			if (this.filterProp.includes("id")) {
+				var searchCol = item.attributes[this.filterProp];
+				if (searchCol == selectedVal) return 1;
+			} else {
+				var searchCol = item.attributes[this.filterProp].toLowerCase();
+				if (searchCol.includes(selectedVal.toLowerCase())) return 1;
+			}
+			return 0;
+		}, this)
+		this.addItems(items);
+	},
+
+	sortColumn: function(e) {
+		let target = $(e.currentTarget);
+		console.log(target);
+		let sortCol = target.data("sortCol");
+		console.log(sortCol);
+
+		if (this.sortCol == sortCol) {
+			if (this.sortDir == "ASC") {
+				this.sortDir = "DESC";
+			} else {
+				this.sortDir = "ASC";
+			}
+		} else {
+			this.sortDir = "ASC";
+		}
+		this.sortCol = sortCol;
+
+		var col = this.sortCol;
+		var dir = this.sortDir;
+		this.collection.comparator = function(a, b) {
+			var aVal = a.attributes[col];
+			var bVal = b.attributes[col];
+			if (aVal < bVal) return dir === 'DESC' ? 1 : -1;
+			if (aVal > bVal) return dir === 'DESC' ? -1 : 1;
+			return 0;
+		};
+		this.collection.sort();
+		this.addItems(this.collection.models);
 	}
 
 });

@@ -123,6 +123,17 @@ Necro.Routers.NecroRouter = Backbone.Router.extend({
 		$('.right-content-container', this.rightContent.$el).html(elem);
 	},
 
+	updateRightNew: function(obj, title = null) {
+		if (title) {
+			this.rightContent.pageTitle = title;
+		} else {
+			this.rightContent.pageTitle = obj.pageTitle;
+		}
+		Necro.Events.trigger('right:title:change');
+		$('.right-content-container', this.rightContent.$el).html(obj.render().$el);
+		if (obj.onRendered) obj.onRendered();
+	},
+
 	updateLeft: function(elem, title) {
 	
 	},
@@ -264,7 +275,7 @@ Necro.Routers.NecroRouter = Backbone.Router.extend({
 	adminWeapons: function() {
 		var traitList = new Necro.Views.Admin.WeaponList({});
 		var title = traitList.pageTitle;
-		this.updateRight(traitList.render().$el, title);
+		this.updateRightNew(traitList);
 	},
 
 	adminArchetypes: function() {

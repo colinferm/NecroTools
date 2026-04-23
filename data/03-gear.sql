@@ -648,3 +648,640 @@ INSERT INTO necro_weapon_trait_characteristic_map SELECT 95, id FROM necro_looku
 -- char 96: Wyld bow acid arrows → Blaze, Scarce
 INSERT INTO necro_weapon_trait_characteristic_map SELECT 96, id FROM necro_lookups WHERE lookup_value = 'Blaze'         AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
 INSERT INTO necro_weapon_trait_characteristic_map SELECT 96, id FROM necro_lookups WHERE lookup_value = 'Scarce'        AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+
+-- ============================================================
+-- CLOSE COMBAT WEAPONS: New traits
+-- ============================================================
+INSERT INTO necro_lookups (id, lookup_value, lookup_key) VALUES (0, 'Haemophagic', 'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, lookup_value, lookup_key) VALUES (0, 'Lance-bomb',   'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, lookup_value, lookup_key) VALUES (0, 'Paired',       'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, lookup_value, lookup_key) VALUES (0, 'Phase',        'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, lookup_value, lookup_key) VALUES (0, 'Shred',        'WEAPON_TRAIT');
+INSERT INTO necro_lookups (id, lookup_value, lookup_key) VALUES (0, 'Whispering',   'WEAPON_TRAIT');
+
+-- ============================================================
+-- CLOSE COMBAT WEAPONS: New weapons (IDs 41-123, weapon_category_id=5)
+-- ============================================================
+INSERT INTO necro_weapon VALUES (41,  5, 'Power knife',                         25,  'R9',  NULL, 0, NULL);
+INSERT INTO necro_weapon VALUES (42,  5, 'Axe',                                 10,  'C',   NULL, 0, NULL);
+INSERT INTO necro_weapon VALUES (43,  5, 'Chainaxe',                            30,  'R9',  NULL, 0, 3);
+INSERT INTO necro_weapon VALUES (44,  5, 'Cleaver',                             20,  'C',   NULL, 0, NULL);
+INSERT INTO necro_weapon VALUES (45,  5, 'Digi laser',                          25,  'R10', NULL, 0, NULL);
+INSERT INTO necro_weapon VALUES (46,  5, 'Flail',                               20,  'C',   NULL, 0, NULL);
+INSERT INTO necro_weapon VALUES (47,  5, 'Goredrinker axe',                     40,  'I9',  NULL, 0, NULL);
+INSERT INTO necro_weapon VALUES (48,  5, 'Heavy club',                          15,  'C',   NULL, 0, NULL);
+INSERT INTO necro_weapon VALUES (49,  5, 'Hex''iron Blade',                     25,  'I9',  NULL, 0, NULL);
+INSERT INTO necro_weapon VALUES (50,  5, 'Maul (Club)',                         10,  'C',   NULL, 0, NULL);
+INSERT INTO necro_weapon VALUES (51,  5, 'Servo claw',                          35,  'R10', NULL, 0, NULL);
+INSERT INTO necro_weapon VALUES (52,  5, 'Sword',                               20,  'R6',  NULL, 0, NULL);
+INSERT INTO necro_weapon VALUES (53,  5, 'Whip',                                15,  'C',   NULL, 0, NULL);
+INSERT INTO necro_weapon VALUES (54,  5, 'Whisperbane knife',                   30,  'I11', NULL, 0, NULL);
+INSERT INTO necro_weapon VALUES (55,  5, 'Xenarch Death-arc',                   75,  'I9',  NULL, 0, NULL);
+INSERT INTO necro_weapon VALUES (56,  5, 'Desire''s Needle',                    50,  'I9',  NULL, 0, NULL);
+INSERT INTO necro_weapon VALUES (57,  5, 'Las cutter',                          85,  'R10', NULL, 0, NULL);
+INSERT INTO necro_weapon VALUES (58,  5, 'Lightning claw',                      70,  'R11', NULL, 0, NULL);
+INSERT INTO necro_weapon VALUES (59,  5, 'Power axe',                           35,  'R8',  NULL, 0, NULL);
+INSERT INTO necro_weapon VALUES (60,  5, 'Power claw',                          55,  'R11', NULL, 0, NULL);
+INSERT INTO necro_weapon VALUES (61,  5, 'Power fist',                         100,  'R11', NULL, 0, NULL);
+INSERT INTO necro_weapon VALUES (62,  5, 'Power hammer',                        45,  'R8',  NULL, 0, NULL);
+INSERT INTO necro_weapon VALUES (63,  5, 'Power maul',                          30,  'R8',  NULL, 0, NULL);
+INSERT INTO necro_weapon VALUES (64,  5, 'Power pick',                          40,  'R8',  NULL, 0, NULL);
+INSERT INTO necro_weapon VALUES (65,  5, 'Power sword',                         50,  'R9',  NULL, 0, NULL);
+INSERT INTO necro_weapon VALUES (66,  5, 'Shock baton',                         30,  'R8',  NULL, 0, NULL);
+INSERT INTO necro_weapon VALUES (67,  5, 'Shock stave',                         25,  'R9',  NULL, 0, NULL);
+INSERT INTO necro_weapon VALUES (68,  5, 'Tenebrous Scourge',                   60,  'I10', NULL, 0, NULL);
+INSERT INTO necro_weapon VALUES (69,  5, 'Thunder hammer',                      70,  'R11', NULL, 0, NULL);
+INSERT INTO necro_weapon VALUES (70,  5, 'Chain glaive*',                      60,  'R7',  NULL, 0, NULL);
+INSERT INTO necro_weapon VALUES (71,  5, 'Greatsword*',                         40,  'R10', NULL, 0, NULL);
+INSERT INTO necro_weapon VALUES (72,  5, 'Heavy rock cutter*',                 135,  'R9',  NULL, 0, NULL);
+INSERT INTO necro_weapon VALUES (73,  5, 'Heavy rock drill*',                   90,  'R9',  NULL, 0, NULL);
+INSERT INTO necro_weapon VALUES (74,  5, 'Heavy rock saw*',                    120,  'R9',  NULL, 0, NULL);
+INSERT INTO necro_weapon VALUES (75,  5, 'Polearm*',                            30,  'R9',  NULL, 0, NULL);
+INSERT INTO necro_weapon VALUES (76,  5, 'Two-handed axe*',                     25,  'C',   NULL, 0, NULL);
+INSERT INTO necro_weapon VALUES (77,  5, 'Two-handed hammer*',                  35,  'C',   NULL, 0, NULL);
+INSERT INTO necro_weapon VALUES (78,  5, 'Araneus-pattern power fist',         145,  'E',   NULL, 0, NULL);
+INSERT INTO necro_weapon VALUES (79,  5, 'Arc hammer*',                         70,  'E',   NULL, 0, 1);
+INSERT INTO necro_weapon VALUES (80,  5, 'Arc welder',                          50,  'E',   NULL, 0, NULL);
+INSERT INTO necro_weapon VALUES (81,  5, 'Augmetic fist',                       40,  'E',   NULL, 0, NULL);
+INSERT INTO necro_weapon VALUES (82,  5, 'Barbed flabellum',                    80,  'I12', NULL, 0, NULL);
+INSERT INTO necro_weapon VALUES (83,  5, 'The Bloodfingers',                    95,  'I13', NULL, 0, NULL);
+INSERT INTO necro_weapon VALUES (84,  5, 'Boning sword',                        25,  'E',   NULL, 0, 10);
+INSERT INTO necro_weapon VALUES (85,  5, 'Brute cleaver',                       15,  'E',   NULL, 0, 3);
+INSERT INTO necro_weapon VALUES (86,  5, 'Butcher''s chain cleaver',            45,  'E',   NULL, 0, 10);
+INSERT INTO necro_weapon VALUES (87,  5, 'Butcher''s cleaver',                  20,  'E',   NULL, 0, 10);
+INSERT INTO necro_weapon VALUES (88,  5, 'Drawn-out Death*',                   160,  'I13', NULL, 0, NULL);
+INSERT INTO necro_weapon VALUES (89,  5, 'Eviscerator',                         70,  'E',   NULL, 0, 4);
+INSERT INTO necro_weapon VALUES (90,  5, 'Excavator hammer*',                   50,  'E',   NULL, 0, 7);
+INSERT INTO necro_weapon VALUES (91,  5, 'Flensing knife',                      35,  'E',   NULL, 0, 10);
+INSERT INTO necro_weapon VALUES (92,  5, 'Frag lance',                          35,  'E',   NULL, 0, 4);
+INSERT INTO necro_weapon VALUES (93,  5, 'Gleeful Judgement',                   85,  'I13', NULL, 0, NULL);
+INSERT INTO necro_weapon VALUES (94,  5, 'Haemophagic Blade',                   50,  'I13', NULL, 0, NULL);
+INSERT INTO necro_weapon VALUES (95,  5, 'Heavy chain cleaver',                 80,  'E',   NULL, 0, 10);
+INSERT INTO necro_weapon VALUES (96,  5, 'Heavy drill',                         35,  'E',   NULL, 0, 7);
+INSERT INTO necro_weapon VALUES (97,  5, 'Hydraulic drill',                     25,  'E',   NULL, 0, 7);
+INSERT INTO necro_weapon VALUES (98,  5, '''Hystrar'' pattern energy shield',   50,  'E',   NULL, 0, 6);
+INSERT INTO necro_weapon VALUES (99,  5, 'Ironhead power fist',                 60,  'E',   NULL, 0, 7);
+INSERT INTO necro_weapon VALUES (100, 5, 'Krak lance',                          50,  'E',   NULL, 0, 4);
+INSERT INTO necro_weapon VALUES (101, 5, 'Paired augmetic fists*',              70,  'E',   NULL, 0, NULL);
+INSERT INTO necro_weapon VALUES (102, 5, 'Paired butcher''s chain cleaver*',    80,  'E',   NULL, 0, 10);
+INSERT INTO necro_weapon VALUES (103, 5, 'Paired heavy chain cleavers*',       130,  'E',   NULL, 0, 10);
+INSERT INTO necro_weapon VALUES (104, 5, 'Paired psychomantic claws',            0,  'E',   NULL, 0, 5);
+INSERT INTO necro_weapon VALUES (105, 5, 'Paired ''Pulverizers''*',             50,  'E',   NULL, 0, 3);
+INSERT INTO necro_weapon VALUES (106, 5, 'Paired spud-jackers*',                25,  'E',   NULL, 0, 3);
+INSERT INTO necro_weapon VALUES (107, 5, '''Pulverizer'' Serrated Axe',         30,  'E',   NULL, 0, 3);
+INSERT INTO necro_weapon VALUES (108, 5, 'Riot shield',                         35,  'E',   NULL, 0, 9);
+INSERT INTO necro_weapon VALUES (109, 5, '''Renderizer'' Serrated Axe*',        40,  'E',   NULL, 0, 3);
+INSERT INTO necro_weapon VALUES (110, 5, 'Rock saw',                            35,  'E',   NULL, 0, 7);
+INSERT INTO necro_weapon VALUES (111, 5, 'Rotary flensing saw*',                55,  'E',   NULL, 0, 10);
+INSERT INTO necro_weapon VALUES (112, 5, 'Serpent''s Fangs*',                   90,  'E',   NULL, 0, 5);
+INSERT INTO necro_weapon VALUES (113, 5, 'Shock whip',                          25,  'E',   NULL, 0, 2);
+INSERT INTO necro_weapon VALUES (114, 5, 'Shivver sword',                       70,  'E',   NULL, 0, 5);
+INSERT INTO necro_weapon VALUES (115, 5, 'Spider-rig*',                         80,  'E',   NULL, 0, 6);
+INSERT INTO necro_weapon VALUES (116, 5, 'Spud-jacker',                         15,  'E',   NULL, 0, 3);
+INSERT INTO necro_weapon VALUES (117, 5, 'Stun lance',                          30,  'E',   NULL, 0, 4);
+INSERT INTO necro_weapon VALUES (118, 5, 'Two-handed chainaxe*',                40,  'E',   NULL, 0, 7);
+INSERT INTO necro_weapon VALUES (119, 5, 'Two-handed power axe*',               65,  'E',   NULL, 0, 7);
+INSERT INTO necro_weapon VALUES (120, 5, 'Two-handed power pick*',              75,  'E',   NULL, 0, 7);
+INSERT INTO necro_weapon VALUES (121, 5, 'Venom claw',                          30,  'E',   NULL, 0, 2);
+INSERT INTO necro_weapon VALUES (122, 5, 'Vigilance pattern assault shield',    40,  'E',   NULL, 0, 9);
+INSERT INTO necro_weapon VALUES (123, 5, 'Web gauntlet',                        35,  'E',   NULL, 0, 5);
+
+-- ============================================================
+-- CLOSE COMBAT WEAPONS: Weapon characteristics
+-- Columns: id, weapon_id, ammo_type, range_short, range_long,
+--          accuracy_short, accuracy_long, strength, armor_penetration,
+--          damage, ammo_check, characteristic_value, default_loadout, rarity, gang_type_id
+-- ============================================================
+
+-- Power knife (41)
+INSERT INTO necro_weapon_characteristic VALUES (97,  41,  'Standard',                        'E', '-',   '-',  '-',  'S+1', '-2', '1', '-',  0, 1, 'R9',  NULL);
+-- Axe (42)
+INSERT INTO necro_weapon_characteristic VALUES (98,  42,  'Standard',                        'E', '-',   '-',  '-',  'S+1', '-',  '1', '-',  0, 1, 'C',   NULL);
+-- Chainaxe (43)
+INSERT INTO necro_weapon_characteristic VALUES (99,  43,  'Standard',                        'E', '-',   '-',  '+1', 'S+1', '-1', '1', '-',  0, 1, 'R9',  3);
+-- Cleaver (44)
+INSERT INTO necro_weapon_characteristic VALUES (100, 44,  'Standard',                        'E', '-',   '-',  '-',  'S+1', '-1', '1', '-',  0, 1, 'C',   NULL);
+-- Digi laser (45)
+INSERT INTO necro_weapon_characteristic VALUES (101, 45,  'Standard',                        'E', '3"',  '-',  '-',  '1',   '-',  '1', '6+', 0, 1, 'R10', NULL);
+-- Flail (46)
+INSERT INTO necro_weapon_characteristic VALUES (102, 46,  'Standard',                        'E', '-',   '-',  '+1', 'S+1', '-',  '1', '-',  0, 1, 'C',   NULL);
+-- Goredrinker axe (47)
+INSERT INTO necro_weapon_characteristic VALUES (103, 47,  'Standard',                        'E', '-',   '-',  '-',  'S+3', '-1', '2', '-',  0, 1, 'I9',  NULL);
+-- Heavy club (48)
+INSERT INTO necro_weapon_characteristic VALUES (104, 48,  'Standard',                        'E', '-',   '-',  '-',  'S',   '-',  '2', '-',  0, 1, 'C',   NULL);
+-- Hex'iron Blade (49)
+INSERT INTO necro_weapon_characteristic VALUES (105, 49,  'Standard',                        'E', '-',   '-',  '-',  'S+1', '-3', '1', '-',  0, 1, 'I9',  NULL);
+-- Maul (Club) (50)
+INSERT INTO necro_weapon_characteristic VALUES (106, 50,  'Standard',                        'E', '-',   '-',  '-',  'S',   '+1', '2', '-',  0, 1, 'C',   NULL);
+-- Servo claw (51)
+INSERT INTO necro_weapon_characteristic VALUES (107, 51,  'Standard',                        'E', '-',   '-',  '-',  'S+2', '-',  '2', '-',  0, 1, 'R10', NULL);
+-- Sword (52)
+INSERT INTO necro_weapon_characteristic VALUES (108, 52,  'Standard',                        'E', '-',   '-',  '+1', 'S',   '-1', '1', '-',  0, 1, 'R6',  NULL);
+-- Whip (53)
+INSERT INTO necro_weapon_characteristic VALUES (109, 53,  'Standard',                        'E', '3"',  '-1', '-',  'S',   '-',  '1', '-',  0, 1, 'C',   NULL);
+-- Whisperbane knife (54)
+INSERT INTO necro_weapon_characteristic VALUES (110, 54,  'Standard',                        'E', '-',   '-',  '+1', 'S',   '-',  '1', '-',  0, 1, 'I11', NULL);
+-- Xenarch Death-arc (55)
+INSERT INTO necro_weapon_characteristic VALUES (111, 55,  'Standard',                        'E', '5"',  '+1', '-',  '3',   '-',  '1', '2+', 0, 1, 'I9',  NULL);
+-- Desire's Needle (56)
+INSERT INTO necro_weapon_characteristic VALUES (112, 56,  'Standard',                        'E', '-',   '-',  '+1', 'S+2', '-1', '-', '-',  0, 1, 'I9',  NULL);
+-- Las cutter (57)
+INSERT INTO necro_weapon_characteristic VALUES (113, 57,  'Standard',                        'E', '2"',  '+1', '-',  '9',   '-3', '2', '6+', 0, 1, 'R10', NULL);
+-- Lightning claw (58)
+INSERT INTO necro_weapon_characteristic VALUES (114, 58,  'Standard',                        'E', '-',   '-',  '+1', 'S+1', '-2', '1', '-',  0, 1, 'R11', NULL);
+-- Power axe (59)
+INSERT INTO necro_weapon_characteristic VALUES (115, 59,  'Standard',                        'E', '-',   '-',  '-',  'S+2', '-2', '1', '-',  0, 1, 'R8',  NULL);
+-- Power claw (60)
+INSERT INTO necro_weapon_characteristic VALUES (116, 60,  'Standard',                        'E', '-',   '-',  '-',  'S',   '-1', '2', '-',  0, 1, 'R11', NULL);
+-- Power fist (61)
+INSERT INTO necro_weapon_characteristic VALUES (117, 61,  'Standard',                        'E', '-',   '-',  '-',  'S+3', '-3', '3', '-',  0, 1, 'R11', NULL);
+-- Power hammer (62)
+INSERT INTO necro_weapon_characteristic VALUES (118, 62,  'Standard',                        'E', '-',   '-',  '-',  'S+1', '-1', '2', '-',  0, 1, 'R8',  NULL);
+-- Power maul (63)
+INSERT INTO necro_weapon_characteristic VALUES (119, 63,  'Standard',                        'E', '-',   '-',  '-',  'S+2', '-1', '1', '-',  0, 1, 'R8',  NULL);
+-- Power pick (64)
+INSERT INTO necro_weapon_characteristic VALUES (120, 64,  'Standard',                        'E', '-',   '-',  '-',  'S+1', '-3', '1', '-',  0, 1, 'R8',  NULL);
+-- Power sword (65)
+INSERT INTO necro_weapon_characteristic VALUES (121, 65,  'Standard',                        'E', '-',   '-',  '-',  'S+1', '-2', '1', '-',  0, 1, 'R9',  NULL);
+-- Shock baton (66)
+INSERT INTO necro_weapon_characteristic VALUES (122, 66,  'Standard',                        'E', '-',   '-',  '-',  'S',   '-',  '1', '-',  0, 1, 'R8',  NULL);
+-- Shock stave (67)
+INSERT INTO necro_weapon_characteristic VALUES (123, 67,  'Standard',                        'E', '2"',  '-',  '-',  'S+1', '-',  '1', '-',  0, 1, 'R9',  NULL);
+-- Tenebrous Scourge (68)
+INSERT INTO necro_weapon_characteristic VALUES (124, 68,  'Standard',                        'E', '3"',  '-',  '-',  'S+3', '-',  '1', '-',  0, 1, 'I10', NULL);
+-- Thunder hammer (69)
+INSERT INTO necro_weapon_characteristic VALUES (125, 69,  'Standard',                        'E', '-',   '-',  '-',  'S+1', '-1', '3', '-',  0, 1, 'R11', NULL);
+-- Chain glaive (70)
+INSERT INTO necro_weapon_characteristic VALUES (126, 70,  'Standard',                        'E', '2"',  '-1', '-',  'S+2', '-2', '2', '-',  0, 1, 'R7',  NULL);
+-- Greatsword (71)
+INSERT INTO necro_weapon_characteristic VALUES (127, 71,  'Standard',                        'E', '1"',  '-',  '+1', 'S+1', '-1', '1', '-',  0, 1, 'R10', NULL);
+-- Heavy rock cutter (72)
+INSERT INTO necro_weapon_characteristic VALUES (128, 72,  'Standard',                        'E', '-',   '-',  '-',  'S+4', '-4', '3', '-',  0, 1, 'R9',  NULL);
+-- Heavy rock drill (73)
+INSERT INTO necro_weapon_characteristic VALUES (129, 73,  'Standard',                        'E', '-',   '-',  '-',  'S+2', '-3', '2', '-',  0, 1, 'R9',  NULL);
+-- Heavy rock saw (74)
+INSERT INTO necro_weapon_characteristic VALUES (130, 74,  'Standard',                        'E', '-',   '-',  '+1', 'S+3', '-3', '2', '-',  0, 1, 'R9',  NULL);
+-- Polearm (75)
+INSERT INTO necro_weapon_characteristic VALUES (131, 75,  'Standard',                        'E', '2"',  '-1', '-',  'S+1', '-',  '1', '-',  0, 1, 'R9',  NULL);
+-- Two-handed axe (76)
+INSERT INTO necro_weapon_characteristic VALUES (132, 76,  'Standard',                        'E', '-',   '-',  '-1', 'S+2', '-',  '2', '-',  0, 1, 'C',   NULL);
+-- Two-handed hammer (77)
+INSERT INTO necro_weapon_characteristic VALUES (133, 77,  'Standard',                        'E', '-',   '-',  '-1', 'S+1', '-',  '3', '-',  0, 1, 'C',   NULL);
+-- Araneus-pattern power fist (78)
+INSERT INTO necro_weapon_characteristic VALUES (134, 78,  'Standard',                        'E', '-',   '-',  '-',  'S+3', '-3', '3', '-',  0, 1, 'E',   NULL);
+-- Arc hammer (79)
+INSERT INTO necro_weapon_characteristic VALUES (135, 79,  'Standard',                        'E', '1"',  '-',  '-',  'S+3', '-1', '3', '-',  0, 1, 'E',   1);
+-- Arc welder (80)
+INSERT INTO necro_weapon_characteristic VALUES (136, 80,  'Standard',                        'E', '-',   '-',  '-',  'S+2', '-3', '3', '-',  0, 1, 'E',   NULL);
+-- Augmetic fist (81)
+INSERT INTO necro_weapon_characteristic VALUES (137, 81,  'Standard',                        'E', '-',   '-',  '-',  'S+1', '-1', '2', '-',  0, 1, 'E',   NULL);
+-- Barbed flabellum (82)
+INSERT INTO necro_weapon_characteristic VALUES (138, 82,  'Standard',                        'E', '4"',  '+2', '+1', '-',   '-2', '-', '-',  0, 1, 'I12', NULL);
+-- The Bloodfingers (83)
+INSERT INTO necro_weapon_characteristic VALUES (139, 83,  'Standard',                        'E', '-',   '-',  '-',  'S',   '-1', '2', '-',  0, 1, 'I13', NULL);
+-- Boning sword (84)
+INSERT INTO necro_weapon_characteristic VALUES (140, 84,  'Standard',                        'E', '-',   '-',  '-',  'S',   '-2', '2', '-',  0, 1, 'E',   10);
+-- Brute cleaver (85)
+INSERT INTO necro_weapon_characteristic VALUES (141, 85,  'Standard',                        'E', '-',   '-',  '+1', 'S',   '-1', '1', '-',  0, 1, 'E',   3);
+-- Butcher's chain cleaver (86)
+INSERT INTO necro_weapon_characteristic VALUES (142, 86,  'Standard',                        'E', '-',   '-',  '-',  'S+1', '-2', '2', '-',  0, 1, 'E',   10);
+-- Butcher's cleaver (87)
+INSERT INTO necro_weapon_characteristic VALUES (143, 87,  'Standard',                        'E', '-',   '-',  '-',  'S+1', '-1', '2', '-',  0, 1, 'E',   10);
+-- Drawn-out Death (88)
+INSERT INTO necro_weapon_characteristic VALUES (144, 88,  'Standard',                        'E', '2"',  '-1', '-',  'S+2', '-2', '2', '-',  0, 1, 'I13', NULL);
+-- Eviscerator (89)
+INSERT INTO necro_weapon_characteristic VALUES (145, 89,  'melee',                           'E', '1"',  '-',  '-',  'S+1', '-1', '1', '-',  0, 1, 'E',   4);
+INSERT INTO necro_weapon_characteristic VALUES (146, 89,  'ranged',                          '-', 'T',   '-',  '-',  '3',   '-1', '1', '5+', 0, 1, 'E',   4);
+-- Excavator hammer (90)
+INSERT INTO necro_weapon_characteristic VALUES (147, 90,  'Standard',                        'E', '2"',  '-',  '-1', 'S+2', '-1', '3', '*',  0, 1, 'E',   7);
+-- Flensing knife (91)
+INSERT INTO necro_weapon_characteristic VALUES (148, 91,  'Standard',                        'E', '-',   '-',  '-',  'S',   '-1', '1', '-',  0, 1, 'E',   10);
+-- Frag lance (92)
+INSERT INTO necro_weapon_characteristic VALUES (149, 92,  'primed',                          'E', '2"',  '+1', '-',  '4',   '-1', '1', '-',  0, 1, 'E',   4);
+INSERT INTO necro_weapon_characteristic VALUES (150, 92,  'spent',                           'E', '2"',  '+1', '-',  'S',   '-',  '1', '-',  0, 1, 'E',   4);
+-- Gleeful Judgement (93)
+INSERT INTO necro_weapon_characteristic VALUES (151, 93,  'Standard',                        'E', '-',   '-',  '-',  'S+1', '-1', '2', '-',  0, 1, 'I13', NULL);
+-- Haemophagic Blade (94)
+INSERT INTO necro_weapon_characteristic VALUES (152, 94,  'Standard',                        'E', '-',   '-',  '+1', '-',   '-2', '-', '-',  0, 1, 'I13', NULL);
+-- Heavy chain cleaver (95)
+INSERT INTO necro_weapon_characteristic VALUES (153, 95,  'Standard',                        'E', '-',   '-',  '+1', 'S+2', '-2', '2', '-',  0, 1, 'E',   10);
+-- Heavy drill (96)
+INSERT INTO necro_weapon_characteristic VALUES (154, 96,  'Standard',                        'E', '-',   '-',  '-',  'S',   '-1', '2', '-',  0, 1, 'E',   7);
+-- Hydraulic drill (97)
+INSERT INTO necro_weapon_characteristic VALUES (155, 97,  'Standard',                        'E', '-',   '-',  '-',  'S+1', '-',  '1', '-',  0, 1, 'E',   7);
+-- 'Hystrar' pattern energy shield (98)
+INSERT INTO necro_weapon_characteristic VALUES (156, 98,  'Standard',                        'E', '-',   '-',  '-',  'S',   '-',  '1', '-',  0, 1, 'E',   6);
+-- Ironhead power fist (99)
+INSERT INTO necro_weapon_characteristic VALUES (157, 99,  'Standard',                        'E', '-',   '-',  '-',  'S+2', '-2', '2', '-',  0, 1, 'E',   7);
+-- Krak lance (100)
+INSERT INTO necro_weapon_characteristic VALUES (158, 100, 'primed',                          'E', '2"',  '+1', '-',  '6',   '-2', '3', '-',  0, 1, 'E',   4);
+INSERT INTO necro_weapon_characteristic VALUES (159, 100, 'spent',                           'E', '2"',  '+1', '-',  'S',   '-',  '1', '-',  0, 1, 'E',   4);
+-- Paired augmetic fists (101)
+INSERT INTO necro_weapon_characteristic VALUES (160, 101, 'Standard',                        'E', '-',   '-',  '-',  'S+1', '-1', '2', '-',  0, 1, 'E',   NULL);
+-- Paired butcher's chain cleaver (102)
+INSERT INTO necro_weapon_characteristic VALUES (161, 102, 'Standard',                        'E', '-',   '-',  '-',  'S+1', '-2', '2', '-',  0, 1, 'E',   10);
+-- Paired heavy chain cleavers (103)
+INSERT INTO necro_weapon_characteristic VALUES (162, 103, 'Standard',                        'E', '-',   '-',  '+1', 'S+2', '-2', '2', '-',  0, 1, 'E',   10);
+-- Paired psychomantic claws (104)
+INSERT INTO necro_weapon_characteristic VALUES (163, 104, 'Standard',                        'E', '3"',  '-',  '-',  'S+1', '*',  '1', '-',  0, 1, 'E',   5);
+-- Paired 'Pulverizers' (105)
+INSERT INTO necro_weapon_characteristic VALUES (164, 105, 'Standard',                        'E', '-',   '-',  '-',  'S+1', '-1', '1', '-',  0, 1, 'E',   3);
+-- Paired spud-jackers (106)
+INSERT INTO necro_weapon_characteristic VALUES (165, 106, 'Standard',                        'E', '-',   '-',  '-',  'S+1', '-',  '1', '-',  0, 1, 'E',   3);
+-- 'Pulverizer' Serrated Axe (107)
+INSERT INTO necro_weapon_characteristic VALUES (166, 107, 'Standard',                        'E', '-',   '-',  '-',  'S+1', '-1', '1', '-',  0, 1, 'E',   3);
+-- Riot shield (108)
+INSERT INTO necro_weapon_characteristic VALUES (167, 108, 'Standard',                        'E', '-',   '-',  '-1', 'S',   '-',  '1', '-',  0, 1, 'E',   9);
+-- 'Renderizer' Serrated Axe (109)
+INSERT INTO necro_weapon_characteristic VALUES (168, 109, 'Standard',                        'E', '-',   '-',  '-',  'S+2', '-1', '2', '-',  0, 1, 'E',   3);
+-- Rock saw (110)
+INSERT INTO necro_weapon_characteristic VALUES (169, 110, 'Standard',                        'E', '-',   '-',  '-',  'S+1', '-1', '2', '-',  0, 1, 'E',   7);
+-- Rotary flensing saw (111)
+INSERT INTO necro_weapon_characteristic VALUES (170, 111, 'Standard',                        'E', '4"',  '-',  '-1', 'S+1', '-2', '2', '-',  0, 1, 'E',   10);
+-- Serpent's Fangs (112)
+INSERT INTO necro_weapon_characteristic VALUES (171, 112, 'Standard',                        'E', '-',   '-',  '-',  'S+2', '*',  '1', '-',  0, 1, 'E',   5);
+-- Shock whip (113)
+INSERT INTO necro_weapon_characteristic VALUES (172, 113, 'Standard',                        'E', '3"',  '-1', '-',  'S+1', '-',  '1', '-',  0, 1, 'E',   2);
+-- Shivver sword (114)
+INSERT INTO necro_weapon_characteristic VALUES (173, 114, 'Standard',                        'E', '-',   '-',  '+1', 'S+1', '-1', '1', '-',  0, 1, 'E',   5);
+-- Spider-rig (115)
+INSERT INTO necro_weapon_characteristic VALUES (174, 115, 'Standard',                        'E', '3"',  '+1', '+1', 'S+1', '-1', '1', '-',  0, 1, 'E',   6);
+-- Spud-jacker (116)
+INSERT INTO necro_weapon_characteristic VALUES (175, 116, 'Standard',                        'E', '-',   '-',  '-',  'S+1', '-',  '1', '-',  0, 1, 'E',   3);
+-- Stun lance (117)
+INSERT INTO necro_weapon_characteristic VALUES (176, 117, 'primed',                          'E', '2"',  '+1', '-',  '2',   '-1', '1', '-',  0, 1, 'E',   4);
+INSERT INTO necro_weapon_characteristic VALUES (177, 117, 'spent',                           'E', '2"',  '+1', '-',  'S',   '-',  '1', '-',  0, 1, 'E',   4);
+-- Two-handed chainaxe (118)
+INSERT INTO necro_weapon_characteristic VALUES (178, 118, 'Standard',                        'E', '-',   '-',  '-',  'S+2', '-1', '2', '-',  0, 1, 'E',   7);
+-- Two-handed power axe (119)
+INSERT INTO necro_weapon_characteristic VALUES (179, 119, 'Standard',                        'E', '2"',  '-',  '-1', 'S+2', '-1', '2', '-',  0, 1, 'E',   7);
+-- Two-handed power pick (120)
+INSERT INTO necro_weapon_characteristic VALUES (180, 120, 'Standard',                        'E', '2"',  '-',  '-1', 'S+1', '-3', '2', '-',  0, 1, 'E',   7);
+-- Venom claw (121)
+INSERT INTO necro_weapon_characteristic VALUES (181, 121, 'Standard',                        'E', '-',   '-',  '-',  '-',   '-2', '-', '-',  0, 1, 'E',   2);
+-- Vigilance pattern assault shield (122)
+INSERT INTO necro_weapon_characteristic VALUES (182, 122, 'Standard',                        'E', '-',   '-',  '-',  'S',   '-',  '1', '-',  0, 1, 'E',   9);
+-- Web gauntlet (123)
+INSERT INTO necro_weapon_characteristic VALUES (183, 123, 'Standard',                        'E', '-',   '-',  '+1', '3',   '-',  '-', '-',  0, 1, 'E',   5);
+
+-- ============================================================
+-- CLOSE COMBAT WEAPONS: Trait-characteristic mappings
+-- ============================================================
+
+-- char 97: Power knife → Backstab, Melee, Power
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 97,  id FROM necro_lookups WHERE lookup_value = 'Backstab'  AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 97,  id FROM necro_lookups WHERE lookup_value = 'Melee'     AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 97,  id FROM necro_lookups WHERE lookup_value = 'Power'     AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 98: Axe → Disarm, Melee
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 98,  id FROM necro_lookups WHERE lookup_value = 'Disarm'    AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 98,  id FROM necro_lookups WHERE lookup_value = 'Melee'     AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 99: Chainaxe → Disarm, Melee, Parry, Rending
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 99,  id FROM necro_lookups WHERE lookup_value = 'Disarm'    AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 99,  id FROM necro_lookups WHERE lookup_value = 'Melee'     AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 99,  id FROM necro_lookups WHERE lookup_value = 'Parry'     AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 99,  id FROM necro_lookups WHERE lookup_value = 'Rending'   AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 100: Cleaver → Disarm, Melee
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 100, id FROM necro_lookups WHERE lookup_value = 'Disarm'    AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 100, id FROM necro_lookups WHERE lookup_value = 'Melee'     AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 101: Digi laser → Digi, Melee, Versatile
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 101, id FROM necro_lookups WHERE lookup_value = 'Digi'      AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 101, id FROM necro_lookups WHERE lookup_value = 'Melee'     AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 101, id FROM necro_lookups WHERE lookup_value = 'Versatile' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 102: Flail → Entangle, Melee
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 102, id FROM necro_lookups WHERE lookup_value = 'Entangle'  AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 102, id FROM necro_lookups WHERE lookup_value = 'Melee'     AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 103: Goredrinker axe → Esoteric, Melee, Reckless, Rending
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 103, id FROM necro_lookups WHERE lookup_value = 'Esoteric'  AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 103, id FROM necro_lookups WHERE lookup_value = 'Melee'     AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 103, id FROM necro_lookups WHERE lookup_value = 'Reckless'  AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 103, id FROM necro_lookups WHERE lookup_value = 'Rending'   AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 104: Heavy club → Concussion, Melee
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 104, id FROM necro_lookups WHERE lookup_value = 'Concussion' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 104, id FROM necro_lookups WHERE lookup_value = 'Melee'      AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 105: Hex'iron Blade → Cursed, Esoteric, Melee, Parry
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 105, id FROM necro_lookups WHERE lookup_value = 'Cursed'    AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 105, id FROM necro_lookups WHERE lookup_value = 'Esoteric'  AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 105, id FROM necro_lookups WHERE lookup_value = 'Melee'     AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 105, id FROM necro_lookups WHERE lookup_value = 'Parry'     AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 106: Maul (Club) → Melee
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 106, id FROM necro_lookups WHERE lookup_value = 'Melee'     AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 107: Servo claw → Melee
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 107, id FROM necro_lookups WHERE lookup_value = 'Melee'     AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 108: Sword → Melee, Parry
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 108, id FROM necro_lookups WHERE lookup_value = 'Melee'     AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 108, id FROM necro_lookups WHERE lookup_value = 'Parry'     AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 109: Whip → Entangle, Melee, Versatile
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 109, id FROM necro_lookups WHERE lookup_value = 'Entangle'  AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 109, id FROM necro_lookups WHERE lookup_value = 'Melee'     AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 109, id FROM necro_lookups WHERE lookup_value = 'Versatile' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 110: Whisperbane knife → Backstab, Esoteric, Melee, Scattershot
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 110, id FROM necro_lookups WHERE lookup_value = 'Backstab'    AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 110, id FROM necro_lookups WHERE lookup_value = 'Esoteric'    AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 110, id FROM necro_lookups WHERE lookup_value = 'Melee'       AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 110, id FROM necro_lookups WHERE lookup_value = 'Scattershot' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 111: Xenarch Death-arc → Esoteric, Melee, Plentiful, Rapid Fire (2), Shock, Versatile
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 111, id FROM necro_lookups WHERE lookup_value = 'Esoteric'       AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 111, id FROM necro_lookups WHERE lookup_value = 'Melee'          AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 111, id FROM necro_lookups WHERE lookup_value = 'Plentiful'      AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 111, id FROM necro_lookups WHERE lookup_value = 'Rapid Fire (2)' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 111, id FROM necro_lookups WHERE lookup_value = 'Shock'          AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 111, id FROM necro_lookups WHERE lookup_value = 'Versatile'      AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 112: Desire's Needle → Chem Delivery, Esoteric, Melee, Power, Toxin
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 112, id FROM necro_lookups WHERE lookup_value = 'Chem Delivery' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 112, id FROM necro_lookups WHERE lookup_value = 'Esoteric'      AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 112, id FROM necro_lookups WHERE lookup_value = 'Melee'         AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 112, id FROM necro_lookups WHERE lookup_value = 'Power'         AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 112, id FROM necro_lookups WHERE lookup_value = 'Toxin'         AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 113: Las cutter → Melee, Scarce, Versatile
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 113, id FROM necro_lookups WHERE lookup_value = 'Melee'     AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 113, id FROM necro_lookups WHERE lookup_value = 'Scarce'    AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 113, id FROM necro_lookups WHERE lookup_value = 'Versatile' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 114: Lightning claw → Melee, Parry, Power, Rending
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 114, id FROM necro_lookups WHERE lookup_value = 'Melee'   AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 114, id FROM necro_lookups WHERE lookup_value = 'Parry'   AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 114, id FROM necro_lookups WHERE lookup_value = 'Power'   AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 114, id FROM necro_lookups WHERE lookup_value = 'Rending' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 115: Power axe → Disarm, Melee, Power
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 115, id FROM necro_lookups WHERE lookup_value = 'Disarm' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 115, id FROM necro_lookups WHERE lookup_value = 'Melee'  AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 115, id FROM necro_lookups WHERE lookup_value = 'Power'  AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 116: Power claw → Melee, Power, Pulverise
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 116, id FROM necro_lookups WHERE lookup_value = 'Melee'    AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 116, id FROM necro_lookups WHERE lookup_value = 'Power'    AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 116, id FROM necro_lookups WHERE lookup_value = 'Pulverise' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 117: Power fist → Melee, Power, Pulverise, Unwieldy
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 117, id FROM necro_lookups WHERE lookup_value = 'Melee'    AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 117, id FROM necro_lookups WHERE lookup_value = 'Power'    AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 117, id FROM necro_lookups WHERE lookup_value = 'Pulverise' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 117, id FROM necro_lookups WHERE lookup_value = 'Unwieldy' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 118: Power hammer → Melee, Power
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 118, id FROM necro_lookups WHERE lookup_value = 'Melee' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 118, id FROM necro_lookups WHERE lookup_value = 'Power' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 119: Power maul → Melee, Power
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 119, id FROM necro_lookups WHERE lookup_value = 'Melee' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 119, id FROM necro_lookups WHERE lookup_value = 'Power' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 120: Power pick → Melee, Power, Pulverise
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 120, id FROM necro_lookups WHERE lookup_value = 'Melee'    AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 120, id FROM necro_lookups WHERE lookup_value = 'Power'    AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 120, id FROM necro_lookups WHERE lookup_value = 'Pulverise' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 121: Power sword → Melee, Parry, Power
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 121, id FROM necro_lookups WHERE lookup_value = 'Melee' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 121, id FROM necro_lookups WHERE lookup_value = 'Parry' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 121, id FROM necro_lookups WHERE lookup_value = 'Power' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 122: Shock baton → Melee, Parry, Shock
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 122, id FROM necro_lookups WHERE lookup_value = 'Melee' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 122, id FROM necro_lookups WHERE lookup_value = 'Parry' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 122, id FROM necro_lookups WHERE lookup_value = 'Shock' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 123: Shock stave → Melee, Shock, Versatile
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 123, id FROM necro_lookups WHERE lookup_value = 'Melee'     AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 123, id FROM necro_lookups WHERE lookup_value = 'Shock'     AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 123, id FROM necro_lookups WHERE lookup_value = 'Versatile' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 124: Tenebrous Scourge → Entangle, Esoteric, Melee, Power, Versatile
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 124, id FROM necro_lookups WHERE lookup_value = 'Entangle'  AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 124, id FROM necro_lookups WHERE lookup_value = 'Esoteric'  AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 124, id FROM necro_lookups WHERE lookup_value = 'Melee'     AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 124, id FROM necro_lookups WHERE lookup_value = 'Power'     AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 124, id FROM necro_lookups WHERE lookup_value = 'Versatile' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 125: Thunder hammer → Melee, Power, Shock
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 125, id FROM necro_lookups WHERE lookup_value = 'Melee' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 125, id FROM necro_lookups WHERE lookup_value = 'Power' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 125, id FROM necro_lookups WHERE lookup_value = 'Shock' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 126: Chain glaive → Melee, Unwieldy, Versatile
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 126, id FROM necro_lookups WHERE lookup_value = 'Melee'     AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 126, id FROM necro_lookups WHERE lookup_value = 'Unwieldy'  AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 126, id FROM necro_lookups WHERE lookup_value = 'Versatile' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 127: Greatsword → Melee, Sever, Unwieldy, Versatile
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 127, id FROM necro_lookups WHERE lookup_value = 'Melee'     AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 127, id FROM necro_lookups WHERE lookup_value = 'Sever'     AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 127, id FROM necro_lookups WHERE lookup_value = 'Unwieldy'  AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 127, id FROM necro_lookups WHERE lookup_value = 'Versatile' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 128: Heavy rock cutter → Melee, Unwieldy
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 128, id FROM necro_lookups WHERE lookup_value = 'Melee'    AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 128, id FROM necro_lookups WHERE lookup_value = 'Unwieldy' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 129: Heavy rock drill → Melee, Pulverise, Unwieldy
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 129, id FROM necro_lookups WHERE lookup_value = 'Melee'    AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 129, id FROM necro_lookups WHERE lookup_value = 'Pulverise' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 129, id FROM necro_lookups WHERE lookup_value = 'Unwieldy' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 130: Heavy rock saw → Melee, Rending, Unwieldy
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 130, id FROM necro_lookups WHERE lookup_value = 'Melee'    AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 130, id FROM necro_lookups WHERE lookup_value = 'Rending'  AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 130, id FROM necro_lookups WHERE lookup_value = 'Unwieldy' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 131: Polearm → Melee, Unwieldy, Versatile
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 131, id FROM necro_lookups WHERE lookup_value = 'Melee'     AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 131, id FROM necro_lookups WHERE lookup_value = 'Unwieldy'  AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 131, id FROM necro_lookups WHERE lookup_value = 'Versatile' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 132: Two-handed axe → Melee, Unwieldy
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 132, id FROM necro_lookups WHERE lookup_value = 'Melee'    AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 132, id FROM necro_lookups WHERE lookup_value = 'Unwieldy' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 133: Two-handed hammer → Knockback, Melee, Unwieldy
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 133, id FROM necro_lookups WHERE lookup_value = 'Knockback' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 133, id FROM necro_lookups WHERE lookup_value = 'Melee'     AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 133, id FROM necro_lookups WHERE lookup_value = 'Unwieldy'  AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 134: Araneus-pattern power fist → Melee, Power, Pulverise
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 134, id FROM necro_lookups WHERE lookup_value = 'Melee'    AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 134, id FROM necro_lookups WHERE lookup_value = 'Power'    AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 134, id FROM necro_lookups WHERE lookup_value = 'Pulverise' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 135: Arc hammer → Melee, Pulverise, Versatile
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 135, id FROM necro_lookups WHERE lookup_value = 'Melee'    AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 135, id FROM necro_lookups WHERE lookup_value = 'Pulverise' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 135, id FROM necro_lookups WHERE lookup_value = 'Versatile' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 136: Arc welder → Blaze, Melee
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 136, id FROM necro_lookups WHERE lookup_value = 'Blaze' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 136, id FROM necro_lookups WHERE lookup_value = 'Melee' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 137: Augmetic fist → Knockback, Melee
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 137, id FROM necro_lookups WHERE lookup_value = 'Knockback' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 137, id FROM necro_lookups WHERE lookup_value = 'Melee'     AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 138: Barbed flabellum → Melee, Toxin, Versatile
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 138, id FROM necro_lookups WHERE lookup_value = 'Melee'     AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 138, id FROM necro_lookups WHERE lookup_value = 'Toxin'     AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 138, id FROM necro_lookups WHERE lookup_value = 'Versatile' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 139: The Bloodfingers → Melee, Power, Pulverise, Whispering
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 139, id FROM necro_lookups WHERE lookup_value = 'Melee'      AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 139, id FROM necro_lookups WHERE lookup_value = 'Power'      AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 139, id FROM necro_lookups WHERE lookup_value = 'Pulverise'  AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 139, id FROM necro_lookups WHERE lookup_value = 'Whispering' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 140: Boning sword → Melee, Parry, Rending
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 140, id FROM necro_lookups WHERE lookup_value = 'Melee'   AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 140, id FROM necro_lookups WHERE lookup_value = 'Parry'   AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 140, id FROM necro_lookups WHERE lookup_value = 'Rending' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 141: Brute cleaver → Disarm, Melee
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 141, id FROM necro_lookups WHERE lookup_value = 'Disarm' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 141, id FROM necro_lookups WHERE lookup_value = 'Melee'  AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 142: Butcher's chain cleaver → Melee, Shred
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 142, id FROM necro_lookups WHERE lookup_value = 'Melee' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 142, id FROM necro_lookups WHERE lookup_value = 'Shred' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 143: Butcher's cleaver → Disarm, Melee
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 143, id FROM necro_lookups WHERE lookup_value = 'Disarm' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 143, id FROM necro_lookups WHERE lookup_value = 'Melee'  AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 144: Drawn-out Death → Melee, Unwieldy, Versatile, Whispering
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 144, id FROM necro_lookups WHERE lookup_value = 'Melee'      AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 144, id FROM necro_lookups WHERE lookup_value = 'Unwieldy'   AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 144, id FROM necro_lookups WHERE lookup_value = 'Versatile'  AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 144, id FROM necro_lookups WHERE lookup_value = 'Whispering' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 145: Eviscerator melee → Melee, Sever, Shred, Unwieldy, Versatile
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 145, id FROM necro_lookups WHERE lookup_value = 'Melee'    AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 145, id FROM necro_lookups WHERE lookup_value = 'Sever'    AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 145, id FROM necro_lookups WHERE lookup_value = 'Shred'    AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 145, id FROM necro_lookups WHERE lookup_value = 'Unwieldy' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 145, id FROM necro_lookups WHERE lookup_value = 'Versatile' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 146: Eviscerator ranged → Blaze, Scarce, Template
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 146, id FROM necro_lookups WHERE lookup_value = 'Blaze'    AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 146, id FROM necro_lookups WHERE lookup_value = 'Scarce'   AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 146, id FROM necro_lookups WHERE lookup_value = 'Template' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 147: Excavator hammer → Melee, Pulverise, Unwieldy, Versatile
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 147, id FROM necro_lookups WHERE lookup_value = 'Melee'    AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 147, id FROM necro_lookups WHERE lookup_value = 'Pulverise' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 147, id FROM necro_lookups WHERE lookup_value = 'Unwieldy' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 147, id FROM necro_lookups WHERE lookup_value = 'Versatile' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 148: Flensing knife → Melee, Rending
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 148, id FROM necro_lookups WHERE lookup_value = 'Melee'   AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 148, id FROM necro_lookups WHERE lookup_value = 'Rending' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 149: Frag lance primed → Blast (*), Knockback, Lance-bomb, Melee, Versatile
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 149, id FROM necro_lookups WHERE lookup_value = 'Blast (*)' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 149, id FROM necro_lookups WHERE lookup_value = 'Knockback' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 149, id FROM necro_lookups WHERE lookup_value = 'Lance-bomb' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 149, id FROM necro_lookups WHERE lookup_value = 'Melee'     AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 149, id FROM necro_lookups WHERE lookup_value = 'Versatile' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 150: Frag lance spent → Lance, Melee, Versatile
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 150, id FROM necro_lookups WHERE lookup_value = 'Lance'     AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 150, id FROM necro_lookups WHERE lookup_value = 'Melee'     AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 150, id FROM necro_lookups WHERE lookup_value = 'Versatile' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 151: Gleeful Judgement → Melee, Power, Whispering
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 151, id FROM necro_lookups WHERE lookup_value = 'Melee'      AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 151, id FROM necro_lookups WHERE lookup_value = 'Power'      AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 151, id FROM necro_lookups WHERE lookup_value = 'Whispering' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 152: Haemophagic Blade → Haemophagic, Melee, Toxin
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 152, id FROM necro_lookups WHERE lookup_value = 'Haemophagic' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 152, id FROM necro_lookups WHERE lookup_value = 'Melee'       AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 152, id FROM necro_lookups WHERE lookup_value = 'Toxin'       AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 153: Heavy chain cleaver → Melee, Sever
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 153, id FROM necro_lookups WHERE lookup_value = 'Melee' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 153, id FROM necro_lookups WHERE lookup_value = 'Sever' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 154: Heavy drill → Melee, Rending
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 154, id FROM necro_lookups WHERE lookup_value = 'Melee'   AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 154, id FROM necro_lookups WHERE lookup_value = 'Rending' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 155: Hydraulic drill → Entangle, Melee
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 155, id FROM necro_lookups WHERE lookup_value = 'Entangle' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 155, id FROM necro_lookups WHERE lookup_value = 'Melee'    AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 156: 'Hystrar' pattern energy shield → Assault Shield, Knockback, Melee
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 156, id FROM necro_lookups WHERE lookup_value = 'Assault Shield' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 156, id FROM necro_lookups WHERE lookup_value = 'Knockback'      AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 156, id FROM necro_lookups WHERE lookup_value = 'Melee'          AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 157: Ironhead power fist → Melee, Power, Pulverise
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 157, id FROM necro_lookups WHERE lookup_value = 'Melee'    AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 157, id FROM necro_lookups WHERE lookup_value = 'Power'    AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 157, id FROM necro_lookups WHERE lookup_value = 'Pulverise' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 158: Krak lance primed → Lance-bomb, Melee, Versatile
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 158, id FROM necro_lookups WHERE lookup_value = 'Lance-bomb' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 158, id FROM necro_lookups WHERE lookup_value = 'Melee'      AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 158, id FROM necro_lookups WHERE lookup_value = 'Versatile'  AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 159: Krak lance spent → Lance, Melee, Versatile
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 159, id FROM necro_lookups WHERE lookup_value = 'Lance'     AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 159, id FROM necro_lookups WHERE lookup_value = 'Melee'     AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 159, id FROM necro_lookups WHERE lookup_value = 'Versatile' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 160: Paired augmetic fists → Knockback, Melee, Paired
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 160, id FROM necro_lookups WHERE lookup_value = 'Knockback' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 160, id FROM necro_lookups WHERE lookup_value = 'Melee'     AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 160, id FROM necro_lookups WHERE lookup_value = 'Paired'    AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 161: Paired butcher's chain cleaver → Melee, Paired, Shred
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 161, id FROM necro_lookups WHERE lookup_value = 'Melee'  AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 161, id FROM necro_lookups WHERE lookup_value = 'Paired' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 161, id FROM necro_lookups WHERE lookup_value = 'Shred'  AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 162: Paired heavy chain cleavers → Melee, Paired, Sever
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 162, id FROM necro_lookups WHERE lookup_value = 'Melee'  AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 162, id FROM necro_lookups WHERE lookup_value = 'Paired' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 162, id FROM necro_lookups WHERE lookup_value = 'Sever'  AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 163: Paired psychomantic claws → Melee, Paired, Phase, Shock, Versatile
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 163, id FROM necro_lookups WHERE lookup_value = 'Melee'     AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 163, id FROM necro_lookups WHERE lookup_value = 'Paired'    AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 163, id FROM necro_lookups WHERE lookup_value = 'Phase'     AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 163, id FROM necro_lookups WHERE lookup_value = 'Shock'     AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 163, id FROM necro_lookups WHERE lookup_value = 'Versatile' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 164: Paired 'Pulverizers' → Melee, Paired, Pulverise
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 164, id FROM necro_lookups WHERE lookup_value = 'Melee'    AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 164, id FROM necro_lookups WHERE lookup_value = 'Paired'   AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 164, id FROM necro_lookups WHERE lookup_value = 'Pulverise' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 165: Paired spud-jackers → Knockback, Melee, Paired
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 165, id FROM necro_lookups WHERE lookup_value = 'Knockback' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 165, id FROM necro_lookups WHERE lookup_value = 'Melee'     AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 165, id FROM necro_lookups WHERE lookup_value = 'Paired'    AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 166: 'Pulverizer' Serrated Axe → Melee, Pulverise
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 166, id FROM necro_lookups WHERE lookup_value = 'Melee'    AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 166, id FROM necro_lookups WHERE lookup_value = 'Pulverise' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 167: Riot shield → Assault Shield, Melee
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 167, id FROM necro_lookups WHERE lookup_value = 'Assault Shield' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 167, id FROM necro_lookups WHERE lookup_value = 'Melee'          AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 168: 'Renderizer' Serrated Axe → Melee, Pulverise, Unwieldy
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 168, id FROM necro_lookups WHERE lookup_value = 'Melee'    AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 168, id FROM necro_lookups WHERE lookup_value = 'Pulverise' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 168, id FROM necro_lookups WHERE lookup_value = 'Unwieldy'  AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 169: Rock saw → Melee, Rending
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 169, id FROM necro_lookups WHERE lookup_value = 'Melee'   AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 169, id FROM necro_lookups WHERE lookup_value = 'Rending' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 170: Rotary flensing saw → Knockback, Melee, Shred, Versatile
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 170, id FROM necro_lookups WHERE lookup_value = 'Knockback' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 170, id FROM necro_lookups WHERE lookup_value = 'Melee'     AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 170, id FROM necro_lookups WHERE lookup_value = 'Shred'     AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 170, id FROM necro_lookups WHERE lookup_value = 'Versatile' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 171: Serpent's Fangs → Melee, Paired, Phase, Rending
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 171, id FROM necro_lookups WHERE lookup_value = 'Melee'   AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 171, id FROM necro_lookups WHERE lookup_value = 'Paired'  AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 171, id FROM necro_lookups WHERE lookup_value = 'Phase'   AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 171, id FROM necro_lookups WHERE lookup_value = 'Rending' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 172: Shock whip → Melee, Shock, Versatile
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 172, id FROM necro_lookups WHERE lookup_value = 'Melee'     AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 172, id FROM necro_lookups WHERE lookup_value = 'Shock'     AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 172, id FROM necro_lookups WHERE lookup_value = 'Versatile' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 173: Shivver sword → Melee, Parry, Power, Sever
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 173, id FROM necro_lookups WHERE lookup_value = 'Melee' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 173, id FROM necro_lookups WHERE lookup_value = 'Parry' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 173, id FROM necro_lookups WHERE lookup_value = 'Power' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 173, id FROM necro_lookups WHERE lookup_value = 'Sever' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 174: Spider-rig → Entangle, Melee, Paired, Parry, Shock, Versatile
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 174, id FROM necro_lookups WHERE lookup_value = 'Entangle'  AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 174, id FROM necro_lookups WHERE lookup_value = 'Melee'     AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 174, id FROM necro_lookups WHERE lookup_value = 'Paired'    AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 174, id FROM necro_lookups WHERE lookup_value = 'Parry'     AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 174, id FROM necro_lookups WHERE lookup_value = 'Shock'     AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 174, id FROM necro_lookups WHERE lookup_value = 'Versatile' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 175: Spud-jacker → Knockback, Melee
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 175, id FROM necro_lookups WHERE lookup_value = 'Knockback' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 175, id FROM necro_lookups WHERE lookup_value = 'Melee'     AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 176: Stun lance primed → Blast (*), Concussion, Lance-bomb, Melee, Versatile
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 176, id FROM necro_lookups WHERE lookup_value = 'Blast (*)'  AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 176, id FROM necro_lookups WHERE lookup_value = 'Concussion' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 176, id FROM necro_lookups WHERE lookup_value = 'Lance-bomb' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 176, id FROM necro_lookups WHERE lookup_value = 'Melee'      AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 176, id FROM necro_lookups WHERE lookup_value = 'Versatile'  AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 177: Stun lance spent → Lance, Melee, Versatile
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 177, id FROM necro_lookups WHERE lookup_value = 'Lance'     AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 177, id FROM necro_lookups WHERE lookup_value = 'Melee'     AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 177, id FROM necro_lookups WHERE lookup_value = 'Versatile' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 178: Two-handed chainaxe → Melee, Rending, Unwieldy
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 178, id FROM necro_lookups WHERE lookup_value = 'Melee'    AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 178, id FROM necro_lookups WHERE lookup_value = 'Rending'  AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 178, id FROM necro_lookups WHERE lookup_value = 'Unwieldy' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 179: Two-handed power axe → Disarm, Melee, Power, Unwieldy, Versatile
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 179, id FROM necro_lookups WHERE lookup_value = 'Disarm'    AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 179, id FROM necro_lookups WHERE lookup_value = 'Melee'     AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 179, id FROM necro_lookups WHERE lookup_value = 'Power'     AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 179, id FROM necro_lookups WHERE lookup_value = 'Unwieldy'  AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 179, id FROM necro_lookups WHERE lookup_value = 'Versatile' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 180: Two-handed power pick → Melee, Power, Pulverise, Unwieldy, Versatile
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 180, id FROM necro_lookups WHERE lookup_value = 'Melee'    AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 180, id FROM necro_lookups WHERE lookup_value = 'Power'    AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 180, id FROM necro_lookups WHERE lookup_value = 'Pulverise' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 180, id FROM necro_lookups WHERE lookup_value = 'Unwieldy' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 180, id FROM necro_lookups WHERE lookup_value = 'Versatile' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 181: Venom claw → Entangle, Melee, Toxin
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 181, id FROM necro_lookups WHERE lookup_value = 'Entangle' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 181, id FROM necro_lookups WHERE lookup_value = 'Melee'    AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 181, id FROM necro_lookups WHERE lookup_value = 'Toxin'    AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 182: Vigilance pattern assault shield → Assault Shield, Knockback, Melee
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 182, id FROM necro_lookups WHERE lookup_value = 'Assault Shield' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 182, id FROM necro_lookups WHERE lookup_value = 'Knockback'      AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 182, id FROM necro_lookups WHERE lookup_value = 'Melee'          AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+-- char 183: Web gauntlet → Backstab, Melee, Web
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 183, id FROM necro_lookups WHERE lookup_value = 'Backstab' AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 183, id FROM necro_lookups WHERE lookup_value = 'Melee'    AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;
+INSERT INTO necro_weapon_trait_characteristic_map SELECT 183, id FROM necro_lookups WHERE lookup_value = 'Web'      AND lookup_key = 'WEAPON_TRAIT' LIMIT 1;

@@ -3,14 +3,16 @@ Necro.Views.Admin.WeaponList = Necro.Views.BaseListView.extend({
 	templateName: 'weapon-list',
 	pageTitle: 'Weapons',
 	searchKey: 'weapon_name',
+	filterProp: 'category_id',
+	filterName: 'category_name',
+	filterSelector: "#filterByCategory",
 
 	events: _.extend({
 		'click .addWeapon': 'addWeapon',
 	}, Necro.Views.BaseListView.prototype.events),
 
-	initialize : function(options) {
-		var html = Necro.Utils.UI.TPL.get(this.templateName);
-		this.template = Handlebars.compile(html);
+	onInitialize : function(options) {
+		this.filterCollection = Necro.Apps.Data.WeaponCategories;
 		this.collection = new Necro.Collections.Weapons();
 		this.collection.on("add", this.addItem, this);
 		this.collection.fetch();

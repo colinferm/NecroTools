@@ -1,7 +1,18 @@
 <div class="text-end d-flex justify-content-between mb-3">
-	<div class="form-floating">
-		<input type="text" id="weaponSearchInput" class="form-control search_input" tabindex="1" placeholder="Search Weapons">
-		<label for="weaponSearchInput">Search Weapons</label>
+	<div class="d-flex justify-content-start">
+		<div class="form-floating pe-3">
+			<input type="text" id="weaponSearchInput" class="form-control search_input" tabindex="1" placeholder="Search Weapons">
+			<label for="weaponSearchInput">Search Weapons</label>
+		</div>
+		<div class="form-floating">
+			<select class="form-select form-filter" id="filterByCategory" aria-label="Filter by category">
+				<option value="">Category</option>
+				{{#each filterOptions}}
+					<option value="{{id}}">{{name}}</option>
+				{{/each}}
+			</select>
+			<label for="filterByCategory">Filter by</label>
+		</div>
 	</div>
 	<div class="d-flex flex-column justify-content-end">
 		<a class="btn addWeapon">Add Weapon</a>
@@ -10,9 +21,10 @@
 <table class="table table-striped">
 	<thead class="dark">
 		<tr>
-			<th>Name</th>
-			<th>Category</th>
-			<th>Value</th>
+			<th class="sort_col" data-sort-col="weapon_name">Name</th>
+			<th class="sort_col" data-sort-col="category_name">Category</th>
+			<th class="sort_col" data-sort-col="weapon_value">Value</th>
+			<th class="sort_col" data-sort-col="rarity">Rarity</th>
 			<th></th>
 		</tr>
 	</thead>
